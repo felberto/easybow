@@ -14,7 +14,7 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="runde" type="bigint">
+            <column name="runde" type="integer">
                 <constraints nullable="true" />
             </column>
             <column name="passe1_id" type="bigint">

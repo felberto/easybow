@@ -36,6 +36,30 @@
         </div>
 
         <div class="form-group">
+          <label class="form-control-label" for="field_anzahlRunden">Anzahl Runden</label>
+          <input
+            type="number"
+            class="form-control"
+            name="anzahlRunden"
+            id="field_anzahlRunden"
+            data-cy="anzahlRunden"
+            formControlName="anzahlRunden"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_finalRunde">Final Runde</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="finalRunde"
+            id="field_finalRunde"
+            data-cy="finalRunde"
+            formControlName="finalRunde"
+          />
+        </div>
+
+        <div class="form-group">
           <label class="form-control-label" for="field_anzahlPassen">Anzahl Passen</label>
           <input
             type="number"
@@ -45,6 +69,47 @@
             data-cy="anzahlPassen"
             formControlName="anzahlPassen"
           />
+          <div
+            *ngIf="editForm.get('anzahlPassen')!.invalid && (editForm.get('anzahlPassen')!.dirty || editForm.get('anzahlPassen')!.touched)"
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('anzahlPassen')?.errors?.min">
+              This field should be at least 1.
+            </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('anzahlPassen')?.errors?.max">
+              This field cannot be more than 4.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('anzahlPassen')?.errors?.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_anzahlPassenFinal">Anzahl Passen Final</label>
+          <input
+            type="number"
+            class="form-control"
+            name="anzahlPassenFinal"
+            id="field_anzahlPassenFinal"
+            data-cy="anzahlPassenFinal"
+            formControlName="anzahlPassenFinal"
+          />
+          <div
+            *ngIf="
+              editForm.get('anzahlPassenFinal')!.invalid &&
+              (editForm.get('anzahlPassenFinal')!.dirty || editForm.get('anzahlPassenFinal')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('anzahlPassenFinal')?.errors?.min">
+              This field should be at least 1.
+            </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('anzahlPassenFinal')?.errors?.max">
+              This field cannot be more than 4.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('anzahlPassenFinal')?.errors?.number">
+              This field should be a number.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">

@@ -22,9 +22,9 @@ entity Wettkampf {
 	name String,
     jahr LocalDate,
     anzahlRunden Integer,
-    final Boolean,
+    finalRunde Boolean,
     anzahlPassen Integer min(1) max(4),
-    anzahlPassenFinal Integer min(1) max(4),
+    anzahlPassenFinal Integer  min(1) max(4),
     team Integer,
     template Boolean
 }

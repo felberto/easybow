@@ -3,6 +3,7 @@ package ch.felberto.domain;
 import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -27,11 +28,24 @@ public class Wettkampf implements Serializable {
     @Column(name = "jahr")
     private LocalDate jahr;
 
+    @Column(name = "anzahl_runden")
+    private Integer anzahlRunden;
+
+    @Column(name = "final_runde")
+    private Boolean finalRunde;
+
+    @Min(value = 1)
+    @Max(value = 4)
     @Column(name = "anzahl_passen")
-    private Long anzahlPassen;
+    private Integer anzahlPassen;
+
+    @Min(value = 1)
+    @Max(value = 4)
+    @Column(name = "anzahl_passen_final")
+    private Integer anzahlPassenFinal;
 
     @Column(name = "team")
-    private Long team;
+    private Integer team;
 
     @Column(name = "template")
     private Boolean template;
@@ -76,29 +90,68 @@ public class Wettkampf implements Serializable {
         this.jahr = jahr;
     }
 
-    public Long getAnzahlPassen() {
+    public Integer getAnzahlRunden() {
+        return this.anzahlRunden;
+    }
+
+    public Wettkampf anzahlRunden(Integer anzahlRunden) {
+        this.anzahlRunden = anzahlRunden;
+        return this;
+    }
+
+    public void setAnzahlRunden(Integer anzahlRunden) {
+        this.anzahlRunden = anzahlRunden;
+    }
+
+    public Boolean getFinalRunde() {
+        return this.finalRunde;
+    }
+
+    public Wettkampf finalRunde(Boolean finalRunde) {
+        this.finalRunde = finalRunde;
+        return this;
+    }
+
+    public void setFinalRunde(Boolean finalRunde) {
+        this.finalRunde = finalRunde;
+    }
+
+    public Integer getAnzahlPassen() {
         return this.anzahlPassen;
     }
 
-    public Wettkampf anzahlPassen(Long anzahlPassen) {
+    public Wettkampf anzahlPassen(Integer anzahlPassen) {
         this.anzahlPassen = anzahlPassen;
         return this;
     }
 
-    public void setAnzahlPassen(Long anzahlPassen) {
+    public void setAnzahlPassen(Integer anzahlPassen) {
         this.anzahlPassen = anzahlPassen;
     }
 
-    public Long getTeam() {
+    public Integer getAnzahlPassenFinal() {
+        return this.anzahlPassenFinal;
+    }
+
+    public Wettkampf anzahlPassenFinal(Integer anzahlPassenFinal) {
+        this.anzahlPassenFinal = anzahlPassenFinal;
+        return this;
+    }
+
+    public void setAnzahlPassenFinal(Integer anzahlPassenFinal) {
+        this.anzahlPassenFinal = anzahlPassenFinal;
+    }
+
+    public Integer getTeam() {
         return this.team;
     }
 
-    public Wettkampf team(Long team) {
+    public Wettkampf team(Integer team) {
         this.team = team;
         return this;
     }
 
-    public void setTeam(Long team) {
+    public void setTeam(Integer team) {
         this.team = team;
     }
 
@@ -141,7 +194,10 @@ public class Wettkampf implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", jahr='" + getJahr() + "'" +
+            ", anzahlRunden=" + getAnzahlRunden() +
+            ", finalRunde='" + getFinalRunde() + "'" +
             ", anzahlPassen=" + getAnzahlPassen() +
+            ", anzahlPassenFinal=" + getAnzahlPassenFinal() +
             ", team=" + getTeam() +
             ", template='" + getTemplate() + "'" +
             "}";

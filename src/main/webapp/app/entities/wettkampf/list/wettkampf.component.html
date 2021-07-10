@@ -35,7 +35,10 @@
           <th scope="col"><span>ID</span></th>
           <th scope="col"><span>Name</span></th>
           <th scope="col"><span>Jahr</span></th>
+          <th scope="col"><span>Anzahl Runden</span></th>
+          <th scope="col"><span>Final Runde</span></th>
           <th scope="col"><span>Anzahl Passen</span></th>
+          <th scope="col"><span>Anzahl Passen Final</span></th>
           <th scope="col"><span>Team</span></th>
           <th scope="col"><span>Template</span></th>
           <th scope="col"></th>
@@ -48,7 +51,10 @@
           </td>
           <td>{{ wettkampf.name }}</td>
           <td>{{ wettkampf.jahr | formatMediumDate }}</td>
+          <td>{{ wettkampf.anzahlRunden }}</td>
+          <td>{{ wettkampf.finalRunde }}</td>
           <td>{{ wettkampf.anzahlPassen }}</td>
+          <td>{{ wettkampf.anzahlPassenFinal }}</td>
           <td>{{ wettkampf.team }}</td>
           <td>{{ wettkampf.template }}</td>
           <td class="text-right">

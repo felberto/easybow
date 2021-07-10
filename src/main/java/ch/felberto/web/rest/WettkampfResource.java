@@ -8,6 +8,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,7 +48,7 @@ public class WettkampfResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/wettkampfs")
-    public ResponseEntity<Wettkampf> createWettkampf(@RequestBody Wettkampf wettkampf) throws URISyntaxException {
+    public ResponseEntity<Wettkampf> createWettkampf(@Valid @RequestBody Wettkampf wettkampf) throws URISyntaxException {
         log.debug("REST request to save Wettkampf : {}", wettkampf);
         if (wettkampf.getId() != null) {
             throw new BadRequestAlertException("A new wettkampf cannot already have an ID", ENTITY_NAME, "idexists");
@@ -71,7 +73,7 @@ public class WettkampfResource {
     @PutMapping("/wettkampfs/{id}")
     public ResponseEntity<Wettkampf> updateWettkampf(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody Wettkampf wettkampf
+        @Valid @RequestBody Wettkampf wettkampf
     ) throws URISyntaxException {
         log.debug("REST request to update Wettkampf : {}, {}", id, wettkampf);
         if (wettkampf.getId() == null) {
@@ -106,7 +108,7 @@ public class WettkampfResource {
     @PatchMapping(value = "/wettkampfs/{id}", consumes = "application/merge-patch+json")
     public ResponseEntity<Wettkampf> partialUpdateWettkampf(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody Wettkampf wettkampf
+        @NotNull @RequestBody Wettkampf wettkampf
     ) throws URISyntaxException {
         log.debug("REST request to partial update Wettkampf partially : {}, {}", id, wettkampf);
         if (wettkampf.getId() == null) {
@@ -130,8 +132,17 @@ public class WettkampfResource {
                     if (wettkampf.getJahr() != null) {
                         existingWettkampf.setJahr(wettkampf.getJahr());
                     }
+                    if (wettkampf.getAnzahlRunden() != null) {
+                        existingWettkampf.setAnzahlRunden(wettkampf.getAnzahlRunden());
+                    }
+                    if (wettkampf.getFinalRunde() != null) {
+                        existingWettkampf.setFinalRunde(wettkampf.getFinalRunde());
+                    }
                     if (wettkampf.getAnzahlPassen() != null) {
                         existingWettkampf.setAnzahlPassen(wettkampf.getAnzahlPassen());
+                    }
+                    if (wettkampf.getAnzahlPassenFinal() != null) {
+                        existingWettkampf.setAnzahlPassenFinal(wettkampf.getAnzahlPassenFinal());
                     }
                     if (wettkampf.getTeam() != null) {
                         existingWettkampf.setTeam(wettkampf.getTeam());

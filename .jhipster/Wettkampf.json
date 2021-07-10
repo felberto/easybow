@@ -14,7 +14,7 @@
       "fieldType": "Integer"
     },
     {
-      "fieldName": "final",
+      "fieldName": "finalRunde",
       "fieldType": "Boolean"
     },
     {

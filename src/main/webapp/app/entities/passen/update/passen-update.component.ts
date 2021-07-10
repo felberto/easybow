@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -17,16 +17,16 @@ export class PassenUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    p1: [],
-    p2: [],
-    p3: [],
-    p4: [],
-    p5: [],
-    p6: [],
-    p7: [],
-    p8: [],
-    p9: [],
-    p10: [],
+    p1: [null, [Validators.min(0), Validators.max(11)]],
+    p2: [null, [Validators.min(0), Validators.max(11)]],
+    p3: [null, [Validators.min(0), Validators.max(11)]],
+    p4: [null, [Validators.min(0), Validators.max(11)]],
+    p5: [null, [Validators.min(0), Validators.max(11)]],
+    p6: [null, [Validators.min(0), Validators.max(11)]],
+    p7: [null, [Validators.min(0), Validators.max(11)]],
+    p8: [null, [Validators.min(0), Validators.max(11)]],
+    p9: [null, [Validators.min(0), Validators.max(11)]],
+    p10: [null, [Validators.min(0), Validators.max(11)]],
     resultat: [],
   });
 

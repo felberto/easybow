@@ -8,6 +8,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,7 +48,7 @@ public class PassenResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/passens")
-    public ResponseEntity<Passen> createPassen(@RequestBody Passen passen) throws URISyntaxException {
+    public ResponseEntity<Passen> createPassen(@Valid @RequestBody Passen passen) throws URISyntaxException {
         log.debug("REST request to save Passen : {}", passen);
         if (passen.getId() != null) {
             throw new BadRequestAlertException("A new passen cannot already have an ID", ENTITY_NAME, "idexists");
@@ -69,8 +71,10 @@ public class PassenResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/passens/{id}")
-    public ResponseEntity<Passen> updatePassen(@PathVariable(value = "id", required = false) final Long id, @RequestBody Passen passen)
-        throws URISyntaxException {
+    public ResponseEntity<Passen> updatePassen(
+        @PathVariable(value = "id", required = false) final Long id,
+        @Valid @RequestBody Passen passen
+    ) throws URISyntaxException {
         log.debug("REST request to update Passen : {}, {}", id, passen);
         if (passen.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -104,7 +108,7 @@ public class PassenResource {
     @PatchMapping(value = "/passens/{id}", consumes = "application/merge-patch+json")
     public ResponseEntity<Passen> partialUpdatePassen(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody Passen passen
+        @NotNull @RequestBody Passen passen
     ) throws URISyntaxException {
         log.debug("REST request to partial update Passen partially : {}, {}", id, passen);
         if (passen.getId() == null) {

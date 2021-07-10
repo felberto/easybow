@@ -29,38 +29,38 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class PassenResourceIT {
 
-    private static final Long DEFAULT_P_1 = 1L;
-    private static final Long UPDATED_P_1 = 2L;
+    private static final Integer DEFAULT_P_1 = 0;
+    private static final Integer UPDATED_P_1 = 1;
 
-    private static final Long DEFAULT_P_2 = 1L;
-    private static final Long UPDATED_P_2 = 2L;
+    private static final Integer DEFAULT_P_2 = 0;
+    private static final Integer UPDATED_P_2 = 1;
 
-    private static final Long DEFAULT_P_3 = 1L;
-    private static final Long UPDATED_P_3 = 2L;
+    private static final Integer DEFAULT_P_3 = 0;
+    private static final Integer UPDATED_P_3 = 1;
 
-    private static final Long DEFAULT_P_4 = 1L;
-    private static final Long UPDATED_P_4 = 2L;
+    private static final Integer DEFAULT_P_4 = 0;
+    private static final Integer UPDATED_P_4 = 1;
 
-    private static final Long DEFAULT_P_5 = 1L;
-    private static final Long UPDATED_P_5 = 2L;
+    private static final Integer DEFAULT_P_5 = 0;
+    private static final Integer UPDATED_P_5 = 1;
 
-    private static final Long DEFAULT_P_6 = 1L;
-    private static final Long UPDATED_P_6 = 2L;
+    private static final Integer DEFAULT_P_6 = 0;
+    private static final Integer UPDATED_P_6 = 1;
 
-    private static final Long DEFAULT_P_7 = 1L;
-    private static final Long UPDATED_P_7 = 2L;
+    private static final Integer DEFAULT_P_7 = 0;
+    private static final Integer UPDATED_P_7 = 1;
 
-    private static final Long DEFAULT_P_8 = 1L;
-    private static final Long UPDATED_P_8 = 2L;
+    private static final Integer DEFAULT_P_8 = 0;
+    private static final Integer UPDATED_P_8 = 1;
 
-    private static final Long DEFAULT_P_9 = 1L;
-    private static final Long UPDATED_P_9 = 2L;
+    private static final Integer DEFAULT_P_9 = 0;
+    private static final Integer UPDATED_P_9 = 1;
 
-    private static final Long DEFAULT_P_10 = 1L;
-    private static final Long UPDATED_P_10 = 2L;
+    private static final Integer DEFAULT_P_10 = 0;
+    private static final Integer UPDATED_P_10 = 1;
 
-    private static final Long DEFAULT_RESULTAT = 1L;
-    private static final Long UPDATED_RESULTAT = 2L;
+    private static final Integer DEFAULT_RESULTAT = 1;
+    private static final Integer UPDATED_RESULTAT = 2;
 
     private static final String ENTITY_API_URL = "/api/passens";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -184,17 +184,17 @@ class PassenResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(passen.getId().intValue())))
-            .andExpect(jsonPath("$.[*].p1").value(hasItem(DEFAULT_P_1.intValue())))
-            .andExpect(jsonPath("$.[*].p2").value(hasItem(DEFAULT_P_2.intValue())))
-            .andExpect(jsonPath("$.[*].p3").value(hasItem(DEFAULT_P_3.intValue())))
-            .andExpect(jsonPath("$.[*].p4").value(hasItem(DEFAULT_P_4.intValue())))
-            .andExpect(jsonPath("$.[*].p5").value(hasItem(DEFAULT_P_5.intValue())))
-            .andExpect(jsonPath("$.[*].p6").value(hasItem(DEFAULT_P_6.intValue())))
-            .andExpect(jsonPath("$.[*].p7").value(hasItem(DEFAULT_P_7.intValue())))
-            .andExpect(jsonPath("$.[*].p8").value(hasItem(DEFAULT_P_8.intValue())))
-            .andExpect(jsonPath("$.[*].p9").value(hasItem(DEFAULT_P_9.intValue())))
-            .andExpect(jsonPath("$.[*].p10").value(hasItem(DEFAULT_P_10.intValue())))
-            .andExpect(jsonPath("$.[*].resultat").value(hasItem(DEFAULT_RESULTAT.intValue())));
+            .andExpect(jsonPath("$.[*].p1").value(hasItem(DEFAULT_P_1)))
+            .andExpect(jsonPath("$.[*].p2").value(hasItem(DEFAULT_P_2)))
+            .andExpect(jsonPath("$.[*].p3").value(hasItem(DEFAULT_P_3)))
+            .andExpect(jsonPath("$.[*].p4").value(hasItem(DEFAULT_P_4)))
+            .andExpect(jsonPath("$.[*].p5").value(hasItem(DEFAULT_P_5)))
+            .andExpect(jsonPath("$.[*].p6").value(hasItem(DEFAULT_P_6)))
+            .andExpect(jsonPath("$.[*].p7").value(hasItem(DEFAULT_P_7)))
+            .andExpect(jsonPath("$.[*].p8").value(hasItem(DEFAULT_P_8)))
+            .andExpect(jsonPath("$.[*].p9").value(hasItem(DEFAULT_P_9)))
+            .andExpect(jsonPath("$.[*].p10").value(hasItem(DEFAULT_P_10)))
+            .andExpect(jsonPath("$.[*].resultat").value(hasItem(DEFAULT_RESULTAT)));
     }
 
     @Test
@@ -209,17 +209,17 @@ class PassenResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(passen.getId().intValue()))
-            .andExpect(jsonPath("$.p1").value(DEFAULT_P_1.intValue()))
-            .andExpect(jsonPath("$.p2").value(DEFAULT_P_2.intValue()))
-            .andExpect(jsonPath("$.p3").value(DEFAULT_P_3.intValue()))
-            .andExpect(jsonPath("$.p4").value(DEFAULT_P_4.intValue()))
-            .andExpect(jsonPath("$.p5").value(DEFAULT_P_5.intValue()))
-            .andExpect(jsonPath("$.p6").value(DEFAULT_P_6.intValue()))
-            .andExpect(jsonPath("$.p7").value(DEFAULT_P_7.intValue()))
-            .andExpect(jsonPath("$.p8").value(DEFAULT_P_8.intValue()))
-            .andExpect(jsonPath("$.p9").value(DEFAULT_P_9.intValue()))
-            .andExpect(jsonPath("$.p10").value(DEFAULT_P_10.intValue()))
-            .andExpect(jsonPath("$.resultat").value(DEFAULT_RESULTAT.intValue()));
+            .andExpect(jsonPath("$.p1").value(DEFAULT_P_1))
+            .andExpect(jsonPath("$.p2").value(DEFAULT_P_2))
+            .andExpect(jsonPath("$.p3").value(DEFAULT_P_3))
+            .andExpect(jsonPath("$.p4").value(DEFAULT_P_4))
+            .andExpect(jsonPath("$.p5").value(DEFAULT_P_5))
+            .andExpect(jsonPath("$.p6").value(DEFAULT_P_6))
+            .andExpect(jsonPath("$.p7").value(DEFAULT_P_7))
+            .andExpect(jsonPath("$.p8").value(DEFAULT_P_8))
+            .andExpect(jsonPath("$.p9").value(DEFAULT_P_9))
+            .andExpect(jsonPath("$.p10").value(DEFAULT_P_10))
+            .andExpect(jsonPath("$.resultat").value(DEFAULT_RESULTAT));
     }
 
     @Test
