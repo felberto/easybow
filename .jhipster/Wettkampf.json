@@ -19,17 +19,11 @@
     },
     {
       "fieldName": "anzahlPassen",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["min", "max"],
-      "fieldValidateRulesMin": "1",
-      "fieldValidateRulesMax": "4"
+      "fieldType": "Integer"
     },
     {
       "fieldName": "anzahlPassenFinal",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["min", "max"],
-      "fieldValidateRulesMin": "1",
-      "fieldValidateRulesMax": "4"
+      "fieldType": "Integer"
     },
     {
       "fieldName": "team",
