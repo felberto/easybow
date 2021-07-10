@@ -21,22 +21,25 @@ entity Schuetze {
 entity Wettkampf {
 	name String,
     jahr LocalDate,
-    anzahlPassen Long,
+    anzahlRunden Long,
+    final Boolean,
+    anzahlPassen Long min(1) max(4),
+    anzahlPassenFinal Long min(1) max(4),
     team Long,
     template Boolean
 }
 
 entity Passen {
-	p1 Long,
-    p2 Long,
-  	p3 Long,
-    p4 Long,
-    p5 Long,
-    p6 Long,
-    p7 Long,
-    p8 Long,
-    p9 Long,
-    p10 Long,
+	p1 Long min(0) max(11),
+    p2 Long min(0) max(11),
+  	p3 Long min(0) max(11),
+    p4 Long min(0) max(11),
+    p5 Long min(0) max(11),
+    p6 Long min(0) max(11),
+    p7 Long min(0) max(11),
+    p8 Long min(0) max(11),
+    p9 Long min(0) max(11),
+    p10 Long min(0) max(11),
     resultat Long
 }
 
