@@ -21,7 +21,7 @@
         <dt><span>Verband</span></dt>
         <dd>
           <div *ngIf="verein.verband">
-            <a [routerLink]="['/verband', verein.verband?.id, 'view']">{{ verein.verband?.id }}</a>
+            <a [routerLink]="['/verband', verein.verband?.id, 'view']">{{ verein.verband?.name }}</a>
           </div>
         </dd>
       </dl>

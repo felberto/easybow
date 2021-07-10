@@ -32,8 +32,7 @@ describe('Service Tests', () => {
         finalRunde: false,
         anzahlPassen: 0,
         anzahlPassenFinal: 0,
-        team: 0,
-        template: false,
+        anzahlTeam: 0,
       };
     });
 
@@ -86,8 +85,7 @@ describe('Service Tests', () => {
             finalRunde: true,
             anzahlPassen: 1,
             anzahlPassenFinal: 1,
-            team: 1,
-            template: true,
+            anzahlTeam: 1,
           },
           elemDefault
         );
@@ -112,7 +110,6 @@ describe('Service Tests', () => {
             name: 'BBBBBB',
             finalRunde: true,
             anzahlPassenFinal: 1,
-            template: true,
           },
           new Wettkampf()
         );
@@ -143,8 +140,7 @@ describe('Service Tests', () => {
             finalRunde: true,
             anzahlPassen: 1,
             anzahlPassenFinal: 1,
-            team: 1,
-            template: true,
+            anzahlTeam: 1,
           },
           elemDefault
         );
@@ -201,7 +197,7 @@ describe('Service Tests', () => {
         });
 
         it('should add only unique Wettkampf to an array', () => {
-          const wettkampfArray: IWettkampf[] = [{ id: 123 }, { id: 456 }, { id: 7732 }];
+          const wettkampfArray: IWettkampf[] = [{ id: 123 }, { id: 456 }, { id: 71195 }];
           const wettkampfCollection: IWettkampf[] = [{ id: 123 }];
           expectedResult = service.addWettkampfToCollectionIfMissing(wettkampfCollection, ...wettkampfArray);
           expect(expectedResult).toHaveLength(3);

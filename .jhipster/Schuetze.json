@@ -3,20 +3,19 @@
   "fields": [
     {
       "fieldName": "name",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "vorname",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "jahrgang",
-      "fieldType": "LocalDate"
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "stellung",
       "fieldType": "Stellung",
-      "fieldValues": "FREI,AUFGELEGT"
+      "fieldValues": "FREI,AUFGELEGT",
+      "fieldValidateRules": ["required"]
     }
   ],
   "relationships": [
@@ -25,6 +24,7 @@
       "otherEntityName": "verein",
       "otherEntityRelationshipName": "schuetze",
       "relationshipName": "verein",
+      "otherEntityField": "name",
       "ownerSide": true
     }
   ],

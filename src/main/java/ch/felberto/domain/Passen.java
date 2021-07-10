@@ -21,54 +21,64 @@ public class Passen implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
+    @NotNull
     @Min(value = 0)
     @Max(value = 11)
-    @Column(name = "p_1")
+    @Column(name = "p_1", nullable = false)
     private Integer p1;
 
+    @NotNull
     @Min(value = 0)
     @Max(value = 11)
-    @Column(name = "p_2")
+    @Column(name = "p_2", nullable = false)
     private Integer p2;
 
+    @NotNull
     @Min(value = 0)
     @Max(value = 11)
-    @Column(name = "p_3")
+    @Column(name = "p_3", nullable = false)
     private Integer p3;
 
+    @NotNull
     @Min(value = 0)
     @Max(value = 11)
-    @Column(name = "p_4")
+    @Column(name = "p_4", nullable = false)
     private Integer p4;
 
+    @NotNull
     @Min(value = 0)
     @Max(value = 11)
-    @Column(name = "p_5")
+    @Column(name = "p_5", nullable = false)
     private Integer p5;
 
+    @NotNull
     @Min(value = 0)
     @Max(value = 11)
-    @Column(name = "p_6")
+    @Column(name = "p_6", nullable = false)
     private Integer p6;
 
+    @NotNull
     @Min(value = 0)
     @Max(value = 11)
-    @Column(name = "p_7")
+    @Column(name = "p_7", nullable = false)
     private Integer p7;
 
+    @NotNull
     @Min(value = 0)
     @Max(value = 11)
-    @Column(name = "p_8")
+    @Column(name = "p_8", nullable = false)
     private Integer p8;
 
+    @NotNull
     @Min(value = 0)
     @Max(value = 11)
-    @Column(name = "p_9")
+    @Column(name = "p_9", nullable = false)
     private Integer p9;
 
+    @NotNull
     @Min(value = 0)
     @Max(value = 11)
-    @Column(name = "p_10")
+    @Column(name = "p_10", nullable = false)
     private Integer p10;
 
     @Column(name = "resultat")

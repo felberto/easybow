@@ -3,6 +3,7 @@ package ch.felberto.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -21,7 +22,8 @@ public class Resultate implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "runde")
+    @NotNull
+    @Column(name = "runde", nullable = false)
     private Integer runde;
 
     @OneToOne

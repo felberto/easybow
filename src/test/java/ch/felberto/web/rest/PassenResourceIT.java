@@ -174,6 +174,176 @@ class PassenResourceIT {
 
     @Test
     @Transactional
+    void checkp1IsRequired() throws Exception {
+        int databaseSizeBeforeTest = passenRepository.findAll().size();
+        // set the field null
+        passen.setp1(null);
+
+        // Create the Passen, which fails.
+
+        restPassenMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passen)))
+            .andExpect(status().isBadRequest());
+
+        List<Passen> passenList = passenRepository.findAll();
+        assertThat(passenList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkp2IsRequired() throws Exception {
+        int databaseSizeBeforeTest = passenRepository.findAll().size();
+        // set the field null
+        passen.setp2(null);
+
+        // Create the Passen, which fails.
+
+        restPassenMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passen)))
+            .andExpect(status().isBadRequest());
+
+        List<Passen> passenList = passenRepository.findAll();
+        assertThat(passenList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkp3IsRequired() throws Exception {
+        int databaseSizeBeforeTest = passenRepository.findAll().size();
+        // set the field null
+        passen.setp3(null);
+
+        // Create the Passen, which fails.
+
+        restPassenMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passen)))
+            .andExpect(status().isBadRequest());
+
+        List<Passen> passenList = passenRepository.findAll();
+        assertThat(passenList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkp4IsRequired() throws Exception {
+        int databaseSizeBeforeTest = passenRepository.findAll().size();
+        // set the field null
+        passen.setp4(null);
+
+        // Create the Passen, which fails.
+
+        restPassenMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passen)))
+            .andExpect(status().isBadRequest());
+
+        List<Passen> passenList = passenRepository.findAll();
+        assertThat(passenList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkp5IsRequired() throws Exception {
+        int databaseSizeBeforeTest = passenRepository.findAll().size();
+        // set the field null
+        passen.setp5(null);
+
+        // Create the Passen, which fails.
+
+        restPassenMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passen)))
+            .andExpect(status().isBadRequest());
+
+        List<Passen> passenList = passenRepository.findAll();
+        assertThat(passenList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkp6IsRequired() throws Exception {
+        int databaseSizeBeforeTest = passenRepository.findAll().size();
+        // set the field null
+        passen.setp6(null);
+
+        // Create the Passen, which fails.
+
+        restPassenMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passen)))
+            .andExpect(status().isBadRequest());
+
+        List<Passen> passenList = passenRepository.findAll();
+        assertThat(passenList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkp7IsRequired() throws Exception {
+        int databaseSizeBeforeTest = passenRepository.findAll().size();
+        // set the field null
+        passen.setp7(null);
+
+        // Create the Passen, which fails.
+
+        restPassenMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passen)))
+            .andExpect(status().isBadRequest());
+
+        List<Passen> passenList = passenRepository.findAll();
+        assertThat(passenList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkp8IsRequired() throws Exception {
+        int databaseSizeBeforeTest = passenRepository.findAll().size();
+        // set the field null
+        passen.setp8(null);
+
+        // Create the Passen, which fails.
+
+        restPassenMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passen)))
+            .andExpect(status().isBadRequest());
+
+        List<Passen> passenList = passenRepository.findAll();
+        assertThat(passenList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkp9IsRequired() throws Exception {
+        int databaseSizeBeforeTest = passenRepository.findAll().size();
+        // set the field null
+        passen.setp9(null);
+
+        // Create the Passen, which fails.
+
+        restPassenMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passen)))
+            .andExpect(status().isBadRequest());
+
+        List<Passen> passenList = passenRepository.findAll();
+        assertThat(passenList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkp10IsRequired() throws Exception {
+        int databaseSizeBeforeTest = passenRepository.findAll().size();
+        // set the field null
+        passen.setp10(null);
+
+        // Create the Passen, which fails.
+
+        restPassenMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passen)))
+            .andExpect(status().isBadRequest());
+
+        List<Passen> passenList = passenRepository.findAll();
+        assertThat(passenList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllPassens() throws Exception {
         // Initialize the database
         passenRepository.saveAndFlush(passen);

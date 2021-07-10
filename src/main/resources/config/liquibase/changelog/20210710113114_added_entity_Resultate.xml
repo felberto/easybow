@@ -15,7 +15,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="runde" type="integer">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="passe1_id" type="bigint">
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_resultate__passe1_id" />

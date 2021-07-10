@@ -18,10 +18,6 @@
         <dd>
           <span>{{ schuetze.name }}</span>
         </dd>
-        <dt><span>Vorname</span></dt>
-        <dd>
-          <span>{{ schuetze.vorname }}</span>
-        </dd>
         <dt><span>Jahrgang</span></dt>
         <dd>
           <span>{{ schuetze.jahrgang | formatMediumDate }}</span>
@@ -33,7 +29,7 @@
         <dt><span>Verein</span></dt>
         <dd>
           <div *ngIf="schuetze.verein">
-            <a [routerLink]="['/verein', schuetze.verein?.id, 'view']">{{ schuetze.verein?.id }}</a>
+            <a [routerLink]="['/verein', schuetze.verein?.id, 'view']">{{ schuetze.verein?.name }}</a>
           </div>
         </dd>
       </dl>

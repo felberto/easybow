@@ -22,21 +22,25 @@ public class Wettkampf implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "name")
+    @NotNull
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "jahr")
+    @NotNull
+    @Column(name = "jahr", nullable = false)
     private LocalDate jahr;
 
-    @Column(name = "anzahl_runden")
+    @NotNull
+    @Column(name = "anzahl_runden", nullable = false)
     private Integer anzahlRunden;
 
     @Column(name = "final_runde")
     private Boolean finalRunde;
 
+    @NotNull
     @Min(value = 1)
     @Max(value = 4)
-    @Column(name = "anzahl_passen")
+    @Column(name = "anzahl_passen", nullable = false)
     private Integer anzahlPassen;
 
     @Min(value = 1)
@@ -44,11 +48,8 @@ public class Wettkampf implements Serializable {
     @Column(name = "anzahl_passen_final")
     private Integer anzahlPassenFinal;
 
-    @Column(name = "team")
-    private Integer team;
-
-    @Column(name = "template")
-    private Boolean template;
+    @Column(name = "anzahl_team")
+    private Integer anzahlTeam;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -142,30 +143,17 @@ public class Wettkampf implements Serializable {
         this.anzahlPassenFinal = anzahlPassenFinal;
     }
 
-    public Integer getTeam() {
-        return this.team;
+    public Integer getAnzahlTeam() {
+        return this.anzahlTeam;
     }
 
-    public Wettkampf team(Integer team) {
-        this.team = team;
+    public Wettkampf anzahlTeam(Integer anzahlTeam) {
+        this.anzahlTeam = anzahlTeam;
         return this;
     }
 
-    public void setTeam(Integer team) {
-        this.team = team;
-    }
-
-    public Boolean getTemplate() {
-        return this.template;
-    }
-
-    public Wettkampf template(Boolean template) {
-        this.template = template;
-        return this;
-    }
-
-    public void setTemplate(Boolean template) {
-        this.template = template;
+    public void setAnzahlTeam(Integer anzahlTeam) {
+        this.anzahlTeam = anzahlTeam;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -198,8 +186,7 @@ public class Wettkampf implements Serializable {
             ", finalRunde='" + getFinalRunde() + "'" +
             ", anzahlPassen=" + getAnzahlPassen() +
             ", anzahlPassenFinal=" + getAnzahlPassenFinal() +
-            ", team=" + getTeam() +
-            ", template='" + getTemplate() + "'" +
+            ", anzahlTeam=" + getAnzahlTeam() +
             "}";
     }
 }

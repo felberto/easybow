@@ -112,6 +112,23 @@ class VerbandResourceIT {
 
     @Test
     @Transactional
+    void checkNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = verbandRepository.findAll().size();
+        // set the field null
+        verband.setName(null);
+
+        // Create the Verband, which fails.
+
+        restVerbandMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(verband)))
+            .andExpect(status().isBadRequest());
+
+        List<Verband> verbandList = verbandRepository.findAll();
+        assertThat(verbandList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllVerbands() throws Exception {
         // Initialize the database
         verbandRepository.saveAndFlush(verband);

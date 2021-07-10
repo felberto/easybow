@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -23,17 +24,17 @@ public class Schuetze implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "name")
+    @NotNull
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "vorname")
-    private String vorname;
-
-    @Column(name = "jahrgang")
+    @NotNull
+    @Column(name = "jahrgang", nullable = false)
     private LocalDate jahrgang;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "stellung")
+    @Column(name = "stellung", nullable = false)
     private Stellung stellung;
 
     @JsonIgnoreProperties(value = { "verband" }, allowSetters = true)
@@ -66,19 +67,6 @@ public class Schuetze implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getVorname() {
-        return this.vorname;
-    }
-
-    public Schuetze vorname(String vorname) {
-        this.vorname = vorname;
-        return this;
-    }
-
-    public void setVorname(String vorname) {
-        this.vorname = vorname;
     }
 
     public LocalDate getJahrgang() {
@@ -145,7 +133,6 @@ public class Schuetze implements Serializable {
         return "Schuetze{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", vorname='" + getVorname() + "'" +
             ", jahrgang='" + getJahrgang() + "'" +
             ", stellung='" + getStellung() + "'" +
             "}";

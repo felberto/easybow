@@ -3,7 +3,8 @@
   "fields": [
     {
       "fieldName": "name",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     }
   ],
   "relationships": [
@@ -12,6 +13,7 @@
       "otherEntityName": "verband",
       "otherEntityRelationshipName": "verein",
       "relationshipName": "verband",
+      "otherEntityField": "name",
       "ownerSide": true
     }
   ],

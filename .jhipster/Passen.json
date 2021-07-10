@@ -4,70 +4,70 @@
     {
       "fieldName": "p1",
       "fieldType": "Integer",
-      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRules": ["min", "max", "required"],
       "fieldValidateRulesMin": "0",
       "fieldValidateRulesMax": "11"
     },
     {
       "fieldName": "p2",
       "fieldType": "Integer",
-      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRules": ["min", "max", "required"],
       "fieldValidateRulesMin": "0",
       "fieldValidateRulesMax": "11"
     },
     {
       "fieldName": "p3",
       "fieldType": "Integer",
-      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRules": ["min", "max", "required"],
       "fieldValidateRulesMin": "0",
       "fieldValidateRulesMax": "11"
     },
     {
       "fieldName": "p4",
       "fieldType": "Integer",
-      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRules": ["min", "max", "required"],
       "fieldValidateRulesMin": "0",
       "fieldValidateRulesMax": "11"
     },
     {
       "fieldName": "p5",
       "fieldType": "Integer",
-      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRules": ["min", "max", "required"],
       "fieldValidateRulesMin": "0",
       "fieldValidateRulesMax": "11"
     },
     {
       "fieldName": "p6",
       "fieldType": "Integer",
-      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRules": ["min", "max", "required"],
       "fieldValidateRulesMin": "0",
       "fieldValidateRulesMax": "11"
     },
     {
       "fieldName": "p7",
       "fieldType": "Integer",
-      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRules": ["min", "max", "required"],
       "fieldValidateRulesMin": "0",
       "fieldValidateRulesMax": "11"
     },
     {
       "fieldName": "p8",
       "fieldType": "Integer",
-      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRules": ["min", "max", "required"],
       "fieldValidateRulesMin": "0",
       "fieldValidateRulesMax": "11"
     },
     {
       "fieldName": "p9",
       "fieldType": "Integer",
-      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRules": ["min", "max", "required"],
       "fieldValidateRulesMin": "0",
       "fieldValidateRulesMax": "11"
     },
     {
       "fieldName": "p10",
       "fieldType": "Integer",
-      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRules": ["min", "max", "required"],
       "fieldValidateRulesMin": "0",
       "fieldValidateRulesMax": "11"
     },

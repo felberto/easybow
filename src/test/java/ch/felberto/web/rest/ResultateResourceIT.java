@@ -112,6 +112,23 @@ class ResultateResourceIT {
 
     @Test
     @Transactional
+    void checkRundeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = resultateRepository.findAll().size();
+        // set the field null
+        resultate.setRunde(null);
+
+        // Create the Resultate, which fails.
+
+        restResultateMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resultate)))
+            .andExpect(status().isBadRequest());
+
+        List<Resultate> resultateList = resultateRepository.findAll();
+        assertThat(resultateList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllResultates() throws Exception {
         // Initialize the database
         resultateRepository.saveAndFlush(resultate);

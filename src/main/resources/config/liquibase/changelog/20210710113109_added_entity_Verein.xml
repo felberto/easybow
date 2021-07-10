@@ -15,7 +15,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="verband_id" type="bigint">
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_verein__verband_id" />
