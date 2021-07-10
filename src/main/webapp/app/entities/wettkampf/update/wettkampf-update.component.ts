@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -19,7 +19,10 @@ export class WettkampfUpdateComponent implements OnInit {
     id: [],
     name: [],
     jahr: [],
-    anzahlPassen: [],
+    anzahlRunden: [],
+    finalRunde: [],
+    anzahlPassen: [null, [Validators.min(1), Validators.max(4)]],
+    anzahlPassenFinal: [null, [Validators.min(1), Validators.max(4)]],
     team: [],
     template: [],
   });
@@ -70,7 +73,10 @@ export class WettkampfUpdateComponent implements OnInit {
       id: wettkampf.id,
       name: wettkampf.name,
       jahr: wettkampf.jahr,
+      anzahlRunden: wettkampf.anzahlRunden,
+      finalRunde: wettkampf.finalRunde,
       anzahlPassen: wettkampf.anzahlPassen,
+      anzahlPassenFinal: wettkampf.anzahlPassenFinal,
       team: wettkampf.team,
       template: wettkampf.template,
     });
@@ -82,7 +88,10 @@ export class WettkampfUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       name: this.editForm.get(['name'])!.value,
       jahr: this.editForm.get(['jahr'])!.value,
+      anzahlRunden: this.editForm.get(['anzahlRunden'])!.value,
+      finalRunde: this.editForm.get(['finalRunde'])!.value,
       anzahlPassen: this.editForm.get(['anzahlPassen'])!.value,
+      anzahlPassenFinal: this.editForm.get(['anzahlPassenFinal'])!.value,
       team: this.editForm.get(['team'])!.value,
       template: this.editForm.get(['template'])!.value,
     };

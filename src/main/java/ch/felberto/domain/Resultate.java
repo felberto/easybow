@@ -22,7 +22,7 @@ public class Resultate implements Serializable {
     private Long id;
 
     @Column(name = "runde")
-    private Long runde;
+    private Integer runde;
 
     @OneToOne
     @JoinColumn(unique = true)
@@ -65,16 +65,16 @@ public class Resultate implements Serializable {
         return this;
     }
 
-    public Long getRunde() {
+    public Integer getRunde() {
         return this.runde;
     }
 
-    public Resultate runde(Long runde) {
+    public Resultate runde(Integer runde) {
         this.runde = runde;
         return this;
     }
 
-    public void setRunde(Long runde) {
+    public void setRunde(Integer runde) {
         this.runde = runde;
     }
 

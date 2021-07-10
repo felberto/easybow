@@ -29,8 +29,8 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class ResultateResourceIT {
 
-    private static final Long DEFAULT_RUNDE = 1L;
-    private static final Long UPDATED_RUNDE = 2L;
+    private static final Integer DEFAULT_RUNDE = 1;
+    private static final Integer UPDATED_RUNDE = 2;
 
     private static final String ENTITY_API_URL = "/api/resultates";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -122,7 +122,7 @@ class ResultateResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(resultate.getId().intValue())))
-            .andExpect(jsonPath("$.[*].runde").value(hasItem(DEFAULT_RUNDE.intValue())));
+            .andExpect(jsonPath("$.[*].runde").value(hasItem(DEFAULT_RUNDE)));
     }
 
     @Test
@@ -137,7 +137,7 @@ class ResultateResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(resultate.getId().intValue()))
-            .andExpect(jsonPath("$.runde").value(DEFAULT_RUNDE.intValue()));
+            .andExpect(jsonPath("$.runde").value(DEFAULT_RUNDE));
     }
 
     @Test
