@@ -8,9 +8,27 @@
     -->
     <changeSet id="20210710113114-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="passe_id"
+        <addForeignKeyConstraint baseColumnNames="passe1_id"
                                  baseTableName="resultate"
-                                 constraintName="fk_resultate__passe_id"
+                                 constraintName="fk_resultate__passe1_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="passen"/>
+
+        <addForeignKeyConstraint baseColumnNames="passe2_id"
+                                 baseTableName="resultate"
+                                 constraintName="fk_resultate__passe2_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="passen"/>
+
+        <addForeignKeyConstraint baseColumnNames="passe3_id"
+                                 baseTableName="resultate"
+                                 constraintName="fk_resultate__passe3_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="passen"/>
+
+        <addForeignKeyConstraint baseColumnNames="passe4_id"
+                                 baseTableName="resultate"
+                                 constraintName="fk_resultate__passe4_id"
                                  referencedColumnNames="id"
                                  referencedTableName="passen"/>
 

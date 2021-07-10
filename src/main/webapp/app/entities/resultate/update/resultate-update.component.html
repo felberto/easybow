@@ -17,12 +17,51 @@
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" for="field_passe">Passe</label>
-          <select class="form-control" id="field_passe" data-cy="passe" name="passe" formControlName="passe">
+          <label class="form-control-label" for="field_passe1">Passe 1</label>
+          <select class="form-control" id="field_passe1" data-cy="passe1" name="passe1" formControlName="passe1">
             <option [ngValue]="null"></option>
             <option
-              [ngValue]="passenOption.id === editForm.get('passe')!.value?.id ? editForm.get('passe')!.value : passenOption"
-              *ngFor="let passenOption of passesCollection; trackBy: trackPassenById"
+              [ngValue]="passenOption.id === editForm.get('passe1')!.value?.id ? editForm.get('passe1')!.value : passenOption"
+              *ngFor="let passenOption of passe1sCollection; trackBy: trackPassenById"
+            >
+              {{ passenOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_passe2">Passe 2</label>
+          <select class="form-control" id="field_passe2" data-cy="passe2" name="passe2" formControlName="passe2">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="passenOption.id === editForm.get('passe2')!.value?.id ? editForm.get('passe2')!.value : passenOption"
+              *ngFor="let passenOption of passe2sCollection; trackBy: trackPassenById"
+            >
+              {{ passenOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_passe3">Passe 3</label>
+          <select class="form-control" id="field_passe3" data-cy="passe3" name="passe3" formControlName="passe3">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="passenOption.id === editForm.get('passe3')!.value?.id ? editForm.get('passe3')!.value : passenOption"
+              *ngFor="let passenOption of passe3sCollection; trackBy: trackPassenById"
+            >
+              {{ passenOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_passe4">Passe 4</label>
+          <select class="form-control" id="field_passe4" data-cy="passe4" name="passe4" formControlName="passe4">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="passenOption.id === editForm.get('passe4')!.value?.id ? editForm.get('passe4')!.value : passenOption"
+              *ngFor="let passenOption of passe4sCollection; trackBy: trackPassenById"
             >
               {{ passenOption.id }}
             </option>

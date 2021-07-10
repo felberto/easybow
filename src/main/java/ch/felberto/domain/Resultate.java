@@ -26,7 +26,19 @@ public class Resultate implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
-    private Passen passe;
+    private Passen passe1;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Passen passe2;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Passen passe3;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Passen passe4;
 
     @OneToOne
     @JoinColumn(unique = true)
@@ -66,17 +78,56 @@ public class Resultate implements Serializable {
         this.runde = runde;
     }
 
-    public Passen getPasse() {
-        return this.passe;
+    public Passen getPasse1() {
+        return this.passe1;
     }
 
-    public Resultate passe(Passen passen) {
-        this.setPasse(passen);
+    public Resultate passe1(Passen passen) {
+        this.setPasse1(passen);
         return this;
     }
 
-    public void setPasse(Passen passen) {
-        this.passe = passen;
+    public void setPasse1(Passen passen) {
+        this.passe1 = passen;
+    }
+
+    public Passen getPasse2() {
+        return this.passe2;
+    }
+
+    public Resultate passe2(Passen passen) {
+        this.setPasse2(passen);
+        return this;
+    }
+
+    public void setPasse2(Passen passen) {
+        this.passe2 = passen;
+    }
+
+    public Passen getPasse3() {
+        return this.passe3;
+    }
+
+    public Resultate passe3(Passen passen) {
+        this.setPasse3(passen);
+        return this;
+    }
+
+    public void setPasse3(Passen passen) {
+        this.passe3 = passen;
+    }
+
+    public Passen getPasse4() {
+        return this.passe4;
+    }
+
+    public Resultate passe4(Passen passen) {
+        this.setPasse4(passen);
+        return this;
+    }
+
+    public void setPasse4(Passen passen) {
+        this.passe4 = passen;
     }
 
     public Gruppen getGruppe() {

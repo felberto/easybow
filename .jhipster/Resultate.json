@@ -11,7 +11,28 @@
       "relationshipType": "one-to-one",
       "otherEntityName": "passen",
       "otherEntityRelationshipName": "resultate",
-      "relationshipName": "passe",
+      "relationshipName": "passe1",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "passen",
+      "otherEntityRelationshipName": "resultate",
+      "relationshipName": "passe2",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "passen",
+      "otherEntityRelationshipName": "resultate",
+      "relationshipName": "passe3",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "passen",
+      "otherEntityRelationshipName": "resultate",
+      "relationshipName": "passe4",
       "ownerSide": true
     },
     {

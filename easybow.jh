@@ -57,7 +57,10 @@ relationship OneToOne {
 }
 
 relationship OneToOne {
-	Resultate{passe} to Passen
+	Resultate{passe1} to Passen
+    Resultate{passe2} to Passen
+    Resultate{passe3} to Passen
+    Resultate{passe4} to Passen
 }
 
 relationship OneToOne {
