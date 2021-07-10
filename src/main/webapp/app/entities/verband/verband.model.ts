@@ -1,10 +1,10 @@
 export interface IVerband {
   id?: number;
-  name?: string | null;
+  name?: string;
 }
 
 export class Verband implements IVerband {
-  constructor(public id?: number, public name?: string | null) {}
+  constructor(public id?: number, public name?: string) {}
 }
 
 export function getVerbandIdentifier(verband: IVerband): number | undefined {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
@@ -21,10 +21,9 @@ export class SchuetzeUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    name: [],
-    vorname: [],
-    jahrgang: [],
-    stellung: [],
+    name: [null, [Validators.required]],
+    jahrgang: [null, [Validators.required]],
+    stellung: [null, [Validators.required]],
     verein: [],
   });
 
@@ -84,7 +83,6 @@ export class SchuetzeUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: schuetze.id,
       name: schuetze.name,
-      vorname: schuetze.vorname,
       jahrgang: schuetze.jahrgang,
       stellung: schuetze.stellung,
       verein: schuetze.verein,
@@ -106,7 +104,6 @@ export class SchuetzeUpdateComponent implements OnInit {
       ...new Schuetze(),
       id: this.editForm.get(['id'])!.value,
       name: this.editForm.get(['name'])!.value,
-      vorname: this.editForm.get(['vorname'])!.value,
       jahrgang: this.editForm.get(['jahrgang'])!.value,
       stellung: this.editForm.get(['stellung'])!.value,
       verein: this.editForm.get(['verein'])!.value,

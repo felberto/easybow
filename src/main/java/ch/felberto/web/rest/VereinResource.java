@@ -8,6 +8,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,7 +48,7 @@ public class VereinResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/vereins")
-    public ResponseEntity<Verein> createVerein(@RequestBody Verein verein) throws URISyntaxException {
+    public ResponseEntity<Verein> createVerein(@Valid @RequestBody Verein verein) throws URISyntaxException {
         log.debug("REST request to save Verein : {}", verein);
         if (verein.getId() != null) {
             throw new BadRequestAlertException("A new verein cannot already have an ID", ENTITY_NAME, "idexists");
@@ -69,8 +71,10 @@ public class VereinResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/vereins/{id}")
-    public ResponseEntity<Verein> updateVerein(@PathVariable(value = "id", required = false) final Long id, @RequestBody Verein verein)
-        throws URISyntaxException {
+    public ResponseEntity<Verein> updateVerein(
+        @PathVariable(value = "id", required = false) final Long id,
+        @Valid @RequestBody Verein verein
+    ) throws URISyntaxException {
         log.debug("REST request to update Verein : {}, {}", id, verein);
         if (verein.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -104,7 +108,7 @@ public class VereinResource {
     @PatchMapping(value = "/vereins/{id}", consumes = "application/merge-patch+json")
     public ResponseEntity<Verein> partialUpdateVerein(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody Verein verein
+        @NotNull @RequestBody Verein verein
     ) throws URISyntaxException {
         log.debug("REST request to partial update Verein partially : {}, {}", id, verein);
         if (verein.getId() == null) {

@@ -28,7 +28,6 @@ describe('Service Tests', () => {
       elemDefault = {
         id: 0,
         name: 'AAAAAAA',
-        vorname: 'AAAAAAA',
         jahrgang: currentDate,
         stellung: Stellung.FREI,
       };
@@ -78,7 +77,6 @@ describe('Service Tests', () => {
           {
             id: 1,
             name: 'BBBBBB',
-            vorname: 'BBBBBB',
             jahrgang: currentDate.format(DATE_FORMAT),
             stellung: 'BBBBBB',
           },
@@ -103,7 +101,6 @@ describe('Service Tests', () => {
         const patchObject = Object.assign(
           {
             name: 'BBBBBB',
-            stellung: 'BBBBBB',
           },
           new Schuetze()
         );
@@ -129,7 +126,6 @@ describe('Service Tests', () => {
           {
             id: 1,
             name: 'BBBBBB',
-            vorname: 'BBBBBB',
             jahrgang: currentDate.format(DATE_FORMAT),
             stellung: 'BBBBBB',
           },
@@ -188,7 +184,7 @@ describe('Service Tests', () => {
         });
 
         it('should add only unique Schuetze to an array', () => {
-          const schuetzeArray: ISchuetze[] = [{ id: 123 }, { id: 456 }, { id: 94945 }];
+          const schuetzeArray: ISchuetze[] = [{ id: 123 }, { id: 456 }, { id: 75695 }];
           const schuetzeCollection: ISchuetze[] = [{ id: 123 }];
           expectedResult = service.addSchuetzeToCollectionIfMissing(schuetzeCollection, ...schuetzeArray);
           expect(expectedResult).toHaveLength(3);

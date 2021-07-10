@@ -8,6 +8,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,7 +48,7 @@ public class SchuetzeResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/schuetzes")
-    public ResponseEntity<Schuetze> createSchuetze(@RequestBody Schuetze schuetze) throws URISyntaxException {
+    public ResponseEntity<Schuetze> createSchuetze(@Valid @RequestBody Schuetze schuetze) throws URISyntaxException {
         log.debug("REST request to save Schuetze : {}", schuetze);
         if (schuetze.getId() != null) {
             throw new BadRequestAlertException("A new schuetze cannot already have an ID", ENTITY_NAME, "idexists");
@@ -71,7 +73,7 @@ public class SchuetzeResource {
     @PutMapping("/schuetzes/{id}")
     public ResponseEntity<Schuetze> updateSchuetze(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody Schuetze schuetze
+        @Valid @RequestBody Schuetze schuetze
     ) throws URISyntaxException {
         log.debug("REST request to update Schuetze : {}, {}", id, schuetze);
         if (schuetze.getId() == null) {
@@ -106,7 +108,7 @@ public class SchuetzeResource {
     @PatchMapping(value = "/schuetzes/{id}", consumes = "application/merge-patch+json")
     public ResponseEntity<Schuetze> partialUpdateSchuetze(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody Schuetze schuetze
+        @NotNull @RequestBody Schuetze schuetze
     ) throws URISyntaxException {
         log.debug("REST request to partial update Schuetze partially : {}, {}", id, schuetze);
         if (schuetze.getId() == null) {
@@ -126,9 +128,6 @@ public class SchuetzeResource {
                 existingSchuetze -> {
                     if (schuetze.getName() != null) {
                         existingSchuetze.setName(schuetze.getName());
-                    }
-                    if (schuetze.getVorname() != null) {
-                        existingSchuetze.setVorname(schuetze.getVorname());
                     }
                     if (schuetze.getJahrgang() != null) {
                         existingSchuetze.setJahrgang(schuetze.getJahrgang());

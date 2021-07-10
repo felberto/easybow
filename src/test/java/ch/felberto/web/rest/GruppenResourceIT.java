@@ -112,6 +112,23 @@ class GruppenResourceIT {
 
     @Test
     @Transactional
+    void checkNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = gruppenRepository.findAll().size();
+        // set the field null
+        gruppen.setName(null);
+
+        // Create the Gruppen, which fails.
+
+        restGruppenMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(gruppen)))
+            .andExpect(status().isBadRequest());
+
+        List<Gruppen> gruppenList = gruppenRepository.findAll();
+        assertThat(gruppenList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllGruppens() throws Exception {
         // Initialize the database
         gruppenRepository.saveAndFlush(gruppen);

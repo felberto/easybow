@@ -35,9 +35,6 @@ class SchuetzeResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_VORNAME = "AAAAAAAAAA";
-    private static final String UPDATED_VORNAME = "BBBBBBBBBB";
-
     private static final LocalDate DEFAULT_JAHRGANG = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_JAHRGANG = LocalDate.now(ZoneId.systemDefault());
 
@@ -68,11 +65,7 @@ class SchuetzeResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Schuetze createEntity(EntityManager em) {
-        Schuetze schuetze = new Schuetze()
-            .name(DEFAULT_NAME)
-            .vorname(DEFAULT_VORNAME)
-            .jahrgang(DEFAULT_JAHRGANG)
-            .stellung(DEFAULT_STELLUNG);
+        Schuetze schuetze = new Schuetze().name(DEFAULT_NAME).jahrgang(DEFAULT_JAHRGANG).stellung(DEFAULT_STELLUNG);
         return schuetze;
     }
 
@@ -83,11 +76,7 @@ class SchuetzeResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Schuetze createUpdatedEntity(EntityManager em) {
-        Schuetze schuetze = new Schuetze()
-            .name(UPDATED_NAME)
-            .vorname(UPDATED_VORNAME)
-            .jahrgang(UPDATED_JAHRGANG)
-            .stellung(UPDATED_STELLUNG);
+        Schuetze schuetze = new Schuetze().name(UPDATED_NAME).jahrgang(UPDATED_JAHRGANG).stellung(UPDATED_STELLUNG);
         return schuetze;
     }
 
@@ -110,7 +99,6 @@ class SchuetzeResourceIT {
         assertThat(schuetzeList).hasSize(databaseSizeBeforeCreate + 1);
         Schuetze testSchuetze = schuetzeList.get(schuetzeList.size() - 1);
         assertThat(testSchuetze.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testSchuetze.getVorname()).isEqualTo(DEFAULT_VORNAME);
         assertThat(testSchuetze.getJahrgang()).isEqualTo(DEFAULT_JAHRGANG);
         assertThat(testSchuetze.getStellung()).isEqualTo(DEFAULT_STELLUNG);
     }
@@ -135,6 +123,57 @@ class SchuetzeResourceIT {
 
     @Test
     @Transactional
+    void checkNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = schuetzeRepository.findAll().size();
+        // set the field null
+        schuetze.setName(null);
+
+        // Create the Schuetze, which fails.
+
+        restSchuetzeMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(schuetze)))
+            .andExpect(status().isBadRequest());
+
+        List<Schuetze> schuetzeList = schuetzeRepository.findAll();
+        assertThat(schuetzeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkJahrgangIsRequired() throws Exception {
+        int databaseSizeBeforeTest = schuetzeRepository.findAll().size();
+        // set the field null
+        schuetze.setJahrgang(null);
+
+        // Create the Schuetze, which fails.
+
+        restSchuetzeMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(schuetze)))
+            .andExpect(status().isBadRequest());
+
+        List<Schuetze> schuetzeList = schuetzeRepository.findAll();
+        assertThat(schuetzeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkStellungIsRequired() throws Exception {
+        int databaseSizeBeforeTest = schuetzeRepository.findAll().size();
+        // set the field null
+        schuetze.setStellung(null);
+
+        // Create the Schuetze, which fails.
+
+        restSchuetzeMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(schuetze)))
+            .andExpect(status().isBadRequest());
+
+        List<Schuetze> schuetzeList = schuetzeRepository.findAll();
+        assertThat(schuetzeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllSchuetzes() throws Exception {
         // Initialize the database
         schuetzeRepository.saveAndFlush(schuetze);
@@ -146,7 +185,6 @@ class SchuetzeResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(schuetze.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].vorname").value(hasItem(DEFAULT_VORNAME)))
             .andExpect(jsonPath("$.[*].jahrgang").value(hasItem(DEFAULT_JAHRGANG.toString())))
             .andExpect(jsonPath("$.[*].stellung").value(hasItem(DEFAULT_STELLUNG.toString())));
     }
@@ -164,7 +202,6 @@ class SchuetzeResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(schuetze.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.vorname").value(DEFAULT_VORNAME))
             .andExpect(jsonPath("$.jahrgang").value(DEFAULT_JAHRGANG.toString()))
             .andExpect(jsonPath("$.stellung").value(DEFAULT_STELLUNG.toString()));
     }
@@ -188,7 +225,7 @@ class SchuetzeResourceIT {
         Schuetze updatedSchuetze = schuetzeRepository.findById(schuetze.getId()).get();
         // Disconnect from session so that the updates on updatedSchuetze are not directly saved in db
         em.detach(updatedSchuetze);
-        updatedSchuetze.name(UPDATED_NAME).vorname(UPDATED_VORNAME).jahrgang(UPDATED_JAHRGANG).stellung(UPDATED_STELLUNG);
+        updatedSchuetze.name(UPDATED_NAME).jahrgang(UPDATED_JAHRGANG).stellung(UPDATED_STELLUNG);
 
         restSchuetzeMockMvc
             .perform(
@@ -203,7 +240,6 @@ class SchuetzeResourceIT {
         assertThat(schuetzeList).hasSize(databaseSizeBeforeUpdate);
         Schuetze testSchuetze = schuetzeList.get(schuetzeList.size() - 1);
         assertThat(testSchuetze.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testSchuetze.getVorname()).isEqualTo(UPDATED_VORNAME);
         assertThat(testSchuetze.getJahrgang()).isEqualTo(UPDATED_JAHRGANG);
         assertThat(testSchuetze.getStellung()).isEqualTo(UPDATED_STELLUNG);
     }
@@ -276,7 +312,7 @@ class SchuetzeResourceIT {
         Schuetze partialUpdatedSchuetze = new Schuetze();
         partialUpdatedSchuetze.setId(schuetze.getId());
 
-        partialUpdatedSchuetze.vorname(UPDATED_VORNAME).stellung(UPDATED_STELLUNG);
+        partialUpdatedSchuetze.jahrgang(UPDATED_JAHRGANG);
 
         restSchuetzeMockMvc
             .perform(
@@ -291,9 +327,8 @@ class SchuetzeResourceIT {
         assertThat(schuetzeList).hasSize(databaseSizeBeforeUpdate);
         Schuetze testSchuetze = schuetzeList.get(schuetzeList.size() - 1);
         assertThat(testSchuetze.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testSchuetze.getVorname()).isEqualTo(UPDATED_VORNAME);
-        assertThat(testSchuetze.getJahrgang()).isEqualTo(DEFAULT_JAHRGANG);
-        assertThat(testSchuetze.getStellung()).isEqualTo(UPDATED_STELLUNG);
+        assertThat(testSchuetze.getJahrgang()).isEqualTo(UPDATED_JAHRGANG);
+        assertThat(testSchuetze.getStellung()).isEqualTo(DEFAULT_STELLUNG);
     }
 
     @Test
@@ -308,7 +343,7 @@ class SchuetzeResourceIT {
         Schuetze partialUpdatedSchuetze = new Schuetze();
         partialUpdatedSchuetze.setId(schuetze.getId());
 
-        partialUpdatedSchuetze.name(UPDATED_NAME).vorname(UPDATED_VORNAME).jahrgang(UPDATED_JAHRGANG).stellung(UPDATED_STELLUNG);
+        partialUpdatedSchuetze.name(UPDATED_NAME).jahrgang(UPDATED_JAHRGANG).stellung(UPDATED_STELLUNG);
 
         restSchuetzeMockMvc
             .perform(
@@ -323,7 +358,6 @@ class SchuetzeResourceIT {
         assertThat(schuetzeList).hasSize(databaseSizeBeforeUpdate);
         Schuetze testSchuetze = schuetzeList.get(schuetzeList.size() - 1);
         assertThat(testSchuetze.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testSchuetze.getVorname()).isEqualTo(UPDATED_VORNAME);
         assertThat(testSchuetze.getJahrgang()).isEqualTo(UPDATED_JAHRGANG);
         assertThat(testSchuetze.getStellung()).isEqualTo(UPDATED_STELLUNG);
     }
