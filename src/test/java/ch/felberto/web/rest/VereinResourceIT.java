@@ -6,8 +6,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import ch.felberto.IntegrationTest;
+import ch.felberto.domain.Verband;
 import ch.felberto.domain.Verein;
 import ch.felberto.repository.VereinRepository;
+import ch.felberto.service.criteria.VereinCriteria;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -155,6 +157,159 @@ class VereinResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(verein.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
+    }
+
+    @Test
+    @Transactional
+    void getVereinsByIdFiltering() throws Exception {
+        // Initialize the database
+        vereinRepository.saveAndFlush(verein);
+
+        Long id = verein.getId();
+
+        defaultVereinShouldBeFound("id.equals=" + id);
+        defaultVereinShouldNotBeFound("id.notEquals=" + id);
+
+        defaultVereinShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultVereinShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultVereinShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultVereinShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllVereinsByNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        vereinRepository.saveAndFlush(verein);
+
+        // Get all the vereinList where name equals to DEFAULT_NAME
+        defaultVereinShouldBeFound("name.equals=" + DEFAULT_NAME);
+
+        // Get all the vereinList where name equals to UPDATED_NAME
+        defaultVereinShouldNotBeFound("name.equals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllVereinsByNameIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        vereinRepository.saveAndFlush(verein);
+
+        // Get all the vereinList where name not equals to DEFAULT_NAME
+        defaultVereinShouldNotBeFound("name.notEquals=" + DEFAULT_NAME);
+
+        // Get all the vereinList where name not equals to UPDATED_NAME
+        defaultVereinShouldBeFound("name.notEquals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllVereinsByNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        vereinRepository.saveAndFlush(verein);
+
+        // Get all the vereinList where name in DEFAULT_NAME or UPDATED_NAME
+        defaultVereinShouldBeFound("name.in=" + DEFAULT_NAME + "," + UPDATED_NAME);
+
+        // Get all the vereinList where name equals to UPDATED_NAME
+        defaultVereinShouldNotBeFound("name.in=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllVereinsByNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        vereinRepository.saveAndFlush(verein);
+
+        // Get all the vereinList where name is not null
+        defaultVereinShouldBeFound("name.specified=true");
+
+        // Get all the vereinList where name is null
+        defaultVereinShouldNotBeFound("name.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllVereinsByNameContainsSomething() throws Exception {
+        // Initialize the database
+        vereinRepository.saveAndFlush(verein);
+
+        // Get all the vereinList where name contains DEFAULT_NAME
+        defaultVereinShouldBeFound("name.contains=" + DEFAULT_NAME);
+
+        // Get all the vereinList where name contains UPDATED_NAME
+        defaultVereinShouldNotBeFound("name.contains=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllVereinsByNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        vereinRepository.saveAndFlush(verein);
+
+        // Get all the vereinList where name does not contain DEFAULT_NAME
+        defaultVereinShouldNotBeFound("name.doesNotContain=" + DEFAULT_NAME);
+
+        // Get all the vereinList where name does not contain UPDATED_NAME
+        defaultVereinShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllVereinsByVerbandIsEqualToSomething() throws Exception {
+        // Initialize the database
+        vereinRepository.saveAndFlush(verein);
+        Verband verband = VerbandResourceIT.createEntity(em);
+        em.persist(verband);
+        em.flush();
+        verein.setVerband(verband);
+        vereinRepository.saveAndFlush(verein);
+        Long verbandId = verband.getId();
+
+        // Get all the vereinList where verband equals to verbandId
+        defaultVereinShouldBeFound("verbandId.equals=" + verbandId);
+
+        // Get all the vereinList where verband equals to (verbandId + 1)
+        defaultVereinShouldNotBeFound("verbandId.equals=" + (verbandId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultVereinShouldBeFound(String filter) throws Exception {
+        restVereinMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(verein.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+
+        // Check, that the count call also returns 1
+        restVereinMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultVereinShouldNotBeFound(String filter) throws Exception {
+        restVereinMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restVereinMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

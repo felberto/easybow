@@ -2,6 +2,9 @@ package ch.felberto.web.rest;
 
 import ch.felberto.domain.Verein;
 import ch.felberto.repository.VereinRepository;
+import ch.felberto.service.VereinQueryService;
+import ch.felberto.service.VereinService;
+import ch.felberto.service.criteria.VereinCriteria;
 import ch.felberto.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -24,7 +26,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class VereinResource {
 
     private final Logger log = LoggerFactory.getLogger(VereinResource.class);
@@ -34,10 +35,16 @@ public class VereinResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final VereinService vereinService;
+
     private final VereinRepository vereinRepository;
 
-    public VereinResource(VereinRepository vereinRepository) {
+    private final VereinQueryService vereinQueryService;
+
+    public VereinResource(VereinService vereinService, VereinRepository vereinRepository, VereinQueryService vereinQueryService) {
+        this.vereinService = vereinService;
         this.vereinRepository = vereinRepository;
+        this.vereinQueryService = vereinQueryService;
     }
 
     /**
@@ -53,7 +60,7 @@ public class VereinResource {
         if (verein.getId() != null) {
             throw new BadRequestAlertException("A new verein cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Verein result = vereinRepository.save(verein);
+        Verein result = vereinService.save(verein);
         return ResponseEntity
             .created(new URI("/api/vereins/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -87,7 +94,7 @@ public class VereinResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Verein result = vereinRepository.save(verein);
+        Verein result = vereinService.save(verein);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, verein.getId().toString()))
@@ -122,18 +129,7 @@ public class VereinResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Verein> result = vereinRepository
-            .findById(verein.getId())
-            .map(
-                existingVerein -> {
-                    if (verein.getName() != null) {
-                        existingVerein.setName(verein.getName());
-                    }
-
-                    return existingVerein;
-                }
-            )
-            .map(vereinRepository::save);
+        Optional<Verein> result = vereinService.partialUpdate(verein);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -144,12 +140,26 @@ public class VereinResource {
     /**
      * {@code GET  /vereins} : get all the vereins.
      *
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of vereins in body.
      */
     @GetMapping("/vereins")
-    public List<Verein> getAllVereins() {
-        log.debug("REST request to get all Vereins");
-        return vereinRepository.findAll();
+    public ResponseEntity<List<Verein>> getAllVereins(VereinCriteria criteria) {
+        log.debug("REST request to get Vereins by criteria: {}", criteria);
+        List<Verein> entityList = vereinQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+     * {@code GET  /vereins/count} : count all the vereins.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/vereins/count")
+    public ResponseEntity<Long> countVereins(VereinCriteria criteria) {
+        log.debug("REST request to count Vereins by criteria: {}", criteria);
+        return ResponseEntity.ok().body(vereinQueryService.countByCriteria(criteria));
     }
 
     /**
@@ -161,7 +171,7 @@ public class VereinResource {
     @GetMapping("/vereins/{id}")
     public ResponseEntity<Verein> getVerein(@PathVariable Long id) {
         log.debug("REST request to get Verein : {}", id);
-        Optional<Verein> verein = vereinRepository.findById(id);
+        Optional<Verein> verein = vereinService.findOne(id);
         return ResponseUtil.wrapOrNotFound(verein);
     }
 
@@ -174,7 +184,7 @@ public class VereinResource {
     @DeleteMapping("/vereins/{id}")
     public ResponseEntity<Void> deleteVerein(@PathVariable Long id) {
         log.debug("REST request to delete Verein : {}", id);
-        vereinRepository.deleteById(id);
+        vereinService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
