@@ -1,10 +1,10 @@
 
 entity Verband {
-	name String
+	name String required
 }
 
 entity Verein {
-	name String
+	name String required
 }
 
 enum Stellung {
@@ -12,51 +12,49 @@ enum Stellung {
 }
 
 entity Schuetze {
-	name String,
-    vorname String,
-    jahrgang LocalDate,
-    stellung Stellung
+	name String required,
+    jahrgang LocalDate required,
+    stellung Stellung required
 }
 
 entity Wettkampf {
-	name String,
-    jahr LocalDate,
-    anzahlRunden Integer,
+	name String required,
+    jahr LocalDate required,
+    anzahlRunden Integer required,
     finalRunde Boolean,
-    anzahlPassen Integer min(1) max(4),
+    anzahlPassen Integer min(1) max(4) required,
     anzahlPassenFinal Integer  min(1) max(4),
-    team Integer,
-    template Boolean
+    anzahlTeam Integer
 }
 
 entity Passen {
-	p1 Integer min(0) max(11),
-    p2 Integer min(0) max(11),
-  	p3 Integer min(0) max(11),
-    p4 Integer min(0) max(11),
-    p5 Integer min(0) max(11),
-    p6 Integer min(0) max(11),
-    p7 Integer min(0) max(11),
-    p8 Integer min(0) max(11),
-    p9 Integer min(0) max(11),
-    p10 Integer min(0) max(11),
+	p1 Integer min(0) max(11) required,
+    p2 Integer min(0) max(11) required,
+  	p3 Integer min(0) max(11) required,
+    p4 Integer min(0) max(11) required,
+    p5 Integer min(0) max(11) required,
+    p6 Integer min(0) max(11) required,
+    p7 Integer min(0) max(11) required,
+    p8 Integer min(0) max(11) required,
+    p9 Integer min(0) max(11) required,
+    p10 Integer min(0) max(11) required,
     resultat Integer
 }
 
 entity Gruppen {
-	name String
+	name String required
 }
 
 entity Resultate {
-	runde Integer
+	runde Integer required
 }
 
 relationship OneToOne {
-	Verein{verband} to Verband
+	Verein{verband(name)} to Verband
 }
 
 relationship OneToOne {
-	Schuetze{verein} to Verein
+	Schuetze{verein(name)} to Verein
 }
 
 relationship OneToOne {
@@ -67,13 +65,13 @@ relationship OneToOne {
 }
 
 relationship OneToOne {
-	Resultate{gruppe} to Gruppen
+	Resultate{gruppe(name)} to Gruppen
 }
 
 relationship ManyToOne {
-	Resultate{schuetze} to Schuetze
+	Resultate{schuetze(name)} to Schuetze
 }
 
 relationship ManyToOne {
-	Resultate{wettkampf} to Wettkampf
+	Resultate{wettkampf(name)} to Wettkampf
 }
