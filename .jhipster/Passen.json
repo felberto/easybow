@@ -3,47 +3,77 @@
   "fields": [
     {
       "fieldName": "p1",
-      "fieldType": "Long"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMin": "0",
+      "fieldValidateRulesMax": "11"
     },
     {
       "fieldName": "p2",
-      "fieldType": "Long"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMin": "0",
+      "fieldValidateRulesMax": "11"
     },
     {
       "fieldName": "p3",
-      "fieldType": "Long"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMin": "0",
+      "fieldValidateRulesMax": "11"
     },
     {
       "fieldName": "p4",
-      "fieldType": "Long"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMin": "0",
+      "fieldValidateRulesMax": "11"
     },
     {
       "fieldName": "p5",
-      "fieldType": "Long"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMin": "0",
+      "fieldValidateRulesMax": "11"
     },
     {
       "fieldName": "p6",
-      "fieldType": "Long"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMin": "0",
+      "fieldValidateRulesMax": "11"
     },
     {
       "fieldName": "p7",
-      "fieldType": "Long"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMin": "0",
+      "fieldValidateRulesMax": "11"
     },
     {
       "fieldName": "p8",
-      "fieldType": "Long"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMin": "0",
+      "fieldValidateRulesMax": "11"
     },
     {
       "fieldName": "p9",
-      "fieldType": "Long"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMin": "0",
+      "fieldValidateRulesMax": "11"
     },
     {
       "fieldName": "p10",
-      "fieldType": "Long"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMin": "0",
+      "fieldValidateRulesMax": "11"
     },
     {
       "fieldName": "resultat",
-      "fieldType": "Long"
+      "fieldType": "Integer"
     }
   ],
   "relationships": [],
