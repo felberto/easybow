@@ -1,0 +1,56 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="resultate">
+      <h2 data-cy="resultateDetailsHeading"><span>Resultate</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ resultate.id }}</span>
+        </dd>
+        <dt><span>Runde</span></dt>
+        <dd>
+          <span>{{ resultate.runde }}</span>
+        </dd>
+        <dt><span>Passe</span></dt>
+        <dd>
+          <div *ngIf="resultate.passe">
+            <a [routerLink]="['/passen', resultate.passe?.id, 'view']">{{ resultate.passe?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Gruppe</span></dt>
+        <dd>
+          <div *ngIf="resultate.gruppe">
+            <a [routerLink]="['/gruppen', resultate.gruppe?.id, 'view']">{{ resultate.gruppe?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Schuetze</span></dt>
+        <dd>
+          <div *ngIf="resultate.schuetze">
+            <a [routerLink]="['/schuetze', resultate.schuetze?.id, 'view']">{{ resultate.schuetze?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Wettkampf</span></dt>
+        <dd>
+          <div *ngIf="resultate.wettkampf">
+            <a [routerLink]="['/wettkampf', resultate.wettkampf?.id, 'view']">{{ resultate.wettkampf?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/resultate', resultate.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

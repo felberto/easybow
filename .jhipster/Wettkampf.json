@@ -1,0 +1,36 @@
+{
+  "name": "Wettkampf",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "jahr",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "anzahlPassen",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "team",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "template",
+      "fieldType": "Boolean"
+    }
+  ],
+  "relationships": [],
+  "entityTableName": "wettkampf",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210710113111"
+}

@@ -51,6 +51,13 @@ public class CacheConfiguration {
             createCache(cm, ch.felberto.domain.User.class.getName());
             createCache(cm, ch.felberto.domain.Authority.class.getName());
             createCache(cm, ch.felberto.domain.User.class.getName() + ".authorities");
+            createCache(cm, ch.felberto.domain.Verband.class.getName());
+            createCache(cm, ch.felberto.domain.Verein.class.getName());
+            createCache(cm, ch.felberto.domain.Schuetze.class.getName());
+            createCache(cm, ch.felberto.domain.Wettkampf.class.getName());
+            createCache(cm, ch.felberto.domain.Passen.class.getName());
+            createCache(cm, ch.felberto.domain.Gruppen.class.getName());
+            createCache(cm, ch.felberto.domain.Resultate.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

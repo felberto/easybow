@@ -1,0 +1,28 @@
+{
+  "name": "Verein",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "verband",
+      "otherEntityRelationshipName": "verein",
+      "relationshipName": "verband",
+      "ownerSide": true
+    }
+  ],
+  "entityTableName": "verein",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210710113109"
+}

@@ -1,0 +1,88 @@
+<div>
+  <h2 id="page-heading" data-cy="PassenHeading">
+    <span>Passens</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-passen"
+        [routerLink]="['/passen/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Passen </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="passens?.length === 0">
+    <span>No passens found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="passens && passens.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>ID</span></th>
+          <th scope="col"><span>P 1</span></th>
+          <th scope="col"><span>P 2</span></th>
+          <th scope="col"><span>P 3</span></th>
+          <th scope="col"><span>P 4</span></th>
+          <th scope="col"><span>P 5</span></th>
+          <th scope="col"><span>P 6</span></th>
+          <th scope="col"><span>P 7</span></th>
+          <th scope="col"><span>P 8</span></th>
+          <th scope="col"><span>P 9</span></th>
+          <th scope="col"><span>P 10</span></th>
+          <th scope="col"><span>Resultat</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let passen of passens; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/passen', passen.id, 'view']">{{ passen.id }}</a>
+          </td>
+          <td>{{ passen.p1 }}</td>
+          <td>{{ passen.p2 }}</td>
+          <td>{{ passen.p3 }}</td>
+          <td>{{ passen.p4 }}</td>
+          <td>{{ passen.p5 }}</td>
+          <td>{{ passen.p6 }}</td>
+          <td>{{ passen.p7 }}</td>
+          <td>{{ passen.p8 }}</td>
+          <td>{{ passen.p9 }}</td>
+          <td>{{ passen.p10 }}</td>
+          <td>{{ passen.resultat }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/passen', passen.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/passen', passen.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(passen)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

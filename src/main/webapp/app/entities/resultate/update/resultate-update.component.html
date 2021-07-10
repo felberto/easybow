@@ -1,0 +1,89 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-resultate-heading" data-cy="ResultateCreateUpdateHeading">Create or edit a Resultate</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_runde">Runde</label>
+          <input type="number" class="form-control" name="runde" id="field_runde" data-cy="runde" formControlName="runde" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_passe">Passe</label>
+          <select class="form-control" id="field_passe" data-cy="passe" name="passe" formControlName="passe">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="passenOption.id === editForm.get('passe')!.value?.id ? editForm.get('passe')!.value : passenOption"
+              *ngFor="let passenOption of passesCollection; trackBy: trackPassenById"
+            >
+              {{ passenOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_gruppe">Gruppe</label>
+          <select class="form-control" id="field_gruppe" data-cy="gruppe" name="gruppe" formControlName="gruppe">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="gruppenOption.id === editForm.get('gruppe')!.value?.id ? editForm.get('gruppe')!.value : gruppenOption"
+              *ngFor="let gruppenOption of gruppesCollection; trackBy: trackGruppenById"
+            >
+              {{ gruppenOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_schuetze">Schuetze</label>
+          <select class="form-control" id="field_schuetze" data-cy="schuetze" name="schuetze" formControlName="schuetze">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="schuetzeOption.id === editForm.get('schuetze')!.value?.id ? editForm.get('schuetze')!.value : schuetzeOption"
+              *ngFor="let schuetzeOption of schuetzesSharedCollection; trackBy: trackSchuetzeById"
+            >
+              {{ schuetzeOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_wettkampf">Wettkampf</label>
+          <select class="form-control" id="field_wettkampf" data-cy="wettkampf" name="wettkampf" formControlName="wettkampf">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="wettkampfOption.id === editForm.get('wettkampf')!.value?.id ? editForm.get('wettkampf')!.value : wettkampfOption"
+              *ngFor="let wettkampfOption of wettkampfsSharedCollection; trackBy: trackWettkampfById"
+            >
+              {{ wettkampfOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+{
+  "name": "Schuetze",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "vorname",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "jahrgang",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "stellung",
+      "fieldType": "Stellung",
+      "fieldValues": "FREI,AUFGELEGT"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "verein",
+      "otherEntityRelationshipName": "schuetze",
+      "relationshipName": "verein",
+      "ownerSide": true
+    }
+  ],
+  "entityTableName": "schuetze",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210710113110"
+}

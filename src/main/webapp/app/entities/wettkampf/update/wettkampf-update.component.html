@@ -1,0 +1,78 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-wettkampf-heading" data-cy="WettkampfCreateUpdateHeading">Create or edit a Wettkampf</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_jahr">Jahr</label>
+          <div class="input-group">
+            <input
+              id="field_jahr"
+              data-cy="jahr"
+              type="text"
+              class="form-control"
+              name="jahr"
+              ngbDatepicker
+              #jahrDp="ngbDatepicker"
+              formControlName="jahr"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="jahrDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_anzahlPassen">Anzahl Passen</label>
+          <input
+            type="number"
+            class="form-control"
+            name="anzahlPassen"
+            id="field_anzahlPassen"
+            data-cy="anzahlPassen"
+            formControlName="anzahlPassen"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_team">Team</label>
+          <input type="number" class="form-control" name="team" id="field_team" data-cy="team" formControlName="team" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_template">Template</label>
+          <input type="checkbox" class="form-check" name="template" id="field_template" data-cy="template" formControlName="template" />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
