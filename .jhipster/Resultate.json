@@ -1,0 +1,47 @@
+{
+  "name": "Resultate",
+  "fields": [
+    {
+      "fieldName": "runde",
+      "fieldType": "Long"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "passen",
+      "otherEntityRelationshipName": "resultate",
+      "relationshipName": "passe",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "gruppen",
+      "otherEntityRelationshipName": "resultate",
+      "relationshipName": "gruppe",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "schuetze",
+      "otherEntityRelationshipName": "resultate",
+      "relationshipName": "schuetze"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "wettkampf",
+      "otherEntityRelationshipName": "resultate",
+      "relationshipName": "wettkampf"
+    }
+  ],
+  "entityTableName": "resultate",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210710113114"
+}

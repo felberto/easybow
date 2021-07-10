@@ -1,0 +1,90 @@
+<div>
+  <h2 id="page-heading" data-cy="SchuetzeHeading">
+    <span>Schuetzes</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-schuetze"
+        [routerLink]="['/schuetze/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Schuetze </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="schuetzes?.length === 0">
+    <span>No schuetzes found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="schuetzes && schuetzes.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>ID</span></th>
+          <th scope="col"><span>Name</span></th>
+          <th scope="col"><span>Vorname</span></th>
+          <th scope="col"><span>Jahrgang</span></th>
+          <th scope="col"><span>Stellung</span></th>
+          <th scope="col"><span>Verein</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let schuetze of schuetzes; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/schuetze', schuetze.id, 'view']">{{ schuetze.id }}</a>
+          </td>
+          <td>{{ schuetze.name }}</td>
+          <td>{{ schuetze.vorname }}</td>
+          <td>{{ schuetze.jahrgang | formatMediumDate }}</td>
+          <td>{{ schuetze.stellung }}</td>
+          <td>
+            <div *ngIf="schuetze.verein">
+              <a [routerLink]="['/verein', schuetze.verein?.id, 'view']">{{ schuetze.verein?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/schuetze', schuetze.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/schuetze', schuetze.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(schuetze)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="passen">
+      <h2 data-cy="passenDetailsHeading"><span>Passen</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ passen.id }}</span>
+        </dd>
+        <dt><span>P 1</span></dt>
+        <dd>
+          <span>{{ passen.p1 }}</span>
+        </dd>
+        <dt><span>P 2</span></dt>
+        <dd>
+          <span>{{ passen.p2 }}</span>
+        </dd>
+        <dt><span>P 3</span></dt>
+        <dd>
+          <span>{{ passen.p3 }}</span>
+        </dd>
+        <dt><span>P 4</span></dt>
+        <dd>
+          <span>{{ passen.p4 }}</span>
+        </dd>
+        <dt><span>P 5</span></dt>
+        <dd>
+          <span>{{ passen.p5 }}</span>
+        </dd>
+        <dt><span>P 6</span></dt>
+        <dd>
+          <span>{{ passen.p6 }}</span>
+        </dd>
+        <dt><span>P 7</span></dt>
+        <dd>
+          <span>{{ passen.p7 }}</span>
+        </dd>
+        <dt><span>P 8</span></dt>
+        <dd>
+          <span>{{ passen.p8 }}</span>
+        </dd>
+        <dt><span>P 9</span></dt>
+        <dd>
+          <span>{{ passen.p9 }}</span>
+        </dd>
+        <dt><span>P 10</span></dt>
+        <dd>
+          <span>{{ passen.p10 }}</span>
+        </dd>
+        <dt><span>Resultat</span></dt>
+        <dd>
+          <span>{{ passen.resultat }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/passen', passen.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

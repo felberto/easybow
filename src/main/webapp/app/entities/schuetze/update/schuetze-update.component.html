@@ -1,0 +1,83 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-schuetze-heading" data-cy="SchuetzeCreateUpdateHeading">Create or edit a Schuetze</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_vorname">Vorname</label>
+          <input type="text" class="form-control" name="vorname" id="field_vorname" data-cy="vorname" formControlName="vorname" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_jahrgang">Jahrgang</label>
+          <div class="input-group">
+            <input
+              id="field_jahrgang"
+              data-cy="jahrgang"
+              type="text"
+              class="form-control"
+              name="jahrgang"
+              ngbDatepicker
+              #jahrgangDp="ngbDatepicker"
+              formControlName="jahrgang"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="jahrgangDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_stellung">Stellung</label>
+          <select class="form-control" name="stellung" formControlName="stellung" id="field_stellung" data-cy="stellung">
+            <option [ngValue]="null"></option>
+            <option value="FREI">FREI</option>
+            <option value="AUFGELEGT">AUFGELEGT</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_verein">Verein</label>
+          <select class="form-control" id="field_verein" data-cy="verein" name="verein" formControlName="verein">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="vereinOption.id === editForm.get('verein')!.value?.id ? editForm.get('verein')!.value : vereinOption"
+              *ngFor="let vereinOption of vereinsCollection; trackBy: trackVereinById"
+            >
+              {{ vereinOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+
+entity Verband {
+	name String
+}
+
+entity Verein {
+	name String
+}
+
+enum Stellung {
+	FREI, AUFGELEGT
+}
+
+entity Schuetze {
+	name String,
+    vorname String,
+    jahrgang LocalDate,
+    stellung Stellung
+}
+
+entity Wettkampf {
+	name String,
+    jahr LocalDate,
+    anzahlPassen Long,
+    team Long,
+    template Boolean
+}
+
+entity Passen {
+	p1 Long,
+    p2 Long,
+  	p3 Long,
+    p4 Long,
+    p5 Long,
+    p6 Long,
+    p7 Long,
+    p8 Long,
+    p9 Long,
+    p10 Long,
+    resultat Long
+}
+
+entity Gruppen {
+	name String
+}
+
+entity Resultate {
+	runde Long
+}
+
+relationship OneToOne {
+	Verein{verband} to Verband
+}
+
+relationship OneToOne {
+	Schuetze{verein} to Verein
+}
+
+relationship OneToOne {
+	Resultate{passe} to Passen
+}
+
+relationship OneToOne {
+	Resultate{gruppe} to Gruppen
+}
+
+relationship ManyToOne {
+	Resultate{schuetze} to Schuetze
+}
+
+relationship ManyToOne {
+	Resultate{wettkampf} to Wettkampf
+}

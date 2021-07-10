@@ -1,0 +1,60 @@
+{
+  "name": "Passen",
+  "fields": [
+    {
+      "fieldName": "p1",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "p2",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "p3",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "p4",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "p5",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "p6",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "p7",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "p8",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "p9",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "p10",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "resultat",
+      "fieldType": "Long"
+    }
+  ],
+  "relationships": [],
+  "entityTableName": "passen",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210710113112"
+}
