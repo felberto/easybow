@@ -3,7 +3,7 @@
   "fields": [
     {
       "fieldName": "runde",
-      "fieldType": "Long"
+      "fieldType": "Integer"
     }
   ],
   "relationships": [
