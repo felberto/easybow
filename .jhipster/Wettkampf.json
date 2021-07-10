@@ -10,8 +10,26 @@
       "fieldType": "LocalDate"
     },
     {
-      "fieldName": "anzahlPassen",
+      "fieldName": "anzahlRunden",
       "fieldType": "Long"
+    },
+    {
+      "fieldName": "final",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "anzahlPassen",
+      "fieldType": "Long",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMin": "1",
+      "fieldValidateRulesMax": "4"
+    },
+    {
+      "fieldName": "anzahlPassenFinal",
+      "fieldType": "Long",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMin": "1",
+      "fieldValidateRulesMax": "4"
     },
     {
       "fieldName": "team",
