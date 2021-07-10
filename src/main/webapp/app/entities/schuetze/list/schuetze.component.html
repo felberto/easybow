@@ -34,7 +34,6 @@
         <tr>
           <th scope="col"><span>ID</span></th>
           <th scope="col"><span>Name</span></th>
-          <th scope="col"><span>Vorname</span></th>
           <th scope="col"><span>Jahrgang</span></th>
           <th scope="col"><span>Stellung</span></th>
           <th scope="col"><span>Verein</span></th>
@@ -47,12 +46,11 @@
             <a [routerLink]="['/schuetze', schuetze.id, 'view']">{{ schuetze.id }}</a>
           </td>
           <td>{{ schuetze.name }}</td>
-          <td>{{ schuetze.vorname }}</td>
           <td>{{ schuetze.jahrgang | formatMediumDate }}</td>
           <td>{{ schuetze.stellung }}</td>
           <td>
             <div *ngIf="schuetze.verein">
-              <a [routerLink]="['/verein', schuetze.verein?.id, 'view']">{{ schuetze.verein?.id }}</a>
+              <a [routerLink]="['/verein', schuetze.verein?.id, 'view']">{{ schuetze.verein?.name }}</a>
             </div>
           </td>
           <td class="text-right">

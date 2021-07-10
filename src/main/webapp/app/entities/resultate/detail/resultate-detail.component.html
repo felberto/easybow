@@ -45,19 +45,19 @@
         <dt><span>Gruppe</span></dt>
         <dd>
           <div *ngIf="resultate.gruppe">
-            <a [routerLink]="['/gruppen', resultate.gruppe?.id, 'view']">{{ resultate.gruppe?.id }}</a>
+            <a [routerLink]="['/gruppen', resultate.gruppe?.id, 'view']">{{ resultate.gruppe?.name }}</a>
           </div>
         </dd>
         <dt><span>Schuetze</span></dt>
         <dd>
           <div *ngIf="resultate.schuetze">
-            <a [routerLink]="['/schuetze', resultate.schuetze?.id, 'view']">{{ resultate.schuetze?.id }}</a>
+            <a [routerLink]="['/schuetze', resultate.schuetze?.id, 'view']">{{ resultate.schuetze?.name }}</a>
           </div>
         </dd>
         <dt><span>Wettkampf</span></dt>
         <dd>
           <div *ngIf="resultate.wettkampf">
-            <a [routerLink]="['/wettkampf', resultate.wettkampf?.id, 'view']">{{ resultate.wettkampf?.id }}</a>
+            <a [routerLink]="['/wettkampf', resultate.wettkampf?.id, 'view']">{{ resultate.wettkampf?.name }}</a>
           </div>
         </dd>
       </dl>

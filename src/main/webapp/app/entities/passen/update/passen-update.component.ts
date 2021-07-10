@@ -17,16 +17,16 @@ export class PassenUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    p1: [null, [Validators.min(0), Validators.max(11)]],
-    p2: [null, [Validators.min(0), Validators.max(11)]],
-    p3: [null, [Validators.min(0), Validators.max(11)]],
-    p4: [null, [Validators.min(0), Validators.max(11)]],
-    p5: [null, [Validators.min(0), Validators.max(11)]],
-    p6: [null, [Validators.min(0), Validators.max(11)]],
-    p7: [null, [Validators.min(0), Validators.max(11)]],
-    p8: [null, [Validators.min(0), Validators.max(11)]],
-    p9: [null, [Validators.min(0), Validators.max(11)]],
-    p10: [null, [Validators.min(0), Validators.max(11)]],
+    p1: [null, [Validators.required, Validators.min(0), Validators.max(11)]],
+    p2: [null, [Validators.required, Validators.min(0), Validators.max(11)]],
+    p3: [null, [Validators.required, Validators.min(0), Validators.max(11)]],
+    p4: [null, [Validators.required, Validators.min(0), Validators.max(11)]],
+    p5: [null, [Validators.required, Validators.min(0), Validators.max(11)]],
+    p6: [null, [Validators.required, Validators.min(0), Validators.max(11)]],
+    p7: [null, [Validators.required, Validators.min(0), Validators.max(11)]],
+    p8: [null, [Validators.required, Validators.min(0), Validators.max(11)]],
+    p9: [null, [Validators.required, Validators.min(0), Validators.max(11)]],
+    p10: [null, [Validators.required, Validators.min(0), Validators.max(11)]],
     resultat: [],
   });
 

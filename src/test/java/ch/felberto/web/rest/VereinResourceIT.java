@@ -112,6 +112,23 @@ class VereinResourceIT {
 
     @Test
     @Transactional
+    void checkNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = vereinRepository.findAll().size();
+        // set the field null
+        verein.setName(null);
+
+        // Create the Verein, which fails.
+
+        restVereinMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(verein)))
+            .andExpect(status().isBadRequest());
+
+        List<Verein> vereinList = vereinRepository.findAll();
+        assertThat(vereinList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllVereins() throws Exception {
         // Initialize the database
         vereinRepository.saveAndFlush(verein);

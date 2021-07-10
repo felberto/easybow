@@ -144,11 +144,8 @@ public class WettkampfResource {
                     if (wettkampf.getAnzahlPassenFinal() != null) {
                         existingWettkampf.setAnzahlPassenFinal(wettkampf.getAnzahlPassenFinal());
                     }
-                    if (wettkampf.getTeam() != null) {
-                        existingWettkampf.setTeam(wettkampf.getTeam());
-                    }
-                    if (wettkampf.getTemplate() != null) {
-                        existingWettkampf.setTemplate(wettkampf.getTemplate());
+                    if (wettkampf.getAnzahlTeam() != null) {
+                        existingWettkampf.setAnzahlTeam(wettkampf.getAnzahlTeam());
                     }
 
                     return existingWettkampf;

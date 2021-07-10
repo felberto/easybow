@@ -8,6 +8,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,7 +48,7 @@ public class GruppenResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/gruppens")
-    public ResponseEntity<Gruppen> createGruppen(@RequestBody Gruppen gruppen) throws URISyntaxException {
+    public ResponseEntity<Gruppen> createGruppen(@Valid @RequestBody Gruppen gruppen) throws URISyntaxException {
         log.debug("REST request to save Gruppen : {}", gruppen);
         if (gruppen.getId() != null) {
             throw new BadRequestAlertException("A new gruppen cannot already have an ID", ENTITY_NAME, "idexists");
@@ -69,8 +71,10 @@ public class GruppenResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/gruppens/{id}")
-    public ResponseEntity<Gruppen> updateGruppen(@PathVariable(value = "id", required = false) final Long id, @RequestBody Gruppen gruppen)
-        throws URISyntaxException {
+    public ResponseEntity<Gruppen> updateGruppen(
+        @PathVariable(value = "id", required = false) final Long id,
+        @Valid @RequestBody Gruppen gruppen
+    ) throws URISyntaxException {
         log.debug("REST request to update Gruppen : {}, {}", id, gruppen);
         if (gruppen.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -104,7 +108,7 @@ public class GruppenResource {
     @PatchMapping(value = "/gruppens/{id}", consumes = "application/merge-patch+json")
     public ResponseEntity<Gruppen> partialUpdateGruppen(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody Gruppen gruppen
+        @NotNull @RequestBody Gruppen gruppen
     ) throws URISyntaxException {
         log.debug("REST request to partial update Gruppen partially : {}, {}", id, gruppen);
         if (gruppen.getId() == null) {

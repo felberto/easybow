@@ -14,6 +14,9 @@
         <div class="form-group">
           <label class="form-control-label" for="field_name">Name</label>
           <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+          <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required"> This field is required. </small>
+          </div>
         </div>
 
         <div class="form-group">
@@ -33,6 +36,9 @@
               <button type="button" class="btn btn-secondary" (click)="jahrDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
             </span>
           </div>
+          <div *ngIf="editForm.get('jahr')!.invalid && (editForm.get('jahr')!.dirty || editForm.get('jahr')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('jahr')?.errors?.required"> This field is required. </small>
+          </div>
         </div>
 
         <div class="form-group">
@@ -45,6 +51,14 @@
             data-cy="anzahlRunden"
             formControlName="anzahlRunden"
           />
+          <div
+            *ngIf="editForm.get('anzahlRunden')!.invalid && (editForm.get('anzahlRunden')!.dirty || editForm.get('anzahlRunden')!.touched)"
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('anzahlRunden')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('anzahlRunden')?.errors?.number">
+              This field should be a number.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
@@ -72,6 +86,7 @@
           <div
             *ngIf="editForm.get('anzahlPassen')!.invalid && (editForm.get('anzahlPassen')!.dirty || editForm.get('anzahlPassen')!.touched)"
           >
+            <small class="form-text text-danger" *ngIf="editForm.get('anzahlPassen')?.errors?.required"> This field is required. </small>
             <small class="form-text text-danger" *ngIf="editForm.get('anzahlPassen')?.errors?.min">
               This field should be at least 1.
             </small>
@@ -113,13 +128,15 @@
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" for="field_team">Team</label>
-          <input type="number" class="form-control" name="team" id="field_team" data-cy="team" formControlName="team" />
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" for="field_template">Template</label>
-          <input type="checkbox" class="form-check" name="template" id="field_template" data-cy="template" formControlName="template" />
+          <label class="form-control-label" for="field_anzahlTeam">Anzahl Team</label>
+          <input
+            type="number"
+            class="form-control"
+            name="anzahlTeam"
+            id="field_anzahlTeam"
+            data-cy="anzahlTeam"
+            formControlName="anzahlTeam"
+          />
         </div>
       </div>
 

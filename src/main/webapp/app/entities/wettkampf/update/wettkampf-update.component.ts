@@ -17,14 +17,13 @@ export class WettkampfUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    name: [],
-    jahr: [],
-    anzahlRunden: [],
+    name: [null, [Validators.required]],
+    jahr: [null, [Validators.required]],
+    anzahlRunden: [null, [Validators.required]],
     finalRunde: [],
-    anzahlPassen: [null, [Validators.min(1), Validators.max(4)]],
+    anzahlPassen: [null, [Validators.required, Validators.min(1), Validators.max(4)]],
     anzahlPassenFinal: [null, [Validators.min(1), Validators.max(4)]],
-    team: [],
-    template: [],
+    anzahlTeam: [],
   });
 
   constructor(protected wettkampfService: WettkampfService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {}
@@ -77,8 +76,7 @@ export class WettkampfUpdateComponent implements OnInit {
       finalRunde: wettkampf.finalRunde,
       anzahlPassen: wettkampf.anzahlPassen,
       anzahlPassenFinal: wettkampf.anzahlPassenFinal,
-      team: wettkampf.team,
-      template: wettkampf.template,
+      anzahlTeam: wettkampf.anzahlTeam,
     });
   }
 
@@ -92,8 +90,7 @@ export class WettkampfUpdateComponent implements OnInit {
       finalRunde: this.editForm.get(['finalRunde'])!.value,
       anzahlPassen: this.editForm.get(['anzahlPassen'])!.value,
       anzahlPassenFinal: this.editForm.get(['anzahlPassenFinal'])!.value,
-      team: this.editForm.get(['team'])!.value,
-      template: this.editForm.get(['template'])!.value,
+      anzahlTeam: this.editForm.get(['anzahlTeam'])!.value,
     };
   }
 }

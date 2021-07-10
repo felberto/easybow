@@ -2,30 +2,27 @@ import * as dayjs from 'dayjs';
 
 export interface IWettkampf {
   id?: number;
-  name?: string | null;
-  jahr?: dayjs.Dayjs | null;
-  anzahlRunden?: number | null;
+  name?: string;
+  jahr?: dayjs.Dayjs;
+  anzahlRunden?: number;
   finalRunde?: boolean | null;
-  anzahlPassen?: number | null;
+  anzahlPassen?: number;
   anzahlPassenFinal?: number | null;
-  team?: number | null;
-  template?: boolean | null;
+  anzahlTeam?: number | null;
 }
 
 export class Wettkampf implements IWettkampf {
   constructor(
     public id?: number,
-    public name?: string | null,
-    public jahr?: dayjs.Dayjs | null,
-    public anzahlRunden?: number | null,
+    public name?: string,
+    public jahr?: dayjs.Dayjs,
+    public anzahlRunden?: number,
     public finalRunde?: boolean | null,
-    public anzahlPassen?: number | null,
+    public anzahlPassen?: number,
     public anzahlPassenFinal?: number | null,
-    public team?: number | null,
-    public template?: boolean | null
+    public anzahlTeam?: number | null
   ) {
     this.finalRunde = this.finalRunde ?? false;
-    this.template = this.template ?? false;
   }
 }
 

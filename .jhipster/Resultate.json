@@ -3,7 +3,8 @@
   "fields": [
     {
       "fieldName": "runde",
-      "fieldType": "Integer"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
     }
   ],
   "relationships": [
@@ -40,19 +41,22 @@
       "otherEntityName": "gruppen",
       "otherEntityRelationshipName": "resultate",
       "relationshipName": "gruppe",
+      "otherEntityField": "name",
       "ownerSide": true
     },
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "schuetze",
       "otherEntityRelationshipName": "resultate",
-      "relationshipName": "schuetze"
+      "relationshipName": "schuetze",
+      "otherEntityField": "name"
     },
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "wettkampf",
       "otherEntityRelationshipName": "resultate",
-      "relationshipName": "wettkampf"
+      "relationshipName": "wettkampf",
+      "otherEntityField": "name"
     }
   ],
   "entityTableName": "resultate",

@@ -8,6 +8,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,7 +48,7 @@ public class ResultateResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/resultates")
-    public ResponseEntity<Resultate> createResultate(@RequestBody Resultate resultate) throws URISyntaxException {
+    public ResponseEntity<Resultate> createResultate(@Valid @RequestBody Resultate resultate) throws URISyntaxException {
         log.debug("REST request to save Resultate : {}", resultate);
         if (resultate.getId() != null) {
             throw new BadRequestAlertException("A new resultate cannot already have an ID", ENTITY_NAME, "idexists");
@@ -71,7 +73,7 @@ public class ResultateResource {
     @PutMapping("/resultates/{id}")
     public ResponseEntity<Resultate> updateResultate(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody Resultate resultate
+        @Valid @RequestBody Resultate resultate
     ) throws URISyntaxException {
         log.debug("REST request to update Resultate : {}, {}", id, resultate);
         if (resultate.getId() == null) {
@@ -106,7 +108,7 @@ public class ResultateResource {
     @PatchMapping(value = "/resultates/{id}", consumes = "application/merge-patch+json")
     public ResponseEntity<Resultate> partialUpdateResultate(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody Resultate resultate
+        @NotNull @RequestBody Resultate resultate
     ) throws URISyntaxException {
         log.debug("REST request to partial update Resultate partially : {}, {}", id, resultate);
         if (resultate.getId() == null) {

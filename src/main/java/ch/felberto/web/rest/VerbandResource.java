@@ -8,6 +8,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,7 +48,7 @@ public class VerbandResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/verbands")
-    public ResponseEntity<Verband> createVerband(@RequestBody Verband verband) throws URISyntaxException {
+    public ResponseEntity<Verband> createVerband(@Valid @RequestBody Verband verband) throws URISyntaxException {
         log.debug("REST request to save Verband : {}", verband);
         if (verband.getId() != null) {
             throw new BadRequestAlertException("A new verband cannot already have an ID", ENTITY_NAME, "idexists");
@@ -69,8 +71,10 @@ public class VerbandResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/verbands/{id}")
-    public ResponseEntity<Verband> updateVerband(@PathVariable(value = "id", required = false) final Long id, @RequestBody Verband verband)
-        throws URISyntaxException {
+    public ResponseEntity<Verband> updateVerband(
+        @PathVariable(value = "id", required = false) final Long id,
+        @Valid @RequestBody Verband verband
+    ) throws URISyntaxException {
         log.debug("REST request to update Verband : {}, {}", id, verband);
         if (verband.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -104,7 +108,7 @@ public class VerbandResource {
     @PatchMapping(value = "/verbands/{id}", consumes = "application/merge-patch+json")
     public ResponseEntity<Verband> partialUpdateVerband(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody Verband verband
+        @NotNull @RequestBody Verband verband
     ) throws URISyntaxException {
         log.debug("REST request to partial update Verband partially : {}, {}", id, verband);
         if (verband.getId() == null) {
