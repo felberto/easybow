@@ -23,23 +23,23 @@ entity Wettkampf {
     jahr LocalDate,
     anzahlRunden Integer,
     final Boolean,
-    anzahlPassen Integer min(1) max(4),
-    anzahlPassenFinal Integer min(1) max(4),
+    anzahlPassen Integer,
+    anzahlPassenFinal Integer,
     team Integer,
     template Boolean
 }
 
 entity Passen {
-	p1 Integer min(0) max(11),
-    p2 Integer min(0) max(11),
-  	p3 Integer min(0) max(11),
-    p4 Integer min(0) max(11),
-    p5 Integer min(0) max(11),
-    p6 Integer min(0) max(11),
-    p7 Integer min(0) max(11),
-    p8 Integer min(0) max(11),
-    p9 Integer min(0) max(11),
-    p10 Integer min(0) max(11),
+	p1 Integer,
+    p2 Integer,
+  	p3 Integer,
+    p4 Integer,
+    p5 Integer,
+    p6 Integer,
+    p7 Integer,
+    p8 Integer,
+    p9 Integer,
+    p10 Integer,
     resultat Integer
 }
 
