@@ -52,22 +52,76 @@ describe('Component Tests', () => {
     });
 
     describe('ngOnInit', () => {
-      it('Should call passe query and add missing value', () => {
+      it('Should call passe1 query and add missing value', () => {
         const resultate: IResultate = { id: 456 };
-        const passe: IPassen = { id: 1899 };
-        resultate.passe = passe;
+        const passe1: IPassen = { id: 1899 };
+        resultate.passe1 = passe1;
 
-        const passeCollection: IPassen[] = [{ id: 97842 }];
-        jest.spyOn(passenService, 'query').mockReturnValue(of(new HttpResponse({ body: passeCollection })));
-        const expectedCollection: IPassen[] = [passe, ...passeCollection];
+        const passe1Collection: IPassen[] = [{ id: 97842 }];
+        jest.spyOn(passenService, 'query').mockReturnValue(of(new HttpResponse({ body: passe1Collection })));
+        const expectedCollection: IPassen[] = [passe1, ...passe1Collection];
         jest.spyOn(passenService, 'addPassenToCollectionIfMissing').mockReturnValue(expectedCollection);
 
         activatedRoute.data = of({ resultate });
         comp.ngOnInit();
 
         expect(passenService.query).toHaveBeenCalled();
-        expect(passenService.addPassenToCollectionIfMissing).toHaveBeenCalledWith(passeCollection, passe);
-        expect(comp.passesCollection).toEqual(expectedCollection);
+        expect(passenService.addPassenToCollectionIfMissing).toHaveBeenCalledWith(passe1Collection, passe1);
+        expect(comp.passe1sCollection).toEqual(expectedCollection);
+      });
+
+      it('Should call passe2 query and add missing value', () => {
+        const resultate: IResultate = { id: 456 };
+        const passe2: IPassen = { id: 81609 };
+        resultate.passe2 = passe2;
+
+        const passe2Collection: IPassen[] = [{ id: 64656 }];
+        jest.spyOn(passenService, 'query').mockReturnValue(of(new HttpResponse({ body: passe2Collection })));
+        const expectedCollection: IPassen[] = [passe2, ...passe2Collection];
+        jest.spyOn(passenService, 'addPassenToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+        activatedRoute.data = of({ resultate });
+        comp.ngOnInit();
+
+        expect(passenService.query).toHaveBeenCalled();
+        expect(passenService.addPassenToCollectionIfMissing).toHaveBeenCalledWith(passe2Collection, passe2);
+        expect(comp.passe2sCollection).toEqual(expectedCollection);
+      });
+
+      it('Should call passe3 query and add missing value', () => {
+        const resultate: IResultate = { id: 456 };
+        const passe3: IPassen = { id: 84689 };
+        resultate.passe3 = passe3;
+
+        const passe3Collection: IPassen[] = [{ id: 46950 }];
+        jest.spyOn(passenService, 'query').mockReturnValue(of(new HttpResponse({ body: passe3Collection })));
+        const expectedCollection: IPassen[] = [passe3, ...passe3Collection];
+        jest.spyOn(passenService, 'addPassenToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+        activatedRoute.data = of({ resultate });
+        comp.ngOnInit();
+
+        expect(passenService.query).toHaveBeenCalled();
+        expect(passenService.addPassenToCollectionIfMissing).toHaveBeenCalledWith(passe3Collection, passe3);
+        expect(comp.passe3sCollection).toEqual(expectedCollection);
+      });
+
+      it('Should call passe4 query and add missing value', () => {
+        const resultate: IResultate = { id: 456 };
+        const passe4: IPassen = { id: 11131 };
+        resultate.passe4 = passe4;
+
+        const passe4Collection: IPassen[] = [{ id: 12199 }];
+        jest.spyOn(passenService, 'query').mockReturnValue(of(new HttpResponse({ body: passe4Collection })));
+        const expectedCollection: IPassen[] = [passe4, ...passe4Collection];
+        jest.spyOn(passenService, 'addPassenToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+        activatedRoute.data = of({ resultate });
+        comp.ngOnInit();
+
+        expect(passenService.query).toHaveBeenCalled();
+        expect(passenService.addPassenToCollectionIfMissing).toHaveBeenCalledWith(passe4Collection, passe4);
+        expect(comp.passe4sCollection).toEqual(expectedCollection);
       });
 
       it('Should call gruppe query and add missing value', () => {
@@ -128,8 +182,14 @@ describe('Component Tests', () => {
 
       it('Should update editForm', () => {
         const resultate: IResultate = { id: 456 };
-        const passe: IPassen = { id: 81609 };
-        resultate.passe = passe;
+        const passe1: IPassen = { id: 48052 };
+        resultate.passe1 = passe1;
+        const passe2: IPassen = { id: 59389 };
+        resultate.passe2 = passe2;
+        const passe3: IPassen = { id: 59362 };
+        resultate.passe3 = passe3;
+        const passe4: IPassen = { id: 92137 };
+        resultate.passe4 = passe4;
         const gruppe: IGruppen = { id: 97148 };
         resultate.gruppe = gruppe;
         const schuetze: ISchuetze = { id: 53609 };
@@ -141,7 +201,10 @@ describe('Component Tests', () => {
         comp.ngOnInit();
 
         expect(comp.editForm.value).toEqual(expect.objectContaining(resultate));
-        expect(comp.passesCollection).toContain(passe);
+        expect(comp.passe1sCollection).toContain(passe1);
+        expect(comp.passe2sCollection).toContain(passe2);
+        expect(comp.passe3sCollection).toContain(passe3);
+        expect(comp.passe4sCollection).toContain(passe4);
         expect(comp.gruppesCollection).toContain(gruppe);
         expect(comp.schuetzesSharedCollection).toContain(schuetze);
         expect(comp.wettkampfsSharedCollection).toContain(wettkampf);

@@ -18,10 +18,28 @@
         <dd>
           <span>{{ resultate.runde }}</span>
         </dd>
-        <dt><span>Passe</span></dt>
+        <dt><span>Passe 1</span></dt>
         <dd>
-          <div *ngIf="resultate.passe">
-            <a [routerLink]="['/passen', resultate.passe?.id, 'view']">{{ resultate.passe?.id }}</a>
+          <div *ngIf="resultate.passe1">
+            <a [routerLink]="['/passen', resultate.passe1?.id, 'view']">{{ resultate.passe1?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Passe 2</span></dt>
+        <dd>
+          <div *ngIf="resultate.passe2">
+            <a [routerLink]="['/passen', resultate.passe2?.id, 'view']">{{ resultate.passe2?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Passe 3</span></dt>
+        <dd>
+          <div *ngIf="resultate.passe3">
+            <a [routerLink]="['/passen', resultate.passe3?.id, 'view']">{{ resultate.passe3?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Passe 4</span></dt>
+        <dd>
+          <div *ngIf="resultate.passe4">
+            <a [routerLink]="['/passen', resultate.passe4?.id, 'view']">{{ resultate.passe4?.id }}</a>
           </div>
         </dd>
         <dt><span>Gruppe</span></dt>

@@ -23,7 +23,10 @@ import { WettkampfService } from 'app/entities/wettkampf/service/wettkampf.servi
 export class ResultateUpdateComponent implements OnInit {
   isSaving = false;
 
-  passesCollection: IPassen[] = [];
+  passe1sCollection: IPassen[] = [];
+  passe2sCollection: IPassen[] = [];
+  passe3sCollection: IPassen[] = [];
+  passe4sCollection: IPassen[] = [];
   gruppesCollection: IGruppen[] = [];
   schuetzesSharedCollection: ISchuetze[] = [];
   wettkampfsSharedCollection: IWettkampf[] = [];
@@ -31,7 +34,10 @@ export class ResultateUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     runde: [],
-    passe: [],
+    passe1: [],
+    passe2: [],
+    passe3: [],
+    passe4: [],
     gruppe: [],
     schuetze: [],
     wettkampf: [],
@@ -108,13 +114,19 @@ export class ResultateUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: resultate.id,
       runde: resultate.runde,
-      passe: resultate.passe,
+      passe1: resultate.passe1,
+      passe2: resultate.passe2,
+      passe3: resultate.passe3,
+      passe4: resultate.passe4,
       gruppe: resultate.gruppe,
       schuetze: resultate.schuetze,
       wettkampf: resultate.wettkampf,
     });
 
-    this.passesCollection = this.passenService.addPassenToCollectionIfMissing(this.passesCollection, resultate.passe);
+    this.passe1sCollection = this.passenService.addPassenToCollectionIfMissing(this.passe1sCollection, resultate.passe1);
+    this.passe2sCollection = this.passenService.addPassenToCollectionIfMissing(this.passe2sCollection, resultate.passe2);
+    this.passe3sCollection = this.passenService.addPassenToCollectionIfMissing(this.passe3sCollection, resultate.passe3);
+    this.passe4sCollection = this.passenService.addPassenToCollectionIfMissing(this.passe4sCollection, resultate.passe4);
     this.gruppesCollection = this.gruppenService.addGruppenToCollectionIfMissing(this.gruppesCollection, resultate.gruppe);
     this.schuetzesSharedCollection = this.schuetzeService.addSchuetzeToCollectionIfMissing(
       this.schuetzesSharedCollection,
@@ -130,8 +142,26 @@ export class ResultateUpdateComponent implements OnInit {
     this.passenService
       .query({ filter: 'resultate-is-null' })
       .pipe(map((res: HttpResponse<IPassen[]>) => res.body ?? []))
-      .pipe(map((passens: IPassen[]) => this.passenService.addPassenToCollectionIfMissing(passens, this.editForm.get('passe')!.value)))
-      .subscribe((passens: IPassen[]) => (this.passesCollection = passens));
+      .pipe(map((passens: IPassen[]) => this.passenService.addPassenToCollectionIfMissing(passens, this.editForm.get('passe1')!.value)))
+      .subscribe((passens: IPassen[]) => (this.passe1sCollection = passens));
+
+    this.passenService
+      .query({ filter: 'resultate-is-null' })
+      .pipe(map((res: HttpResponse<IPassen[]>) => res.body ?? []))
+      .pipe(map((passens: IPassen[]) => this.passenService.addPassenToCollectionIfMissing(passens, this.editForm.get('passe2')!.value)))
+      .subscribe((passens: IPassen[]) => (this.passe2sCollection = passens));
+
+    this.passenService
+      .query({ filter: 'resultate-is-null' })
+      .pipe(map((res: HttpResponse<IPassen[]>) => res.body ?? []))
+      .pipe(map((passens: IPassen[]) => this.passenService.addPassenToCollectionIfMissing(passens, this.editForm.get('passe3')!.value)))
+      .subscribe((passens: IPassen[]) => (this.passe3sCollection = passens));
+
+    this.passenService
+      .query({ filter: 'resultate-is-null' })
+      .pipe(map((res: HttpResponse<IPassen[]>) => res.body ?? []))
+      .pipe(map((passens: IPassen[]) => this.passenService.addPassenToCollectionIfMissing(passens, this.editForm.get('passe4')!.value)))
+      .subscribe((passens: IPassen[]) => (this.passe4sCollection = passens));
 
     this.gruppenService
       .query({ filter: 'resultate-is-null' })
@@ -167,7 +197,10 @@ export class ResultateUpdateComponent implements OnInit {
       ...new Resultate(),
       id: this.editForm.get(['id'])!.value,
       runde: this.editForm.get(['runde'])!.value,
-      passe: this.editForm.get(['passe'])!.value,
+      passe1: this.editForm.get(['passe1'])!.value,
+      passe2: this.editForm.get(['passe2'])!.value,
+      passe3: this.editForm.get(['passe3'])!.value,
+      passe4: this.editForm.get(['passe4'])!.value,
       gruppe: this.editForm.get(['gruppe'])!.value,
       schuetze: this.editForm.get(['schuetze'])!.value,
       wettkampf: this.editForm.get(['wettkampf'])!.value,

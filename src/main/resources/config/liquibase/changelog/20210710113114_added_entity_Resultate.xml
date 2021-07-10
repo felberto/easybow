@@ -17,8 +17,17 @@
             <column name="runde" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="passe_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_resultate__passe_id" />
+            <column name="passe1_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_resultate__passe1_id" />
+            </column>
+            <column name="passe2_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_resultate__passe2_id" />
+            </column>
+            <column name="passe3_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_resultate__passe3_id" />
+            </column>
+            <column name="passe4_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_resultate__passe4_id" />
             </column>
             <column name="gruppe_id" type="bigint">
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_resultate__gruppe_id" />
