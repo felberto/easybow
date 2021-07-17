@@ -18,12 +18,15 @@ export class WettkampfUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     name: [null, [Validators.required]],
-    jahr: [null, [Validators.required]],
+    jahr: [],
     anzahlRunden: [null, [Validators.required]],
-    finalRunde: [],
     anzahlPassen: [null, [Validators.required, Validators.min(1), Validators.max(4)]],
+    finalRunde: [],
+    finalVorbereitung: [],
+    anzahlFinalteilnehmer: [],
     anzahlPassenFinal: [null, [Validators.min(1), Validators.max(4)]],
     anzahlTeam: [],
+    template: [],
   });
 
   constructor(protected wettkampfService: WettkampfService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {}
@@ -73,10 +76,13 @@ export class WettkampfUpdateComponent implements OnInit {
       name: wettkampf.name,
       jahr: wettkampf.jahr,
       anzahlRunden: wettkampf.anzahlRunden,
-      finalRunde: wettkampf.finalRunde,
       anzahlPassen: wettkampf.anzahlPassen,
+      finalRunde: wettkampf.finalRunde,
+      finalVorbereitung: wettkampf.finalVorbereitung,
+      anzahlFinalteilnehmer: wettkampf.anzahlFinalteilnehmer,
       anzahlPassenFinal: wettkampf.anzahlPassenFinal,
       anzahlTeam: wettkampf.anzahlTeam,
+      template: wettkampf.template,
     });
   }
 
@@ -87,10 +93,13 @@ export class WettkampfUpdateComponent implements OnInit {
       name: this.editForm.get(['name'])!.value,
       jahr: this.editForm.get(['jahr'])!.value,
       anzahlRunden: this.editForm.get(['anzahlRunden'])!.value,
-      finalRunde: this.editForm.get(['finalRunde'])!.value,
       anzahlPassen: this.editForm.get(['anzahlPassen'])!.value,
+      finalRunde: this.editForm.get(['finalRunde'])!.value,
+      finalVorbereitung: this.editForm.get(['finalVorbereitung'])!.value,
+      anzahlFinalteilnehmer: this.editForm.get(['anzahlFinalteilnehmer'])!.value,
       anzahlPassenFinal: this.editForm.get(['anzahlPassenFinal'])!.value,
       anzahlTeam: this.editForm.get(['anzahlTeam'])!.value,
+      template: this.editForm.get(['template'])!.value,
     };
   }
 }

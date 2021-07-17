@@ -8,8 +8,7 @@
     },
     {
       "fieldName": "jahr",
-      "fieldType": "LocalDate",
-      "fieldValidateRules": ["required"]
+      "fieldType": "LocalDate"
     },
     {
       "fieldName": "anzahlRunden",
@@ -17,15 +16,23 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "finalRunde",
-      "fieldType": "Boolean"
-    },
-    {
       "fieldName": "anzahlPassen",
       "fieldType": "Integer",
       "fieldValidateRules": ["min", "max", "required"],
       "fieldValidateRulesMin": "1",
       "fieldValidateRulesMax": "4"
+    },
+    {
+      "fieldName": "finalRunde",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "finalVorbereitung",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "anzahlFinalteilnehmer",
+      "fieldType": "Integer"
     },
     {
       "fieldName": "anzahlPassenFinal",
@@ -37,6 +44,10 @@
     {
       "fieldName": "anzahlTeam",
       "fieldType": "Integer"
+    },
+    {
+      "fieldName": "template",
+      "fieldType": "Boolean"
     }
   ],
   "relationships": [],

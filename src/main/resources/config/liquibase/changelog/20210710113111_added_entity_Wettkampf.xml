@@ -18,21 +18,30 @@
                 <constraints nullable="false" />
             </column>
             <column name="jahr" type="date">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="anzahl_runden" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="anzahl_passen" type="integer">
                 <constraints nullable="false" />
             </column>
             <column name="final_runde" type="boolean">
                 <constraints nullable="true" />
             </column>
-            <column name="anzahl_passen" type="integer">
-                <constraints nullable="false" />
+            <column name="final_vorbereitung" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="anzahl_finalteilnehmer" type="integer">
+                <constraints nullable="true" />
             </column>
             <column name="anzahl_passen_final" type="integer">
                 <constraints nullable="true" />
             </column>
             <column name="anzahl_team" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="template" type="boolean">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -58,10 +67,13 @@
             <column name="name" type="string"/>
             <column name="jahr" type="date"/>
             <column name="anzahl_runden" type="numeric"/>
-            <column name="final_runde" type="boolean"/>
             <column name="anzahl_passen" type="numeric"/>
+            <column name="final_runde" type="boolean"/>
+            <column name="final_vorbereitung" type="boolean"/>
+            <column name="anzahl_finalteilnehmer" type="numeric"/>
             <column name="anzahl_passen_final" type="numeric"/>
             <column name="anzahl_team" type="numeric"/>
+            <column name="template" type="boolean"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

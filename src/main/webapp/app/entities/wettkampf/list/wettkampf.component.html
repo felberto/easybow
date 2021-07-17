@@ -36,10 +36,13 @@
           <th scope="col"><span>Name</span></th>
           <th scope="col"><span>Jahr</span></th>
           <th scope="col"><span>Anzahl Runden</span></th>
-          <th scope="col"><span>Final Runde</span></th>
           <th scope="col"><span>Anzahl Passen</span></th>
+          <th scope="col"><span>Final Runde</span></th>
+          <th scope="col"><span>Final Vorbereitung</span></th>
+          <th scope="col"><span>Anzahl Finalteilnehmer</span></th>
           <th scope="col"><span>Anzahl Passen Final</span></th>
           <th scope="col"><span>Anzahl Team</span></th>
+          <th scope="col"><span>Template</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -51,10 +54,13 @@
           <td>{{ wettkampf.name }}</td>
           <td>{{ wettkampf.jahr | formatMediumDate }}</td>
           <td>{{ wettkampf.anzahlRunden }}</td>
-          <td>{{ wettkampf.finalRunde }}</td>
           <td>{{ wettkampf.anzahlPassen }}</td>
+          <td>{{ wettkampf.finalRunde }}</td>
+          <td>{{ wettkampf.finalVorbereitung }}</td>
+          <td>{{ wettkampf.anzahlFinalteilnehmer }}</td>
           <td>{{ wettkampf.anzahlPassenFinal }}</td>
           <td>{{ wettkampf.anzahlTeam }}</td>
+          <td>{{ wettkampf.template }}</td>
           <td class="text-right">
             <div class="btn-group">
               <button

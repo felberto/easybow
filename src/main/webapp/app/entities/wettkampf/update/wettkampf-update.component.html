@@ -36,9 +36,6 @@
               <button type="button" class="btn btn-secondary" (click)="jahrDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
             </span>
           </div>
-          <div *ngIf="editForm.get('jahr')!.invalid && (editForm.get('jahr')!.dirty || editForm.get('jahr')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('jahr')?.errors?.required"> This field is required. </small>
-          </div>
         </div>
 
         <div class="form-group">
@@ -59,18 +56,6 @@
               This field should be a number.
             </small>
           </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" for="field_finalRunde">Final Runde</label>
-          <input
-            type="checkbox"
-            class="form-check"
-            name="finalRunde"
-            id="field_finalRunde"
-            data-cy="finalRunde"
-            formControlName="finalRunde"
-          />
         </div>
 
         <div class="form-group">
@@ -97,6 +82,42 @@
               This field should be a number.
             </small>
           </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_finalRunde">Final Runde</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="finalRunde"
+            id="field_finalRunde"
+            data-cy="finalRunde"
+            formControlName="finalRunde"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_finalVorbereitung">Final Vorbereitung</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="finalVorbereitung"
+            id="field_finalVorbereitung"
+            data-cy="finalVorbereitung"
+            formControlName="finalVorbereitung"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_anzahlFinalteilnehmer">Anzahl Finalteilnehmer</label>
+          <input
+            type="number"
+            class="form-control"
+            name="anzahlFinalteilnehmer"
+            id="field_anzahlFinalteilnehmer"
+            data-cy="anzahlFinalteilnehmer"
+            formControlName="anzahlFinalteilnehmer"
+          />
         </div>
 
         <div class="form-group">
@@ -137,6 +158,11 @@
             data-cy="anzahlTeam"
             formControlName="anzahlTeam"
           />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_template">Template</label>
+          <input type="checkbox" class="form-check" name="template" id="field_template" data-cy="template" formControlName="template" />
         </div>
       </div>
 

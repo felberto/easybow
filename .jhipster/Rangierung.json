@@ -1,0 +1,35 @@
+{
+  "name": "Rangierung",
+  "fields": [
+    {
+      "fieldName": "position",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "rangierungskriterien",
+      "fieldType": "Rangierungskriterien",
+      "fieldValues": "RESULTAT,SERIE,TIEFSCHUESSE,MOUCHEN,ALTER",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "wettkampf",
+      "otherEntityRelationshipName": "rangierung",
+      "relationshipName": "wettkampf",
+      "otherEntityField": "name"
+    }
+  ],
+  "entityTableName": "rangierung",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210717143622"
+}

@@ -26,22 +26,27 @@ public class Wettkampf implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull
-    @Column(name = "jahr", nullable = false)
+    @Column(name = "jahr")
     private LocalDate jahr;
 
     @NotNull
     @Column(name = "anzahl_runden", nullable = false)
     private Integer anzahlRunden;
 
-    @Column(name = "final_runde")
-    private Boolean finalRunde;
-
     @NotNull
     @Min(value = 1)
     @Max(value = 4)
     @Column(name = "anzahl_passen", nullable = false)
     private Integer anzahlPassen;
+
+    @Column(name = "final_runde")
+    private Boolean finalRunde;
+
+    @Column(name = "final_vorbereitung")
+    private Boolean finalVorbereitung;
+
+    @Column(name = "anzahl_finalteilnehmer")
+    private Integer anzahlFinalteilnehmer;
 
     @Min(value = 1)
     @Max(value = 4)
@@ -50,6 +55,9 @@ public class Wettkampf implements Serializable {
 
     @Column(name = "anzahl_team")
     private Integer anzahlTeam;
+
+    @Column(name = "template")
+    private Boolean template;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -104,6 +112,19 @@ public class Wettkampf implements Serializable {
         this.anzahlRunden = anzahlRunden;
     }
 
+    public Integer getAnzahlPassen() {
+        return this.anzahlPassen;
+    }
+
+    public Wettkampf anzahlPassen(Integer anzahlPassen) {
+        this.anzahlPassen = anzahlPassen;
+        return this;
+    }
+
+    public void setAnzahlPassen(Integer anzahlPassen) {
+        this.anzahlPassen = anzahlPassen;
+    }
+
     public Boolean getFinalRunde() {
         return this.finalRunde;
     }
@@ -117,17 +138,30 @@ public class Wettkampf implements Serializable {
         this.finalRunde = finalRunde;
     }
 
-    public Integer getAnzahlPassen() {
-        return this.anzahlPassen;
+    public Boolean getFinalVorbereitung() {
+        return this.finalVorbereitung;
     }
 
-    public Wettkampf anzahlPassen(Integer anzahlPassen) {
-        this.anzahlPassen = anzahlPassen;
+    public Wettkampf finalVorbereitung(Boolean finalVorbereitung) {
+        this.finalVorbereitung = finalVorbereitung;
         return this;
     }
 
-    public void setAnzahlPassen(Integer anzahlPassen) {
-        this.anzahlPassen = anzahlPassen;
+    public void setFinalVorbereitung(Boolean finalVorbereitung) {
+        this.finalVorbereitung = finalVorbereitung;
+    }
+
+    public Integer getAnzahlFinalteilnehmer() {
+        return this.anzahlFinalteilnehmer;
+    }
+
+    public Wettkampf anzahlFinalteilnehmer(Integer anzahlFinalteilnehmer) {
+        this.anzahlFinalteilnehmer = anzahlFinalteilnehmer;
+        return this;
+    }
+
+    public void setAnzahlFinalteilnehmer(Integer anzahlFinalteilnehmer) {
+        this.anzahlFinalteilnehmer = anzahlFinalteilnehmer;
     }
 
     public Integer getAnzahlPassenFinal() {
@@ -154,6 +188,19 @@ public class Wettkampf implements Serializable {
 
     public void setAnzahlTeam(Integer anzahlTeam) {
         this.anzahlTeam = anzahlTeam;
+    }
+
+    public Boolean getTemplate() {
+        return this.template;
+    }
+
+    public Wettkampf template(Boolean template) {
+        this.template = template;
+        return this;
+    }
+
+    public void setTemplate(Boolean template) {
+        this.template = template;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -183,10 +230,13 @@ public class Wettkampf implements Serializable {
             ", name='" + getName() + "'" +
             ", jahr='" + getJahr() + "'" +
             ", anzahlRunden=" + getAnzahlRunden() +
-            ", finalRunde='" + getFinalRunde() + "'" +
             ", anzahlPassen=" + getAnzahlPassen() +
+            ", finalRunde='" + getFinalRunde() + "'" +
+            ", finalVorbereitung='" + getFinalVorbereitung() + "'" +
+            ", anzahlFinalteilnehmer=" + getAnzahlFinalteilnehmer() +
             ", anzahlPassenFinal=" + getAnzahlPassenFinal() +
             ", anzahlTeam=" + getAnzahlTeam() +
+            ", template='" + getTemplate() + "'" +
             "}";
     }
 }

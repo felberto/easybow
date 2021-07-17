@@ -39,6 +39,11 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'Resultates' },
         loadChildren: () => import('./resultate/resultate.module').then(m => m.ResultateModule),
       },
+      {
+        path: 'rangierung',
+        data: { pageTitle: 'Rangierungs' },
+        loadChildren: () => import('./rangierung/rangierung.module').then(m => m.RangierungModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],
