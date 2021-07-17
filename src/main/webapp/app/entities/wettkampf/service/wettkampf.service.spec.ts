@@ -29,10 +29,13 @@ describe('Service Tests', () => {
         name: 'AAAAAAA',
         jahr: currentDate,
         anzahlRunden: 0,
-        finalRunde: false,
         anzahlPassen: 0,
+        finalRunde: false,
+        finalVorbereitung: false,
+        anzahlFinalteilnehmer: 0,
         anzahlPassenFinal: 0,
         anzahlTeam: 0,
+        template: false,
       };
     });
 
@@ -82,10 +85,13 @@ describe('Service Tests', () => {
             name: 'BBBBBB',
             jahr: currentDate.format(DATE_FORMAT),
             anzahlRunden: 1,
-            finalRunde: true,
             anzahlPassen: 1,
+            finalRunde: true,
+            finalVorbereitung: true,
+            anzahlFinalteilnehmer: 1,
             anzahlPassenFinal: 1,
             anzahlTeam: 1,
+            template: true,
           },
           elemDefault
         );
@@ -108,7 +114,8 @@ describe('Service Tests', () => {
         const patchObject = Object.assign(
           {
             name: 'BBBBBB',
-            finalRunde: true,
+            anzahlPassen: 1,
+            finalVorbereitung: true,
             anzahlPassenFinal: 1,
           },
           new Wettkampf()
@@ -137,10 +144,13 @@ describe('Service Tests', () => {
             name: 'BBBBBB',
             jahr: currentDate.format(DATE_FORMAT),
             anzahlRunden: 1,
-            finalRunde: true,
             anzahlPassen: 1,
+            finalRunde: true,
+            finalVorbereitung: true,
+            anzahlFinalteilnehmer: 1,
             anzahlPassenFinal: 1,
             anzahlTeam: 1,
+            template: true,
           },
           elemDefault
         );
@@ -197,7 +207,7 @@ describe('Service Tests', () => {
         });
 
         it('should add only unique Wettkampf to an array', () => {
-          const wettkampfArray: IWettkampf[] = [{ id: 123 }, { id: 456 }, { id: 71195 }];
+          const wettkampfArray: IWettkampf[] = [{ id: 123 }, { id: 456 }, { id: 14443 }];
           const wettkampfCollection: IWettkampf[] = [{ id: 123 }];
           expectedResult = service.addWettkampfToCollectionIfMissing(wettkampfCollection, ...wettkampfArray);
           expect(expectedResult).toHaveLength(3);

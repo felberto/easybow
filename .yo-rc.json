@@ -44,8 +44,8 @@
     "clientTheme": "none",
     "clientThemeVariant": "",
     "reactive": false,
-    "entities": ["Verband", "Verein", "Schuetze", "Wettkampf", "Passen", "Gruppen", "Resultate"],
-    "lastLiquibaseTimestamp": 1625916674000
+    "entities": ["Verband", "Verein", "Schuetze", "Wettkampf", "Passen", "Gruppen", "Resultate", "Rangierung"],
+    "lastLiquibaseTimestamp": 1626532582000
   },
   "git-provider": "GitHub",
   "git-company": "felberto",

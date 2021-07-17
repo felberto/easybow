@@ -58,6 +58,7 @@ public class CacheConfiguration {
             createCache(cm, ch.felberto.domain.Passen.class.getName());
             createCache(cm, ch.felberto.domain.Gruppen.class.getName());
             createCache(cm, ch.felberto.domain.Resultate.class.getName());
+            createCache(cm, ch.felberto.domain.Rangierung.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

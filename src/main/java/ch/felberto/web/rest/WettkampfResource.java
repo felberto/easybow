@@ -135,17 +135,26 @@ public class WettkampfResource {
                     if (wettkampf.getAnzahlRunden() != null) {
                         existingWettkampf.setAnzahlRunden(wettkampf.getAnzahlRunden());
                     }
+                    if (wettkampf.getAnzahlPassen() != null) {
+                        existingWettkampf.setAnzahlPassen(wettkampf.getAnzahlPassen());
+                    }
                     if (wettkampf.getFinalRunde() != null) {
                         existingWettkampf.setFinalRunde(wettkampf.getFinalRunde());
                     }
-                    if (wettkampf.getAnzahlPassen() != null) {
-                        existingWettkampf.setAnzahlPassen(wettkampf.getAnzahlPassen());
+                    if (wettkampf.getFinalVorbereitung() != null) {
+                        existingWettkampf.setFinalVorbereitung(wettkampf.getFinalVorbereitung());
+                    }
+                    if (wettkampf.getAnzahlFinalteilnehmer() != null) {
+                        existingWettkampf.setAnzahlFinalteilnehmer(wettkampf.getAnzahlFinalteilnehmer());
                     }
                     if (wettkampf.getAnzahlPassenFinal() != null) {
                         existingWettkampf.setAnzahlPassenFinal(wettkampf.getAnzahlPassenFinal());
                     }
                     if (wettkampf.getAnzahlTeam() != null) {
                         existingWettkampf.setAnzahlTeam(wettkampf.getAnzahlTeam());
+                    }
+                    if (wettkampf.getTemplate() != null) {
+                        existingWettkampf.setTemplate(wettkampf.getTemplate());
                     }
 
                     return existingWettkampf;

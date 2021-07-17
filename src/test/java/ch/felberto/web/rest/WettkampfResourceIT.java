@@ -40,17 +40,26 @@ class WettkampfResourceIT {
     private static final Integer DEFAULT_ANZAHL_RUNDEN = 1;
     private static final Integer UPDATED_ANZAHL_RUNDEN = 2;
 
+    private static final Integer DEFAULT_ANZAHL_PASSEN = 1;
+    private static final Integer UPDATED_ANZAHL_PASSEN = 2;
+
     private static final Boolean DEFAULT_FINAL_RUNDE = false;
     private static final Boolean UPDATED_FINAL_RUNDE = true;
 
-    private static final Integer DEFAULT_ANZAHL_PASSEN = 1;
-    private static final Integer UPDATED_ANZAHL_PASSEN = 2;
+    private static final Boolean DEFAULT_FINAL_VORBEREITUNG = false;
+    private static final Boolean UPDATED_FINAL_VORBEREITUNG = true;
+
+    private static final Integer DEFAULT_ANZAHL_FINALTEILNEHMER = 1;
+    private static final Integer UPDATED_ANZAHL_FINALTEILNEHMER = 2;
 
     private static final Integer DEFAULT_ANZAHL_PASSEN_FINAL = 1;
     private static final Integer UPDATED_ANZAHL_PASSEN_FINAL = 2;
 
     private static final Integer DEFAULT_ANZAHL_TEAM = 1;
     private static final Integer UPDATED_ANZAHL_TEAM = 2;
+
+    private static final Boolean DEFAULT_TEMPLATE = false;
+    private static final Boolean UPDATED_TEMPLATE = true;
 
     private static final String ENTITY_API_URL = "/api/wettkampfs";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -80,10 +89,13 @@ class WettkampfResourceIT {
             .name(DEFAULT_NAME)
             .jahr(DEFAULT_JAHR)
             .anzahlRunden(DEFAULT_ANZAHL_RUNDEN)
-            .finalRunde(DEFAULT_FINAL_RUNDE)
             .anzahlPassen(DEFAULT_ANZAHL_PASSEN)
+            .finalRunde(DEFAULT_FINAL_RUNDE)
+            .finalVorbereitung(DEFAULT_FINAL_VORBEREITUNG)
+            .anzahlFinalteilnehmer(DEFAULT_ANZAHL_FINALTEILNEHMER)
             .anzahlPassenFinal(DEFAULT_ANZAHL_PASSEN_FINAL)
-            .anzahlTeam(DEFAULT_ANZAHL_TEAM);
+            .anzahlTeam(DEFAULT_ANZAHL_TEAM)
+            .template(DEFAULT_TEMPLATE);
         return wettkampf;
     }
 
@@ -98,10 +110,13 @@ class WettkampfResourceIT {
             .name(UPDATED_NAME)
             .jahr(UPDATED_JAHR)
             .anzahlRunden(UPDATED_ANZAHL_RUNDEN)
-            .finalRunde(UPDATED_FINAL_RUNDE)
             .anzahlPassen(UPDATED_ANZAHL_PASSEN)
+            .finalRunde(UPDATED_FINAL_RUNDE)
+            .finalVorbereitung(UPDATED_FINAL_VORBEREITUNG)
+            .anzahlFinalteilnehmer(UPDATED_ANZAHL_FINALTEILNEHMER)
             .anzahlPassenFinal(UPDATED_ANZAHL_PASSEN_FINAL)
-            .anzahlTeam(UPDATED_ANZAHL_TEAM);
+            .anzahlTeam(UPDATED_ANZAHL_TEAM)
+            .template(UPDATED_TEMPLATE);
         return wettkampf;
     }
 
@@ -126,10 +141,13 @@ class WettkampfResourceIT {
         assertThat(testWettkampf.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testWettkampf.getJahr()).isEqualTo(DEFAULT_JAHR);
         assertThat(testWettkampf.getAnzahlRunden()).isEqualTo(DEFAULT_ANZAHL_RUNDEN);
-        assertThat(testWettkampf.getFinalRunde()).isEqualTo(DEFAULT_FINAL_RUNDE);
         assertThat(testWettkampf.getAnzahlPassen()).isEqualTo(DEFAULT_ANZAHL_PASSEN);
+        assertThat(testWettkampf.getFinalRunde()).isEqualTo(DEFAULT_FINAL_RUNDE);
+        assertThat(testWettkampf.getFinalVorbereitung()).isEqualTo(DEFAULT_FINAL_VORBEREITUNG);
+        assertThat(testWettkampf.getAnzahlFinalteilnehmer()).isEqualTo(DEFAULT_ANZAHL_FINALTEILNEHMER);
         assertThat(testWettkampf.getAnzahlPassenFinal()).isEqualTo(DEFAULT_ANZAHL_PASSEN_FINAL);
         assertThat(testWettkampf.getAnzahlTeam()).isEqualTo(DEFAULT_ANZAHL_TEAM);
+        assertThat(testWettkampf.getTemplate()).isEqualTo(DEFAULT_TEMPLATE);
     }
 
     @Test
@@ -156,23 +174,6 @@ class WettkampfResourceIT {
         int databaseSizeBeforeTest = wettkampfRepository.findAll().size();
         // set the field null
         wettkampf.setName(null);
-
-        // Create the Wettkampf, which fails.
-
-        restWettkampfMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(wettkampf)))
-            .andExpect(status().isBadRequest());
-
-        List<Wettkampf> wettkampfList = wettkampfRepository.findAll();
-        assertThat(wettkampfList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkJahrIsRequired() throws Exception {
-        int databaseSizeBeforeTest = wettkampfRepository.findAll().size();
-        // set the field null
-        wettkampf.setJahr(null);
 
         // Create the Wettkampf, which fails.
 
@@ -233,10 +234,13 @@ class WettkampfResourceIT {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].jahr").value(hasItem(DEFAULT_JAHR.toString())))
             .andExpect(jsonPath("$.[*].anzahlRunden").value(hasItem(DEFAULT_ANZAHL_RUNDEN)))
-            .andExpect(jsonPath("$.[*].finalRunde").value(hasItem(DEFAULT_FINAL_RUNDE.booleanValue())))
             .andExpect(jsonPath("$.[*].anzahlPassen").value(hasItem(DEFAULT_ANZAHL_PASSEN)))
+            .andExpect(jsonPath("$.[*].finalRunde").value(hasItem(DEFAULT_FINAL_RUNDE.booleanValue())))
+            .andExpect(jsonPath("$.[*].finalVorbereitung").value(hasItem(DEFAULT_FINAL_VORBEREITUNG.booleanValue())))
+            .andExpect(jsonPath("$.[*].anzahlFinalteilnehmer").value(hasItem(DEFAULT_ANZAHL_FINALTEILNEHMER)))
             .andExpect(jsonPath("$.[*].anzahlPassenFinal").value(hasItem(DEFAULT_ANZAHL_PASSEN_FINAL)))
-            .andExpect(jsonPath("$.[*].anzahlTeam").value(hasItem(DEFAULT_ANZAHL_TEAM)));
+            .andExpect(jsonPath("$.[*].anzahlTeam").value(hasItem(DEFAULT_ANZAHL_TEAM)))
+            .andExpect(jsonPath("$.[*].template").value(hasItem(DEFAULT_TEMPLATE.booleanValue())));
     }
 
     @Test
@@ -254,10 +258,13 @@ class WettkampfResourceIT {
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.jahr").value(DEFAULT_JAHR.toString()))
             .andExpect(jsonPath("$.anzahlRunden").value(DEFAULT_ANZAHL_RUNDEN))
-            .andExpect(jsonPath("$.finalRunde").value(DEFAULT_FINAL_RUNDE.booleanValue()))
             .andExpect(jsonPath("$.anzahlPassen").value(DEFAULT_ANZAHL_PASSEN))
+            .andExpect(jsonPath("$.finalRunde").value(DEFAULT_FINAL_RUNDE.booleanValue()))
+            .andExpect(jsonPath("$.finalVorbereitung").value(DEFAULT_FINAL_VORBEREITUNG.booleanValue()))
+            .andExpect(jsonPath("$.anzahlFinalteilnehmer").value(DEFAULT_ANZAHL_FINALTEILNEHMER))
             .andExpect(jsonPath("$.anzahlPassenFinal").value(DEFAULT_ANZAHL_PASSEN_FINAL))
-            .andExpect(jsonPath("$.anzahlTeam").value(DEFAULT_ANZAHL_TEAM));
+            .andExpect(jsonPath("$.anzahlTeam").value(DEFAULT_ANZAHL_TEAM))
+            .andExpect(jsonPath("$.template").value(DEFAULT_TEMPLATE.booleanValue()));
     }
 
     @Test
@@ -283,10 +290,13 @@ class WettkampfResourceIT {
             .name(UPDATED_NAME)
             .jahr(UPDATED_JAHR)
             .anzahlRunden(UPDATED_ANZAHL_RUNDEN)
-            .finalRunde(UPDATED_FINAL_RUNDE)
             .anzahlPassen(UPDATED_ANZAHL_PASSEN)
+            .finalRunde(UPDATED_FINAL_RUNDE)
+            .finalVorbereitung(UPDATED_FINAL_VORBEREITUNG)
+            .anzahlFinalteilnehmer(UPDATED_ANZAHL_FINALTEILNEHMER)
             .anzahlPassenFinal(UPDATED_ANZAHL_PASSEN_FINAL)
-            .anzahlTeam(UPDATED_ANZAHL_TEAM);
+            .anzahlTeam(UPDATED_ANZAHL_TEAM)
+            .template(UPDATED_TEMPLATE);
 
         restWettkampfMockMvc
             .perform(
@@ -303,10 +313,13 @@ class WettkampfResourceIT {
         assertThat(testWettkampf.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testWettkampf.getJahr()).isEqualTo(UPDATED_JAHR);
         assertThat(testWettkampf.getAnzahlRunden()).isEqualTo(UPDATED_ANZAHL_RUNDEN);
-        assertThat(testWettkampf.getFinalRunde()).isEqualTo(UPDATED_FINAL_RUNDE);
         assertThat(testWettkampf.getAnzahlPassen()).isEqualTo(UPDATED_ANZAHL_PASSEN);
+        assertThat(testWettkampf.getFinalRunde()).isEqualTo(UPDATED_FINAL_RUNDE);
+        assertThat(testWettkampf.getFinalVorbereitung()).isEqualTo(UPDATED_FINAL_VORBEREITUNG);
+        assertThat(testWettkampf.getAnzahlFinalteilnehmer()).isEqualTo(UPDATED_ANZAHL_FINALTEILNEHMER);
         assertThat(testWettkampf.getAnzahlPassenFinal()).isEqualTo(UPDATED_ANZAHL_PASSEN_FINAL);
         assertThat(testWettkampf.getAnzahlTeam()).isEqualTo(UPDATED_ANZAHL_TEAM);
+        assertThat(testWettkampf.getTemplate()).isEqualTo(UPDATED_TEMPLATE);
     }
 
     @Test
@@ -377,7 +390,7 @@ class WettkampfResourceIT {
         Wettkampf partialUpdatedWettkampf = new Wettkampf();
         partialUpdatedWettkampf.setId(wettkampf.getId());
 
-        partialUpdatedWettkampf.name(UPDATED_NAME).finalRunde(UPDATED_FINAL_RUNDE).anzahlPassen(UPDATED_ANZAHL_PASSEN);
+        partialUpdatedWettkampf.name(UPDATED_NAME).anzahlPassen(UPDATED_ANZAHL_PASSEN).finalRunde(UPDATED_FINAL_RUNDE);
 
         restWettkampfMockMvc
             .perform(
@@ -394,10 +407,13 @@ class WettkampfResourceIT {
         assertThat(testWettkampf.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testWettkampf.getJahr()).isEqualTo(DEFAULT_JAHR);
         assertThat(testWettkampf.getAnzahlRunden()).isEqualTo(DEFAULT_ANZAHL_RUNDEN);
-        assertThat(testWettkampf.getFinalRunde()).isEqualTo(UPDATED_FINAL_RUNDE);
         assertThat(testWettkampf.getAnzahlPassen()).isEqualTo(UPDATED_ANZAHL_PASSEN);
+        assertThat(testWettkampf.getFinalRunde()).isEqualTo(UPDATED_FINAL_RUNDE);
+        assertThat(testWettkampf.getFinalVorbereitung()).isEqualTo(DEFAULT_FINAL_VORBEREITUNG);
+        assertThat(testWettkampf.getAnzahlFinalteilnehmer()).isEqualTo(DEFAULT_ANZAHL_FINALTEILNEHMER);
         assertThat(testWettkampf.getAnzahlPassenFinal()).isEqualTo(DEFAULT_ANZAHL_PASSEN_FINAL);
         assertThat(testWettkampf.getAnzahlTeam()).isEqualTo(DEFAULT_ANZAHL_TEAM);
+        assertThat(testWettkampf.getTemplate()).isEqualTo(DEFAULT_TEMPLATE);
     }
 
     @Test
@@ -416,10 +432,13 @@ class WettkampfResourceIT {
             .name(UPDATED_NAME)
             .jahr(UPDATED_JAHR)
             .anzahlRunden(UPDATED_ANZAHL_RUNDEN)
-            .finalRunde(UPDATED_FINAL_RUNDE)
             .anzahlPassen(UPDATED_ANZAHL_PASSEN)
+            .finalRunde(UPDATED_FINAL_RUNDE)
+            .finalVorbereitung(UPDATED_FINAL_VORBEREITUNG)
+            .anzahlFinalteilnehmer(UPDATED_ANZAHL_FINALTEILNEHMER)
             .anzahlPassenFinal(UPDATED_ANZAHL_PASSEN_FINAL)
-            .anzahlTeam(UPDATED_ANZAHL_TEAM);
+            .anzahlTeam(UPDATED_ANZAHL_TEAM)
+            .template(UPDATED_TEMPLATE);
 
         restWettkampfMockMvc
             .perform(
@@ -436,10 +455,13 @@ class WettkampfResourceIT {
         assertThat(testWettkampf.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testWettkampf.getJahr()).isEqualTo(UPDATED_JAHR);
         assertThat(testWettkampf.getAnzahlRunden()).isEqualTo(UPDATED_ANZAHL_RUNDEN);
-        assertThat(testWettkampf.getFinalRunde()).isEqualTo(UPDATED_FINAL_RUNDE);
         assertThat(testWettkampf.getAnzahlPassen()).isEqualTo(UPDATED_ANZAHL_PASSEN);
+        assertThat(testWettkampf.getFinalRunde()).isEqualTo(UPDATED_FINAL_RUNDE);
+        assertThat(testWettkampf.getFinalVorbereitung()).isEqualTo(UPDATED_FINAL_VORBEREITUNG);
+        assertThat(testWettkampf.getAnzahlFinalteilnehmer()).isEqualTo(UPDATED_ANZAHL_FINALTEILNEHMER);
         assertThat(testWettkampf.getAnzahlPassenFinal()).isEqualTo(UPDATED_ANZAHL_PASSEN_FINAL);
         assertThat(testWettkampf.getAnzahlTeam()).isEqualTo(UPDATED_ANZAHL_TEAM);
+        assertThat(testWettkampf.getTemplate()).isEqualTo(UPDATED_TEMPLATE);
     }
 
     @Test

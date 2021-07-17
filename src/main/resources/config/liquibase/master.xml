@@ -22,10 +22,12 @@
     <include file="config/liquibase/changelog/20210710113112_added_entity_Passen.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210710113113_added_entity_Gruppen.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210710113114_added_entity_Resultate.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210717143622_added_entity_Rangierung.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20210710113109_added_entity_constraints_Verein.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210710113110_added_entity_constraints_Schuetze.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210710113114_added_entity_constraints_Resultate.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210717143622_added_entity_constraints_Rangierung.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>
