@@ -18,17 +18,34 @@
   </a>
   <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="account !== null">
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
+      <!-- zsav menu -->
+      <li *jhiHasAnyAuthority="'ROLE_ZSAV'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="verein" (click)="collapseNavbar()">
           <span>
-            <fa-icon icon="home"></fa-icon>
-            <span>Home</span>
+            <mat-icon>holiday_village</mat-icon>
+            <span>Vereine</span>
+          </span>
+        </a>
+      </li>
+      <li *jhiHasAnyAuthority="'ROLE_ZSAV'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="schuetze" (click)="collapseNavbar()">
+          <span>
+            <mat-icon>groups</mat-icon>
+            <span>Schützen</span>
+          </span>
+        </a>
+      </li>
+      <li *jhiHasAnyAuthority="'ROLE_ZSAV'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="wettkampf" (click)="collapseNavbar()">
+          <span>
+            <mat-icon>emoji_events</mat-icon>
+            <span>Wettkämpfe</span>
           </span>
         </a>
       </li>
       <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
       <li
-        *ngSwitchCase="true"
+        *jhiHasAnyAuthority="'ROLE_ADMIN'"
         ngbDropdown
         class="nav-item dropdown pointer"
         display="dynamic"
@@ -192,7 +209,7 @@
       >
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu" data-cy="accountMenu">
           <span *ngIf="!account?.imageUrl">
-            <fa-icon icon="user"></fa-icon>
+            <mat-icon>person</mat-icon>
             <span>Account</span>
           </span>
           <span *ngIf="account?.imageUrl">
