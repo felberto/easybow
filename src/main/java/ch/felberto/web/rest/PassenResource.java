@@ -1,7 +1,10 @@
 package ch.felberto.web.rest;
 
-import ch.felberto.domain.Passen;
 import ch.felberto.repository.PassenRepository;
+import ch.felberto.service.PassenQueryService;
+import ch.felberto.service.PassenService;
+import ch.felberto.service.criteria.PassenCriteria;
+import ch.felberto.service.dto.PassenDTO;
 import ch.felberto.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,10 +16,15 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -24,7 +32,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class PassenResource {
 
     private final Logger log = LoggerFactory.getLogger(PassenResource.class);
@@ -34,26 +41,32 @@ public class PassenResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final PassenService passenService;
+
     private final PassenRepository passenRepository;
 
-    public PassenResource(PassenRepository passenRepository) {
+    private final PassenQueryService passenQueryService;
+
+    public PassenResource(PassenService passenService, PassenRepository passenRepository, PassenQueryService passenQueryService) {
+        this.passenService = passenService;
         this.passenRepository = passenRepository;
+        this.passenQueryService = passenQueryService;
     }
 
     /**
      * {@code POST  /passens} : Create a new passen.
      *
-     * @param passen the passen to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new passen, or with status {@code 400 (Bad Request)} if the passen has already an ID.
+     * @param passenDTO the passenDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new passenDTO, or with status {@code 400 (Bad Request)} if the passen has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/passens")
-    public ResponseEntity<Passen> createPassen(@Valid @RequestBody Passen passen) throws URISyntaxException {
-        log.debug("REST request to save Passen : {}", passen);
-        if (passen.getId() != null) {
+    public ResponseEntity<PassenDTO> createPassen(@Valid @RequestBody PassenDTO passenDTO) throws URISyntaxException {
+        log.debug("REST request to save Passen : {}", passenDTO);
+        if (passenDTO.getId() != null) {
             throw new BadRequestAlertException("A new passen cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Passen result = passenRepository.save(passen);
+        PassenDTO result = passenService.save(passenDTO);
         return ResponseEntity
             .created(new URI("/api/passens/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -63,23 +76,23 @@ public class PassenResource {
     /**
      * {@code PUT  /passens/:id} : Updates an existing passen.
      *
-     * @param id the id of the passen to save.
-     * @param passen the passen to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated passen,
-     * or with status {@code 400 (Bad Request)} if the passen is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the passen couldn't be updated.
+     * @param id the id of the passenDTO to save.
+     * @param passenDTO the passenDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated passenDTO,
+     * or with status {@code 400 (Bad Request)} if the passenDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the passenDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/passens/{id}")
-    public ResponseEntity<Passen> updatePassen(
+    public ResponseEntity<PassenDTO> updatePassen(
         @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody Passen passen
+        @Valid @RequestBody PassenDTO passenDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update Passen : {}, {}", id, passen);
-        if (passen.getId() == null) {
+        log.debug("REST request to update Passen : {}, {}", id, passenDTO);
+        if (passenDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, passen.getId())) {
+        if (!Objects.equals(id, passenDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -87,34 +100,34 @@ public class PassenResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Passen result = passenRepository.save(passen);
+        PassenDTO result = passenService.save(passenDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, passen.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, passenDTO.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code PATCH  /passens/:id} : Partial updates given fields of an existing passen, field will ignore if it is null
      *
-     * @param id the id of the passen to save.
-     * @param passen the passen to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated passen,
-     * or with status {@code 400 (Bad Request)} if the passen is not valid,
-     * or with status {@code 404 (Not Found)} if the passen is not found,
-     * or with status {@code 500 (Internal Server Error)} if the passen couldn't be updated.
+     * @param id the id of the passenDTO to save.
+     * @param passenDTO the passenDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated passenDTO,
+     * or with status {@code 400 (Bad Request)} if the passenDTO is not valid,
+     * or with status {@code 404 (Not Found)} if the passenDTO is not found,
+     * or with status {@code 500 (Internal Server Error)} if the passenDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/passens/{id}", consumes = "application/merge-patch+json")
-    public ResponseEntity<Passen> partialUpdatePassen(
+    public ResponseEntity<PassenDTO> partialUpdatePassen(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody Passen passen
+        @NotNull @RequestBody PassenDTO passenDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update Passen partially : {}, {}", id, passen);
-        if (passen.getId() == null) {
+        log.debug("REST request to partial update Passen partially : {}, {}", id, passenDTO);
+        if (passenDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, passen.getId())) {
+        if (!Objects.equals(id, passenDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -122,89 +135,64 @@ public class PassenResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Passen> result = passenRepository
-            .findById(passen.getId())
-            .map(
-                existingPassen -> {
-                    if (passen.getp1() != null) {
-                        existingPassen.setp1(passen.getp1());
-                    }
-                    if (passen.getp2() != null) {
-                        existingPassen.setp2(passen.getp2());
-                    }
-                    if (passen.getp3() != null) {
-                        existingPassen.setp3(passen.getp3());
-                    }
-                    if (passen.getp4() != null) {
-                        existingPassen.setp4(passen.getp4());
-                    }
-                    if (passen.getp5() != null) {
-                        existingPassen.setp5(passen.getp5());
-                    }
-                    if (passen.getp6() != null) {
-                        existingPassen.setp6(passen.getp6());
-                    }
-                    if (passen.getp7() != null) {
-                        existingPassen.setp7(passen.getp7());
-                    }
-                    if (passen.getp8() != null) {
-                        existingPassen.setp8(passen.getp8());
-                    }
-                    if (passen.getp9() != null) {
-                        existingPassen.setp9(passen.getp9());
-                    }
-                    if (passen.getp10() != null) {
-                        existingPassen.setp10(passen.getp10());
-                    }
-                    if (passen.getResultat() != null) {
-                        existingPassen.setResultat(passen.getResultat());
-                    }
-
-                    return existingPassen;
-                }
-            )
-            .map(passenRepository::save);
+        Optional<PassenDTO> result = passenService.partialUpdate(passenDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, passen.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, passenDTO.getId().toString())
         );
     }
 
     /**
      * {@code GET  /passens} : get all the passens.
      *
+     * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of passens in body.
      */
     @GetMapping("/passens")
-    public List<Passen> getAllPassens() {
-        log.debug("REST request to get all Passens");
-        return passenRepository.findAll();
+    public ResponseEntity<List<PassenDTO>> getAllPassens(PassenCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Passens by criteria: {}", criteria);
+        Page<PassenDTO> page = passenQueryService.findByCriteria(criteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /passens/count} : count all the passens.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/passens/count")
+    public ResponseEntity<Long> countPassens(PassenCriteria criteria) {
+        log.debug("REST request to count Passens by criteria: {}", criteria);
+        return ResponseEntity.ok().body(passenQueryService.countByCriteria(criteria));
     }
 
     /**
      * {@code GET  /passens/:id} : get the "id" passen.
      *
-     * @param id the id of the passen to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the passen, or with status {@code 404 (Not Found)}.
+     * @param id the id of the passenDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the passenDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/passens/{id}")
-    public ResponseEntity<Passen> getPassen(@PathVariable Long id) {
+    public ResponseEntity<PassenDTO> getPassen(@PathVariable Long id) {
         log.debug("REST request to get Passen : {}", id);
-        Optional<Passen> passen = passenRepository.findById(id);
-        return ResponseUtil.wrapOrNotFound(passen);
+        Optional<PassenDTO> passenDTO = passenService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(passenDTO);
     }
 
     /**
      * {@code DELETE  /passens/:id} : delete the "id" passen.
      *
-     * @param id the id of the passen to delete.
+     * @param id the id of the passenDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/passens/{id}")
     public ResponseEntity<Void> deletePassen(@PathVariable Long id) {
         log.debug("REST request to delete Passen : {}", id);
-        passenRepository.deleteById(id);
+        passenService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))

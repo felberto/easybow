@@ -11,6 +11,9 @@ const gruppenRoute: Routes = [
   {
     path: '',
     component: GruppenComponent,
+    data: {
+      defaultSort: 'id,asc',
+    },
     canActivate: [UserRouteAccessService],
   },
   {
