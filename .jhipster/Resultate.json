@@ -37,12 +37,11 @@
       "ownerSide": true
     },
     {
-      "relationshipType": "one-to-one",
+      "relationshipType": "many-to-one",
       "otherEntityName": "gruppen",
       "otherEntityRelationshipName": "resultate",
       "relationshipName": "gruppe",
-      "otherEntityField": "name",
-      "ownerSide": true
+      "otherEntityField": "name"
     },
     {
       "relationshipType": "many-to-one",

@@ -124,22 +124,23 @@ describe('Component Tests', () => {
         expect(comp.passe4sCollection).toEqual(expectedCollection);
       });
 
-      it('Should call gruppe query and add missing value', () => {
+      it('Should call Gruppen query and add missing value', () => {
         const resultate: IResultate = { id: 456 };
         const gruppe: IGruppen = { id: 24544 };
         resultate.gruppe = gruppe;
 
-        const gruppeCollection: IGruppen[] = [{ id: 10336 }];
-        jest.spyOn(gruppenService, 'query').mockReturnValue(of(new HttpResponse({ body: gruppeCollection })));
-        const expectedCollection: IGruppen[] = [gruppe, ...gruppeCollection];
+        const gruppenCollection: IGruppen[] = [{ id: 10336 }];
+        jest.spyOn(gruppenService, 'query').mockReturnValue(of(new HttpResponse({ body: gruppenCollection })));
+        const additionalGruppens = [gruppe];
+        const expectedCollection: IGruppen[] = [...additionalGruppens, ...gruppenCollection];
         jest.spyOn(gruppenService, 'addGruppenToCollectionIfMissing').mockReturnValue(expectedCollection);
 
         activatedRoute.data = of({ resultate });
         comp.ngOnInit();
 
         expect(gruppenService.query).toHaveBeenCalled();
-        expect(gruppenService.addGruppenToCollectionIfMissing).toHaveBeenCalledWith(gruppeCollection, gruppe);
-        expect(comp.gruppesCollection).toEqual(expectedCollection);
+        expect(gruppenService.addGruppenToCollectionIfMissing).toHaveBeenCalledWith(gruppenCollection, ...additionalGruppens);
+        expect(comp.gruppensSharedCollection).toEqual(expectedCollection);
       });
 
       it('Should call Schuetze query and add missing value', () => {
@@ -205,7 +206,7 @@ describe('Component Tests', () => {
         expect(comp.passe2sCollection).toContain(passe2);
         expect(comp.passe3sCollection).toContain(passe3);
         expect(comp.passe4sCollection).toContain(passe4);
-        expect(comp.gruppesCollection).toContain(gruppe);
+        expect(comp.gruppensSharedCollection).toContain(gruppe);
         expect(comp.schuetzesSharedCollection).toContain(schuetze);
         expect(comp.wettkampfsSharedCollection).toContain(wettkampf);
       });

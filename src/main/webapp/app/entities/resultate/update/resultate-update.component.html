@@ -78,7 +78,7 @@
             <option [ngValue]="null"></option>
             <option
               [ngValue]="gruppenOption.id === editForm.get('gruppe')!.value?.id ? editForm.get('gruppe')!.value : gruppenOption"
-              *ngFor="let gruppenOption of gruppesCollection; trackBy: trackGruppenById"
+              *ngFor="let gruppenOption of gruppensSharedCollection; trackBy: trackGruppenById"
             >
               {{ gruppenOption.name }}
             </option>

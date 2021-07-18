@@ -42,8 +42,7 @@ public class Resultate implements Serializable {
     @JoinColumn(unique = true)
     private Passen passe4;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
     private Gruppen gruppe;
 
     @ManyToOne

@@ -25,7 +25,7 @@
             <option [ngValue]="null"></option>
             <option
               [ngValue]="verbandOption.id === editForm.get('verband')!.value?.id ? editForm.get('verband')!.value : verbandOption"
-              *ngFor="let verbandOption of verbandsCollection; trackBy: trackVerbandById"
+              *ngFor="let verbandOption of verbandsSharedCollection; trackBy: trackVerbandById"
             >
               {{ verbandOption.name }}
             </option>
