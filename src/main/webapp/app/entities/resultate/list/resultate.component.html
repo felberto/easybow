@@ -3,7 +3,7 @@
     <span>Resultates</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span>Refresh List</span>
       </button>
@@ -31,16 +31,16 @@
   <div class="table-responsive" id="entities" *ngIf="resultates && resultates.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
-        <tr>
-          <th scope="col"><span>ID</span></th>
-          <th scope="col"><span>Runde</span></th>
-          <th scope="col"><span>Passe 1</span></th>
-          <th scope="col"><span>Passe 2</span></th>
-          <th scope="col"><span>Passe 3</span></th>
-          <th scope="col"><span>Passe 4</span></th>
-          <th scope="col"><span>Gruppe</span></th>
-          <th scope="col"><span>Schuetze</span></th>
-          <th scope="col"><span>Wettkampf</span></th>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="runde"><span>Runde</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="passe1.id"><span>Passe 1</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="passe2.id"><span>Passe 2</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="passe3.id"><span>Passe 3</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="passe4.id"><span>Passe 4</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="gruppe.name"><span>Gruppe</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="schuetze.name"><span>Schuetze</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="wettkampf.name"><span>Wettkampf</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -116,5 +116,23 @@
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <div *ngIf="resultates && resultates.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
   </div>
 </div>

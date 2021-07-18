@@ -1,93 +1,50 @@
 package ch.felberto.service;
 
-import ch.felberto.domain.Verein;
-import ch.felberto.repository.VereinRepository;
-import java.util.List;
+import ch.felberto.service.dto.VereinDTO;
 import java.util.Optional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
- * Service Implementation for managing {@link Verein}.
+ * Service Interface for managing {@link ch.felberto.domain.Verein}.
  */
-@Service
-@Transactional
-public class VereinService {
-
-    private final Logger log = LoggerFactory.getLogger(VereinService.class);
-
-    private final VereinRepository vereinRepository;
-
-    public VereinService(VereinRepository vereinRepository) {
-        this.vereinRepository = vereinRepository;
-    }
-
+public interface VereinService {
     /**
      * Save a verein.
      *
-     * @param verein the entity to save.
+     * @param vereinDTO the entity to save.
      * @return the persisted entity.
      */
-    public Verein save(Verein verein) {
-        log.debug("Request to save Verein : {}", verein);
-        return vereinRepository.save(verein);
-    }
+    VereinDTO save(VereinDTO vereinDTO);
 
     /**
-     * Partially update a verein.
+     * Partially updates a verein.
      *
-     * @param verein the entity to update partially.
+     * @param vereinDTO the entity to update partially.
      * @return the persisted entity.
      */
-    public Optional<Verein> partialUpdate(Verein verein) {
-        log.debug("Request to partially update Verein : {}", verein);
-
-        return vereinRepository
-            .findById(verein.getId())
-            .map(
-                existingVerein -> {
-                    if (verein.getName() != null) {
-                        existingVerein.setName(verein.getName());
-                    }
-
-                    return existingVerein;
-                }
-            )
-            .map(vereinRepository::save);
-    }
+    Optional<VereinDTO> partialUpdate(VereinDTO vereinDTO);
 
     /**
      * Get all the vereins.
      *
+     * @param pageable the pagination information.
      * @return the list of entities.
      */
-    @Transactional(readOnly = true)
-    public List<Verein> findAll() {
-        log.debug("Request to get all Vereins");
-        return vereinRepository.findAll();
-    }
+    Page<VereinDTO> findAll(Pageable pageable);
 
     /**
-     * Get one verein by id.
+     * Get the "id" verein.
      *
      * @param id the id of the entity.
      * @return the entity.
      */
-    @Transactional(readOnly = true)
-    public Optional<Verein> findOne(Long id) {
-        log.debug("Request to get Verein : {}", id);
-        return vereinRepository.findById(id);
-    }
+    Optional<VereinDTO> findOne(Long id);
 
     /**
-     * Delete the verein by id.
+     * Delete the "id" verein.
      *
      * @param id the id of the entity.
      */
-    public void delete(Long id) {
-        log.debug("Request to delete Verein : {}", id);
-        vereinRepository.deleteById(id);
-    }
+    void delete(Long id);
 }

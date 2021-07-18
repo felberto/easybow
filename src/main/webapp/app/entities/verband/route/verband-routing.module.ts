@@ -11,6 +11,9 @@ const verbandRoute: Routes = [
   {
     path: '',
     component: VerbandComponent,
+    data: {
+      defaultSort: 'id,asc',
+    },
     canActivate: [UserRouteAccessService],
   },
   {
