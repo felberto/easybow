@@ -61,18 +61,18 @@ entity Resultate {
 	runde Integer required
 }
 
-relationship OneToOne {
+relationship ManyToOne {
 	Schuetze{verein(name)} to Verein
     Verein{verband(name)} to Verband
-    Resultate{passe1} to Passen
+    Resultate{gruppe(name)} to Gruppen
+    Resultate{schuetze(name)} to Schuetze
+    Resultate{wettkampf(name)} to Wettkampf
+    Rangierung{wettkampf(name)} to Wettkampf
+}
+
+relationship OneToOne {
+	Resultate{passe1} to Passen
     Resultate{passe2} to Passen
     Resultate{passe3} to Passen
     Resultate{passe4} to Passen
-    Resultate{gruppe(name)} to Gruppen
-}
-
-relationship ManyToOne {
-	Resultate{schuetze(name)} to Schuetze
-    Resultate{wettkampf(name)} to Wettkampf
-    Rangierung{wettkampf(name)} to Wettkampf
 }
