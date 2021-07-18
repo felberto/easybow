@@ -89,7 +89,7 @@ export class VereinUpdateComponent implements OnInit {
 
   protected loadRelationshipsOptions(): void {
     this.verbandService
-      .query({ filter: 'verein-is-null' })
+      .query({ 'vereinId.specified': 'false' })
       .pipe(map((res: HttpResponse<IVerband[]>) => res.body ?? []))
       .pipe(
         map((verbands: IVerband[]) => this.verbandService.addVerbandToCollectionIfMissing(verbands, this.editForm.get('verband')!.value))

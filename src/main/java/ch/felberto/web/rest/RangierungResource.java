@@ -1,7 +1,10 @@
 package ch.felberto.web.rest;
 
-import ch.felberto.domain.Rangierung;
 import ch.felberto.repository.RangierungRepository;
+import ch.felberto.service.RangierungQueryService;
+import ch.felberto.service.RangierungService;
+import ch.felberto.service.criteria.RangierungCriteria;
+import ch.felberto.service.dto.RangierungDTO;
 import ch.felberto.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,10 +16,15 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -24,7 +32,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class RangierungResource {
 
     private final Logger log = LoggerFactory.getLogger(RangierungResource.class);
@@ -34,26 +41,36 @@ public class RangierungResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final RangierungService rangierungService;
+
     private final RangierungRepository rangierungRepository;
 
-    public RangierungResource(RangierungRepository rangierungRepository) {
+    private final RangierungQueryService rangierungQueryService;
+
+    public RangierungResource(
+        RangierungService rangierungService,
+        RangierungRepository rangierungRepository,
+        RangierungQueryService rangierungQueryService
+    ) {
+        this.rangierungService = rangierungService;
         this.rangierungRepository = rangierungRepository;
+        this.rangierungQueryService = rangierungQueryService;
     }
 
     /**
      * {@code POST  /rangierungs} : Create a new rangierung.
      *
-     * @param rangierung the rangierung to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new rangierung, or with status {@code 400 (Bad Request)} if the rangierung has already an ID.
+     * @param rangierungDTO the rangierungDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new rangierungDTO, or with status {@code 400 (Bad Request)} if the rangierung has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/rangierungs")
-    public ResponseEntity<Rangierung> createRangierung(@Valid @RequestBody Rangierung rangierung) throws URISyntaxException {
-        log.debug("REST request to save Rangierung : {}", rangierung);
-        if (rangierung.getId() != null) {
+    public ResponseEntity<RangierungDTO> createRangierung(@Valid @RequestBody RangierungDTO rangierungDTO) throws URISyntaxException {
+        log.debug("REST request to save Rangierung : {}", rangierungDTO);
+        if (rangierungDTO.getId() != null) {
             throw new BadRequestAlertException("A new rangierung cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Rangierung result = rangierungRepository.save(rangierung);
+        RangierungDTO result = rangierungService.save(rangierungDTO);
         return ResponseEntity
             .created(new URI("/api/rangierungs/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -63,23 +80,23 @@ public class RangierungResource {
     /**
      * {@code PUT  /rangierungs/:id} : Updates an existing rangierung.
      *
-     * @param id the id of the rangierung to save.
-     * @param rangierung the rangierung to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated rangierung,
-     * or with status {@code 400 (Bad Request)} if the rangierung is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the rangierung couldn't be updated.
+     * @param id the id of the rangierungDTO to save.
+     * @param rangierungDTO the rangierungDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated rangierungDTO,
+     * or with status {@code 400 (Bad Request)} if the rangierungDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the rangierungDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/rangierungs/{id}")
-    public ResponseEntity<Rangierung> updateRangierung(
+    public ResponseEntity<RangierungDTO> updateRangierung(
         @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody Rangierung rangierung
+        @Valid @RequestBody RangierungDTO rangierungDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update Rangierung : {}, {}", id, rangierung);
-        if (rangierung.getId() == null) {
+        log.debug("REST request to update Rangierung : {}, {}", id, rangierungDTO);
+        if (rangierungDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, rangierung.getId())) {
+        if (!Objects.equals(id, rangierungDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -87,34 +104,34 @@ public class RangierungResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Rangierung result = rangierungRepository.save(rangierung);
+        RangierungDTO result = rangierungService.save(rangierungDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, rangierung.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, rangierungDTO.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code PATCH  /rangierungs/:id} : Partial updates given fields of an existing rangierung, field will ignore if it is null
      *
-     * @param id the id of the rangierung to save.
-     * @param rangierung the rangierung to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated rangierung,
-     * or with status {@code 400 (Bad Request)} if the rangierung is not valid,
-     * or with status {@code 404 (Not Found)} if the rangierung is not found,
-     * or with status {@code 500 (Internal Server Error)} if the rangierung couldn't be updated.
+     * @param id the id of the rangierungDTO to save.
+     * @param rangierungDTO the rangierungDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated rangierungDTO,
+     * or with status {@code 400 (Bad Request)} if the rangierungDTO is not valid,
+     * or with status {@code 404 (Not Found)} if the rangierungDTO is not found,
+     * or with status {@code 500 (Internal Server Error)} if the rangierungDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/rangierungs/{id}", consumes = "application/merge-patch+json")
-    public ResponseEntity<Rangierung> partialUpdateRangierung(
+    public ResponseEntity<RangierungDTO> partialUpdateRangierung(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody Rangierung rangierung
+        @NotNull @RequestBody RangierungDTO rangierungDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update Rangierung partially : {}, {}", id, rangierung);
-        if (rangierung.getId() == null) {
+        log.debug("REST request to partial update Rangierung partially : {}, {}", id, rangierungDTO);
+        if (rangierungDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, rangierung.getId())) {
+        if (!Objects.equals(id, rangierungDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -122,62 +139,64 @@ public class RangierungResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Rangierung> result = rangierungRepository
-            .findById(rangierung.getId())
-            .map(
-                existingRangierung -> {
-                    if (rangierung.getPosition() != null) {
-                        existingRangierung.setPosition(rangierung.getPosition());
-                    }
-                    if (rangierung.getRangierungskriterien() != null) {
-                        existingRangierung.setRangierungskriterien(rangierung.getRangierungskriterien());
-                    }
-
-                    return existingRangierung;
-                }
-            )
-            .map(rangierungRepository::save);
+        Optional<RangierungDTO> result = rangierungService.partialUpdate(rangierungDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, rangierung.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, rangierungDTO.getId().toString())
         );
     }
 
     /**
      * {@code GET  /rangierungs} : get all the rangierungs.
      *
+     * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of rangierungs in body.
      */
     @GetMapping("/rangierungs")
-    public List<Rangierung> getAllRangierungs() {
-        log.debug("REST request to get all Rangierungs");
-        return rangierungRepository.findAll();
+    public ResponseEntity<List<RangierungDTO>> getAllRangierungs(RangierungCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Rangierungs by criteria: {}", criteria);
+        Page<RangierungDTO> page = rangierungQueryService.findByCriteria(criteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /rangierungs/count} : count all the rangierungs.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/rangierungs/count")
+    public ResponseEntity<Long> countRangierungs(RangierungCriteria criteria) {
+        log.debug("REST request to count Rangierungs by criteria: {}", criteria);
+        return ResponseEntity.ok().body(rangierungQueryService.countByCriteria(criteria));
     }
 
     /**
      * {@code GET  /rangierungs/:id} : get the "id" rangierung.
      *
-     * @param id the id of the rangierung to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the rangierung, or with status {@code 404 (Not Found)}.
+     * @param id the id of the rangierungDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the rangierungDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/rangierungs/{id}")
-    public ResponseEntity<Rangierung> getRangierung(@PathVariable Long id) {
+    public ResponseEntity<RangierungDTO> getRangierung(@PathVariable Long id) {
         log.debug("REST request to get Rangierung : {}", id);
-        Optional<Rangierung> rangierung = rangierungRepository.findById(id);
-        return ResponseUtil.wrapOrNotFound(rangierung);
+        Optional<RangierungDTO> rangierungDTO = rangierungService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(rangierungDTO);
     }
 
     /**
      * {@code DELETE  /rangierungs/:id} : delete the "id" rangierung.
      *
-     * @param id the id of the rangierung to delete.
+     * @param id the id of the rangierungDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/rangierungs/{id}")
     public ResponseEntity<Void> deleteRangierung(@PathVariable Long id) {
         log.debug("REST request to delete Rangierung : {}", id);
-        rangierungRepository.deleteById(id);
+        rangierungService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))

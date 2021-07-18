@@ -4,6 +4,8 @@ import ch.felberto.domain.*; // for static metamodels
 import ch.felberto.domain.Verein;
 import ch.felberto.repository.VereinRepository;
 import ch.felberto.service.criteria.VereinCriteria;
+import ch.felberto.service.dto.VereinDTO;
+import ch.felberto.service.mapper.VereinMapper;
 import java.util.List;
 import javax.persistence.criteria.JoinType;
 import org.slf4j.Logger;
@@ -19,7 +21,7 @@ import tech.jhipster.service.QueryService;
  * Service for executing complex queries for {@link Verein} entities in the database.
  * The main input is a {@link VereinCriteria} which gets converted to {@link Specification},
  * in a way that all the filters must apply.
- * It returns a {@link List} of {@link Verein} or a {@link Page} of {@link Verein} which fulfills the criteria.
+ * It returns a {@link List} of {@link VereinDTO} or a {@link Page} of {@link VereinDTO} which fulfills the criteria.
  */
 @Service
 @Transactional(readOnly = true)
@@ -29,33 +31,36 @@ public class VereinQueryService extends QueryService<Verein> {
 
     private final VereinRepository vereinRepository;
 
-    public VereinQueryService(VereinRepository vereinRepository) {
+    private final VereinMapper vereinMapper;
+
+    public VereinQueryService(VereinRepository vereinRepository, VereinMapper vereinMapper) {
         this.vereinRepository = vereinRepository;
+        this.vereinMapper = vereinMapper;
     }
 
     /**
-     * Return a {@link List} of {@link Verein} which matches the criteria from the database.
+     * Return a {@link List} of {@link VereinDTO} which matches the criteria from the database.
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public List<Verein> findByCriteria(VereinCriteria criteria) {
+    public List<VereinDTO> findByCriteria(VereinCriteria criteria) {
         log.debug("find by criteria : {}", criteria);
         final Specification<Verein> specification = createSpecification(criteria);
-        return vereinRepository.findAll(specification);
+        return vereinMapper.toDto(vereinRepository.findAll(specification));
     }
 
     /**
-     * Return a {@link Page} of {@link Verein} which matches the criteria from the database.
+     * Return a {@link Page} of {@link VereinDTO} which matches the criteria from the database.
      * @param criteria The object which holds all the filters, which the entities should match.
      * @param page The page, which should be returned.
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public Page<Verein> findByCriteria(VereinCriteria criteria, Pageable page) {
+    public Page<VereinDTO> findByCriteria(VereinCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<Verein> specification = createSpecification(criteria);
-        return vereinRepository.findAll(specification, page);
+        return vereinRepository.findAll(specification, page).map(vereinMapper::toDto);
     }
 
     /**
