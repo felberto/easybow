@@ -28,9 +28,15 @@
         </a>
       </li>
       <li *jhiHasAnyAuthority="'ROLE_ZSAV'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="gruppen" (click)="collapseNavbar()">
+          <mat-icon>groups</mat-icon>
+          <span>Gruppen</span>
+        </a>
+      </li>
+      <li *jhiHasAnyAuthority="'ROLE_ZSAV'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a class="nav-link" routerLink="schuetze" (click)="collapseNavbar()">
           <span>
-            <mat-icon>groups</mat-icon>
+            <mat-icon>people</mat-icon>
             <span>Schützen</span>
           </span>
         </a>
@@ -40,6 +46,14 @@
           <span>
             <mat-icon>emoji_events</mat-icon>
             <span>Wettkämpfe</span>
+          </span>
+        </a>
+      </li>
+      <li *jhiHasAnyAuthority="'ROLE_ZSAV'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="rangierung" (click)="collapseNavbar()">
+          <span>
+            <mat-icon>import_export</mat-icon>
+            <span>Rangierung</span>
           </span>
         </a>
       </li>
