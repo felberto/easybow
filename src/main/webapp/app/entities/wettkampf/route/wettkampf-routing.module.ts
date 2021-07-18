@@ -11,9 +11,6 @@ const wettkampfRoute: Routes = [
   {
     path: '',
     component: WettkampfComponent,
-    data: {
-      defaultSort: 'id,asc',
-    },
     canActivate: [UserRouteAccessService],
   },
   {

@@ -9,4 +9,4 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface VerbandRepository extends JpaRepository<Verband, Long>, JpaSpecificationExecutor<Verband> {}
+public interface VerbandRepository extends JpaRepository<Verband, Long> {}

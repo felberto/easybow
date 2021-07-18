@@ -37,9 +37,8 @@ public class Schuetze implements Serializable {
     @Column(name = "stellung", nullable = false)
     private Stellung stellung;
 
+    @ManyToOne
     @JsonIgnoreProperties(value = { "verband" }, allowSetters = true)
-    @OneToOne
-    @JoinColumn(unique = true)
     private Verein verein;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

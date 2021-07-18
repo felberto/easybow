@@ -17,7 +17,7 @@ import { VereinService } from 'app/entities/verein/service/verein.service';
 export class SchuetzeUpdateComponent implements OnInit {
   isSaving = false;
 
-  vereinsCollection: IVerein[] = [];
+  vereinsSharedCollection: IVerein[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -88,15 +88,15 @@ export class SchuetzeUpdateComponent implements OnInit {
       verein: schuetze.verein,
     });
 
-    this.vereinsCollection = this.vereinService.addVereinToCollectionIfMissing(this.vereinsCollection, schuetze.verein);
+    this.vereinsSharedCollection = this.vereinService.addVereinToCollectionIfMissing(this.vereinsSharedCollection, schuetze.verein);
   }
 
   protected loadRelationshipsOptions(): void {
     this.vereinService
-      .query({ 'schuetzeId.specified': 'false' })
+      .query()
       .pipe(map((res: HttpResponse<IVerein[]>) => res.body ?? []))
       .pipe(map((vereins: IVerein[]) => this.vereinService.addVereinToCollectionIfMissing(vereins, this.editForm.get('verein')!.value)))
-      .subscribe((vereins: IVerein[]) => (this.vereinsCollection = vereins));
+      .subscribe((vereins: IVerein[]) => (this.vereinsSharedCollection = vereins));
   }
 
   protected createFromForm(): ISchuetze {

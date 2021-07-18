@@ -1,10 +1,7 @@
 package ch.felberto.web.rest;
 
+import ch.felberto.domain.Wettkampf;
 import ch.felberto.repository.WettkampfRepository;
-import ch.felberto.service.WettkampfQueryService;
-import ch.felberto.service.WettkampfService;
-import ch.felberto.service.criteria.WettkampfCriteria;
-import ch.felberto.service.dto.WettkampfDTO;
 import ch.felberto.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -16,15 +13,10 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
-import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -32,6 +24,7 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
+@Transactional
 public class WettkampfResource {
 
     private final Logger log = LoggerFactory.getLogger(WettkampfResource.class);
@@ -41,36 +34,26 @@ public class WettkampfResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final WettkampfService wettkampfService;
-
     private final WettkampfRepository wettkampfRepository;
 
-    private final WettkampfQueryService wettkampfQueryService;
-
-    public WettkampfResource(
-        WettkampfService wettkampfService,
-        WettkampfRepository wettkampfRepository,
-        WettkampfQueryService wettkampfQueryService
-    ) {
-        this.wettkampfService = wettkampfService;
+    public WettkampfResource(WettkampfRepository wettkampfRepository) {
         this.wettkampfRepository = wettkampfRepository;
-        this.wettkampfQueryService = wettkampfQueryService;
     }
 
     /**
      * {@code POST  /wettkampfs} : Create a new wettkampf.
      *
-     * @param wettkampfDTO the wettkampfDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new wettkampfDTO, or with status {@code 400 (Bad Request)} if the wettkampf has already an ID.
+     * @param wettkampf the wettkampf to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new wettkampf, or with status {@code 400 (Bad Request)} if the wettkampf has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/wettkampfs")
-    public ResponseEntity<WettkampfDTO> createWettkampf(@Valid @RequestBody WettkampfDTO wettkampfDTO) throws URISyntaxException {
-        log.debug("REST request to save Wettkampf : {}", wettkampfDTO);
-        if (wettkampfDTO.getId() != null) {
+    public ResponseEntity<Wettkampf> createWettkampf(@Valid @RequestBody Wettkampf wettkampf) throws URISyntaxException {
+        log.debug("REST request to save Wettkampf : {}", wettkampf);
+        if (wettkampf.getId() != null) {
             throw new BadRequestAlertException("A new wettkampf cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        WettkampfDTO result = wettkampfService.save(wettkampfDTO);
+        Wettkampf result = wettkampfRepository.save(wettkampf);
         return ResponseEntity
             .created(new URI("/api/wettkampfs/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -80,23 +63,23 @@ public class WettkampfResource {
     /**
      * {@code PUT  /wettkampfs/:id} : Updates an existing wettkampf.
      *
-     * @param id the id of the wettkampfDTO to save.
-     * @param wettkampfDTO the wettkampfDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated wettkampfDTO,
-     * or with status {@code 400 (Bad Request)} if the wettkampfDTO is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the wettkampfDTO couldn't be updated.
+     * @param id the id of the wettkampf to save.
+     * @param wettkampf the wettkampf to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated wettkampf,
+     * or with status {@code 400 (Bad Request)} if the wettkampf is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the wettkampf couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/wettkampfs/{id}")
-    public ResponseEntity<WettkampfDTO> updateWettkampf(
+    public ResponseEntity<Wettkampf> updateWettkampf(
         @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody WettkampfDTO wettkampfDTO
+        @Valid @RequestBody Wettkampf wettkampf
     ) throws URISyntaxException {
-        log.debug("REST request to update Wettkampf : {}, {}", id, wettkampfDTO);
-        if (wettkampfDTO.getId() == null) {
+        log.debug("REST request to update Wettkampf : {}, {}", id, wettkampf);
+        if (wettkampf.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, wettkampfDTO.getId())) {
+        if (!Objects.equals(id, wettkampf.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -104,34 +87,34 @@ public class WettkampfResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        WettkampfDTO result = wettkampfService.save(wettkampfDTO);
+        Wettkampf result = wettkampfRepository.save(wettkampf);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, wettkampfDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, wettkampf.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code PATCH  /wettkampfs/:id} : Partial updates given fields of an existing wettkampf, field will ignore if it is null
      *
-     * @param id the id of the wettkampfDTO to save.
-     * @param wettkampfDTO the wettkampfDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated wettkampfDTO,
-     * or with status {@code 400 (Bad Request)} if the wettkampfDTO is not valid,
-     * or with status {@code 404 (Not Found)} if the wettkampfDTO is not found,
-     * or with status {@code 500 (Internal Server Error)} if the wettkampfDTO couldn't be updated.
+     * @param id the id of the wettkampf to save.
+     * @param wettkampf the wettkampf to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated wettkampf,
+     * or with status {@code 400 (Bad Request)} if the wettkampf is not valid,
+     * or with status {@code 404 (Not Found)} if the wettkampf is not found,
+     * or with status {@code 500 (Internal Server Error)} if the wettkampf couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/wettkampfs/{id}", consumes = "application/merge-patch+json")
-    public ResponseEntity<WettkampfDTO> partialUpdateWettkampf(
+    public ResponseEntity<Wettkampf> partialUpdateWettkampf(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody WettkampfDTO wettkampfDTO
+        @NotNull @RequestBody Wettkampf wettkampf
     ) throws URISyntaxException {
-        log.debug("REST request to partial update Wettkampf partially : {}, {}", id, wettkampfDTO);
-        if (wettkampfDTO.getId() == null) {
+        log.debug("REST request to partial update Wettkampf partially : {}, {}", id, wettkampf);
+        if (wettkampf.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, wettkampfDTO.getId())) {
+        if (!Objects.equals(id, wettkampf.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -139,64 +122,86 @@ public class WettkampfResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<WettkampfDTO> result = wettkampfService.partialUpdate(wettkampfDTO);
+        Optional<Wettkampf> result = wettkampfRepository
+            .findById(wettkampf.getId())
+            .map(
+                existingWettkampf -> {
+                    if (wettkampf.getName() != null) {
+                        existingWettkampf.setName(wettkampf.getName());
+                    }
+                    if (wettkampf.getJahr() != null) {
+                        existingWettkampf.setJahr(wettkampf.getJahr());
+                    }
+                    if (wettkampf.getAnzahlRunden() != null) {
+                        existingWettkampf.setAnzahlRunden(wettkampf.getAnzahlRunden());
+                    }
+                    if (wettkampf.getAnzahlPassen() != null) {
+                        existingWettkampf.setAnzahlPassen(wettkampf.getAnzahlPassen());
+                    }
+                    if (wettkampf.getFinalRunde() != null) {
+                        existingWettkampf.setFinalRunde(wettkampf.getFinalRunde());
+                    }
+                    if (wettkampf.getFinalVorbereitung() != null) {
+                        existingWettkampf.setFinalVorbereitung(wettkampf.getFinalVorbereitung());
+                    }
+                    if (wettkampf.getAnzahlFinalteilnehmer() != null) {
+                        existingWettkampf.setAnzahlFinalteilnehmer(wettkampf.getAnzahlFinalteilnehmer());
+                    }
+                    if (wettkampf.getAnzahlPassenFinal() != null) {
+                        existingWettkampf.setAnzahlPassenFinal(wettkampf.getAnzahlPassenFinal());
+                    }
+                    if (wettkampf.getAnzahlTeam() != null) {
+                        existingWettkampf.setAnzahlTeam(wettkampf.getAnzahlTeam());
+                    }
+                    if (wettkampf.getTemplate() != null) {
+                        existingWettkampf.setTemplate(wettkampf.getTemplate());
+                    }
+
+                    return existingWettkampf;
+                }
+            )
+            .map(wettkampfRepository::save);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, wettkampfDTO.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, wettkampf.getId().toString())
         );
     }
 
     /**
      * {@code GET  /wettkampfs} : get all the wettkampfs.
      *
-     * @param pageable the pagination information.
-     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of wettkampfs in body.
      */
     @GetMapping("/wettkampfs")
-    public ResponseEntity<List<WettkampfDTO>> getAllWettkampfs(WettkampfCriteria criteria, Pageable pageable) {
-        log.debug("REST request to get Wettkampfs by criteria: {}", criteria);
-        Page<WettkampfDTO> page = wettkampfQueryService.findByCriteria(criteria, pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }
-
-    /**
-     * {@code GET  /wettkampfs/count} : count all the wettkampfs.
-     *
-     * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-     */
-    @GetMapping("/wettkampfs/count")
-    public ResponseEntity<Long> countWettkampfs(WettkampfCriteria criteria) {
-        log.debug("REST request to count Wettkampfs by criteria: {}", criteria);
-        return ResponseEntity.ok().body(wettkampfQueryService.countByCriteria(criteria));
+    public List<Wettkampf> getAllWettkampfs() {
+        log.debug("REST request to get all Wettkampfs");
+        return wettkampfRepository.findAll();
     }
 
     /**
      * {@code GET  /wettkampfs/:id} : get the "id" wettkampf.
      *
-     * @param id the id of the wettkampfDTO to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the wettkampfDTO, or with status {@code 404 (Not Found)}.
+     * @param id the id of the wettkampf to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the wettkampf, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/wettkampfs/{id}")
-    public ResponseEntity<WettkampfDTO> getWettkampf(@PathVariable Long id) {
+    public ResponseEntity<Wettkampf> getWettkampf(@PathVariable Long id) {
         log.debug("REST request to get Wettkampf : {}", id);
-        Optional<WettkampfDTO> wettkampfDTO = wettkampfService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(wettkampfDTO);
+        Optional<Wettkampf> wettkampf = wettkampfRepository.findById(id);
+        return ResponseUtil.wrapOrNotFound(wettkampf);
     }
 
     /**
      * {@code DELETE  /wettkampfs/:id} : delete the "id" wettkampf.
      *
-     * @param id the id of the wettkampfDTO to delete.
+     * @param id the id of the wettkampf to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/wettkampfs/{id}")
     public ResponseEntity<Void> deleteWettkampf(@PathVariable Long id) {
         log.debug("REST request to delete Wettkampf : {}", id);
-        wettkampfService.delete(id);
+        wettkampfRepository.deleteById(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))

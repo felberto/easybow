@@ -27,7 +27,7 @@ export class ResultateUpdateComponent implements OnInit {
   passe2sCollection: IPassen[] = [];
   passe3sCollection: IPassen[] = [];
   passe4sCollection: IPassen[] = [];
-  gruppesCollection: IGruppen[] = [];
+  gruppensSharedCollection: IGruppen[] = [];
   schuetzesSharedCollection: ISchuetze[] = [];
   wettkampfsSharedCollection: IWettkampf[] = [];
 
@@ -127,7 +127,7 @@ export class ResultateUpdateComponent implements OnInit {
     this.passe2sCollection = this.passenService.addPassenToCollectionIfMissing(this.passe2sCollection, resultate.passe2);
     this.passe3sCollection = this.passenService.addPassenToCollectionIfMissing(this.passe3sCollection, resultate.passe3);
     this.passe4sCollection = this.passenService.addPassenToCollectionIfMissing(this.passe4sCollection, resultate.passe4);
-    this.gruppesCollection = this.gruppenService.addGruppenToCollectionIfMissing(this.gruppesCollection, resultate.gruppe);
+    this.gruppensSharedCollection = this.gruppenService.addGruppenToCollectionIfMissing(this.gruppensSharedCollection, resultate.gruppe);
     this.schuetzesSharedCollection = this.schuetzeService.addSchuetzeToCollectionIfMissing(
       this.schuetzesSharedCollection,
       resultate.schuetze
@@ -140,36 +140,36 @@ export class ResultateUpdateComponent implements OnInit {
 
   protected loadRelationshipsOptions(): void {
     this.passenService
-      .query({ 'resultateId.specified': 'false' })
+      .query({ filter: 'resultate-is-null' })
       .pipe(map((res: HttpResponse<IPassen[]>) => res.body ?? []))
       .pipe(map((passens: IPassen[]) => this.passenService.addPassenToCollectionIfMissing(passens, this.editForm.get('passe1')!.value)))
       .subscribe((passens: IPassen[]) => (this.passe1sCollection = passens));
 
     this.passenService
-      .query({ 'resultateId.specified': 'false' })
+      .query({ filter: 'resultate-is-null' })
       .pipe(map((res: HttpResponse<IPassen[]>) => res.body ?? []))
       .pipe(map((passens: IPassen[]) => this.passenService.addPassenToCollectionIfMissing(passens, this.editForm.get('passe2')!.value)))
       .subscribe((passens: IPassen[]) => (this.passe2sCollection = passens));
 
     this.passenService
-      .query({ 'resultateId.specified': 'false' })
+      .query({ filter: 'resultate-is-null' })
       .pipe(map((res: HttpResponse<IPassen[]>) => res.body ?? []))
       .pipe(map((passens: IPassen[]) => this.passenService.addPassenToCollectionIfMissing(passens, this.editForm.get('passe3')!.value)))
       .subscribe((passens: IPassen[]) => (this.passe3sCollection = passens));
 
     this.passenService
-      .query({ 'resultateId.specified': 'false' })
+      .query({ filter: 'resultate-is-null' })
       .pipe(map((res: HttpResponse<IPassen[]>) => res.body ?? []))
       .pipe(map((passens: IPassen[]) => this.passenService.addPassenToCollectionIfMissing(passens, this.editForm.get('passe4')!.value)))
       .subscribe((passens: IPassen[]) => (this.passe4sCollection = passens));
 
     this.gruppenService
-      .query({ 'resultateId.specified': 'false' })
+      .query()
       .pipe(map((res: HttpResponse<IGruppen[]>) => res.body ?? []))
       .pipe(
         map((gruppens: IGruppen[]) => this.gruppenService.addGruppenToCollectionIfMissing(gruppens, this.editForm.get('gruppe')!.value))
       )
-      .subscribe((gruppens: IGruppen[]) => (this.gruppesCollection = gruppens));
+      .subscribe((gruppens: IGruppen[]) => (this.gruppensSharedCollection = gruppens));
 
     this.schuetzeService
       .query()

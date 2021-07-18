@@ -9,19 +9,18 @@
   ],
   "relationships": [
     {
-      "relationshipType": "one-to-one",
+      "relationshipType": "many-to-one",
       "otherEntityName": "verband",
       "otherEntityRelationshipName": "verein",
       "relationshipName": "verband",
-      "otherEntityField": "name",
-      "ownerSide": true
+      "otherEntityField": "name"
     }
   ],
   "entityTableName": "verein",
-  "dto": "mapstruct",
-  "pagination": "pagination",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": true,
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
   "fluentMethods": true,
   "readOnly": false,
   "embedded": false,

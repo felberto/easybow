@@ -11,9 +11,6 @@ const passenRoute: Routes = [
   {
     path: '',
     component: PassenComponent,
-    data: {
-      defaultSort: 'id,asc',
-    },
     canActivate: [UserRouteAccessService],
   },
   {

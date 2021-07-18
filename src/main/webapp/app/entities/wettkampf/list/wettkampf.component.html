@@ -3,7 +3,7 @@
     <span>Wettkampfs</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span>Refresh List</span>
       </button>
@@ -31,18 +31,18 @@
   <div class="table-responsive" id="entities" *ngIf="wettkampfs && wettkampfs.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
-        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="name"><span>Name</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="jahr"><span>Jahr</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="anzahlRunden"><span>Anzahl Runden</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="anzahlPassen"><span>Anzahl Passen</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="finalRunde"><span>Final Runde</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="finalVorbereitung"><span>Final Vorbereitung</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="anzahlFinalteilnehmer"><span>Anzahl Finalteilnehmer</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="anzahlPassenFinal"><span>Anzahl Passen Final</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="anzahlTeam"><span>Anzahl Team</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="template"><span>Template</span> <fa-icon icon="sort"></fa-icon></th>
+        <tr>
+          <th scope="col"><span>ID</span></th>
+          <th scope="col"><span>Name</span></th>
+          <th scope="col"><span>Jahr</span></th>
+          <th scope="col"><span>Anzahl Runden</span></th>
+          <th scope="col"><span>Anzahl Passen</span></th>
+          <th scope="col"><span>Final Runde</span></th>
+          <th scope="col"><span>Final Vorbereitung</span></th>
+          <th scope="col"><span>Anzahl Finalteilnehmer</span></th>
+          <th scope="col"><span>Anzahl Passen Final</span></th>
+          <th scope="col"><span>Anzahl Team</span></th>
+          <th scope="col"><span>Template</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -92,23 +92,5 @@
         </tr>
       </tbody>
     </table>
-  </div>
-
-  <div *ngIf="wettkampfs && wettkampfs.length > 0">
-    <div class="row justify-content-center">
-      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
-    </div>
-
-    <div class="row justify-content-center">
-      <ngb-pagination
-        [collectionSize]="totalItems"
-        [(page)]="ngbPaginationPage"
-        [pageSize]="itemsPerPage"
-        [maxSize]="5"
-        [rotate]="true"
-        [boundaryLinks]="true"
-        (pageChange)="loadPage($event)"
-      ></ngb-pagination>
-    </div>
   </div>
 </div>

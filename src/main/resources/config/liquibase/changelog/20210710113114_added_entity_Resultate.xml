@@ -30,7 +30,7 @@
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_resultate__passe4_id" />
             </column>
             <column name="gruppe_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_resultate__gruppe_id" />
+                <constraints nullable="true" />
             </column>
             <column name="schuetze_id" type="bigint">
                 <constraints nullable="true" />

@@ -40,22 +40,23 @@ describe('Component Tests', () => {
     });
 
     describe('ngOnInit', () => {
-      it('Should call verein query and add missing value', () => {
+      it('Should call Verein query and add missing value', () => {
         const schuetze: ISchuetze = { id: 456 };
         const verein: IVerein = { id: 3966 };
         schuetze.verein = verein;
 
         const vereinCollection: IVerein[] = [{ id: 3402 }];
         jest.spyOn(vereinService, 'query').mockReturnValue(of(new HttpResponse({ body: vereinCollection })));
-        const expectedCollection: IVerein[] = [verein, ...vereinCollection];
+        const additionalVereins = [verein];
+        const expectedCollection: IVerein[] = [...additionalVereins, ...vereinCollection];
         jest.spyOn(vereinService, 'addVereinToCollectionIfMissing').mockReturnValue(expectedCollection);
 
         activatedRoute.data = of({ schuetze });
         comp.ngOnInit();
 
         expect(vereinService.query).toHaveBeenCalled();
-        expect(vereinService.addVereinToCollectionIfMissing).toHaveBeenCalledWith(vereinCollection, verein);
-        expect(comp.vereinsCollection).toEqual(expectedCollection);
+        expect(vereinService.addVereinToCollectionIfMissing).toHaveBeenCalledWith(vereinCollection, ...additionalVereins);
+        expect(comp.vereinsSharedCollection).toEqual(expectedCollection);
       });
 
       it('Should update editForm', () => {
@@ -67,7 +68,7 @@ describe('Component Tests', () => {
         comp.ngOnInit();
 
         expect(comp.editForm.value).toEqual(expect.objectContaining(schuetze));
-        expect(comp.vereinsCollection).toContain(verein);
+        expect(comp.vereinsSharedCollection).toContain(verein);
       });
     });
 

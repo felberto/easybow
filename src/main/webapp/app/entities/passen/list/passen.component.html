@@ -3,7 +3,7 @@
     <span>Passens</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span>Refresh List</span>
       </button>
@@ -31,19 +31,19 @@
   <div class="table-responsive" id="entities" *ngIf="passens && passens.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
-        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="p1"><span>P 1</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="p2"><span>P 2</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="p3"><span>P 3</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="p4"><span>P 4</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="p5"><span>P 5</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="p6"><span>P 6</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="p7"><span>P 7</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="p8"><span>P 8</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="p9"><span>P 9</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="p10"><span>P 10</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="resultat"><span>Resultat</span> <fa-icon icon="sort"></fa-icon></th>
+        <tr>
+          <th scope="col"><span>ID</span></th>
+          <th scope="col"><span>P 1</span></th>
+          <th scope="col"><span>P 2</span></th>
+          <th scope="col"><span>P 3</span></th>
+          <th scope="col"><span>P 4</span></th>
+          <th scope="col"><span>P 5</span></th>
+          <th scope="col"><span>P 6</span></th>
+          <th scope="col"><span>P 7</span></th>
+          <th scope="col"><span>P 8</span></th>
+          <th scope="col"><span>P 9</span></th>
+          <th scope="col"><span>P 10</span></th>
+          <th scope="col"><span>Resultat</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -84,23 +84,5 @@
         </tr>
       </tbody>
     </table>
-  </div>
-
-  <div *ngIf="passens && passens.length > 0">
-    <div class="row justify-content-center">
-      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
-    </div>
-
-    <div class="row justify-content-center">
-      <ngb-pagination
-        [collectionSize]="totalItems"
-        [(page)]="ngbPaginationPage"
-        [pageSize]="itemsPerPage"
-        [maxSize]="5"
-        [rotate]="true"
-        [boundaryLinks]="true"
-        (pageChange)="loadPage($event)"
-      ></ngb-pagination>
-    </div>
   </div>
 </div>
