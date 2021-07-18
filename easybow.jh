@@ -19,12 +19,24 @@ entity Schuetze {
 
 entity Wettkampf {
 	name String required,
-    jahr LocalDate required,
+    jahr LocalDate,
     anzahlRunden Integer required,
-    finalRunde Boolean,
     anzahlPassen Integer min(1) max(4) required,
+    finalRunde Boolean,
+    finalVorbereitung Boolean,
+    anzahlFinalteilnehmer Integer,
     anzahlPassenFinal Integer  min(1) max(4),
-    anzahlTeam Integer
+    anzahlTeam Integer,
+    template Boolean
+}
+
+enum Rangierungskriterien {
+	RESULTAT, SERIE, TIEFSCHUESSE, MOUCHEN, ALTER
+}
+
+entity Rangierung {
+	position Integer required,
+    rangierungskriterien Rangierungskriterien required
 }
 
 entity Passen {
@@ -50,28 +62,17 @@ entity Resultate {
 }
 
 relationship OneToOne {
-	Verein{verband(name)} to Verband
-}
-
-relationship OneToOne {
 	Schuetze{verein(name)} to Verein
-}
-
-relationship OneToOne {
-	Resultate{passe1} to Passen
+    Verein{verband(name)} to Verband
+    Resultate{passe1} to Passen
     Resultate{passe2} to Passen
     Resultate{passe3} to Passen
     Resultate{passe4} to Passen
-}
-
-relationship OneToOne {
-	Resultate{gruppe(name)} to Gruppen
+    Resultate{gruppe(name)} to Gruppen
 }
 
 relationship ManyToOne {
 	Resultate{schuetze(name)} to Schuetze
-}
-
-relationship ManyToOne {
-	Resultate{wettkampf(name)} to Wettkampf
+    Resultate{wettkampf(name)} to Wettkampf
+    Rangierung{wettkampf(name)} to Wettkampf
 }
