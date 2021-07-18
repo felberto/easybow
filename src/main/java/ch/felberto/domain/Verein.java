@@ -25,8 +25,7 @@ public class Verein implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
     private Verband verband;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

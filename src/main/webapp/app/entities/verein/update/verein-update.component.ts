@@ -17,7 +17,7 @@ import { VerbandService } from 'app/entities/verband/service/verband.service';
 export class VereinUpdateComponent implements OnInit {
   isSaving = false;
 
-  verbandsCollection: IVerband[] = [];
+  verbandsSharedCollection: IVerband[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -84,17 +84,17 @@ export class VereinUpdateComponent implements OnInit {
       verband: verein.verband,
     });
 
-    this.verbandsCollection = this.verbandService.addVerbandToCollectionIfMissing(this.verbandsCollection, verein.verband);
+    this.verbandsSharedCollection = this.verbandService.addVerbandToCollectionIfMissing(this.verbandsSharedCollection, verein.verband);
   }
 
   protected loadRelationshipsOptions(): void {
     this.verbandService
-      .query({ 'vereinId.specified': 'false' })
+      .query()
       .pipe(map((res: HttpResponse<IVerband[]>) => res.body ?? []))
       .pipe(
         map((verbands: IVerband[]) => this.verbandService.addVerbandToCollectionIfMissing(verbands, this.editForm.get('verband')!.value))
       )
-      .subscribe((verbands: IVerband[]) => (this.verbandsCollection = verbands));
+      .subscribe((verbands: IVerband[]) => (this.verbandsSharedCollection = verbands));
   }
 
   protected createFromForm(): IVerein {

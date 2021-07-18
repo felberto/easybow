@@ -11,9 +11,6 @@ const rangierungRoute: Routes = [
   {
     path: '',
     component: RangierungComponent,
-    data: {
-      defaultSort: 'id,asc',
-    },
     canActivate: [UserRouteAccessService],
   },
   {

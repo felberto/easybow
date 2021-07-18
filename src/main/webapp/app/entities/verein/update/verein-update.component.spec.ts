@@ -40,22 +40,23 @@ describe('Component Tests', () => {
     });
 
     describe('ngOnInit', () => {
-      it('Should call verband query and add missing value', () => {
+      it('Should call Verband query and add missing value', () => {
         const verein: IVerein = { id: 456 };
         const verband: IVerband = { id: 83465 };
         verein.verband = verband;
 
         const verbandCollection: IVerband[] = [{ id: 11762 }];
         jest.spyOn(verbandService, 'query').mockReturnValue(of(new HttpResponse({ body: verbandCollection })));
-        const expectedCollection: IVerband[] = [verband, ...verbandCollection];
+        const additionalVerbands = [verband];
+        const expectedCollection: IVerband[] = [...additionalVerbands, ...verbandCollection];
         jest.spyOn(verbandService, 'addVerbandToCollectionIfMissing').mockReturnValue(expectedCollection);
 
         activatedRoute.data = of({ verein });
         comp.ngOnInit();
 
         expect(verbandService.query).toHaveBeenCalled();
-        expect(verbandService.addVerbandToCollectionIfMissing).toHaveBeenCalledWith(verbandCollection, verband);
-        expect(comp.verbandsCollection).toEqual(expectedCollection);
+        expect(verbandService.addVerbandToCollectionIfMissing).toHaveBeenCalledWith(verbandCollection, ...additionalVerbands);
+        expect(comp.verbandsSharedCollection).toEqual(expectedCollection);
       });
 
       it('Should update editForm', () => {
@@ -67,7 +68,7 @@ describe('Component Tests', () => {
         comp.ngOnInit();
 
         expect(comp.editForm.value).toEqual(expect.objectContaining(verein));
-        expect(comp.verbandsCollection).toContain(verband);
+        expect(comp.verbandsSharedCollection).toContain(verband);
       });
     });
 

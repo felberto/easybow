@@ -11,9 +11,6 @@ const schuetzeRoute: Routes = [
   {
     path: '',
     component: SchuetzeComponent,
-    data: {
-      defaultSort: 'id,asc',
-    },
     canActivate: [UserRouteAccessService],
   },
   {

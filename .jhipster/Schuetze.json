@@ -20,19 +20,18 @@
   ],
   "relationships": [
     {
-      "relationshipType": "one-to-one",
+      "relationshipType": "many-to-one",
       "otherEntityName": "verein",
       "otherEntityRelationshipName": "schuetze",
       "relationshipName": "verein",
-      "otherEntityField": "name",
-      "ownerSide": true
+      "otherEntityField": "name"
     }
   ],
   "entityTableName": "schuetze",
-  "dto": "mapstruct",
-  "pagination": "pagination",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": true,
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
   "fluentMethods": true,
   "readOnly": false,
   "embedded": false,

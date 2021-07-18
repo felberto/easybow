@@ -11,9 +11,6 @@ const vereinRoute: Routes = [
   {
     path: '',
     component: VereinComponent,
-    data: {
-      defaultSort: 'id,asc',
-    },
     canActivate: [UserRouteAccessService],
   },
   {
