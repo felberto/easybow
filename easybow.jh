@@ -1,12 +1,14 @@
 @dto(mapstruct)
 @paginate(pagination)
 @service(serviceImpl)
+@filter(true)
 entity Verband {
 	name String required
 }
 @dto(mapstruct)
 @paginate(pagination)
 @service(serviceImpl)
+@filter(true)
 entity Verein {
 	name String required
 }
@@ -17,6 +19,7 @@ enum Stellung {
 @dto(mapstruct)
 @paginate(pagination)
 @service(serviceImpl)
+@filter(true)
 entity Schuetze {
 	name String required,
     jahrgang Integer required,
@@ -25,6 +28,7 @@ entity Schuetze {
 @dto(mapstruct)
 @paginate(pagination)
 @service(serviceImpl)
+@filter(true)
 entity Wettkampf {
 	name String required,
     jahr LocalDate,
@@ -44,6 +48,7 @@ enum Rangierungskriterien {
 @dto(mapstruct)
 @paginate(pagination)
 @service(serviceImpl)
+@filter(true)
 entity Rangierung {
 	position Integer required,
     rangierungskriterien Rangierungskriterien required
@@ -51,6 +56,7 @@ entity Rangierung {
 @dto(mapstruct)
 @paginate(pagination)
 @service(serviceImpl)
+@filter(true)
 entity Passen {
 	p1 Integer min(0) max(11) required,
     p2 Integer min(0) max(11) required,
@@ -67,12 +73,14 @@ entity Passen {
 @dto(mapstruct)
 @paginate(pagination)
 @service(serviceImpl)
+@filter(true)
 entity Gruppen {
 	name String required
 }
 @dto(mapstruct)
 @paginate(pagination)
 @service(serviceImpl)
+@filter(true)
 entity Resultate {
 	runde Integer required
 }

@@ -140,25 +140,25 @@ export class ResultateUpdateComponent implements OnInit {
 
   protected loadRelationshipsOptions(): void {
     this.passenService
-      .query({ filter: 'resultate-is-null' })
+      .query({ 'resultateId.specified': 'false' })
       .pipe(map((res: HttpResponse<IPassen[]>) => res.body ?? []))
       .pipe(map((passens: IPassen[]) => this.passenService.addPassenToCollectionIfMissing(passens, this.editForm.get('passe1')!.value)))
       .subscribe((passens: IPassen[]) => (this.passe1sCollection = passens));
 
     this.passenService
-      .query({ filter: 'resultate-is-null' })
+      .query({ 'resultateId.specified': 'false' })
       .pipe(map((res: HttpResponse<IPassen[]>) => res.body ?? []))
       .pipe(map((passens: IPassen[]) => this.passenService.addPassenToCollectionIfMissing(passens, this.editForm.get('passe2')!.value)))
       .subscribe((passens: IPassen[]) => (this.passe2sCollection = passens));
 
     this.passenService
-      .query({ filter: 'resultate-is-null' })
+      .query({ 'resultateId.specified': 'false' })
       .pipe(map((res: HttpResponse<IPassen[]>) => res.body ?? []))
       .pipe(map((passens: IPassen[]) => this.passenService.addPassenToCollectionIfMissing(passens, this.editForm.get('passe3')!.value)))
       .subscribe((passens: IPassen[]) => (this.passe3sCollection = passens));
 
     this.passenService
-      .query({ filter: 'resultate-is-null' })
+      .query({ 'resultateId.specified': 'false' })
       .pipe(map((res: HttpResponse<IPassen[]>) => res.body ?? []))
       .pipe(map((passens: IPassen[]) => this.passenService.addPassenToCollectionIfMissing(passens, this.editForm.get('passe4')!.value)))
       .subscribe((passens: IPassen[]) => (this.passe4sCollection = passens));

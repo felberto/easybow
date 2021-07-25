@@ -9,4 +9,4 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface WettkampfRepository extends JpaRepository<Wettkampf, Long> {}
+public interface WettkampfRepository extends JpaRepository<Wettkampf, Long>, JpaSpecificationExecutor<Wettkampf> {}

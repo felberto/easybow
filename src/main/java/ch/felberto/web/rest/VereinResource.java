@@ -1,7 +1,9 @@
 package ch.felberto.web.rest;
 
 import ch.felberto.repository.VereinRepository;
+import ch.felberto.service.VereinQueryService;
 import ch.felberto.service.VereinService;
+import ch.felberto.service.criteria.VereinCriteria;
 import ch.felberto.service.dto.VereinDTO;
 import ch.felberto.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -43,9 +45,12 @@ public class VereinResource {
 
     private final VereinRepository vereinRepository;
 
-    public VereinResource(VereinService vereinService, VereinRepository vereinRepository) {
+    private final VereinQueryService vereinQueryService;
+
+    public VereinResource(VereinService vereinService, VereinRepository vereinRepository, VereinQueryService vereinQueryService) {
         this.vereinService = vereinService;
         this.vereinRepository = vereinRepository;
+        this.vereinQueryService = vereinQueryService;
     }
 
     /**
@@ -142,14 +147,27 @@ public class VereinResource {
      * {@code GET  /vereins} : get all the vereins.
      *
      * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of vereins in body.
      */
     @GetMapping("/vereins")
-    public ResponseEntity<List<VereinDTO>> getAllVereins(Pageable pageable) {
-        log.debug("REST request to get a page of Vereins");
-        Page<VereinDTO> page = vereinService.findAll(pageable);
+    public ResponseEntity<List<VereinDTO>> getAllVereins(VereinCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Vereins by criteria: {}", criteria);
+        Page<VereinDTO> page = vereinQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /vereins/count} : count all the vereins.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/vereins/count")
+    public ResponseEntity<Long> countVereins(VereinCriteria criteria) {
+        log.debug("REST request to count Vereins by criteria: {}", criteria);
+        return ResponseEntity.ok().body(vereinQueryService.countByCriteria(criteria));
     }
 
     /**

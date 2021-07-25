@@ -1,7 +1,9 @@
 package ch.felberto.web.rest;
 
 import ch.felberto.repository.RangierungRepository;
+import ch.felberto.service.RangierungQueryService;
 import ch.felberto.service.RangierungService;
+import ch.felberto.service.criteria.RangierungCriteria;
 import ch.felberto.service.dto.RangierungDTO;
 import ch.felberto.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -43,9 +45,16 @@ public class RangierungResource {
 
     private final RangierungRepository rangierungRepository;
 
-    public RangierungResource(RangierungService rangierungService, RangierungRepository rangierungRepository) {
+    private final RangierungQueryService rangierungQueryService;
+
+    public RangierungResource(
+        RangierungService rangierungService,
+        RangierungRepository rangierungRepository,
+        RangierungQueryService rangierungQueryService
+    ) {
         this.rangierungService = rangierungService;
         this.rangierungRepository = rangierungRepository;
+        this.rangierungQueryService = rangierungQueryService;
     }
 
     /**
@@ -142,14 +151,27 @@ public class RangierungResource {
      * {@code GET  /rangierungs} : get all the rangierungs.
      *
      * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of rangierungs in body.
      */
     @GetMapping("/rangierungs")
-    public ResponseEntity<List<RangierungDTO>> getAllRangierungs(Pageable pageable) {
-        log.debug("REST request to get a page of Rangierungs");
-        Page<RangierungDTO> page = rangierungService.findAll(pageable);
+    public ResponseEntity<List<RangierungDTO>> getAllRangierungs(RangierungCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Rangierungs by criteria: {}", criteria);
+        Page<RangierungDTO> page = rangierungQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /rangierungs/count} : count all the rangierungs.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/rangierungs/count")
+    public ResponseEntity<Long> countRangierungs(RangierungCriteria criteria) {
+        log.debug("REST request to count Rangierungs by criteria: {}", criteria);
+        return ResponseEntity.ok().body(rangierungQueryService.countByCriteria(criteria));
     }
 
     /**
