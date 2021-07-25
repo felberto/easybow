@@ -31,7 +31,7 @@ entity Schuetze {
 @filter(true)
 entity Wettkampf {
 	name String required,
-    jahr LocalDate,
+    jahr Integer,
     anzahlRunden Integer required,
     anzahlPassen Integer min(1) max(4) required,
     finalRunde Boolean,
