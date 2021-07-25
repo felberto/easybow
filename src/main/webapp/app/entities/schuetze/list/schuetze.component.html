@@ -46,7 +46,7 @@
             <a [routerLink]="['/schuetze', schuetze.id, 'view']">{{ schuetze.id }}</a>
           </td>
           <td>{{ schuetze.name }}</td>
-          <td>{{ schuetze.jahrgang | formatMediumDate }}</td>
+          <td>{{ schuetze.jahrgang }}</td>
           <td>{{ schuetze.stellung }}</td>
           <td>
             <div *ngIf="schuetze.verein">

@@ -1,9 +1,7 @@
 package ch.felberto.web.rest;
 
 import ch.felberto.repository.VerbandRepository;
-import ch.felberto.service.VerbandQueryService;
 import ch.felberto.service.VerbandService;
-import ch.felberto.service.criteria.VerbandCriteria;
 import ch.felberto.service.dto.VerbandDTO;
 import ch.felberto.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -45,12 +43,9 @@ public class VerbandResource {
 
     private final VerbandRepository verbandRepository;
 
-    private final VerbandQueryService verbandQueryService;
-
-    public VerbandResource(VerbandService verbandService, VerbandRepository verbandRepository, VerbandQueryService verbandQueryService) {
+    public VerbandResource(VerbandService verbandService, VerbandRepository verbandRepository) {
         this.verbandService = verbandService;
         this.verbandRepository = verbandRepository;
-        this.verbandQueryService = verbandQueryService;
     }
 
     /**
@@ -147,27 +142,14 @@ public class VerbandResource {
      * {@code GET  /verbands} : get all the verbands.
      *
      * @param pageable the pagination information.
-     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of verbands in body.
      */
     @GetMapping("/verbands")
-    public ResponseEntity<List<VerbandDTO>> getAllVerbands(VerbandCriteria criteria, Pageable pageable) {
-        log.debug("REST request to get Verbands by criteria: {}", criteria);
-        Page<VerbandDTO> page = verbandQueryService.findByCriteria(criteria, pageable);
+    public ResponseEntity<List<VerbandDTO>> getAllVerbands(Pageable pageable) {
+        log.debug("REST request to get a page of Verbands");
+        Page<VerbandDTO> page = verbandService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }
-
-    /**
-     * {@code GET  /verbands/count} : count all the verbands.
-     *
-     * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-     */
-    @GetMapping("/verbands/count")
-    public ResponseEntity<Long> countVerbands(VerbandCriteria criteria) {
-        log.debug("REST request to count Verbands by criteria: {}", criteria);
-        return ResponseEntity.ok().body(verbandQueryService.countByCriteria(criteria));
     }
 
     /**

@@ -2,7 +2,6 @@ package ch.felberto.service.dto;
 
 import ch.felberto.domain.enumeration.Stellung;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Objects;
 import javax.validation.constraints.*;
 
@@ -17,7 +16,7 @@ public class SchuetzeDTO implements Serializable {
     private String name;
 
     @NotNull
-    private LocalDate jahrgang;
+    private Integer jahrgang;
 
     @NotNull
     private Stellung stellung;
@@ -40,11 +39,11 @@ public class SchuetzeDTO implements Serializable {
         this.name = name;
     }
 
-    public LocalDate getJahrgang() {
+    public Integer getJahrgang() {
         return jahrgang;
     }
 
-    public void setJahrgang(LocalDate jahrgang) {
+    public void setJahrgang(Integer jahrgang) {
         this.jahrgang = jahrgang;
     }
 
@@ -91,7 +90,7 @@ public class SchuetzeDTO implements Serializable {
         return "SchuetzeDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", jahrgang='" + getJahrgang() + "'" +
+            ", jahrgang=" + getJahrgang() +
             ", stellung='" + getStellung() + "'" +
             ", verein=" + getVerein() +
             "}";

@@ -1,9 +1,7 @@
 package ch.felberto.web.rest;
 
 import ch.felberto.repository.ResultateRepository;
-import ch.felberto.service.ResultateQueryService;
 import ch.felberto.service.ResultateService;
-import ch.felberto.service.criteria.ResultateCriteria;
 import ch.felberto.service.dto.ResultateDTO;
 import ch.felberto.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -45,16 +43,9 @@ public class ResultateResource {
 
     private final ResultateRepository resultateRepository;
 
-    private final ResultateQueryService resultateQueryService;
-
-    public ResultateResource(
-        ResultateService resultateService,
-        ResultateRepository resultateRepository,
-        ResultateQueryService resultateQueryService
-    ) {
+    public ResultateResource(ResultateService resultateService, ResultateRepository resultateRepository) {
         this.resultateService = resultateService;
         this.resultateRepository = resultateRepository;
-        this.resultateQueryService = resultateQueryService;
     }
 
     /**
@@ -151,27 +142,14 @@ public class ResultateResource {
      * {@code GET  /resultates} : get all the resultates.
      *
      * @param pageable the pagination information.
-     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of resultates in body.
      */
     @GetMapping("/resultates")
-    public ResponseEntity<List<ResultateDTO>> getAllResultates(ResultateCriteria criteria, Pageable pageable) {
-        log.debug("REST request to get Resultates by criteria: {}", criteria);
-        Page<ResultateDTO> page = resultateQueryService.findByCriteria(criteria, pageable);
+    public ResponseEntity<List<ResultateDTO>> getAllResultates(Pageable pageable) {
+        log.debug("REST request to get a page of Resultates");
+        Page<ResultateDTO> page = resultateService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }
-
-    /**
-     * {@code GET  /resultates/count} : count all the resultates.
-     *
-     * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-     */
-    @GetMapping("/resultates/count")
-    public ResponseEntity<Long> countResultates(ResultateCriteria criteria) {
-        log.debug("REST request to count Resultates by criteria: {}", criteria);
-        return ResponseEntity.ok().body(resultateQueryService.countByCriteria(criteria));
     }
 
     /**

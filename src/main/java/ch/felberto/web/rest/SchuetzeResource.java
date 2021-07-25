@@ -1,9 +1,7 @@
 package ch.felberto.web.rest;
 
 import ch.felberto.repository.SchuetzeRepository;
-import ch.felberto.service.SchuetzeQueryService;
 import ch.felberto.service.SchuetzeService;
-import ch.felberto.service.criteria.SchuetzeCriteria;
 import ch.felberto.service.dto.SchuetzeDTO;
 import ch.felberto.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -45,16 +43,9 @@ public class SchuetzeResource {
 
     private final SchuetzeRepository schuetzeRepository;
 
-    private final SchuetzeQueryService schuetzeQueryService;
-
-    public SchuetzeResource(
-        SchuetzeService schuetzeService,
-        SchuetzeRepository schuetzeRepository,
-        SchuetzeQueryService schuetzeQueryService
-    ) {
+    public SchuetzeResource(SchuetzeService schuetzeService, SchuetzeRepository schuetzeRepository) {
         this.schuetzeService = schuetzeService;
         this.schuetzeRepository = schuetzeRepository;
-        this.schuetzeQueryService = schuetzeQueryService;
     }
 
     /**
@@ -151,27 +142,14 @@ public class SchuetzeResource {
      * {@code GET  /schuetzes} : get all the schuetzes.
      *
      * @param pageable the pagination information.
-     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of schuetzes in body.
      */
     @GetMapping("/schuetzes")
-    public ResponseEntity<List<SchuetzeDTO>> getAllSchuetzes(SchuetzeCriteria criteria, Pageable pageable) {
-        log.debug("REST request to get Schuetzes by criteria: {}", criteria);
-        Page<SchuetzeDTO> page = schuetzeQueryService.findByCriteria(criteria, pageable);
+    public ResponseEntity<List<SchuetzeDTO>> getAllSchuetzes(Pageable pageable) {
+        log.debug("REST request to get a page of Schuetzes");
+        Page<SchuetzeDTO> page = schuetzeService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }
-
-    /**
-     * {@code GET  /schuetzes/count} : count all the schuetzes.
-     *
-     * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-     */
-    @GetMapping("/schuetzes/count")
-    public ResponseEntity<Long> countSchuetzes(SchuetzeCriteria criteria) {
-        log.debug("REST request to count Schuetzes by criteria: {}", criteria);
-        return ResponseEntity.ok().body(schuetzeQueryService.countByCriteria(criteria));
     }
 
     /**

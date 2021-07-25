@@ -8,7 +8,7 @@
     },
     {
       "fieldName": "jahrgang",
-      "fieldType": "LocalDate",
+      "fieldType": "Integer",
       "fieldValidateRules": ["required"]
     },
     {
@@ -31,7 +31,7 @@
   "dto": "mapstruct",
   "pagination": "pagination",
   "service": "serviceImpl",
-  "jpaMetamodelFiltering": true,
+  "jpaMetamodelFiltering": false,
   "fluentMethods": true,
   "readOnly": false,
   "embedded": false,

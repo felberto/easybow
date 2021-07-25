@@ -3,7 +3,6 @@ package ch.felberto.domain;
 import ch.felberto.domain.enumeration.Stellung;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.time.LocalDate;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -30,7 +29,7 @@ public class Schuetze implements Serializable {
 
     @NotNull
     @Column(name = "jahrgang", nullable = false)
-    private LocalDate jahrgang;
+    private Integer jahrgang;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -68,16 +67,16 @@ public class Schuetze implements Serializable {
         this.name = name;
     }
 
-    public LocalDate getJahrgang() {
+    public Integer getJahrgang() {
         return this.jahrgang;
     }
 
-    public Schuetze jahrgang(LocalDate jahrgang) {
+    public Schuetze jahrgang(Integer jahrgang) {
         this.jahrgang = jahrgang;
         return this;
     }
 
-    public void setJahrgang(LocalDate jahrgang) {
+    public void setJahrgang(Integer jahrgang) {
         this.jahrgang = jahrgang;
     }
 
@@ -132,7 +131,7 @@ public class Schuetze implements Serializable {
         return "Schuetze{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", jahrgang='" + getJahrgang() + "'" +
+            ", jahrgang=" + getJahrgang() +
             ", stellung='" + getStellung() + "'" +
             "}";
     }

@@ -1,9 +1,7 @@
 package ch.felberto.web.rest;
 
 import ch.felberto.repository.PassenRepository;
-import ch.felberto.service.PassenQueryService;
 import ch.felberto.service.PassenService;
-import ch.felberto.service.criteria.PassenCriteria;
 import ch.felberto.service.dto.PassenDTO;
 import ch.felberto.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -45,12 +43,9 @@ public class PassenResource {
 
     private final PassenRepository passenRepository;
 
-    private final PassenQueryService passenQueryService;
-
-    public PassenResource(PassenService passenService, PassenRepository passenRepository, PassenQueryService passenQueryService) {
+    public PassenResource(PassenService passenService, PassenRepository passenRepository) {
         this.passenService = passenService;
         this.passenRepository = passenRepository;
-        this.passenQueryService = passenQueryService;
     }
 
     /**
@@ -147,27 +142,14 @@ public class PassenResource {
      * {@code GET  /passens} : get all the passens.
      *
      * @param pageable the pagination information.
-     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of passens in body.
      */
     @GetMapping("/passens")
-    public ResponseEntity<List<PassenDTO>> getAllPassens(PassenCriteria criteria, Pageable pageable) {
-        log.debug("REST request to get Passens by criteria: {}", criteria);
-        Page<PassenDTO> page = passenQueryService.findByCriteria(criteria, pageable);
+    public ResponseEntity<List<PassenDTO>> getAllPassens(Pageable pageable) {
+        log.debug("REST request to get a page of Passens");
+        Page<PassenDTO> page = passenService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }
-
-    /**
-     * {@code GET  /passens/count} : count all the passens.
-     *
-     * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-     */
-    @GetMapping("/passens/count")
-    public ResponseEntity<Long> countPassens(PassenCriteria criteria) {
-        log.debug("REST request to count Passens by criteria: {}", criteria);
-        return ResponseEntity.ok().body(passenQueryService.countByCriteria(criteria));
     }
 
     /**

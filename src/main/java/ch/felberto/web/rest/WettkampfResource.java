@@ -1,9 +1,7 @@
 package ch.felberto.web.rest;
 
 import ch.felberto.repository.WettkampfRepository;
-import ch.felberto.service.WettkampfQueryService;
 import ch.felberto.service.WettkampfService;
-import ch.felberto.service.criteria.WettkampfCriteria;
 import ch.felberto.service.dto.WettkampfDTO;
 import ch.felberto.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -45,16 +43,9 @@ public class WettkampfResource {
 
     private final WettkampfRepository wettkampfRepository;
 
-    private final WettkampfQueryService wettkampfQueryService;
-
-    public WettkampfResource(
-        WettkampfService wettkampfService,
-        WettkampfRepository wettkampfRepository,
-        WettkampfQueryService wettkampfQueryService
-    ) {
+    public WettkampfResource(WettkampfService wettkampfService, WettkampfRepository wettkampfRepository) {
         this.wettkampfService = wettkampfService;
         this.wettkampfRepository = wettkampfRepository;
-        this.wettkampfQueryService = wettkampfQueryService;
     }
 
     /**
@@ -151,27 +142,14 @@ public class WettkampfResource {
      * {@code GET  /wettkampfs} : get all the wettkampfs.
      *
      * @param pageable the pagination information.
-     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of wettkampfs in body.
      */
     @GetMapping("/wettkampfs")
-    public ResponseEntity<List<WettkampfDTO>> getAllWettkampfs(WettkampfCriteria criteria, Pageable pageable) {
-        log.debug("REST request to get Wettkampfs by criteria: {}", criteria);
-        Page<WettkampfDTO> page = wettkampfQueryService.findByCriteria(criteria, pageable);
+    public ResponseEntity<List<WettkampfDTO>> getAllWettkampfs(Pageable pageable) {
+        log.debug("REST request to get a page of Wettkampfs");
+        Page<WettkampfDTO> page = wettkampfService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }
-
-    /**
-     * {@code GET  /wettkampfs/count} : count all the wettkampfs.
-     *
-     * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-     */
-    @GetMapping("/wettkampfs/count")
-    public ResponseEntity<Long> countWettkampfs(WettkampfCriteria criteria) {
-        log.debug("REST request to count Wettkampfs by criteria: {}", criteria);
-        return ResponseEntity.ok().body(wettkampfQueryService.countByCriteria(criteria));
     }
 
     /**
