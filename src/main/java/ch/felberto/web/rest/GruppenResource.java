@@ -1,7 +1,9 @@
 package ch.felberto.web.rest;
 
 import ch.felberto.repository.GruppenRepository;
+import ch.felberto.service.GruppenQueryService;
 import ch.felberto.service.GruppenService;
+import ch.felberto.service.criteria.GruppenCriteria;
 import ch.felberto.service.dto.GruppenDTO;
 import ch.felberto.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -43,9 +45,12 @@ public class GruppenResource {
 
     private final GruppenRepository gruppenRepository;
 
-    public GruppenResource(GruppenService gruppenService, GruppenRepository gruppenRepository) {
+    private final GruppenQueryService gruppenQueryService;
+
+    public GruppenResource(GruppenService gruppenService, GruppenRepository gruppenRepository, GruppenQueryService gruppenQueryService) {
         this.gruppenService = gruppenService;
         this.gruppenRepository = gruppenRepository;
+        this.gruppenQueryService = gruppenQueryService;
     }
 
     /**
@@ -142,14 +147,27 @@ public class GruppenResource {
      * {@code GET  /gruppens} : get all the gruppens.
      *
      * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of gruppens in body.
      */
     @GetMapping("/gruppens")
-    public ResponseEntity<List<GruppenDTO>> getAllGruppens(Pageable pageable) {
-        log.debug("REST request to get a page of Gruppens");
-        Page<GruppenDTO> page = gruppenService.findAll(pageable);
+    public ResponseEntity<List<GruppenDTO>> getAllGruppens(GruppenCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Gruppens by criteria: {}", criteria);
+        Page<GruppenDTO> page = gruppenQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /gruppens/count} : count all the gruppens.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/gruppens/count")
+    public ResponseEntity<Long> countGruppens(GruppenCriteria criteria) {
+        log.debug("REST request to count Gruppens by criteria: {}", criteria);
+        return ResponseEntity.ok().body(gruppenQueryService.countByCriteria(criteria));
     }
 
     /**

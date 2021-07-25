@@ -9,4 +9,4 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface RangierungRepository extends JpaRepository<Rangierung, Long> {}
+public interface RangierungRepository extends JpaRepository<Rangierung, Long>, JpaSpecificationExecutor<Rangierung> {}
