@@ -21,21 +21,7 @@
 
         <div class="form-group">
           <label class="form-control-label" for="field_jahr">Jahr</label>
-          <div class="input-group">
-            <input
-              id="field_jahr"
-              data-cy="jahr"
-              type="text"
-              class="form-control"
-              name="jahr"
-              ngbDatepicker
-              #jahrDp="ngbDatepicker"
-              formControlName="jahr"
-            />
-            <span class="input-group-append">
-              <button type="button" class="btn btn-secondary" (click)="jahrDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
-            </span>
-          </div>
+          <input type="number" class="form-control" name="jahr" id="field_jahr" data-cy="jahr" formControlName="jahr" />
         </div>
 
         <div class="form-group">

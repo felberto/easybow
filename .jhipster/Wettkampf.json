@@ -8,7 +8,7 @@
     },
     {
       "fieldName": "jahr",
-      "fieldType": "LocalDate"
+      "fieldType": "Integer"
     },
     {
       "fieldName": "anzahlRunden",
