@@ -1,9 +1,7 @@
-import * as dayjs from 'dayjs';
-
 export interface IWettkampf {
   id?: number;
   name?: string;
-  jahr?: dayjs.Dayjs | null;
+  jahr?: number | null;
   anzahlRunden?: number;
   anzahlPassen?: number;
   finalRunde?: boolean | null;
@@ -18,7 +16,7 @@ export class Wettkampf implements IWettkampf {
   constructor(
     public id?: number,
     public name?: string,
-    public jahr?: dayjs.Dayjs | null,
+    public jahr?: number | null,
     public anzahlRunden?: number,
     public anzahlPassen?: number,
     public finalRunde?: boolean | null,

@@ -17,7 +17,7 @@
             <column name="name" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="jahr" type="date">
+            <column name="jahr" type="integer">
                 <constraints nullable="true" />
             </column>
             <column name="anzahl_runden" type="integer">
@@ -65,7 +65,7 @@
                   tableName="wettkampf">
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>
-            <column name="jahr" type="date"/>
+            <column name="jahr" type="numeric"/>
             <column name="anzahl_runden" type="numeric"/>
             <column name="anzahl_passen" type="numeric"/>
             <column name="final_runde" type="boolean"/>
