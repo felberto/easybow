@@ -9,8 +9,8 @@ import ch.felberto.IntegrationTest;
 import ch.felberto.domain.Schuetze;
 import ch.felberto.domain.enumeration.Stellung;
 import ch.felberto.repository.SchuetzeRepository;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import ch.felberto.service.dto.SchuetzeDTO;
+import ch.felberto.service.mapper.SchuetzeMapper;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -35,8 +35,8 @@ class SchuetzeResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final LocalDate DEFAULT_JAHRGANG = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_JAHRGANG = LocalDate.now(ZoneId.systemDefault());
+    private static final Integer DEFAULT_JAHRGANG = 1;
+    private static final Integer UPDATED_JAHRGANG = 2;
 
     private static final Stellung DEFAULT_STELLUNG = Stellung.FREI;
     private static final Stellung UPDATED_STELLUNG = Stellung.AUFGELEGT;
@@ -49,6 +49,9 @@ class SchuetzeResourceIT {
 
     @Autowired
     private SchuetzeRepository schuetzeRepository;
+
+    @Autowired
+    private SchuetzeMapper schuetzeMapper;
 
     @Autowired
     private EntityManager em;
@@ -90,8 +93,9 @@ class SchuetzeResourceIT {
     void createSchuetze() throws Exception {
         int databaseSizeBeforeCreate = schuetzeRepository.findAll().size();
         // Create the Schuetze
+        SchuetzeDTO schuetzeDTO = schuetzeMapper.toDto(schuetze);
         restSchuetzeMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(schuetze)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(schuetzeDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Schuetze in the database
@@ -108,12 +112,13 @@ class SchuetzeResourceIT {
     void createSchuetzeWithExistingId() throws Exception {
         // Create the Schuetze with an existing ID
         schuetze.setId(1L);
+        SchuetzeDTO schuetzeDTO = schuetzeMapper.toDto(schuetze);
 
         int databaseSizeBeforeCreate = schuetzeRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restSchuetzeMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(schuetze)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(schuetzeDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Schuetze in the database
@@ -129,9 +134,10 @@ class SchuetzeResourceIT {
         schuetze.setName(null);
 
         // Create the Schuetze, which fails.
+        SchuetzeDTO schuetzeDTO = schuetzeMapper.toDto(schuetze);
 
         restSchuetzeMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(schuetze)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(schuetzeDTO)))
             .andExpect(status().isBadRequest());
 
         List<Schuetze> schuetzeList = schuetzeRepository.findAll();
@@ -146,9 +152,10 @@ class SchuetzeResourceIT {
         schuetze.setJahrgang(null);
 
         // Create the Schuetze, which fails.
+        SchuetzeDTO schuetzeDTO = schuetzeMapper.toDto(schuetze);
 
         restSchuetzeMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(schuetze)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(schuetzeDTO)))
             .andExpect(status().isBadRequest());
 
         List<Schuetze> schuetzeList = schuetzeRepository.findAll();
@@ -163,9 +170,10 @@ class SchuetzeResourceIT {
         schuetze.setStellung(null);
 
         // Create the Schuetze, which fails.
+        SchuetzeDTO schuetzeDTO = schuetzeMapper.toDto(schuetze);
 
         restSchuetzeMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(schuetze)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(schuetzeDTO)))
             .andExpect(status().isBadRequest());
 
         List<Schuetze> schuetzeList = schuetzeRepository.findAll();
@@ -185,7 +193,7 @@ class SchuetzeResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(schuetze.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].jahrgang").value(hasItem(DEFAULT_JAHRGANG.toString())))
+            .andExpect(jsonPath("$.[*].jahrgang").value(hasItem(DEFAULT_JAHRGANG)))
             .andExpect(jsonPath("$.[*].stellung").value(hasItem(DEFAULT_STELLUNG.toString())));
     }
 
@@ -202,7 +210,7 @@ class SchuetzeResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(schuetze.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.jahrgang").value(DEFAULT_JAHRGANG.toString()))
+            .andExpect(jsonPath("$.jahrgang").value(DEFAULT_JAHRGANG))
             .andExpect(jsonPath("$.stellung").value(DEFAULT_STELLUNG.toString()));
     }
 
@@ -226,12 +234,13 @@ class SchuetzeResourceIT {
         // Disconnect from session so that the updates on updatedSchuetze are not directly saved in db
         em.detach(updatedSchuetze);
         updatedSchuetze.name(UPDATED_NAME).jahrgang(UPDATED_JAHRGANG).stellung(UPDATED_STELLUNG);
+        SchuetzeDTO schuetzeDTO = schuetzeMapper.toDto(updatedSchuetze);
 
         restSchuetzeMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedSchuetze.getId())
+                put(ENTITY_API_URL_ID, schuetzeDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedSchuetze))
+                    .content(TestUtil.convertObjectToJsonBytes(schuetzeDTO))
             )
             .andExpect(status().isOk());
 
@@ -250,12 +259,15 @@ class SchuetzeResourceIT {
         int databaseSizeBeforeUpdate = schuetzeRepository.findAll().size();
         schuetze.setId(count.incrementAndGet());
 
+        // Create the Schuetze
+        SchuetzeDTO schuetzeDTO = schuetzeMapper.toDto(schuetze);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restSchuetzeMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, schuetze.getId())
+                put(ENTITY_API_URL_ID, schuetzeDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(schuetze))
+                    .content(TestUtil.convertObjectToJsonBytes(schuetzeDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -270,12 +282,15 @@ class SchuetzeResourceIT {
         int databaseSizeBeforeUpdate = schuetzeRepository.findAll().size();
         schuetze.setId(count.incrementAndGet());
 
+        // Create the Schuetze
+        SchuetzeDTO schuetzeDTO = schuetzeMapper.toDto(schuetze);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restSchuetzeMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, count.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(schuetze))
+                    .content(TestUtil.convertObjectToJsonBytes(schuetzeDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -290,9 +305,12 @@ class SchuetzeResourceIT {
         int databaseSizeBeforeUpdate = schuetzeRepository.findAll().size();
         schuetze.setId(count.incrementAndGet());
 
+        // Create the Schuetze
+        SchuetzeDTO schuetzeDTO = schuetzeMapper.toDto(schuetze);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restSchuetzeMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(schuetze)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(schuetzeDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Schuetze in the database
@@ -368,12 +386,15 @@ class SchuetzeResourceIT {
         int databaseSizeBeforeUpdate = schuetzeRepository.findAll().size();
         schuetze.setId(count.incrementAndGet());
 
+        // Create the Schuetze
+        SchuetzeDTO schuetzeDTO = schuetzeMapper.toDto(schuetze);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restSchuetzeMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, schuetze.getId())
+                patch(ENTITY_API_URL_ID, schuetzeDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(schuetze))
+                    .content(TestUtil.convertObjectToJsonBytes(schuetzeDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -388,12 +409,15 @@ class SchuetzeResourceIT {
         int databaseSizeBeforeUpdate = schuetzeRepository.findAll().size();
         schuetze.setId(count.incrementAndGet());
 
+        // Create the Schuetze
+        SchuetzeDTO schuetzeDTO = schuetzeMapper.toDto(schuetze);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restSchuetzeMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, count.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(schuetze))
+                    .content(TestUtil.convertObjectToJsonBytes(schuetzeDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -408,9 +432,14 @@ class SchuetzeResourceIT {
         int databaseSizeBeforeUpdate = schuetzeRepository.findAll().size();
         schuetze.setId(count.incrementAndGet());
 
+        // Create the Schuetze
+        SchuetzeDTO schuetzeDTO = schuetzeMapper.toDto(schuetze);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restSchuetzeMockMvc
-            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(schuetze)))
+            .perform(
+                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(schuetzeDTO))
+            )
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Schuetze in the database

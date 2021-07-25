@@ -8,7 +8,7 @@
     },
     {
       "fieldName": "jahrgang",
-      "fieldType": "LocalDate",
+      "fieldType": "Integer",
       "fieldValidateRules": ["required"]
     },
     {
@@ -28,9 +28,9 @@
     }
   ],
   "entityTableName": "schuetze",
-  "dto": "no",
-  "pagination": "no",
-  "service": "no",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
   "jpaMetamodelFiltering": false,
   "fluentMethods": true,
   "readOnly": false,

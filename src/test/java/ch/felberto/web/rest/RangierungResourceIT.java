@@ -9,6 +9,8 @@ import ch.felberto.IntegrationTest;
 import ch.felberto.domain.Rangierung;
 import ch.felberto.domain.enumeration.Rangierungskriterien;
 import ch.felberto.repository.RangierungRepository;
+import ch.felberto.service.dto.RangierungDTO;
+import ch.felberto.service.mapper.RangierungMapper;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -44,6 +46,9 @@ class RangierungResourceIT {
 
     @Autowired
     private RangierungRepository rangierungRepository;
+
+    @Autowired
+    private RangierungMapper rangierungMapper;
 
     @Autowired
     private EntityManager em;
@@ -85,8 +90,9 @@ class RangierungResourceIT {
     void createRangierung() throws Exception {
         int databaseSizeBeforeCreate = rangierungRepository.findAll().size();
         // Create the Rangierung
+        RangierungDTO rangierungDTO = rangierungMapper.toDto(rangierung);
         restRangierungMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(rangierung)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(rangierungDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Rangierung in the database
@@ -102,12 +108,13 @@ class RangierungResourceIT {
     void createRangierungWithExistingId() throws Exception {
         // Create the Rangierung with an existing ID
         rangierung.setId(1L);
+        RangierungDTO rangierungDTO = rangierungMapper.toDto(rangierung);
 
         int databaseSizeBeforeCreate = rangierungRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restRangierungMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(rangierung)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(rangierungDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Rangierung in the database
@@ -123,9 +130,10 @@ class RangierungResourceIT {
         rangierung.setPosition(null);
 
         // Create the Rangierung, which fails.
+        RangierungDTO rangierungDTO = rangierungMapper.toDto(rangierung);
 
         restRangierungMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(rangierung)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(rangierungDTO)))
             .andExpect(status().isBadRequest());
 
         List<Rangierung> rangierungList = rangierungRepository.findAll();
@@ -140,9 +148,10 @@ class RangierungResourceIT {
         rangierung.setRangierungskriterien(null);
 
         // Create the Rangierung, which fails.
+        RangierungDTO rangierungDTO = rangierungMapper.toDto(rangierung);
 
         restRangierungMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(rangierung)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(rangierungDTO)))
             .andExpect(status().isBadRequest());
 
         List<Rangierung> rangierungList = rangierungRepository.findAll();
@@ -201,12 +210,13 @@ class RangierungResourceIT {
         // Disconnect from session so that the updates on updatedRangierung are not directly saved in db
         em.detach(updatedRangierung);
         updatedRangierung.position(UPDATED_POSITION).rangierungskriterien(UPDATED_RANGIERUNGSKRITERIEN);
+        RangierungDTO rangierungDTO = rangierungMapper.toDto(updatedRangierung);
 
         restRangierungMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedRangierung.getId())
+                put(ENTITY_API_URL_ID, rangierungDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedRangierung))
+                    .content(TestUtil.convertObjectToJsonBytes(rangierungDTO))
             )
             .andExpect(status().isOk());
 
@@ -224,12 +234,15 @@ class RangierungResourceIT {
         int databaseSizeBeforeUpdate = rangierungRepository.findAll().size();
         rangierung.setId(count.incrementAndGet());
 
+        // Create the Rangierung
+        RangierungDTO rangierungDTO = rangierungMapper.toDto(rangierung);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restRangierungMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, rangierung.getId())
+                put(ENTITY_API_URL_ID, rangierungDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(rangierung))
+                    .content(TestUtil.convertObjectToJsonBytes(rangierungDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -244,12 +257,15 @@ class RangierungResourceIT {
         int databaseSizeBeforeUpdate = rangierungRepository.findAll().size();
         rangierung.setId(count.incrementAndGet());
 
+        // Create the Rangierung
+        RangierungDTO rangierungDTO = rangierungMapper.toDto(rangierung);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restRangierungMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, count.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(rangierung))
+                    .content(TestUtil.convertObjectToJsonBytes(rangierungDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -264,9 +280,12 @@ class RangierungResourceIT {
         int databaseSizeBeforeUpdate = rangierungRepository.findAll().size();
         rangierung.setId(count.incrementAndGet());
 
+        // Create the Rangierung
+        RangierungDTO rangierungDTO = rangierungMapper.toDto(rangierung);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restRangierungMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(rangierung)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(rangierungDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Rangierung in the database
@@ -338,12 +357,15 @@ class RangierungResourceIT {
         int databaseSizeBeforeUpdate = rangierungRepository.findAll().size();
         rangierung.setId(count.incrementAndGet());
 
+        // Create the Rangierung
+        RangierungDTO rangierungDTO = rangierungMapper.toDto(rangierung);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restRangierungMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, rangierung.getId())
+                patch(ENTITY_API_URL_ID, rangierungDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(rangierung))
+                    .content(TestUtil.convertObjectToJsonBytes(rangierungDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -358,12 +380,15 @@ class RangierungResourceIT {
         int databaseSizeBeforeUpdate = rangierungRepository.findAll().size();
         rangierung.setId(count.incrementAndGet());
 
+        // Create the Rangierung
+        RangierungDTO rangierungDTO = rangierungMapper.toDto(rangierung);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restRangierungMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, count.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(rangierung))
+                    .content(TestUtil.convertObjectToJsonBytes(rangierungDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -378,10 +403,13 @@ class RangierungResourceIT {
         int databaseSizeBeforeUpdate = rangierungRepository.findAll().size();
         rangierung.setId(count.incrementAndGet());
 
+        // Create the Rangierung
+        RangierungDTO rangierungDTO = rangierungMapper.toDto(rangierung);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restRangierungMockMvc
             .perform(
-                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(rangierung))
+                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(rangierungDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 

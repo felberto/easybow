@@ -17,9 +17,9 @@
     }
   ],
   "entityTableName": "verein",
-  "dto": "no",
-  "pagination": "no",
-  "service": "no",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
   "jpaMetamodelFiltering": false,
   "fluentMethods": true,
   "readOnly": false,

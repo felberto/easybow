@@ -8,6 +8,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import ch.felberto.IntegrationTest;
 import ch.felberto.domain.Resultate;
 import ch.felberto.repository.ResultateRepository;
+import ch.felberto.service.dto.ResultateDTO;
+import ch.felberto.service.mapper.ResultateMapper;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -40,6 +42,9 @@ class ResultateResourceIT {
 
     @Autowired
     private ResultateRepository resultateRepository;
+
+    @Autowired
+    private ResultateMapper resultateMapper;
 
     @Autowired
     private EntityManager em;
@@ -81,8 +86,9 @@ class ResultateResourceIT {
     void createResultate() throws Exception {
         int databaseSizeBeforeCreate = resultateRepository.findAll().size();
         // Create the Resultate
+        ResultateDTO resultateDTO = resultateMapper.toDto(resultate);
         restResultateMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resultate)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resultateDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Resultate in the database
@@ -97,12 +103,13 @@ class ResultateResourceIT {
     void createResultateWithExistingId() throws Exception {
         // Create the Resultate with an existing ID
         resultate.setId(1L);
+        ResultateDTO resultateDTO = resultateMapper.toDto(resultate);
 
         int databaseSizeBeforeCreate = resultateRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restResultateMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resultate)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resultateDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Resultate in the database
@@ -118,9 +125,10 @@ class ResultateResourceIT {
         resultate.setRunde(null);
 
         // Create the Resultate, which fails.
+        ResultateDTO resultateDTO = resultateMapper.toDto(resultate);
 
         restResultateMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resultate)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resultateDTO)))
             .andExpect(status().isBadRequest());
 
         List<Resultate> resultateList = resultateRepository.findAll();
@@ -177,12 +185,13 @@ class ResultateResourceIT {
         // Disconnect from session so that the updates on updatedResultate are not directly saved in db
         em.detach(updatedResultate);
         updatedResultate.runde(UPDATED_RUNDE);
+        ResultateDTO resultateDTO = resultateMapper.toDto(updatedResultate);
 
         restResultateMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedResultate.getId())
+                put(ENTITY_API_URL_ID, resultateDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedResultate))
+                    .content(TestUtil.convertObjectToJsonBytes(resultateDTO))
             )
             .andExpect(status().isOk());
 
@@ -199,12 +208,15 @@ class ResultateResourceIT {
         int databaseSizeBeforeUpdate = resultateRepository.findAll().size();
         resultate.setId(count.incrementAndGet());
 
+        // Create the Resultate
+        ResultateDTO resultateDTO = resultateMapper.toDto(resultate);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restResultateMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, resultate.getId())
+                put(ENTITY_API_URL_ID, resultateDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(resultate))
+                    .content(TestUtil.convertObjectToJsonBytes(resultateDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -219,12 +231,15 @@ class ResultateResourceIT {
         int databaseSizeBeforeUpdate = resultateRepository.findAll().size();
         resultate.setId(count.incrementAndGet());
 
+        // Create the Resultate
+        ResultateDTO resultateDTO = resultateMapper.toDto(resultate);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restResultateMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, count.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(resultate))
+                    .content(TestUtil.convertObjectToJsonBytes(resultateDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -239,9 +254,12 @@ class ResultateResourceIT {
         int databaseSizeBeforeUpdate = resultateRepository.findAll().size();
         resultate.setId(count.incrementAndGet());
 
+        // Create the Resultate
+        ResultateDTO resultateDTO = resultateMapper.toDto(resultate);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restResultateMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resultate)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(resultateDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Resultate in the database
@@ -313,12 +331,15 @@ class ResultateResourceIT {
         int databaseSizeBeforeUpdate = resultateRepository.findAll().size();
         resultate.setId(count.incrementAndGet());
 
+        // Create the Resultate
+        ResultateDTO resultateDTO = resultateMapper.toDto(resultate);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restResultateMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, resultate.getId())
+                patch(ENTITY_API_URL_ID, resultateDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(resultate))
+                    .content(TestUtil.convertObjectToJsonBytes(resultateDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -333,12 +354,15 @@ class ResultateResourceIT {
         int databaseSizeBeforeUpdate = resultateRepository.findAll().size();
         resultate.setId(count.incrementAndGet());
 
+        // Create the Resultate
+        ResultateDTO resultateDTO = resultateMapper.toDto(resultate);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restResultateMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, count.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(resultate))
+                    .content(TestUtil.convertObjectToJsonBytes(resultateDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -353,10 +377,13 @@ class ResultateResourceIT {
         int databaseSizeBeforeUpdate = resultateRepository.findAll().size();
         resultate.setId(count.incrementAndGet());
 
+        // Create the Resultate
+        ResultateDTO resultateDTO = resultateMapper.toDto(resultate);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restResultateMockMvc
             .perform(
-                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(resultate))
+                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(resultateDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 

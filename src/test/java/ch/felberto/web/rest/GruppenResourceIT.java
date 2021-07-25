@@ -8,6 +8,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import ch.felberto.IntegrationTest;
 import ch.felberto.domain.Gruppen;
 import ch.felberto.repository.GruppenRepository;
+import ch.felberto.service.dto.GruppenDTO;
+import ch.felberto.service.mapper.GruppenMapper;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -40,6 +42,9 @@ class GruppenResourceIT {
 
     @Autowired
     private GruppenRepository gruppenRepository;
+
+    @Autowired
+    private GruppenMapper gruppenMapper;
 
     @Autowired
     private EntityManager em;
@@ -81,8 +86,9 @@ class GruppenResourceIT {
     void createGruppen() throws Exception {
         int databaseSizeBeforeCreate = gruppenRepository.findAll().size();
         // Create the Gruppen
+        GruppenDTO gruppenDTO = gruppenMapper.toDto(gruppen);
         restGruppenMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(gruppen)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(gruppenDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Gruppen in the database
@@ -97,12 +103,13 @@ class GruppenResourceIT {
     void createGruppenWithExistingId() throws Exception {
         // Create the Gruppen with an existing ID
         gruppen.setId(1L);
+        GruppenDTO gruppenDTO = gruppenMapper.toDto(gruppen);
 
         int databaseSizeBeforeCreate = gruppenRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restGruppenMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(gruppen)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(gruppenDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Gruppen in the database
@@ -118,9 +125,10 @@ class GruppenResourceIT {
         gruppen.setName(null);
 
         // Create the Gruppen, which fails.
+        GruppenDTO gruppenDTO = gruppenMapper.toDto(gruppen);
 
         restGruppenMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(gruppen)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(gruppenDTO)))
             .andExpect(status().isBadRequest());
 
         List<Gruppen> gruppenList = gruppenRepository.findAll();
@@ -177,12 +185,13 @@ class GruppenResourceIT {
         // Disconnect from session so that the updates on updatedGruppen are not directly saved in db
         em.detach(updatedGruppen);
         updatedGruppen.name(UPDATED_NAME);
+        GruppenDTO gruppenDTO = gruppenMapper.toDto(updatedGruppen);
 
         restGruppenMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedGruppen.getId())
+                put(ENTITY_API_URL_ID, gruppenDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedGruppen))
+                    .content(TestUtil.convertObjectToJsonBytes(gruppenDTO))
             )
             .andExpect(status().isOk());
 
@@ -199,12 +208,15 @@ class GruppenResourceIT {
         int databaseSizeBeforeUpdate = gruppenRepository.findAll().size();
         gruppen.setId(count.incrementAndGet());
 
+        // Create the Gruppen
+        GruppenDTO gruppenDTO = gruppenMapper.toDto(gruppen);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restGruppenMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, gruppen.getId())
+                put(ENTITY_API_URL_ID, gruppenDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(gruppen))
+                    .content(TestUtil.convertObjectToJsonBytes(gruppenDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -219,12 +231,15 @@ class GruppenResourceIT {
         int databaseSizeBeforeUpdate = gruppenRepository.findAll().size();
         gruppen.setId(count.incrementAndGet());
 
+        // Create the Gruppen
+        GruppenDTO gruppenDTO = gruppenMapper.toDto(gruppen);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restGruppenMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, count.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(gruppen))
+                    .content(TestUtil.convertObjectToJsonBytes(gruppenDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -239,9 +254,12 @@ class GruppenResourceIT {
         int databaseSizeBeforeUpdate = gruppenRepository.findAll().size();
         gruppen.setId(count.incrementAndGet());
 
+        // Create the Gruppen
+        GruppenDTO gruppenDTO = gruppenMapper.toDto(gruppen);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restGruppenMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(gruppen)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(gruppenDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Gruppen in the database
@@ -313,12 +331,15 @@ class GruppenResourceIT {
         int databaseSizeBeforeUpdate = gruppenRepository.findAll().size();
         gruppen.setId(count.incrementAndGet());
 
+        // Create the Gruppen
+        GruppenDTO gruppenDTO = gruppenMapper.toDto(gruppen);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restGruppenMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, gruppen.getId())
+                patch(ENTITY_API_URL_ID, gruppenDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(gruppen))
+                    .content(TestUtil.convertObjectToJsonBytes(gruppenDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -333,12 +354,15 @@ class GruppenResourceIT {
         int databaseSizeBeforeUpdate = gruppenRepository.findAll().size();
         gruppen.setId(count.incrementAndGet());
 
+        // Create the Gruppen
+        GruppenDTO gruppenDTO = gruppenMapper.toDto(gruppen);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restGruppenMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, count.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(gruppen))
+                    .content(TestUtil.convertObjectToJsonBytes(gruppenDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -353,9 +377,14 @@ class GruppenResourceIT {
         int databaseSizeBeforeUpdate = gruppenRepository.findAll().size();
         gruppen.setId(count.incrementAndGet());
 
+        // Create the Gruppen
+        GruppenDTO gruppenDTO = gruppenMapper.toDto(gruppen);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restGruppenMockMvc
-            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(gruppen)))
+            .perform(
+                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(gruppenDTO))
+            )
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Gruppen in the database

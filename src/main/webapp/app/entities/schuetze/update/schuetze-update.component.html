@@ -21,23 +21,12 @@
 
         <div class="form-group">
           <label class="form-control-label" for="field_jahrgang">Jahrgang</label>
-          <div class="input-group">
-            <input
-              id="field_jahrgang"
-              data-cy="jahrgang"
-              type="text"
-              class="form-control"
-              name="jahrgang"
-              ngbDatepicker
-              #jahrgangDp="ngbDatepicker"
-              formControlName="jahrgang"
-            />
-            <span class="input-group-append">
-              <button type="button" class="btn btn-secondary" (click)="jahrgangDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
-            </span>
-          </div>
+          <input type="number" class="form-control" name="jahrgang" id="field_jahrgang" data-cy="jahrgang" formControlName="jahrgang" />
           <div *ngIf="editForm.get('jahrgang')!.invalid && (editForm.get('jahrgang')!.dirty || editForm.get('jahrgang')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('jahrgang')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('jahrgang')?.errors?.number">
+              This field should be a number.
+            </small>
           </div>
         </div>
 

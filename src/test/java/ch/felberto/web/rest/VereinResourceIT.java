@@ -8,6 +8,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import ch.felberto.IntegrationTest;
 import ch.felberto.domain.Verein;
 import ch.felberto.repository.VereinRepository;
+import ch.felberto.service.dto.VereinDTO;
+import ch.felberto.service.mapper.VereinMapper;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -40,6 +42,9 @@ class VereinResourceIT {
 
     @Autowired
     private VereinRepository vereinRepository;
+
+    @Autowired
+    private VereinMapper vereinMapper;
 
     @Autowired
     private EntityManager em;
@@ -81,8 +86,9 @@ class VereinResourceIT {
     void createVerein() throws Exception {
         int databaseSizeBeforeCreate = vereinRepository.findAll().size();
         // Create the Verein
+        VereinDTO vereinDTO = vereinMapper.toDto(verein);
         restVereinMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(verein)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(vereinDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Verein in the database
@@ -97,12 +103,13 @@ class VereinResourceIT {
     void createVereinWithExistingId() throws Exception {
         // Create the Verein with an existing ID
         verein.setId(1L);
+        VereinDTO vereinDTO = vereinMapper.toDto(verein);
 
         int databaseSizeBeforeCreate = vereinRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restVereinMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(verein)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(vereinDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Verein in the database
@@ -118,9 +125,10 @@ class VereinResourceIT {
         verein.setName(null);
 
         // Create the Verein, which fails.
+        VereinDTO vereinDTO = vereinMapper.toDto(verein);
 
         restVereinMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(verein)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(vereinDTO)))
             .andExpect(status().isBadRequest());
 
         List<Verein> vereinList = vereinRepository.findAll();
@@ -177,12 +185,13 @@ class VereinResourceIT {
         // Disconnect from session so that the updates on updatedVerein are not directly saved in db
         em.detach(updatedVerein);
         updatedVerein.name(UPDATED_NAME);
+        VereinDTO vereinDTO = vereinMapper.toDto(updatedVerein);
 
         restVereinMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedVerein.getId())
+                put(ENTITY_API_URL_ID, vereinDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedVerein))
+                    .content(TestUtil.convertObjectToJsonBytes(vereinDTO))
             )
             .andExpect(status().isOk());
 
@@ -199,12 +208,15 @@ class VereinResourceIT {
         int databaseSizeBeforeUpdate = vereinRepository.findAll().size();
         verein.setId(count.incrementAndGet());
 
+        // Create the Verein
+        VereinDTO vereinDTO = vereinMapper.toDto(verein);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restVereinMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, verein.getId())
+                put(ENTITY_API_URL_ID, vereinDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(verein))
+                    .content(TestUtil.convertObjectToJsonBytes(vereinDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -219,12 +231,15 @@ class VereinResourceIT {
         int databaseSizeBeforeUpdate = vereinRepository.findAll().size();
         verein.setId(count.incrementAndGet());
 
+        // Create the Verein
+        VereinDTO vereinDTO = vereinMapper.toDto(verein);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restVereinMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, count.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(verein))
+                    .content(TestUtil.convertObjectToJsonBytes(vereinDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -239,9 +254,12 @@ class VereinResourceIT {
         int databaseSizeBeforeUpdate = vereinRepository.findAll().size();
         verein.setId(count.incrementAndGet());
 
+        // Create the Verein
+        VereinDTO vereinDTO = vereinMapper.toDto(verein);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restVereinMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(verein)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(vereinDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Verein in the database
@@ -311,12 +329,15 @@ class VereinResourceIT {
         int databaseSizeBeforeUpdate = vereinRepository.findAll().size();
         verein.setId(count.incrementAndGet());
 
+        // Create the Verein
+        VereinDTO vereinDTO = vereinMapper.toDto(verein);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restVereinMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, verein.getId())
+                patch(ENTITY_API_URL_ID, vereinDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(verein))
+                    .content(TestUtil.convertObjectToJsonBytes(vereinDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -331,12 +352,15 @@ class VereinResourceIT {
         int databaseSizeBeforeUpdate = vereinRepository.findAll().size();
         verein.setId(count.incrementAndGet());
 
+        // Create the Verein
+        VereinDTO vereinDTO = vereinMapper.toDto(verein);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restVereinMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, count.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(verein))
+                    .content(TestUtil.convertObjectToJsonBytes(vereinDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -351,9 +375,14 @@ class VereinResourceIT {
         int databaseSizeBeforeUpdate = vereinRepository.findAll().size();
         verein.setId(count.incrementAndGet());
 
+        // Create the Verein
+        VereinDTO vereinDTO = vereinMapper.toDto(verein);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restVereinMockMvc
-            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(verein)))
+            .perform(
+                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(vereinDTO))
+            )
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Verein in the database

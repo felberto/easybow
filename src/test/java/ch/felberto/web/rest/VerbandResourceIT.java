@@ -8,6 +8,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import ch.felberto.IntegrationTest;
 import ch.felberto.domain.Verband;
 import ch.felberto.repository.VerbandRepository;
+import ch.felberto.service.dto.VerbandDTO;
+import ch.felberto.service.mapper.VerbandMapper;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -40,6 +42,9 @@ class VerbandResourceIT {
 
     @Autowired
     private VerbandRepository verbandRepository;
+
+    @Autowired
+    private VerbandMapper verbandMapper;
 
     @Autowired
     private EntityManager em;
@@ -81,8 +86,9 @@ class VerbandResourceIT {
     void createVerband() throws Exception {
         int databaseSizeBeforeCreate = verbandRepository.findAll().size();
         // Create the Verband
+        VerbandDTO verbandDTO = verbandMapper.toDto(verband);
         restVerbandMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(verband)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(verbandDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Verband in the database
@@ -97,12 +103,13 @@ class VerbandResourceIT {
     void createVerbandWithExistingId() throws Exception {
         // Create the Verband with an existing ID
         verband.setId(1L);
+        VerbandDTO verbandDTO = verbandMapper.toDto(verband);
 
         int databaseSizeBeforeCreate = verbandRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restVerbandMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(verband)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(verbandDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Verband in the database
@@ -118,9 +125,10 @@ class VerbandResourceIT {
         verband.setName(null);
 
         // Create the Verband, which fails.
+        VerbandDTO verbandDTO = verbandMapper.toDto(verband);
 
         restVerbandMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(verband)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(verbandDTO)))
             .andExpect(status().isBadRequest());
 
         List<Verband> verbandList = verbandRepository.findAll();
@@ -177,12 +185,13 @@ class VerbandResourceIT {
         // Disconnect from session so that the updates on updatedVerband are not directly saved in db
         em.detach(updatedVerband);
         updatedVerband.name(UPDATED_NAME);
+        VerbandDTO verbandDTO = verbandMapper.toDto(updatedVerband);
 
         restVerbandMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedVerband.getId())
+                put(ENTITY_API_URL_ID, verbandDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedVerband))
+                    .content(TestUtil.convertObjectToJsonBytes(verbandDTO))
             )
             .andExpect(status().isOk());
 
@@ -199,12 +208,15 @@ class VerbandResourceIT {
         int databaseSizeBeforeUpdate = verbandRepository.findAll().size();
         verband.setId(count.incrementAndGet());
 
+        // Create the Verband
+        VerbandDTO verbandDTO = verbandMapper.toDto(verband);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restVerbandMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, verband.getId())
+                put(ENTITY_API_URL_ID, verbandDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(verband))
+                    .content(TestUtil.convertObjectToJsonBytes(verbandDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -219,12 +231,15 @@ class VerbandResourceIT {
         int databaseSizeBeforeUpdate = verbandRepository.findAll().size();
         verband.setId(count.incrementAndGet());
 
+        // Create the Verband
+        VerbandDTO verbandDTO = verbandMapper.toDto(verband);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restVerbandMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, count.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(verband))
+                    .content(TestUtil.convertObjectToJsonBytes(verbandDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -239,9 +254,12 @@ class VerbandResourceIT {
         int databaseSizeBeforeUpdate = verbandRepository.findAll().size();
         verband.setId(count.incrementAndGet());
 
+        // Create the Verband
+        VerbandDTO verbandDTO = verbandMapper.toDto(verband);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restVerbandMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(verband)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(verbandDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Verband in the database
@@ -311,12 +329,15 @@ class VerbandResourceIT {
         int databaseSizeBeforeUpdate = verbandRepository.findAll().size();
         verband.setId(count.incrementAndGet());
 
+        // Create the Verband
+        VerbandDTO verbandDTO = verbandMapper.toDto(verband);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restVerbandMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, verband.getId())
+                patch(ENTITY_API_URL_ID, verbandDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(verband))
+                    .content(TestUtil.convertObjectToJsonBytes(verbandDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -331,12 +352,15 @@ class VerbandResourceIT {
         int databaseSizeBeforeUpdate = verbandRepository.findAll().size();
         verband.setId(count.incrementAndGet());
 
+        // Create the Verband
+        VerbandDTO verbandDTO = verbandMapper.toDto(verband);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restVerbandMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, count.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(verband))
+                    .content(TestUtil.convertObjectToJsonBytes(verbandDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -351,9 +375,14 @@ class VerbandResourceIT {
         int databaseSizeBeforeUpdate = verbandRepository.findAll().size();
         verband.setId(count.incrementAndGet());
 
+        // Create the Verband
+        VerbandDTO verbandDTO = verbandMapper.toDto(verband);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restVerbandMockMvc
-            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(verband)))
+            .perform(
+                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(verbandDTO))
+            )
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Verband in the database
