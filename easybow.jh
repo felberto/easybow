@@ -1,8 +1,12 @@
-
+@dto(mapstruct)
+@paginate(pagination)
+@service(serviceImpl)
 entity Verband {
 	name String required
 }
-
+@dto(mapstruct)
+@paginate(pagination)
+@service(serviceImpl)
 entity Verein {
 	name String required
 }
@@ -10,13 +14,17 @@ entity Verein {
 enum Stellung {
 	FREI, AUFGELEGT
 }
-
+@dto(mapstruct)
+@paginate(pagination)
+@service(serviceImpl)
 entity Schuetze {
 	name String required,
-    jahrgang LocalDate required,
+    jahrgang Integer required,
     stellung Stellung required
 }
-
+@dto(mapstruct)
+@paginate(pagination)
+@service(serviceImpl)
 entity Wettkampf {
 	name String required,
     jahr LocalDate,
@@ -33,12 +41,16 @@ entity Wettkampf {
 enum Rangierungskriterien {
 	RESULTAT, SERIE, TIEFSCHUESSE, MOUCHEN, ALTER
 }
-
+@dto(mapstruct)
+@paginate(pagination)
+@service(serviceImpl)
 entity Rangierung {
 	position Integer required,
     rangierungskriterien Rangierungskriterien required
 }
-
+@dto(mapstruct)
+@paginate(pagination)
+@service(serviceImpl)
 entity Passen {
 	p1 Integer min(0) max(11) required,
     p2 Integer min(0) max(11) required,
@@ -52,11 +64,15 @@ entity Passen {
     p10 Integer min(0) max(11) required,
     resultat Integer
 }
-
+@dto(mapstruct)
+@paginate(pagination)
+@service(serviceImpl)
 entity Gruppen {
 	name String required
 }
-
+@dto(mapstruct)
+@paginate(pagination)
+@service(serviceImpl)
 entity Resultate {
 	runde Integer required
 }
