@@ -8,6 +8,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import ch.felberto.IntegrationTest;
 import ch.felberto.domain.Passen;
 import ch.felberto.repository.PassenRepository;
+import ch.felberto.service.dto.PassenDTO;
+import ch.felberto.service.mapper.PassenMapper;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -72,6 +74,9 @@ class PassenResourceIT {
     private PassenRepository passenRepository;
 
     @Autowired
+    private PassenMapper passenMapper;
+
+    @Autowired
     private EntityManager em;
 
     @Autowired
@@ -133,8 +138,9 @@ class PassenResourceIT {
     void createPassen() throws Exception {
         int databaseSizeBeforeCreate = passenRepository.findAll().size();
         // Create the Passen
+        PassenDTO passenDTO = passenMapper.toDto(passen);
         restPassenMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passen)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passenDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Passen in the database
@@ -159,12 +165,13 @@ class PassenResourceIT {
     void createPassenWithExistingId() throws Exception {
         // Create the Passen with an existing ID
         passen.setId(1L);
+        PassenDTO passenDTO = passenMapper.toDto(passen);
 
         int databaseSizeBeforeCreate = passenRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restPassenMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passen)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passenDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Passen in the database
@@ -180,9 +187,10 @@ class PassenResourceIT {
         passen.setp1(null);
 
         // Create the Passen, which fails.
+        PassenDTO passenDTO = passenMapper.toDto(passen);
 
         restPassenMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passen)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passenDTO)))
             .andExpect(status().isBadRequest());
 
         List<Passen> passenList = passenRepository.findAll();
@@ -197,9 +205,10 @@ class PassenResourceIT {
         passen.setp2(null);
 
         // Create the Passen, which fails.
+        PassenDTO passenDTO = passenMapper.toDto(passen);
 
         restPassenMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passen)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passenDTO)))
             .andExpect(status().isBadRequest());
 
         List<Passen> passenList = passenRepository.findAll();
@@ -214,9 +223,10 @@ class PassenResourceIT {
         passen.setp3(null);
 
         // Create the Passen, which fails.
+        PassenDTO passenDTO = passenMapper.toDto(passen);
 
         restPassenMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passen)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passenDTO)))
             .andExpect(status().isBadRequest());
 
         List<Passen> passenList = passenRepository.findAll();
@@ -231,9 +241,10 @@ class PassenResourceIT {
         passen.setp4(null);
 
         // Create the Passen, which fails.
+        PassenDTO passenDTO = passenMapper.toDto(passen);
 
         restPassenMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passen)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passenDTO)))
             .andExpect(status().isBadRequest());
 
         List<Passen> passenList = passenRepository.findAll();
@@ -248,9 +259,10 @@ class PassenResourceIT {
         passen.setp5(null);
 
         // Create the Passen, which fails.
+        PassenDTO passenDTO = passenMapper.toDto(passen);
 
         restPassenMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passen)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passenDTO)))
             .andExpect(status().isBadRequest());
 
         List<Passen> passenList = passenRepository.findAll();
@@ -265,9 +277,10 @@ class PassenResourceIT {
         passen.setp6(null);
 
         // Create the Passen, which fails.
+        PassenDTO passenDTO = passenMapper.toDto(passen);
 
         restPassenMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passen)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passenDTO)))
             .andExpect(status().isBadRequest());
 
         List<Passen> passenList = passenRepository.findAll();
@@ -282,9 +295,10 @@ class PassenResourceIT {
         passen.setp7(null);
 
         // Create the Passen, which fails.
+        PassenDTO passenDTO = passenMapper.toDto(passen);
 
         restPassenMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passen)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passenDTO)))
             .andExpect(status().isBadRequest());
 
         List<Passen> passenList = passenRepository.findAll();
@@ -299,9 +313,10 @@ class PassenResourceIT {
         passen.setp8(null);
 
         // Create the Passen, which fails.
+        PassenDTO passenDTO = passenMapper.toDto(passen);
 
         restPassenMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passen)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passenDTO)))
             .andExpect(status().isBadRequest());
 
         List<Passen> passenList = passenRepository.findAll();
@@ -316,9 +331,10 @@ class PassenResourceIT {
         passen.setp9(null);
 
         // Create the Passen, which fails.
+        PassenDTO passenDTO = passenMapper.toDto(passen);
 
         restPassenMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passen)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passenDTO)))
             .andExpect(status().isBadRequest());
 
         List<Passen> passenList = passenRepository.findAll();
@@ -333,9 +349,10 @@ class PassenResourceIT {
         passen.setp10(null);
 
         // Create the Passen, which fails.
+        PassenDTO passenDTO = passenMapper.toDto(passen);
 
         restPassenMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passen)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passenDTO)))
             .andExpect(status().isBadRequest());
 
         List<Passen> passenList = passenRepository.findAll();
@@ -423,12 +440,13 @@ class PassenResourceIT {
             .p9(UPDATED_P_9)
             .p10(UPDATED_P_10)
             .resultat(UPDATED_RESULTAT);
+        PassenDTO passenDTO = passenMapper.toDto(updatedPassen);
 
         restPassenMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedPassen.getId())
+                put(ENTITY_API_URL_ID, passenDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedPassen))
+                    .content(TestUtil.convertObjectToJsonBytes(passenDTO))
             )
             .andExpect(status().isOk());
 
@@ -455,12 +473,15 @@ class PassenResourceIT {
         int databaseSizeBeforeUpdate = passenRepository.findAll().size();
         passen.setId(count.incrementAndGet());
 
+        // Create the Passen
+        PassenDTO passenDTO = passenMapper.toDto(passen);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restPassenMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, passen.getId())
+                put(ENTITY_API_URL_ID, passenDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(passen))
+                    .content(TestUtil.convertObjectToJsonBytes(passenDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -475,12 +496,15 @@ class PassenResourceIT {
         int databaseSizeBeforeUpdate = passenRepository.findAll().size();
         passen.setId(count.incrementAndGet());
 
+        // Create the Passen
+        PassenDTO passenDTO = passenMapper.toDto(passen);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restPassenMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, count.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(passen))
+                    .content(TestUtil.convertObjectToJsonBytes(passenDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -495,9 +519,12 @@ class PassenResourceIT {
         int databaseSizeBeforeUpdate = passenRepository.findAll().size();
         passen.setId(count.incrementAndGet());
 
+        // Create the Passen
+        PassenDTO passenDTO = passenMapper.toDto(passen);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restPassenMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passen)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(passenDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Passen in the database
@@ -600,12 +627,15 @@ class PassenResourceIT {
         int databaseSizeBeforeUpdate = passenRepository.findAll().size();
         passen.setId(count.incrementAndGet());
 
+        // Create the Passen
+        PassenDTO passenDTO = passenMapper.toDto(passen);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restPassenMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, passen.getId())
+                patch(ENTITY_API_URL_ID, passenDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(passen))
+                    .content(TestUtil.convertObjectToJsonBytes(passenDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -620,12 +650,15 @@ class PassenResourceIT {
         int databaseSizeBeforeUpdate = passenRepository.findAll().size();
         passen.setId(count.incrementAndGet());
 
+        // Create the Passen
+        PassenDTO passenDTO = passenMapper.toDto(passen);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restPassenMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, count.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(passen))
+                    .content(TestUtil.convertObjectToJsonBytes(passenDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -640,9 +673,14 @@ class PassenResourceIT {
         int databaseSizeBeforeUpdate = passenRepository.findAll().size();
         passen.setId(count.incrementAndGet());
 
+        // Create the Passen
+        PassenDTO passenDTO = passenMapper.toDto(passen);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restPassenMockMvc
-            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(passen)))
+            .perform(
+                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(passenDTO))
+            )
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Passen in the database

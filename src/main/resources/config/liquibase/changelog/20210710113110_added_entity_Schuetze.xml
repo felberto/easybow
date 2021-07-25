@@ -17,7 +17,7 @@
             <column name="name" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="jahrgang" type="date">
+            <column name="jahrgang" type="integer">
                 <constraints nullable="false" />
             </column>
             <column name="stellung" type="varchar(255)">
@@ -47,7 +47,7 @@
                   tableName="schuetze">
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>
-            <column name="jahrgang" type="date"/>
+            <column name="jahrgang" type="numeric"/>
             <column name="stellung" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>

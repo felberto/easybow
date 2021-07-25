@@ -8,6 +8,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import ch.felberto.IntegrationTest;
 import ch.felberto.domain.Wettkampf;
 import ch.felberto.repository.WettkampfRepository;
+import ch.felberto.service.dto.WettkampfDTO;
+import ch.felberto.service.mapper.WettkampfMapper;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
@@ -71,6 +73,9 @@ class WettkampfResourceIT {
     private WettkampfRepository wettkampfRepository;
 
     @Autowired
+    private WettkampfMapper wettkampfMapper;
+
+    @Autowired
     private EntityManager em;
 
     @Autowired
@@ -130,8 +135,9 @@ class WettkampfResourceIT {
     void createWettkampf() throws Exception {
         int databaseSizeBeforeCreate = wettkampfRepository.findAll().size();
         // Create the Wettkampf
+        WettkampfDTO wettkampfDTO = wettkampfMapper.toDto(wettkampf);
         restWettkampfMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(wettkampf)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(wettkampfDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Wettkampf in the database
@@ -155,12 +161,13 @@ class WettkampfResourceIT {
     void createWettkampfWithExistingId() throws Exception {
         // Create the Wettkampf with an existing ID
         wettkampf.setId(1L);
+        WettkampfDTO wettkampfDTO = wettkampfMapper.toDto(wettkampf);
 
         int databaseSizeBeforeCreate = wettkampfRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restWettkampfMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(wettkampf)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(wettkampfDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Wettkampf in the database
@@ -176,9 +183,10 @@ class WettkampfResourceIT {
         wettkampf.setName(null);
 
         // Create the Wettkampf, which fails.
+        WettkampfDTO wettkampfDTO = wettkampfMapper.toDto(wettkampf);
 
         restWettkampfMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(wettkampf)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(wettkampfDTO)))
             .andExpect(status().isBadRequest());
 
         List<Wettkampf> wettkampfList = wettkampfRepository.findAll();
@@ -193,9 +201,10 @@ class WettkampfResourceIT {
         wettkampf.setAnzahlRunden(null);
 
         // Create the Wettkampf, which fails.
+        WettkampfDTO wettkampfDTO = wettkampfMapper.toDto(wettkampf);
 
         restWettkampfMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(wettkampf)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(wettkampfDTO)))
             .andExpect(status().isBadRequest());
 
         List<Wettkampf> wettkampfList = wettkampfRepository.findAll();
@@ -210,9 +219,10 @@ class WettkampfResourceIT {
         wettkampf.setAnzahlPassen(null);
 
         // Create the Wettkampf, which fails.
+        WettkampfDTO wettkampfDTO = wettkampfMapper.toDto(wettkampf);
 
         restWettkampfMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(wettkampf)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(wettkampfDTO)))
             .andExpect(status().isBadRequest());
 
         List<Wettkampf> wettkampfList = wettkampfRepository.findAll();
@@ -297,12 +307,13 @@ class WettkampfResourceIT {
             .anzahlPassenFinal(UPDATED_ANZAHL_PASSEN_FINAL)
             .anzahlTeam(UPDATED_ANZAHL_TEAM)
             .template(UPDATED_TEMPLATE);
+        WettkampfDTO wettkampfDTO = wettkampfMapper.toDto(updatedWettkampf);
 
         restWettkampfMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedWettkampf.getId())
+                put(ENTITY_API_URL_ID, wettkampfDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedWettkampf))
+                    .content(TestUtil.convertObjectToJsonBytes(wettkampfDTO))
             )
             .andExpect(status().isOk());
 
@@ -328,12 +339,15 @@ class WettkampfResourceIT {
         int databaseSizeBeforeUpdate = wettkampfRepository.findAll().size();
         wettkampf.setId(count.incrementAndGet());
 
+        // Create the Wettkampf
+        WettkampfDTO wettkampfDTO = wettkampfMapper.toDto(wettkampf);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restWettkampfMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, wettkampf.getId())
+                put(ENTITY_API_URL_ID, wettkampfDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(wettkampf))
+                    .content(TestUtil.convertObjectToJsonBytes(wettkampfDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -348,12 +362,15 @@ class WettkampfResourceIT {
         int databaseSizeBeforeUpdate = wettkampfRepository.findAll().size();
         wettkampf.setId(count.incrementAndGet());
 
+        // Create the Wettkampf
+        WettkampfDTO wettkampfDTO = wettkampfMapper.toDto(wettkampf);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restWettkampfMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, count.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(wettkampf))
+                    .content(TestUtil.convertObjectToJsonBytes(wettkampfDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -368,9 +385,12 @@ class WettkampfResourceIT {
         int databaseSizeBeforeUpdate = wettkampfRepository.findAll().size();
         wettkampf.setId(count.incrementAndGet());
 
+        // Create the Wettkampf
+        WettkampfDTO wettkampfDTO = wettkampfMapper.toDto(wettkampf);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restWettkampfMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(wettkampf)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(wettkampfDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Wettkampf in the database
@@ -470,12 +490,15 @@ class WettkampfResourceIT {
         int databaseSizeBeforeUpdate = wettkampfRepository.findAll().size();
         wettkampf.setId(count.incrementAndGet());
 
+        // Create the Wettkampf
+        WettkampfDTO wettkampfDTO = wettkampfMapper.toDto(wettkampf);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restWettkampfMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, wettkampf.getId())
+                patch(ENTITY_API_URL_ID, wettkampfDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(wettkampf))
+                    .content(TestUtil.convertObjectToJsonBytes(wettkampfDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -490,12 +513,15 @@ class WettkampfResourceIT {
         int databaseSizeBeforeUpdate = wettkampfRepository.findAll().size();
         wettkampf.setId(count.incrementAndGet());
 
+        // Create the Wettkampf
+        WettkampfDTO wettkampfDTO = wettkampfMapper.toDto(wettkampf);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restWettkampfMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, count.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(wettkampf))
+                    .content(TestUtil.convertObjectToJsonBytes(wettkampfDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -510,10 +536,13 @@ class WettkampfResourceIT {
         int databaseSizeBeforeUpdate = wettkampfRepository.findAll().size();
         wettkampf.setId(count.incrementAndGet());
 
+        // Create the Wettkampf
+        WettkampfDTO wettkampfDTO = wettkampfMapper.toDto(wettkampf);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restWettkampfMockMvc
             .perform(
-                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(wettkampf))
+                patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(wettkampfDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 

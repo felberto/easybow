@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import * as dayjs from 'dayjs';
 
 import { isPresent } from 'app/core/util/operators';
-import { DATE_FORMAT } from 'app/config/input.constants';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ISchuetze, getSchuetzeIdentifier } from '../schuetze.model';
@@ -20,37 +17,26 @@ export class SchuetzeService {
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
   create(schuetze: ISchuetze): Observable<EntityResponseType> {
-    const copy = this.convertDateFromClient(schuetze);
-    return this.http
-      .post<ISchuetze>(this.resourceUrl, copy, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+    return this.http.post<ISchuetze>(this.resourceUrl, schuetze, { observe: 'response' });
   }
 
   update(schuetze: ISchuetze): Observable<EntityResponseType> {
-    const copy = this.convertDateFromClient(schuetze);
-    return this.http
-      .put<ISchuetze>(`${this.resourceUrl}/${getSchuetzeIdentifier(schuetze) as number}`, copy, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+    return this.http.put<ISchuetze>(`${this.resourceUrl}/${getSchuetzeIdentifier(schuetze) as number}`, schuetze, { observe: 'response' });
   }
 
   partialUpdate(schuetze: ISchuetze): Observable<EntityResponseType> {
-    const copy = this.convertDateFromClient(schuetze);
-    return this.http
-      .patch<ISchuetze>(`${this.resourceUrl}/${getSchuetzeIdentifier(schuetze) as number}`, copy, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+    return this.http.patch<ISchuetze>(`${this.resourceUrl}/${getSchuetzeIdentifier(schuetze) as number}`, schuetze, {
+      observe: 'response',
+    });
   }
 
   find(id: number): Observable<EntityResponseType> {
-    return this.http
-      .get<ISchuetze>(`${this.resourceUrl}/${id}`, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+    return this.http.get<ISchuetze>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
-    return this.http
-      .get<ISchuetze[]>(this.resourceUrl, { params: options, observe: 'response' })
-      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+    return this.http.get<ISchuetze[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {
@@ -72,27 +58,5 @@ export class SchuetzeService {
       return [...schuetzesToAdd, ...schuetzeCollection];
     }
     return schuetzeCollection;
-  }
-
-  protected convertDateFromClient(schuetze: ISchuetze): ISchuetze {
-    return Object.assign({}, schuetze, {
-      jahrgang: schuetze.jahrgang?.isValid() ? schuetze.jahrgang.format(DATE_FORMAT) : undefined,
-    });
-  }
-
-  protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
-    if (res.body) {
-      res.body.jahrgang = res.body.jahrgang ? dayjs(res.body.jahrgang) : undefined;
-    }
-    return res;
-  }
-
-  protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
-    if (res.body) {
-      res.body.forEach((schuetze: ISchuetze) => {
-        schuetze.jahrgang = schuetze.jahrgang ? dayjs(schuetze.jahrgang) : undefined;
-      });
-    }
-    return res;
   }
 }
