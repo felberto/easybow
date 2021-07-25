@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import ch.felberto.IntegrationTest;
 import ch.felberto.domain.Verband;
 import ch.felberto.repository.VerbandRepository;
+import ch.felberto.service.criteria.VerbandCriteria;
 import ch.felberto.service.dto.VerbandDTO;
 import ch.felberto.service.mapper.VerbandMapper;
 import java.util.List;
@@ -163,6 +164,140 @@ class VerbandResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(verband.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
+    }
+
+    @Test
+    @Transactional
+    void getVerbandsByIdFiltering() throws Exception {
+        // Initialize the database
+        verbandRepository.saveAndFlush(verband);
+
+        Long id = verband.getId();
+
+        defaultVerbandShouldBeFound("id.equals=" + id);
+        defaultVerbandShouldNotBeFound("id.notEquals=" + id);
+
+        defaultVerbandShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultVerbandShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultVerbandShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultVerbandShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllVerbandsByNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        verbandRepository.saveAndFlush(verband);
+
+        // Get all the verbandList where name equals to DEFAULT_NAME
+        defaultVerbandShouldBeFound("name.equals=" + DEFAULT_NAME);
+
+        // Get all the verbandList where name equals to UPDATED_NAME
+        defaultVerbandShouldNotBeFound("name.equals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllVerbandsByNameIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        verbandRepository.saveAndFlush(verband);
+
+        // Get all the verbandList where name not equals to DEFAULT_NAME
+        defaultVerbandShouldNotBeFound("name.notEquals=" + DEFAULT_NAME);
+
+        // Get all the verbandList where name not equals to UPDATED_NAME
+        defaultVerbandShouldBeFound("name.notEquals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllVerbandsByNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        verbandRepository.saveAndFlush(verband);
+
+        // Get all the verbandList where name in DEFAULT_NAME or UPDATED_NAME
+        defaultVerbandShouldBeFound("name.in=" + DEFAULT_NAME + "," + UPDATED_NAME);
+
+        // Get all the verbandList where name equals to UPDATED_NAME
+        defaultVerbandShouldNotBeFound("name.in=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllVerbandsByNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        verbandRepository.saveAndFlush(verband);
+
+        // Get all the verbandList where name is not null
+        defaultVerbandShouldBeFound("name.specified=true");
+
+        // Get all the verbandList where name is null
+        defaultVerbandShouldNotBeFound("name.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllVerbandsByNameContainsSomething() throws Exception {
+        // Initialize the database
+        verbandRepository.saveAndFlush(verband);
+
+        // Get all the verbandList where name contains DEFAULT_NAME
+        defaultVerbandShouldBeFound("name.contains=" + DEFAULT_NAME);
+
+        // Get all the verbandList where name contains UPDATED_NAME
+        defaultVerbandShouldNotBeFound("name.contains=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllVerbandsByNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        verbandRepository.saveAndFlush(verband);
+
+        // Get all the verbandList where name does not contain DEFAULT_NAME
+        defaultVerbandShouldNotBeFound("name.doesNotContain=" + DEFAULT_NAME);
+
+        // Get all the verbandList where name does not contain UPDATED_NAME
+        defaultVerbandShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultVerbandShouldBeFound(String filter) throws Exception {
+        restVerbandMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(verband.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+
+        // Check, that the count call also returns 1
+        restVerbandMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultVerbandShouldNotBeFound(String filter) throws Exception {
+        restVerbandMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restVerbandMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

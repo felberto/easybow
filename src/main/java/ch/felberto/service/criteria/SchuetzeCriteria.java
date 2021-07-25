@@ -9,7 +9,6 @@ import tech.jhipster.service.filter.DoubleFilter;
 import tech.jhipster.service.filter.Filter;
 import tech.jhipster.service.filter.FloatFilter;
 import tech.jhipster.service.filter.IntegerFilter;
-import tech.jhipster.service.filter.LocalDateFilter;
 import tech.jhipster.service.filter.LongFilter;
 import tech.jhipster.service.filter.StringFilter;
 
@@ -47,7 +46,7 @@ public class SchuetzeCriteria implements Serializable, Criteria {
 
     private StringFilter name;
 
-    private LocalDateFilter jahrgang;
+    private IntegerFilter jahrgang;
 
     private StellungFilter stellung;
 
@@ -98,18 +97,18 @@ public class SchuetzeCriteria implements Serializable, Criteria {
         this.name = name;
     }
 
-    public LocalDateFilter getJahrgang() {
+    public IntegerFilter getJahrgang() {
         return jahrgang;
     }
 
-    public LocalDateFilter jahrgang() {
+    public IntegerFilter jahrgang() {
         if (jahrgang == null) {
-            jahrgang = new LocalDateFilter();
+            jahrgang = new IntegerFilter();
         }
         return jahrgang;
     }
 
-    public void setJahrgang(LocalDateFilter jahrgang) {
+    public void setJahrgang(IntegerFilter jahrgang) {
         this.jahrgang = jahrgang;
     }
 
