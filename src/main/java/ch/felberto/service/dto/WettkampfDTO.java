@@ -1,7 +1,6 @@
 package ch.felberto.service.dto;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Objects;
 import javax.validation.constraints.*;
 
@@ -15,7 +14,7 @@ public class WettkampfDTO implements Serializable {
     @NotNull
     private String name;
 
-    private LocalDate jahr;
+    private Integer jahr;
 
     @NotNull
     private Integer anzahlRunden;
@@ -55,11 +54,11 @@ public class WettkampfDTO implements Serializable {
         this.name = name;
     }
 
-    public LocalDate getJahr() {
+    public Integer getJahr() {
         return jahr;
     }
 
-    public void setJahr(LocalDate jahr) {
+    public void setJahr(Integer jahr) {
         this.jahr = jahr;
     }
 
@@ -154,7 +153,7 @@ public class WettkampfDTO implements Serializable {
         return "WettkampfDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", jahr='" + getJahr() + "'" +
+            ", jahr=" + getJahr() +
             ", anzahlRunden=" + getAnzahlRunden() +
             ", anzahlPassen=" + getAnzahlPassen() +
             ", finalRunde='" + getFinalRunde() + "'" +

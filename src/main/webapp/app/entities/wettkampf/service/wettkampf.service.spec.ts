@@ -1,8 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import * as dayjs from 'dayjs';
 
-import { DATE_FORMAT } from 'app/config/input.constants';
 import { IWettkampf, Wettkampf } from '../wettkampf.model';
 
 import { WettkampfService } from './wettkampf.service';
@@ -13,7 +11,6 @@ describe('Service Tests', () => {
     let httpMock: HttpTestingController;
     let elemDefault: IWettkampf;
     let expectedResult: IWettkampf | IWettkampf[] | boolean | null;
-    let currentDate: dayjs.Dayjs;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -22,12 +19,11 @@ describe('Service Tests', () => {
       expectedResult = null;
       service = TestBed.inject(WettkampfService);
       httpMock = TestBed.inject(HttpTestingController);
-      currentDate = dayjs();
 
       elemDefault = {
         id: 0,
         name: 'AAAAAAA',
-        jahr: currentDate,
+        jahr: 0,
         anzahlRunden: 0,
         anzahlPassen: 0,
         finalRunde: false,
@@ -41,12 +37,7 @@ describe('Service Tests', () => {
 
     describe('Service methods', () => {
       it('should find an element', () => {
-        const returnedFromService = Object.assign(
-          {
-            jahr: currentDate.format(DATE_FORMAT),
-          },
-          elemDefault
-        );
+        const returnedFromService = Object.assign({}, elemDefault);
 
         service.find(123).subscribe(resp => (expectedResult = resp.body));
 
@@ -59,17 +50,11 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 0,
-            jahr: currentDate.format(DATE_FORMAT),
           },
           elemDefault
         );
 
-        const expected = Object.assign(
-          {
-            jahr: currentDate,
-          },
-          returnedFromService
-        );
+        const expected = Object.assign({}, returnedFromService);
 
         service.create(new Wettkampf()).subscribe(resp => (expectedResult = resp.body));
 
@@ -83,7 +68,7 @@ describe('Service Tests', () => {
           {
             id: 1,
             name: 'BBBBBB',
-            jahr: currentDate.format(DATE_FORMAT),
+            jahr: 1,
             anzahlRunden: 1,
             anzahlPassen: 1,
             finalRunde: true,
@@ -96,12 +81,7 @@ describe('Service Tests', () => {
           elemDefault
         );
 
-        const expected = Object.assign(
-          {
-            jahr: currentDate,
-          },
-          returnedFromService
-        );
+        const expected = Object.assign({}, returnedFromService);
 
         service.update(expected).subscribe(resp => (expectedResult = resp.body));
 
@@ -123,12 +103,7 @@ describe('Service Tests', () => {
 
         const returnedFromService = Object.assign(patchObject, elemDefault);
 
-        const expected = Object.assign(
-          {
-            jahr: currentDate,
-          },
-          returnedFromService
-        );
+        const expected = Object.assign({}, returnedFromService);
 
         service.partialUpdate(patchObject).subscribe(resp => (expectedResult = resp.body));
 
@@ -142,7 +117,7 @@ describe('Service Tests', () => {
           {
             id: 1,
             name: 'BBBBBB',
-            jahr: currentDate.format(DATE_FORMAT),
+            jahr: 1,
             anzahlRunden: 1,
             anzahlPassen: 1,
             finalRunde: true,
@@ -155,12 +130,7 @@ describe('Service Tests', () => {
           elemDefault
         );
 
-        const expected = Object.assign(
-          {
-            jahr: currentDate,
-          },
-          returnedFromService
-        );
+        const expected = Object.assign({}, returnedFromService);
 
         service.query().subscribe(resp => (expectedResult = resp.body));
 

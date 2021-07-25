@@ -1,7 +1,6 @@
 package ch.felberto.domain;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -27,7 +26,7 @@ public class Wettkampf implements Serializable {
     private String name;
 
     @Column(name = "jahr")
-    private LocalDate jahr;
+    private Integer jahr;
 
     @NotNull
     @Column(name = "anzahl_runden", nullable = false)
@@ -86,16 +85,16 @@ public class Wettkampf implements Serializable {
         this.name = name;
     }
 
-    public LocalDate getJahr() {
+    public Integer getJahr() {
         return this.jahr;
     }
 
-    public Wettkampf jahr(LocalDate jahr) {
+    public Wettkampf jahr(Integer jahr) {
         this.jahr = jahr;
         return this;
     }
 
-    public void setJahr(LocalDate jahr) {
+    public void setJahr(Integer jahr) {
         this.jahr = jahr;
     }
 
@@ -228,7 +227,7 @@ public class Wettkampf implements Serializable {
         return "Wettkampf{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", jahr='" + getJahr() + "'" +
+            ", jahr=" + getJahr() +
             ", anzahlRunden=" + getAnzahlRunden() +
             ", anzahlPassen=" + getAnzahlPassen() +
             ", finalRunde='" + getFinalRunde() + "'" +

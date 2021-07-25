@@ -11,8 +11,6 @@ import ch.felberto.repository.WettkampfRepository;
 import ch.felberto.service.criteria.WettkampfCriteria;
 import ch.felberto.service.dto.WettkampfDTO;
 import ch.felberto.service.mapper.WettkampfMapper;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -37,9 +35,9 @@ class WettkampfResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final LocalDate DEFAULT_JAHR = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_JAHR = LocalDate.now(ZoneId.systemDefault());
-    private static final LocalDate SMALLER_JAHR = LocalDate.ofEpochDay(-1L);
+    private static final Integer DEFAULT_JAHR = 1;
+    private static final Integer UPDATED_JAHR = 2;
+    private static final Integer SMALLER_JAHR = 1 - 1;
 
     private static final Integer DEFAULT_ANZAHL_RUNDEN = 1;
     private static final Integer UPDATED_ANZAHL_RUNDEN = 2;
@@ -249,7 +247,7 @@ class WettkampfResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(wettkampf.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].jahr").value(hasItem(DEFAULT_JAHR.toString())))
+            .andExpect(jsonPath("$.[*].jahr").value(hasItem(DEFAULT_JAHR)))
             .andExpect(jsonPath("$.[*].anzahlRunden").value(hasItem(DEFAULT_ANZAHL_RUNDEN)))
             .andExpect(jsonPath("$.[*].anzahlPassen").value(hasItem(DEFAULT_ANZAHL_PASSEN)))
             .andExpect(jsonPath("$.[*].finalRunde").value(hasItem(DEFAULT_FINAL_RUNDE.booleanValue())))
@@ -273,7 +271,7 @@ class WettkampfResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(wettkampf.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.jahr").value(DEFAULT_JAHR.toString()))
+            .andExpect(jsonPath("$.jahr").value(DEFAULT_JAHR))
             .andExpect(jsonPath("$.anzahlRunden").value(DEFAULT_ANZAHL_RUNDEN))
             .andExpect(jsonPath("$.anzahlPassen").value(DEFAULT_ANZAHL_PASSEN))
             .andExpect(jsonPath("$.finalRunde").value(DEFAULT_FINAL_RUNDE.booleanValue()))
@@ -1170,7 +1168,7 @@ class WettkampfResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(wettkampf.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].jahr").value(hasItem(DEFAULT_JAHR.toString())))
+            .andExpect(jsonPath("$.[*].jahr").value(hasItem(DEFAULT_JAHR)))
             .andExpect(jsonPath("$.[*].anzahlRunden").value(hasItem(DEFAULT_ANZAHL_RUNDEN)))
             .andExpect(jsonPath("$.[*].anzahlPassen").value(hasItem(DEFAULT_ANZAHL_PASSEN)))
             .andExpect(jsonPath("$.[*].finalRunde").value(hasItem(DEFAULT_FINAL_RUNDE.booleanValue())))

@@ -8,7 +8,6 @@ import tech.jhipster.service.filter.DoubleFilter;
 import tech.jhipster.service.filter.Filter;
 import tech.jhipster.service.filter.FloatFilter;
 import tech.jhipster.service.filter.IntegerFilter;
-import tech.jhipster.service.filter.LocalDateFilter;
 import tech.jhipster.service.filter.LongFilter;
 import tech.jhipster.service.filter.StringFilter;
 
@@ -29,7 +28,7 @@ public class WettkampfCriteria implements Serializable, Criteria {
 
     private StringFilter name;
 
-    private LocalDateFilter jahr;
+    private IntegerFilter jahr;
 
     private IntegerFilter anzahlRunden;
 
@@ -98,18 +97,18 @@ public class WettkampfCriteria implements Serializable, Criteria {
         this.name = name;
     }
 
-    public LocalDateFilter getJahr() {
+    public IntegerFilter getJahr() {
         return jahr;
     }
 
-    public LocalDateFilter jahr() {
+    public IntegerFilter jahr() {
         if (jahr == null) {
-            jahr = new LocalDateFilter();
+            jahr = new IntegerFilter();
         }
         return jahr;
     }
 
-    public void setJahr(LocalDateFilter jahr) {
+    public void setJahr(IntegerFilter jahr) {
         this.jahr = jahr;
     }
 

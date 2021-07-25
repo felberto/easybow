@@ -1,11 +1,11 @@
 id;name;jahr;anzahl_runden;anzahl_passen;final_runde;final_vorbereitung;anzahl_finalteilnehmer;anzahl_passen_final;anzahl_team;template
-1;back Michigan;2021-07-09;27012;1;false;false;81360;2;37795;false
-2;synergistic;2021-07-10;44117;3;false;true;40787;2;47911;true
-3;invoice;2021-07-09;55784;4;true;false;82942;2;72542;true
-4;Island;2021-07-09;70763;1;true;false;33327;4;40030;false
-5;Gorgeous Operations SDD;2021-07-09;21175;3;true;true;89970;3;52258;false
-6;non-volatile;2021-07-09;55040;3;false;false;42868;3;49940;false
-7;well-modulated;2021-07-10;35044;2;true;true;34077;1;13887;false
-8;withdrawal calculating synergistic;2021-07-09;62109;3;false;false;92405;2;77928;true
-9;Pennsylvania Solutions;2021-07-09;31041;3;true;false;56938;3;99313;true
-10;XML Tactics JSON;2021-07-09;81602;3;false;false;82863;2;55792;false
+1;back Michigan;74950;27012;1;false;false;81360;2;37795;false
+2;synergistic;9271;44117;3;false;true;40787;2;47911;true
+3;invoice;94584;55784;4;true;false;82942;2;72542;true
+4;Island;63337;70763;1;true;false;33327;4;40030;false
+5;Gorgeous Operations SDD;73477;21175;3;true;true;89970;3;52258;false
+6;non-volatile;81026;55040;3;false;false;42868;3;49940;false
+7;well-modulated;15146;35044;2;true;true;34077;1;13887;false
+8;withdrawal calculating synergistic;73374;62109;3;false;false;92405;2;77928;true
+9;Pennsylvania Solutions;75382;31041;3;true;false;56938;3;99313;true
+10;XML Tactics JSON;95128;81602;3;false;false;82863;2;55792;false
