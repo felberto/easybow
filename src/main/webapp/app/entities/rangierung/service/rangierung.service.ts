@@ -6,6 +6,7 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IRangierung, getRangierungIdentifier } from '../rangierung.model';
+import { getWettkampfIdentifier, IWettkampf } from '../../wettkampf/wettkampf.model';
 
 export type EntityResponseType = HttpResponse<IRangierung>;
 export type EntityArrayResponseType = HttpResponse<IRangierung[]>;
@@ -34,6 +35,12 @@ export class RangierungService {
 
   find(id: number): Observable<EntityResponseType> {
     return this.http.get<IRangierung>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  findByWettkampf(wettkampf: IWettkampf): Observable<HttpResponse<Array<IRangierung>>> {
+    return this.http.get<Array<IRangierung>>(`${this.resourceUrl}/wettkampf/${getWettkampfIdentifier(wettkampf) as number}`, {
+      observe: 'response',
+    });
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {

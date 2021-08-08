@@ -6,6 +6,7 @@ import { WettkampfComponent } from '../list/wettkampf.component';
 import { WettkampfDetailComponent } from '../detail/wettkampf-detail.component';
 import { WettkampfUpdateComponent } from '../update/wettkampf-update.component';
 import { WettkampfRoutingResolveService } from './wettkampf-routing-resolve.service';
+import { WettkampfRangierungComponent } from '../rangierung/wettkampf-rangierung.component';
 
 const wettkampfRoute: Routes = [
   {
@@ -19,6 +20,14 @@ const wettkampfRoute: Routes = [
   {
     path: ':id/view',
     component: WettkampfDetailComponent,
+    resolve: {
+      wettkampf: WettkampfRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id/rangierung',
+    component: WettkampfRangierungComponent,
     resolve: {
       wettkampf: WettkampfRoutingResolveService,
     },

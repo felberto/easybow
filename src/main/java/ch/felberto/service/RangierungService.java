@@ -1,6 +1,8 @@
 package ch.felberto.service;
 
 import ch.felberto.service.dto.RangierungDTO;
+import ch.felberto.service.dto.WettkampfDTO;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +28,7 @@ public interface RangierungService {
     Optional<RangierungDTO> partialUpdate(RangierungDTO rangierungDTO);
 
     /**
-     * Get all the rangierungs.
+     * Get all the rangierung.
      *
      * @param pageable the pagination information.
      * @return the list of entities.
@@ -40,6 +42,14 @@ public interface RangierungService {
      * @return the entity.
      */
     Optional<RangierungDTO> findOne(Long id);
+
+    /**
+     * Get all "wettkampf" rangierung.
+     *
+     * @param wettkampfId the id of the entity.
+     * @return the entity.
+     */
+    List<RangierungDTO> findByWettkampf(Long wettkampfId);
 
     /**
      * Delete the "id" rangierung.

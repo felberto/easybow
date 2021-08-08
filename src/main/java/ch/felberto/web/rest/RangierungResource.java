@@ -5,6 +5,7 @@ import ch.felberto.service.RangierungQueryService;
 import ch.felberto.service.RangierungService;
 import ch.felberto.service.criteria.RangierungCriteria;
 import ch.felberto.service.dto.RangierungDTO;
+import ch.felberto.service.mapper.WettkampfMapper;
 import ch.felberto.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -19,7 +20,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -47,14 +47,18 @@ public class RangierungResource {
 
     private final RangierungQueryService rangierungQueryService;
 
+    private final WettkampfMapper wettkampfMapper;
+
     public RangierungResource(
         RangierungService rangierungService,
         RangierungRepository rangierungRepository,
-        RangierungQueryService rangierungQueryService
+        RangierungQueryService rangierungQueryService,
+        WettkampfMapper wettkampfMapper
     ) {
         this.rangierungService = rangierungService;
         this.rangierungRepository = rangierungRepository;
         this.rangierungQueryService = rangierungQueryService;
+        this.wettkampfMapper = wettkampfMapper;
     }
 
     /**
@@ -80,7 +84,7 @@ public class RangierungResource {
     /**
      * {@code PUT  /rangierungs/:id} : Updates an existing rangierung.
      *
-     * @param id the id of the rangierungDTO to save.
+     * @param id            the id of the rangierungDTO to save.
      * @param rangierungDTO the rangierungDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated rangierungDTO,
      * or with status {@code 400 (Bad Request)} if the rangierungDTO is not valid,
@@ -114,7 +118,7 @@ public class RangierungResource {
     /**
      * {@code PATCH  /rangierungs/:id} : Partial updates given fields of an existing rangierung, field will ignore if it is null
      *
-     * @param id the id of the rangierungDTO to save.
+     * @param id            the id of the rangierungDTO to save.
      * @param rangierungDTO the rangierungDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated rangierungDTO,
      * or with status {@code 400 (Bad Request)} if the rangierungDTO is not valid,
@@ -185,6 +189,19 @@ public class RangierungResource {
         log.debug("REST request to get Rangierung : {}", id);
         Optional<RangierungDTO> rangierungDTO = rangierungService.findOne(id);
         return ResponseUtil.wrapOrNotFound(rangierungDTO);
+    }
+
+    /**
+     * {@code GET  /rangierungs/:wettkampf} : get the "wettkampf" rangierung.
+     *
+     * @param wettkampfid the id of the wettkampf to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the rangierungDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/rangierungs/wettkampf/{wettkampfid}")
+    public ResponseEntity<List<RangierungDTO>> getRangierungByWettkampf(@PathVariable Long wettkampfid) {
+        log.debug("REST request to get Rangierung : {}", wettkampfid);
+
+        return ResponseEntity.ok().body(rangierungService.findByWettkampf(wettkampfid));
     }
 
     /**

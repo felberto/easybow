@@ -1,0 +1,41 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="wettkampf">
+      <h2 data-cy="wettkampfRangierungHeading">
+        <span>{{ wettkampf.name }} {{ wettkampf.jahr }} - Rangierungskriterien</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <div cdkDropListGroup>
+        <div class="example-container">
+          <h2>Verfügbare Kriterien</h2>
+
+          <div cdkDropList [cdkDropListData]="items" class="example-list" cdkDropListSortingDisabled (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let item of items" cdkDrag>{{ item }}</div>
+          </div>
+        </div>
+
+        <div class="example-container">
+          <h2>Aktuelle Kriterien</h2>
+
+          <div cdkDropList [cdkDropListData]="basket" class="example-list" (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let item of basket" cdkDrag>{{ item }}</div>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/wettkampf', wettkampf.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

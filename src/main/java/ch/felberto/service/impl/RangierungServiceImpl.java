@@ -5,6 +5,8 @@ import ch.felberto.repository.RangierungRepository;
 import ch.felberto.service.RangierungService;
 import ch.felberto.service.dto.RangierungDTO;
 import ch.felberto.service.mapper.RangierungMapper;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +61,7 @@ public class RangierungServiceImpl implements RangierungService {
     @Override
     @Transactional(readOnly = true)
     public Page<RangierungDTO> findAll(Pageable pageable) {
-        log.debug("Request to get all Rangierungs");
+        log.debug("Request to get all Rangierung");
         return rangierungRepository.findAll(pageable).map(rangierungMapper::toDto);
     }
 
@@ -68,6 +70,17 @@ public class RangierungServiceImpl implements RangierungService {
     public Optional<RangierungDTO> findOne(Long id) {
         log.debug("Request to get Rangierung : {}", id);
         return rangierungRepository.findById(id).map(rangierungMapper::toDto);
+    }
+
+    @Override
+    public List<RangierungDTO> findByWettkampf(Long wettkampfId) {
+        log.debug("Request to get Rangierung : {}", wettkampfId);
+
+        List<RangierungDTO> list = new ArrayList<RangierungDTO>(rangierungRepository.findByWettkampf_Id(wettkampfId).size());
+        for (Rangierung rangierung : rangierungRepository.findByWettkampf_Id(wettkampfId)) {
+            list.add(rangierungMapper.toDto(rangierung));
+        }
+        return list;
     }
 
     @Override
