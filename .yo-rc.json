@@ -45,7 +45,10 @@
     "clientThemeVariant": "",
     "reactive": false,
     "entities": ["Verband", "Verein", "Schuetze", "Wettkampf", "Passen", "Gruppen", "Resultate", "Rangierung"],
-    "lastLiquibaseTimestamp": 1626532582000
+    "lastLiquibaseTimestamp": 1626532582000,
+    "herokuAppName": "easybow",
+    "herokuDeployType": "git",
+    "herokuJavaVersion": "14"
   },
   "git-provider": "GitHub",
   "git-company": "felberto",
