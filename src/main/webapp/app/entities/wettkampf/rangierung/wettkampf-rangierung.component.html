@@ -15,16 +15,22 @@
         <div class="example-container">
           <h2>Verfügbare Kriterien</h2>
 
-          <div cdkDropList [cdkDropListData]="items" class="example-list" cdkDropListSortingDisabled (cdkDropListDropped)="drop($event)">
-            <div class="example-box" *ngFor="let item of items" cdkDrag>{{ item }}</div>
+          <div
+            cdkDropList
+            [cdkDropListData]="available"
+            class="example-list"
+            cdkDropListSortingDisabled
+            (cdkDropListDropped)="drop($event)"
+          >
+            <div class="example-box" *ngFor="let item of available" cdkDrag>{{ item }}</div>
           </div>
         </div>
 
         <div class="example-container">
           <h2>Aktuelle Kriterien</h2>
 
-          <div cdkDropList [cdkDropListData]="basket" class="example-list" (cdkDropListDropped)="drop($event)">
-            <div class="example-box" *ngFor="let item of basket" cdkDrag>{{ item }}</div>
+          <div cdkDropList [cdkDropListData]="used" class="example-list" (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let item of used" cdkDrag>{{ used.indexOf(item) + 1 }}. {{ item }}</div>
           </div>
         </div>
       </div>
@@ -33,9 +39,7 @@
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
       </button>
 
-      <button type="button" [routerLink]="['/wettkampf', wettkampf.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
-      </button>
+      <button type="button" (click)="save()" class="btn btn-primary"><fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Save</span></button>
     </div>
   </div>
 </div>

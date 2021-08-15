@@ -88,4 +88,10 @@ public class RangierungServiceImpl implements RangierungService {
         log.debug("Request to delete Rangierung : {}", id);
         rangierungRepository.deleteById(id);
     }
+
+    @Override
+    public void deleteByWettkampf(Long id) {
+        log.debug("Request to delete Rangierung by Wettkampf: {}", id);
+        rangierungRepository.deleteByWettkampf_Id(id);
+    }
 }

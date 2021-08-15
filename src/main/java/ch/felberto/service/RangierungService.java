@@ -57,4 +57,11 @@ public interface RangierungService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Delete by wettkampf.
+     *
+     * @param id the id of the wettkampf.
+     */
+    void deleteByWettkampf(Long id);
 }

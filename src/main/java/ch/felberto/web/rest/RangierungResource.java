@@ -219,4 +219,20 @@ public class RangierungResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    /**
+     * {@code DELETE  /rangierungs/wettkampf/:id} : delete by wettkampf.
+     *
+     * @param id the id of the wettkampf to delete.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     */
+    @DeleteMapping("/rangierungs/wettkampf/{id}")
+    public ResponseEntity<Void> deleteRangierungByWettkampf(@PathVariable Long id) {
+        log.debug("REST request to delete Rangierung by Wettkampf : {}", id);
+        rangierungService.deleteByWettkampf(id);
+        return ResponseEntity
+            .noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .build();
+    }
 }

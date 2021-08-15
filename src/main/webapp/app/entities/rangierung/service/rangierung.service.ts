@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IRangierung, getRangierungIdentifier } from '../rangierung.model';
+import { getRangierungIdentifier, IRangierung } from '../rangierung.model';
 import { getWettkampfIdentifier, IWettkampf } from '../../wettkampf/wettkampf.model';
 
 export type EntityResponseType = HttpResponse<IRangierung>;
@@ -50,6 +50,10 @@ export class RangierungService {
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  deleteAllByWettkampf(wettkampf: IWettkampf): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}/wettkampf/${getWettkampfIdentifier(wettkampf) as number}`, { observe: 'response' });
   }
 
   addRangierungToCollectionIfMissing(
