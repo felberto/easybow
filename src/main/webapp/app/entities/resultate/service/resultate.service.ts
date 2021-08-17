@@ -5,7 +5,9 @@ import { Observable } from 'rxjs';
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IResultate, getResultateIdentifier } from '../resultate.model';
+import { getResultateIdentifier, IResultate } from '../resultate.model';
+import { getWettkampfIdentifier, IWettkampf } from '../../wettkampf/wettkampf.model';
+import { getSchuetzeIdentifier, ISchuetze } from 'app/entities/schuetze/schuetze.model';
 
 export type EntityResponseType = HttpResponse<IResultate>;
 export type EntityArrayResponseType = HttpResponse<IResultate[]>;
@@ -36,6 +38,12 @@ export class ResultateService {
     return this.http.get<IResultate>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  findByWettkampf(wettkampf: IWettkampf): Observable<HttpResponse<Array<IResultate>>> {
+    return this.http.get<Array<IResultate>>(`${this.resourceUrl}/wettkampf/${getWettkampfIdentifier(wettkampf) as number}`, {
+      observe: 'response',
+    });
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IResultate[]>(this.resourceUrl, { params: options, observe: 'response' });
@@ -43,6 +51,10 @@ export class ResultateService {
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  deleteBySchuetze(schuetze: ISchuetze): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}/schuetze/${getSchuetzeIdentifier(schuetze) as number}`, { observe: 'response' });
   }
 
   addResultateToCollectionIfMissing(

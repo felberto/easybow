@@ -1,6 +1,7 @@
 package ch.felberto.service;
 
 import ch.felberto.service.dto.SchuetzeDTO;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +33,13 @@ public interface SchuetzeService {
      * @return the list of entities.
      */
     Page<SchuetzeDTO> findAll(Pageable pageable);
+
+    /**
+     * Get all the schuetzes.
+     *
+     * @return the list of entities.
+     */
+    List<SchuetzeDTO> findAll();
 
     /**
      * Get the "id" schuetze.

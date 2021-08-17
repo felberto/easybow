@@ -1,0 +1,60 @@
+<form *ngIf="wettkampf" name="deleteForm">
+  <div class="modal-header">
+    <h4 class="modal-title" data-cy="wettkampfDeleteDialogHeading">Schützen verwalten</h4>
+
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="schuetzes?.length === 0">
+      <span>No schuetzes found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="schuetzes && schuetzes.length > 0">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr>
+            <th scope="col"><span>Name</span></th>
+            <th scope="col"><span>Jahrgang</span></th>
+            <th scope="col"><span>Stellung</span></th>
+            <th scope="col"><span>Verein</span></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let schuetze of schuetzes" data-cy="entityTable">
+            <td>{{ schuetze.name }}</td>
+            <td>{{ schuetze.jahrgang }}</td>
+            <td>{{ schuetze.stellung }}</td>
+            <td>
+              <div *ngIf="schuetze.verein">
+                {{ schuetze.verein?.name }}
+              </div>
+            </td>
+            <td class="text-right">
+              <div class="btn-group">
+                <button type="submit" (click)="addSchuetze(schuetze)" class="btn btn-success btn-sm">
+                  <fa-icon icon="plus"></fa-icon>
+                  <span class="d-none d-md-inline">Hinzufügen</span>
+                </button>
+
+                <button type="submit" (click)="removeSchuetze(schuetze)" class="btn btn-danger btn-sm">
+                  <fa-icon icon="minus"></fa-icon>
+                  <span class="d-none d-md-inline">Entfernen</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+      <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+    </button>
+  </div>
+</form>

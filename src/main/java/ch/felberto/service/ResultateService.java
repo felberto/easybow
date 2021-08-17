@@ -1,6 +1,7 @@
 package ch.felberto.service;
 
 import ch.felberto.service.dto.ResultateDTO;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,9 +43,24 @@ public interface ResultateService {
     Optional<ResultateDTO> findOne(Long id);
 
     /**
+     * Get the "id" resultate.
+     *
+     * @param wettkampfId the id of the entity.
+     * @return the entity.
+     */
+    List<ResultateDTO> findByWettkampf(Long wettkampfId);
+
+    /**
      * Delete the "id" resultate.
      *
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Delete the "id" resultate.
+     *
+     * @param id the id of the entity.
+     */
+    void deleteBySchuetze(Long id);
 }

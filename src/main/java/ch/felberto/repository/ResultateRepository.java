@@ -1,6 +1,9 @@
 package ch.felberto.repository;
 
+import ch.felberto.domain.Rangierung;
 import ch.felberto.domain.Resultate;
+import ch.felberto.domain.Schuetze;
+import java.util.List;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +12,7 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface ResultateRepository extends JpaRepository<Resultate, Long>, JpaSpecificationExecutor<Resultate> {}
+public interface ResultateRepository extends JpaRepository<Resultate, Long>, JpaSpecificationExecutor<Resultate> {
+    List<Resultate> findByWettkampf_Id(Long wettkampfId);
+    void deleteBySchuetze(Schuetze schuetze);
+}

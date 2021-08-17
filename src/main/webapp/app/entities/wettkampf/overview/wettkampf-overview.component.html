@@ -1,0 +1,58 @@
+<div xmlns="http://www.w3.org/1999/html">
+  <h2 id="page-heading" data-cy="OverviewHeading">
+    <span>{{ wettkampf.name + ' ' + wettkampf.jahr }}</span>
+
+    <div class="d-flex justify-content-end">
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-wettkampf"
+        (click)="adminSchuetze(wettkampf)"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Schützen verwalten </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <cdk-accordion class="example-accordion">
+    <cdk-accordion-item
+      *ngFor="let schuetze of schuetzen; let index = index"
+      #accordionItem="cdkAccordionItem"
+      class="example-accordion-item"
+      role="button"
+      tabindex="0"
+      [attr.id]="'accordion-header-' + index"
+      [attr.aria-expanded]="accordionItem.expanded"
+      [attr.aria-controls]="'accordion-body-' + index"
+    >
+      <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
+        {{ schuetze.name }} {{ schuetze.verein?.name }}
+        <span class="example-accordion-item-description"> Click to {{ accordionItem.expanded ? 'close' : 'open' }} </span>
+      </div>
+      <div
+        class="example-accordion-item-body"
+        role="region"
+        [style.display]="accordionItem.expanded ? '' : 'none'"
+        [attr.id]="'accordion-body-' + index"
+        [attr.aria-labelledby]="'accordion-header-' + index"
+      >
+        <div class="btn-group">
+          <div class="btn-group">
+            <button
+              *ngFor="let resultat of getResultateBySchuetze(schuetze); let i = index"
+              class="btn btn-primary btn-sm"
+              (click)="(null)"
+            >
+              <span class="d-none d-md-inline">{{ resultat.runde }}. Runde</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </cdk-accordion-item>
+  </cdk-accordion>
+</div>

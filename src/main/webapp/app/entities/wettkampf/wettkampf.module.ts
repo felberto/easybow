@@ -7,16 +7,21 @@ import { WettkampfDeleteDialogComponent } from './delete/wettkampf-delete-dialog
 import { WettkampfRoutingModule } from './route/wettkampf-routing.module';
 import { WettkampfRangierungComponent } from './rangierung/wettkampf-rangierung.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { WettkampfOverviewComponent } from './overview/wettkampf-overview.component';
+import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { ResultateDialogComponent } from './resultate-dialog/resultate-dialog.component';
 
 @NgModule({
-  imports: [SharedModule, WettkampfRoutingModule, DragDropModule],
+  imports: [SharedModule, WettkampfRoutingModule, DragDropModule, CdkAccordionModule],
   declarations: [
     WettkampfComponent,
     WettkampfDetailComponent,
     WettkampfUpdateComponent,
     WettkampfDeleteDialogComponent,
     WettkampfRangierungComponent,
+    WettkampfOverviewComponent,
+    ResultateDialogComponent,
   ],
-  entryComponents: [WettkampfDeleteDialogComponent],
+  entryComponents: [WettkampfDeleteDialogComponent, ResultateDialogComponent],
 })
 export class WettkampfModule {}

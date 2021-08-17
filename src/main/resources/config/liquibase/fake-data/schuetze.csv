@@ -1,11 +1,10 @@
-id;name;jahrgang;stellung
-1;Money hard violet;40286;AUFGELEGT
-2;Incredible Ethiopia;34118;AUFGELEGT
-3;Barbados Tala;94638;AUFGELEGT
-4;Rubber Streamlined;72766;AUFGELEGT
-5;Solutions;14463;FREI
-6;calculating Fresh Computers;33221;AUFGELEGT
-7;architectures Florida;82666;AUFGELEGT
-8;Small Frozen synthesizing;67623;FREI
-9;interfaces Personal Bahraini;96720;AUFGELEGT
-10;eco-centric digital Falkland;32205;FREI
+id;name;jahrgang;stellung;verein_id
+1;Huwiler Jana;2002;FREI;19
+2;Helfenstein Sarina;2003;FREI;7
+3;Iranyi Ilian;2003;FREI;21
+4;Marti Nils;2001;FREI;21
+5;Barmettler Lara;2001;FREI;9
+6;Schraner Roman;2001;FREI;7
+7;Niederberger Michelle;2002;FREI;9
+8;Iten Yanik;2002;FREI;2
+9;Anicic Josip;2003;FREI;10

@@ -1,10 +1,14 @@
 package ch.felberto.service.impl;
 
 import ch.felberto.domain.Resultate;
+import ch.felberto.domain.Schuetze;
 import ch.felberto.repository.ResultateRepository;
+import ch.felberto.repository.SchuetzeRepository;
 import ch.felberto.service.ResultateService;
 import ch.felberto.service.dto.ResultateDTO;
 import ch.felberto.service.mapper.ResultateMapper;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +28,17 @@ public class ResultateServiceImpl implements ResultateService {
 
     private final ResultateRepository resultateRepository;
 
+    private final SchuetzeRepository schuetzeRepository;
+
     private final ResultateMapper resultateMapper;
 
-    public ResultateServiceImpl(ResultateRepository resultateRepository, ResultateMapper resultateMapper) {
+    public ResultateServiceImpl(
+        ResultateRepository resultateRepository,
+        SchuetzeRepository schuetzeRepository,
+        ResultateMapper resultateMapper
+    ) {
         this.resultateRepository = resultateRepository;
+        this.schuetzeRepository = schuetzeRepository;
         this.resultateMapper = resultateMapper;
     }
 
@@ -71,8 +82,27 @@ public class ResultateServiceImpl implements ResultateService {
     }
 
     @Override
+    public List<ResultateDTO> findByWettkampf(Long wettkampfId) {
+        log.debug("Request to get Resultate : {}", wettkampfId);
+
+        List<ResultateDTO> list = new ArrayList<ResultateDTO>(resultateRepository.findByWettkampf_Id(wettkampfId).size());
+        for (Resultate resultate : resultateRepository.findByWettkampf_Id(wettkampfId)) {
+            list.add(resultateMapper.toDto(resultate));
+        }
+        return list;
+    }
+
+    @Override
     public void delete(Long id) {
         log.debug("Request to delete Resultate : {}", id);
         resultateRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteBySchuetze(Long id) {
+        log.debug("Request to delete Resultate : {}", id);
+        if (schuetzeRepository.findById(id).isPresent()) {
+            resultateRepository.deleteBySchuetze(schuetzeRepository.findById(id).get());
+        }
     }
 }

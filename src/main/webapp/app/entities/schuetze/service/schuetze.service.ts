@@ -6,6 +6,7 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ISchuetze, getSchuetzeIdentifier } from '../schuetze.model';
+import { IResultate } from '../../resultate/resultate.model';
 
 export type EntityResponseType = HttpResponse<ISchuetze>;
 export type EntityArrayResponseType = HttpResponse<ISchuetze[]>;
@@ -32,6 +33,10 @@ export class SchuetzeService {
 
   find(id: number): Observable<EntityResponseType> {
     return this.http.get<ISchuetze>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  findAll(): Observable<HttpResponse<Array<ISchuetze>>> {
+    return this.http.get<Array<ISchuetze>>(`${this.resourceUrl}/all`, { observe: 'response' });
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {

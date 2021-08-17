@@ -188,6 +188,19 @@ public class ResultateResource {
     }
 
     /**
+     * {@code GET  /resultates/:wettkampf} : get the "wettkampf" resultate.
+     *
+     * @param wettkampfId the id of the wettkampf to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the resultateDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/resultates/wettkampf/{wettkampfId}")
+    public ResponseEntity<List<ResultateDTO>> getResultateByWettkampf(@PathVariable Long wettkampfId) {
+        log.debug("REST request to get Resultate : {}", wettkampfId);
+
+        return ResponseEntity.ok().body(resultateService.findByWettkampf(wettkampfId));
+    }
+
+    /**
      * {@code DELETE  /resultates/:id} : delete the "id" resultate.
      *
      * @param id the id of the resultateDTO to delete.
@@ -197,6 +210,22 @@ public class ResultateResource {
     public ResponseEntity<Void> deleteResultate(@PathVariable Long id) {
         log.debug("REST request to delete Resultate : {}", id);
         resultateService.delete(id);
+        return ResponseEntity
+            .noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .build();
+    }
+
+    /**
+     * {@code DELETE  /resultates/schuetze/:id} : delete the schuetze resultate.
+     *
+     * @param id the id of schuetze of the resultateDTO to delete.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     */
+    @DeleteMapping("/resultates/schuetze/{id}")
+    public ResponseEntity<Void> deleteResultateBySchuetze(@PathVariable Long id) {
+        log.debug("REST request to delete Resultate : {}", id);
+        resultateService.deleteBySchuetze(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))

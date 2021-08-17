@@ -188,6 +188,17 @@ public class SchuetzeResource {
     }
 
     /**
+     * {@code GET  /schuetzes}.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the schuetzeDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/schuetzes/all")
+    public ResponseEntity<List<SchuetzeDTO>> getAll() {
+        log.debug("REST request to get Schuetzen");
+        return ResponseEntity.ok().body(schuetzeService.findAll());
+    }
+
+    /**
      * {@code DELETE  /schuetzes/:id} : delete the "id" schuetze.
      *
      * @param id the id of the schuetzeDTO to delete.

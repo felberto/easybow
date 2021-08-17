@@ -22,21 +22,18 @@
       <li *jhiHasAnyAuthority="'ROLE_ZSAV'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a class="nav-link" routerLink="verein" (click)="collapseNavbar()">
           <span>
-            <mat-icon>holiday_village</mat-icon>
             <span>Vereine</span>
           </span>
         </a>
       </li>
       <li *jhiHasAnyAuthority="'ROLE_ZSAV'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a class="nav-link" routerLink="gruppen" (click)="collapseNavbar()">
-          <mat-icon>groups</mat-icon>
           <span>Gruppen</span>
         </a>
       </li>
       <li *jhiHasAnyAuthority="'ROLE_ZSAV'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a class="nav-link" routerLink="schuetze" (click)="collapseNavbar()">
           <span>
-            <mat-icon>people</mat-icon>
             <span>Schützen</span>
           </span>
         </a>
@@ -44,7 +41,6 @@
       <li *jhiHasAnyAuthority="'ROLE_ZSAV'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a class="nav-link" routerLink="wettkampf" (click)="collapseNavbar()">
           <span>
-            <mat-icon>emoji_events</mat-icon>
             <span>Wettkämpfe</span>
           </span>
         </a>
@@ -52,7 +48,6 @@
       <li *jhiHasAnyAuthority="'ROLE_ZSAV'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a class="nav-link" routerLink="rangierung" (click)="collapseNavbar()">
           <span>
-            <mat-icon>import_export</mat-icon>
             <span>Rangierung</span>
           </span>
         </a>
@@ -235,7 +230,6 @@
       >
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu" data-cy="accountMenu">
           <span *ngIf="!account?.imageUrl">
-            <mat-icon>person</mat-icon>
             <span>Account</span>
           </span>
           <span *ngIf="account?.imageUrl">

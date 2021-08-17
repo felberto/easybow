@@ -5,6 +5,8 @@ import ch.felberto.repository.SchuetzeRepository;
 import ch.felberto.service.SchuetzeService;
 import ch.felberto.service.dto.SchuetzeDTO;
 import ch.felberto.service.mapper.SchuetzeMapper;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,6 +63,15 @@ public class SchuetzeServiceImpl implements SchuetzeService {
     public Page<SchuetzeDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Schuetzes");
         return schuetzeRepository.findAll(pageable).map(schuetzeMapper::toDto);
+    }
+
+    @Override
+    public List<SchuetzeDTO> findAll() {
+        List<SchuetzeDTO> list = new ArrayList<SchuetzeDTO>(schuetzeRepository.findAll().size());
+        for (Schuetze schuetze : schuetzeRepository.findAll()) {
+            list.add(schuetzeMapper.toDto(schuetze));
+        }
+        return list;
     }
 
     @Override

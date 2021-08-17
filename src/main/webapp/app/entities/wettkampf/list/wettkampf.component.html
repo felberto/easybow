@@ -98,6 +98,15 @@
             <div class="btn-group">
               <button
                 type="submit"
+                [routerLink]="['/wettkampf', wettkampf.id, 'overview']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityOverviewButton"
+              >
+                <span class="d-none d-md-inline">Overview</span>
+              </button>
+
+              <button
+                type="submit"
                 [routerLink]="['/wettkampf', wettkampf.id, 'rangierung']"
                 class="btn btn-success btn-sm"
                 data-cy="entityRangierungButton"
