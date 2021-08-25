@@ -10,9 +10,11 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { WettkampfOverviewComponent } from './overview/wettkampf-overview.component';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { ResultateDialogComponent } from './resultate-dialog/resultate-dialog.component';
+import { PassenDialogComponent } from './passen-dialog/passen-dialog.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  imports: [SharedModule, WettkampfRoutingModule, DragDropModule, CdkAccordionModule],
+  imports: [SharedModule, WettkampfRoutingModule, DragDropModule, CdkAccordionModule, FormsModule],
   declarations: [
     WettkampfComponent,
     WettkampfDetailComponent,
@@ -21,6 +23,7 @@ import { ResultateDialogComponent } from './resultate-dialog/resultate-dialog.co
     WettkampfRangierungComponent,
     WettkampfOverviewComponent,
     ResultateDialogComponent,
+    PassenDialogComponent,
   ],
   entryComponents: [WettkampfDeleteDialogComponent, ResultateDialogComponent],
 })

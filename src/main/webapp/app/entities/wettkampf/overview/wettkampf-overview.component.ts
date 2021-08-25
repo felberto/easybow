@@ -7,6 +7,7 @@ import { IResultate } from 'app/entities/resultate/resultate.model';
 import { ISchuetze } from 'app/entities/schuetze/schuetze.model';
 import { ResultateDialogComponent } from '../resultate-dialog/resultate-dialog.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PassenDialogComponent } from '../passen-dialog/passen-dialog.component';
 
 @Component({
   selector: 'jhi-overview',
@@ -46,6 +47,11 @@ export class WettkampfOverviewComponent implements OnInit {
     modalRef.closed.subscribe(reason => {
       this.loadPage();
     });
+  }
+
+  openPassenDialog(resultat: IResultate): void {
+    const modalRef = this.modalService.open(PassenDialogComponent, { size: 'xl', backdrop: 'static' });
+    modalRef.componentInstance.resultat = resultat;
   }
 
   getResultateBySchuetze(schuetze: ISchuetze): Array<IResultate> {

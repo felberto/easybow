@@ -46,7 +46,7 @@
             <button
               *ngFor="let resultat of getResultateBySchuetze(schuetze); let i = index"
               class="btn btn-primary btn-sm"
-              (click)="(null)"
+              (click)="openPassenDialog(resultat)"
             >
               <span class="d-none d-md-inline">{{ resultat.runde }}. Runde</span>
             </button>

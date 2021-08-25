@@ -27,6 +27,7 @@ import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ErrorComponent } from './layouts/error/error.component';
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NgxWebstorageModule.forRoot({ prefix: 'jhi', separator: '-', caseSensitive: true }),
     MatIconModule,
     BrowserAnimationsModule,
+    FormsModule,
   ],
   providers: [
     Title,

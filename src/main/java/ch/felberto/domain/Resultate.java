@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cascade;
 
 /**
  * A Resultate.
@@ -28,18 +29,22 @@ public class Resultate implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Passen passe1;
 
     @OneToOne
     @JoinColumn(unique = true)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Passen passe2;
 
     @OneToOne
     @JoinColumn(unique = true)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Passen passe3;
 
     @OneToOne
     @JoinColumn(unique = true)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Passen passe4;
 
     @ManyToOne
