@@ -3,14 +3,13 @@
     <span>{{ wettkampf.name + ' ' + wettkampf.jahr }}</span>
 
     <div class="d-flex justify-content-end">
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-wettkampf"
-        (click)="adminSchuetze(wettkampf)"
-      >
+      <button id="jh-create-entity" data-cy="entityCreateButton" class="btn btn-primary" (click)="adminSchuetze(wettkampf)">
         <fa-icon icon="plus"></fa-icon>
         <span> Schützen verwalten </span>
+      </button>
+      <button class="btn btn-primary" (click)="generateRangliste(wettkampf)">
+        <fa-icon icon="cogs"></fa-icon>
+        <span> Rangliste erstellen </span>
       </button>
     </div>
   </h2>

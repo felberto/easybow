@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -84,7 +85,7 @@ public class RangierungResource {
     /**
      * {@code PUT  /rangierungs/:id} : Updates an existing rangierung.
      *
-     * @param id            the id of the rangierungDTO to save.
+     * @param id the id of the rangierungDTO to save.
      * @param rangierungDTO the rangierungDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated rangierungDTO,
      * or with status {@code 400 (Bad Request)} if the rangierungDTO is not valid,
@@ -118,7 +119,7 @@ public class RangierungResource {
     /**
      * {@code PATCH  /rangierungs/:id} : Partial updates given fields of an existing rangierung, field will ignore if it is null
      *
-     * @param id            the id of the rangierungDTO to save.
+     * @param id the id of the rangierungDTO to save.
      * @param rangierungDTO the rangierungDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated rangierungDTO,
      * or with status {@code 400 (Bad Request)} if the rangierungDTO is not valid,

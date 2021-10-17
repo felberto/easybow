@@ -34,6 +34,7 @@
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
           <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="runde"><span>Runde</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="resultat"><span>Resultat</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="passe1.id"><span>Passe 1</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="passe2.id"><span>Passe 2</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="passe3.id"><span>Passe 3</span> <fa-icon icon="sort"></fa-icon></th>
@@ -50,6 +51,7 @@
             <a [routerLink]="['/resultate', resultate.id, 'view']">{{ resultate.id }}</a>
           </td>
           <td>{{ resultate.runde }}</td>
+          <td>{{ resultate.resultat }}</td>
           <td>
             <div *ngIf="resultate.passe1">
               <a [routerLink]="['/passen', resultate.passe1?.id, 'view']">{{ resultate.passe1?.id }}</a>

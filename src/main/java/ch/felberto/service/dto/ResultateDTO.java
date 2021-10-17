@@ -14,6 +14,8 @@ public class ResultateDTO implements Serializable {
     @NotNull
     private Integer runde;
 
+    private Integer resultat;
+
     private PassenDTO passe1;
 
     private PassenDTO passe2;
@@ -42,6 +44,14 @@ public class ResultateDTO implements Serializable {
 
     public void setRunde(Integer runde) {
         this.runde = runde;
+    }
+
+    public Integer getResultat() {
+        return resultat;
+    }
+
+    public void setResultat(Integer resultat) {
+        this.resultat = resultat;
     }
 
     public PassenDTO getPasse1() {
@@ -127,6 +137,7 @@ public class ResultateDTO implements Serializable {
         return "ResultateDTO{" +
             "id=" + getId() +
             ", runde=" + getRunde() +
+            ", resultat=" + getResultat() +
             ", passe1=" + getPasse1() +
             ", passe2=" + getPasse2() +
             ", passe3=" + getPasse3() +

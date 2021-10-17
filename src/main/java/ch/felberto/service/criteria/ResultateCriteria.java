@@ -28,6 +28,8 @@ public class ResultateCriteria implements Serializable, Criteria {
 
     private IntegerFilter runde;
 
+    private IntegerFilter resultat;
+
     private LongFilter passe1Id;
 
     private LongFilter passe2Id;
@@ -47,6 +49,7 @@ public class ResultateCriteria implements Serializable, Criteria {
     public ResultateCriteria(ResultateCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.runde = other.runde == null ? null : other.runde.copy();
+        this.resultat = other.resultat == null ? null : other.resultat.copy();
         this.passe1Id = other.passe1Id == null ? null : other.passe1Id.copy();
         this.passe2Id = other.passe2Id == null ? null : other.passe2Id.copy();
         this.passe3Id = other.passe3Id == null ? null : other.passe3Id.copy();
@@ -89,6 +92,21 @@ public class ResultateCriteria implements Serializable, Criteria {
 
     public void setRunde(IntegerFilter runde) {
         this.runde = runde;
+    }
+
+    public IntegerFilter getResultat() {
+        return resultat;
+    }
+
+    public IntegerFilter resultat() {
+        if (resultat == null) {
+            resultat = new IntegerFilter();
+        }
+        return resultat;
+    }
+
+    public void setResultat(IntegerFilter resultat) {
+        this.resultat = resultat;
     }
 
     public LongFilter getPasse1Id() {
@@ -208,6 +226,7 @@ public class ResultateCriteria implements Serializable, Criteria {
         return (
             Objects.equals(id, that.id) &&
             Objects.equals(runde, that.runde) &&
+            Objects.equals(resultat, that.resultat) &&
             Objects.equals(passe1Id, that.passe1Id) &&
             Objects.equals(passe2Id, that.passe2Id) &&
             Objects.equals(passe3Id, that.passe3Id) &&
@@ -220,7 +239,7 @@ public class ResultateCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, runde, passe1Id, passe2Id, passe3Id, passe4Id, gruppeId, schuetzeId, wettkampfId);
+        return Objects.hash(id, runde, resultat, passe1Id, passe2Id, passe3Id, passe4Id, gruppeId, schuetzeId, wettkampfId);
     }
 
     // prettier-ignore
@@ -229,6 +248,7 @@ public class ResultateCriteria implements Serializable, Criteria {
         return "ResultateCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
             (runde != null ? "runde=" + runde + ", " : "") +
+            (resultat != null ? "resultat=" + resultat + ", " : "") +
             (passe1Id != null ? "passe1Id=" + passe1Id + ", " : "") +
             (passe2Id != null ? "passe2Id=" + passe2Id + ", " : "") +
             (passe3Id != null ? "passe3Id=" + passe3Id + ", " : "") +

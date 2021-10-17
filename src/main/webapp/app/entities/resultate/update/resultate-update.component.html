@@ -21,6 +21,11 @@
         </div>
 
         <div class="form-group">
+          <label class="form-control-label" for="field_resultat">Resultat</label>
+          <input type="number" class="form-control" name="resultat" id="field_resultat" data-cy="resultat" formControlName="resultat" />
+        </div>
+
+        <div class="form-group">
           <label class="form-control-label" for="field_passe1">Passe 1</label>
           <select class="form-control" id="field_passe1" data-cy="passe1" name="passe1" formControlName="passe1">
             <option [ngValue]="null"></option>

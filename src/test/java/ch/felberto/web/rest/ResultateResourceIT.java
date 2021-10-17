@@ -40,6 +40,10 @@ class ResultateResourceIT {
     private static final Integer UPDATED_RUNDE = 2;
     private static final Integer SMALLER_RUNDE = 1 - 1;
 
+    private static final Integer DEFAULT_RESULTAT = 1;
+    private static final Integer UPDATED_RESULTAT = 2;
+    private static final Integer SMALLER_RESULTAT = 1 - 1;
+
     private static final String ENTITY_API_URL = "/api/resultates";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -67,7 +71,7 @@ class ResultateResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Resultate createEntity(EntityManager em) {
-        Resultate resultate = new Resultate().runde(DEFAULT_RUNDE);
+        Resultate resultate = new Resultate().runde(DEFAULT_RUNDE).resultat(DEFAULT_RESULTAT);
         return resultate;
     }
 
@@ -78,7 +82,7 @@ class ResultateResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Resultate createUpdatedEntity(EntityManager em) {
-        Resultate resultate = new Resultate().runde(UPDATED_RUNDE);
+        Resultate resultate = new Resultate().runde(UPDATED_RUNDE).resultat(UPDATED_RESULTAT);
         return resultate;
     }
 
@@ -102,6 +106,7 @@ class ResultateResourceIT {
         assertThat(resultateList).hasSize(databaseSizeBeforeCreate + 1);
         Resultate testResultate = resultateList.get(resultateList.size() - 1);
         assertThat(testResultate.getRunde()).isEqualTo(DEFAULT_RUNDE);
+        assertThat(testResultate.getResultat()).isEqualTo(DEFAULT_RESULTAT);
     }
 
     @Test
@@ -153,7 +158,8 @@ class ResultateResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(resultate.getId().intValue())))
-            .andExpect(jsonPath("$.[*].runde").value(hasItem(DEFAULT_RUNDE)));
+            .andExpect(jsonPath("$.[*].runde").value(hasItem(DEFAULT_RUNDE)))
+            .andExpect(jsonPath("$.[*].resultat").value(hasItem(DEFAULT_RESULTAT)));
     }
 
     @Test
@@ -168,7 +174,8 @@ class ResultateResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(resultate.getId().intValue()))
-            .andExpect(jsonPath("$.runde").value(DEFAULT_RUNDE));
+            .andExpect(jsonPath("$.runde").value(DEFAULT_RUNDE))
+            .andExpect(jsonPath("$.resultat").value(DEFAULT_RESULTAT));
     }
 
     @Test
@@ -291,6 +298,110 @@ class ResultateResourceIT {
 
         // Get all the resultateList where runde is greater than SMALLER_RUNDE
         defaultResultateShouldBeFound("runde.greaterThan=" + SMALLER_RUNDE);
+    }
+
+    @Test
+    @Transactional
+    void getAllResultatesByResultatIsEqualToSomething() throws Exception {
+        // Initialize the database
+        resultateRepository.saveAndFlush(resultate);
+
+        // Get all the resultateList where resultat equals to DEFAULT_RESULTAT
+        defaultResultateShouldBeFound("resultat.equals=" + DEFAULT_RESULTAT);
+
+        // Get all the resultateList where resultat equals to UPDATED_RESULTAT
+        defaultResultateShouldNotBeFound("resultat.equals=" + UPDATED_RESULTAT);
+    }
+
+    @Test
+    @Transactional
+    void getAllResultatesByResultatIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        resultateRepository.saveAndFlush(resultate);
+
+        // Get all the resultateList where resultat not equals to DEFAULT_RESULTAT
+        defaultResultateShouldNotBeFound("resultat.notEquals=" + DEFAULT_RESULTAT);
+
+        // Get all the resultateList where resultat not equals to UPDATED_RESULTAT
+        defaultResultateShouldBeFound("resultat.notEquals=" + UPDATED_RESULTAT);
+    }
+
+    @Test
+    @Transactional
+    void getAllResultatesByResultatIsInShouldWork() throws Exception {
+        // Initialize the database
+        resultateRepository.saveAndFlush(resultate);
+
+        // Get all the resultateList where resultat in DEFAULT_RESULTAT or UPDATED_RESULTAT
+        defaultResultateShouldBeFound("resultat.in=" + DEFAULT_RESULTAT + "," + UPDATED_RESULTAT);
+
+        // Get all the resultateList where resultat equals to UPDATED_RESULTAT
+        defaultResultateShouldNotBeFound("resultat.in=" + UPDATED_RESULTAT);
+    }
+
+    @Test
+    @Transactional
+    void getAllResultatesByResultatIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        resultateRepository.saveAndFlush(resultate);
+
+        // Get all the resultateList where resultat is not null
+        defaultResultateShouldBeFound("resultat.specified=true");
+
+        // Get all the resultateList where resultat is null
+        defaultResultateShouldNotBeFound("resultat.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllResultatesByResultatIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        resultateRepository.saveAndFlush(resultate);
+
+        // Get all the resultateList where resultat is greater than or equal to DEFAULT_RESULTAT
+        defaultResultateShouldBeFound("resultat.greaterThanOrEqual=" + DEFAULT_RESULTAT);
+
+        // Get all the resultateList where resultat is greater than or equal to UPDATED_RESULTAT
+        defaultResultateShouldNotBeFound("resultat.greaterThanOrEqual=" + UPDATED_RESULTAT);
+    }
+
+    @Test
+    @Transactional
+    void getAllResultatesByResultatIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        resultateRepository.saveAndFlush(resultate);
+
+        // Get all the resultateList where resultat is less than or equal to DEFAULT_RESULTAT
+        defaultResultateShouldBeFound("resultat.lessThanOrEqual=" + DEFAULT_RESULTAT);
+
+        // Get all the resultateList where resultat is less than or equal to SMALLER_RESULTAT
+        defaultResultateShouldNotBeFound("resultat.lessThanOrEqual=" + SMALLER_RESULTAT);
+    }
+
+    @Test
+    @Transactional
+    void getAllResultatesByResultatIsLessThanSomething() throws Exception {
+        // Initialize the database
+        resultateRepository.saveAndFlush(resultate);
+
+        // Get all the resultateList where resultat is less than DEFAULT_RESULTAT
+        defaultResultateShouldNotBeFound("resultat.lessThan=" + DEFAULT_RESULTAT);
+
+        // Get all the resultateList where resultat is less than UPDATED_RESULTAT
+        defaultResultateShouldBeFound("resultat.lessThan=" + UPDATED_RESULTAT);
+    }
+
+    @Test
+    @Transactional
+    void getAllResultatesByResultatIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        resultateRepository.saveAndFlush(resultate);
+
+        // Get all the resultateList where resultat is greater than DEFAULT_RESULTAT
+        defaultResultateShouldNotBeFound("resultat.greaterThan=" + DEFAULT_RESULTAT);
+
+        // Get all the resultateList where resultat is greater than SMALLER_RESULTAT
+        defaultResultateShouldBeFound("resultat.greaterThan=" + SMALLER_RESULTAT);
     }
 
     @Test
@@ -435,7 +546,8 @@ class ResultateResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(resultate.getId().intValue())))
-            .andExpect(jsonPath("$.[*].runde").value(hasItem(DEFAULT_RUNDE)));
+            .andExpect(jsonPath("$.[*].runde").value(hasItem(DEFAULT_RUNDE)))
+            .andExpect(jsonPath("$.[*].resultat").value(hasItem(DEFAULT_RESULTAT)));
 
         // Check, that the count call also returns 1
         restResultateMockMvc
@@ -483,7 +595,7 @@ class ResultateResourceIT {
         Resultate updatedResultate = resultateRepository.findById(resultate.getId()).get();
         // Disconnect from session so that the updates on updatedResultate are not directly saved in db
         em.detach(updatedResultate);
-        updatedResultate.runde(UPDATED_RUNDE);
+        updatedResultate.runde(UPDATED_RUNDE).resultat(UPDATED_RESULTAT);
         ResultateDTO resultateDTO = resultateMapper.toDto(updatedResultate);
 
         restResultateMockMvc
@@ -499,6 +611,7 @@ class ResultateResourceIT {
         assertThat(resultateList).hasSize(databaseSizeBeforeUpdate);
         Resultate testResultate = resultateList.get(resultateList.size() - 1);
         assertThat(testResultate.getRunde()).isEqualTo(UPDATED_RUNDE);
+        assertThat(testResultate.getResultat()).isEqualTo(UPDATED_RESULTAT);
     }
 
     @Test
@@ -578,7 +691,7 @@ class ResultateResourceIT {
         Resultate partialUpdatedResultate = new Resultate();
         partialUpdatedResultate.setId(resultate.getId());
 
-        partialUpdatedResultate.runde(UPDATED_RUNDE);
+        partialUpdatedResultate.runde(UPDATED_RUNDE).resultat(UPDATED_RESULTAT);
 
         restResultateMockMvc
             .perform(
@@ -593,6 +706,7 @@ class ResultateResourceIT {
         assertThat(resultateList).hasSize(databaseSizeBeforeUpdate);
         Resultate testResultate = resultateList.get(resultateList.size() - 1);
         assertThat(testResultate.getRunde()).isEqualTo(UPDATED_RUNDE);
+        assertThat(testResultate.getResultat()).isEqualTo(UPDATED_RESULTAT);
     }
 
     @Test
@@ -607,7 +721,7 @@ class ResultateResourceIT {
         Resultate partialUpdatedResultate = new Resultate();
         partialUpdatedResultate.setId(resultate.getId());
 
-        partialUpdatedResultate.runde(UPDATED_RUNDE);
+        partialUpdatedResultate.runde(UPDATED_RUNDE).resultat(UPDATED_RESULTAT);
 
         restResultateMockMvc
             .perform(
@@ -622,6 +736,7 @@ class ResultateResourceIT {
         assertThat(resultateList).hasSize(databaseSizeBeforeUpdate);
         Resultate testResultate = resultateList.get(resultateList.size() - 1);
         assertThat(testResultate.getRunde()).isEqualTo(UPDATED_RUNDE);
+        assertThat(testResultate.getResultat()).isEqualTo(UPDATED_RESULTAT);
     }
 
     @Test

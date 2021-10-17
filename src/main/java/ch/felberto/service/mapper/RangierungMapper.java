@@ -2,7 +2,6 @@ package ch.felberto.service.mapper;
 
 import ch.felberto.domain.*;
 import ch.felberto.service.dto.RangierungDTO;
-import java.util.List;
 import org.mapstruct.*;
 
 /**

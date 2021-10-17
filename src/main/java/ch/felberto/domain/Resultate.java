@@ -27,6 +27,9 @@ public class Resultate implements Serializable {
     @Column(name = "runde", nullable = false)
     private Integer runde;
 
+    @Column(name = "resultat")
+    private Integer resultat;
+
     @OneToOne
     @JoinColumn(unique = true)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
@@ -82,6 +85,19 @@ public class Resultate implements Serializable {
 
     public void setRunde(Integer runde) {
         this.runde = runde;
+    }
+
+    public Integer getResultat() {
+        return this.resultat;
+    }
+
+    public Resultate resultat(Integer resultat) {
+        this.resultat = resultat;
+        return this;
+    }
+
+    public void setResultat(Integer resultat) {
+        this.resultat = resultat;
     }
 
     public Passen getPasse1() {
@@ -200,6 +216,7 @@ public class Resultate implements Serializable {
         return "Resultate{" +
             "id=" + getId() +
             ", runde=" + getRunde() +
+            ", resultat=" + getResultat() +
             "}";
     }
 }

@@ -32,50 +32,17 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-          <th scope="col" jhiSortBy="id">
-            <span>ID</span>
-            <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="name">
-            <span>Name</span>
-            <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="jahr">
-            <span>Jahr</span>
-            <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="anzahlRunden">
-            <span>Anzahl Runden</span>
-            <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="anzahlPassen">
-            <span>Anzahl Passen</span>
-            <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="finalRunde">
-            <span>Final Runde</span>
-            <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="finalVorbereitung">
-            <span>Final Vorbereitung</span>
-            <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="anzahlFinalteilnehmer">
-            <span>Anzahl Finalteilnehmer</span>
-            <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="anzahlPassenFinal">
-            <span>Anzahl Passen Final</span>
-            <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="anzahlTeam">
-            <span>Anzahl Team</span>
-            <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="template">
-            <span>Template</span>
-            <fa-icon icon="sort"></fa-icon>
-          </th>
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="name"><span>Name</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="jahr"><span>Jahr</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="anzahlRunden"><span>Anzahl Runden</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="anzahlPassen"><span>Anzahl Passen</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="finalRunde"><span>Final Runde</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="finalVorbereitung"><span>Final Vorbereitung</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="anzahlFinalteilnehmer"><span>Anzahl Finalteilnehmer</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="anzahlPassenFinal"><span>Anzahl Passen Final</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="anzahlTeam"><span>Anzahl Team</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="template"><span>Template</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col"></th>
         </tr>
       </thead>

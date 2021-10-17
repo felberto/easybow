@@ -23,6 +23,7 @@ describe('Service Tests', () => {
       elemDefault = {
         id: 0,
         runde: 0,
+        resultat: 0,
       };
     });
 
@@ -59,6 +60,7 @@ describe('Service Tests', () => {
           {
             id: 1,
             runde: 1,
+            resultat: 1,
           },
           elemDefault
         );
@@ -91,6 +93,7 @@ describe('Service Tests', () => {
           {
             id: 1,
             runde: 1,
+            resultat: 1,
           },
           elemDefault
         );
@@ -142,7 +145,7 @@ describe('Service Tests', () => {
         });
 
         it('should add only unique Resultate to an array', () => {
-          const resultateArray: IResultate[] = [{ id: 123 }, { id: 456 }, { id: 39022 }];
+          const resultateArray: IResultate[] = [{ id: 123 }, { id: 456 }, { id: 50607 }];
           const resultateCollection: IResultate[] = [{ id: 123 }];
           expectedResult = service.addResultateToCollectionIfMissing(resultateCollection, ...resultateArray);
           expect(expectedResult).toHaveLength(3);

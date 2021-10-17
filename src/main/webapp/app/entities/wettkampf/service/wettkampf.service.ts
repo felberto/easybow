@@ -36,6 +36,10 @@ export class WettkampfService {
     return this.http.get<IWettkampf>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  findAll(): Observable<HttpResponse<Array<IWettkampf>>> {
+    return this.http.get<Array<IWettkampf>>(`${this.resourceUrl}`, { observe: 'response' });
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IWettkampf[]>(this.resourceUrl, { params: options, observe: 'response' });

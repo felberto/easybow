@@ -89,6 +89,9 @@ public class ResultateQueryService extends QueryService<Resultate> {
             if (criteria.getRunde() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getRunde(), Resultate_.runde));
             }
+            if (criteria.getResultat() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getResultat(), Resultate_.resultat));
+            }
             if (criteria.getPasse1Id() != null) {
                 specification =
                     specification.and(

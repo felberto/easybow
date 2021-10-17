@@ -82,7 +82,8 @@ entity Gruppen {
 @service(serviceImpl)
 @filter(true)
 entity Resultate {
-	runde Integer required
+	runde Integer required,
+	resultat Integer
 }
 
 relationship ManyToOne {

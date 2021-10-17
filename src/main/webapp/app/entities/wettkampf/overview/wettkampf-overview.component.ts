@@ -8,6 +8,8 @@ import { ISchuetze } from 'app/entities/schuetze/schuetze.model';
 import { ResultateDialogComponent } from '../resultate-dialog/resultate-dialog.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PassenDialogComponent } from '../passen-dialog/passen-dialog.component';
+import { RanglisteService } from '../../rangliste/service/rangliste.service';
+import { GenerateRanglisteDialogComponent } from '../generate-rangliste-dialog/generate-rangliste-dialog.component';
 
 @Component({
   selector: 'jhi-overview',
@@ -20,7 +22,12 @@ export class WettkampfOverviewComponent implements OnInit {
   resultate: Array<IResultate> | null = [];
   schuetzen: Array<ISchuetze> | null = [];
 
-  constructor(protected activatedRoute: ActivatedRoute, private resultateService: ResultateService, protected modalService: NgbModal) {}
+  constructor(
+    protected activatedRoute: ActivatedRoute,
+    private resultateService: ResultateService,
+    private ranglisteService: RanglisteService,
+    protected modalService: NgbModal
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ wettkampf }) => {
@@ -60,6 +67,11 @@ export class WettkampfOverviewComponent implements OnInit {
     } else {
       return [];
     }
+  }
+
+  generateRangliste(wettkampf: IWettkampf): void {
+    const modalRef = this.modalService.open(GenerateRanglisteDialogComponent, { size: 'l', backdrop: 'static' });
+    modalRef.componentInstance.wettkampf = wettkampf;
   }
 
   private loadPage(): void {

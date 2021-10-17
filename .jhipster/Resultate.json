@@ -5,6 +5,10 @@
       "fieldName": "runde",
       "fieldType": "Integer",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "resultat",
+      "fieldType": "Integer"
     }
   ],
   "relationships": [

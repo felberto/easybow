@@ -28,7 +28,7 @@ public interface RangierungService {
     Optional<RangierungDTO> partialUpdate(RangierungDTO rangierungDTO);
 
     /**
-     * Get all the rangierung.
+     * Get all the rangierungs.
      *
      * @param pageable the pagination information.
      * @return the list of entities.

@@ -61,7 +61,7 @@ public class RangierungServiceImpl implements RangierungService {
     @Override
     @Transactional(readOnly = true)
     public Page<RangierungDTO> findAll(Pageable pageable) {
-        log.debug("Request to get all Rangierung");
+        log.debug("Request to get all Rangierungs");
         return rangierungRepository.findAll(pageable).map(rangierungMapper::toDto);
     }
 

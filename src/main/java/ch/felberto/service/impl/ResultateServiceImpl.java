@@ -1,7 +1,6 @@
 package ch.felberto.service.impl;
 
 import ch.felberto.domain.Resultate;
-import ch.felberto.domain.Schuetze;
 import ch.felberto.repository.ResultateRepository;
 import ch.felberto.repository.SchuetzeRepository;
 import ch.felberto.service.ResultateService;
@@ -46,6 +45,20 @@ public class ResultateServiceImpl implements ResultateService {
     public ResultateDTO save(ResultateDTO resultateDTO) {
         log.debug("Request to save Resultate : {}", resultateDTO);
         Resultate resultate = resultateMapper.toEntity(resultateDTO);
+        int resultat = 0;
+        if (resultate.getPasse1() != null && resultate.getPasse1().getResultat() != null) {
+            resultat = resultat + resultate.getPasse1().getResultat();
+        }
+        if (resultate.getPasse2() != null && resultate.getPasse2().getResultat() != null) {
+            resultat = resultat + resultate.getPasse2().getResultat();
+        }
+        if (resultate.getPasse3() != null && resultate.getPasse3().getResultat() != null) {
+            resultat = resultat + resultate.getPasse3().getResultat();
+        }
+        if (resultate.getPasse4() != null && resultate.getPasse4().getResultat() != null) {
+            resultat = resultat + resultate.getPasse4().getResultat();
+        }
+        resultate.setResultat(resultat);
         resultate = resultateRepository.save(resultate);
         return resultateMapper.toDto(resultate);
     }

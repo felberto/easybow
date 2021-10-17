@@ -57,6 +57,8 @@ public class ResultateResource {
         this.resultateQueryService = resultateQueryService;
     }
 
+    //TODO gemsamtresultat updaten wenn passe hinzugefügt oder geupdatet wird
+
     /**
      * {@code POST  /resultates} : Create a new resultate.
      *

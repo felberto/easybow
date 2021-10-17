@@ -4,9 +4,13 @@ import ch.felberto.domain.enumeration.Rangierungskriterien;
 import java.io.Serializable;
 import java.util.Objects;
 import tech.jhipster.service.Criteria;
+import tech.jhipster.service.filter.BooleanFilter;
+import tech.jhipster.service.filter.DoubleFilter;
 import tech.jhipster.service.filter.Filter;
+import tech.jhipster.service.filter.FloatFilter;
 import tech.jhipster.service.filter.IntegerFilter;
 import tech.jhipster.service.filter.LongFilter;
+import tech.jhipster.service.filter.StringFilter;
 
 /**
  * Criteria class for the {@link ch.felberto.domain.Rangierung} entity. This class is used
