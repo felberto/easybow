@@ -5,6 +5,7 @@ import ch.felberto.repository.RangierungRepository;
 import ch.felberto.repository.ResultateRepository;
 import ch.felberto.repository.WettkampfRepository;
 import ch.felberto.service.RanglisteService;
+import com.google.common.collect.ComparisonChain;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
@@ -47,7 +48,7 @@ public class RanglisteServiceImpl implements RanglisteService {
         Wettkampf wettkampf = wettkampfRepository.getOne(wettkampfId);
         Rangliste rangliste = getAllSchuetzesByWettkampf(wettkampf, runden);
         rangliste = sortRangliste(rangliste, wettkampf);
-        generatePdf(rangliste, runden);
+        //generatePdf(rangliste, runden);
         return rangliste;
     }
 
@@ -86,19 +87,45 @@ public class RanglisteServiceImpl implements RanglisteService {
 
     @Override
     public Rangliste sortRangliste(Rangliste rangliste, Wettkampf wettkampf) {
-        //todo first get rangierung kriterien / loop and switch case or something like that
         List<Rangierung> rangierungList = rangierungRepository.findByWettkampf_Id(wettkampf.getId());
         rangierungList.sort(Comparator.comparing(Rangierung::getPosition));
 
         //todo sort by gesamtpunktzahl
         //todo einmal sortieren, dann überprüfen ob noch gleiche resultate vorliegen
         //todo liste mit offenen rangierungen machen und nur die prüfen, falls aufgelöst, diese aus der temp liste entfernen
-        for (Rangierung rangierung : rangierungList) {
+
+        //todo fixe rangierung entfernen
+
+        /**todo IDEE
+         Rangierung hardcoded machen und für jede Wettkampf Art eine seperate Funktion
+         in dieser ebenfalls verschiedene Möglichkeiten, je nach dem wie viele Runden und Passen geschossen wurden
+         **/
+        rangliste
+            .getSchuetzeResultatList()
+            .sort(
+                (o1, o2) ->
+                    ComparisonChain
+                        .start()
+                        .compare(o2.getResultat(), o1.getResultat())
+                        .compare(o2.getResultateList().get(0).getResultat(), o1.getResultateList().get(0).getResultat())
+                        .compare(
+                            o2.getResultateList().get(0).getPasse2().getResultat(),
+                            o1.getResultateList().get(0).getPasse2().getResultat()
+                        )
+                        .compare(
+                            o2.getResultateList().get(0).getPasse1().getResultat(),
+                            o1.getResultateList().get(0).getPasse1().getResultat()
+                        )
+                        .compare(o2.getSchuetze().getJahrgang(), o1.getSchuetze().getJahrgang())
+                        .result()
+            );
+
+        /*for (Rangierung rangierung : rangierungList) {
             switch (rangierung.getRangierungskriterien()) {
                 case RESULTAT:
-                    rangliste.getSchuetzeResultatList().sort((r1, r2) -> r2.getResultat() - r1.getResultat());
                     break;
                 case SERIE:
+                    //todo check if duplicatedarray empty or not
                     break;
                 case TIEFSCHUESSE:
                     break;
@@ -109,12 +136,12 @@ public class RanglisteServiceImpl implements RanglisteService {
                 default:
                     throw new IllegalStateException("Unexpected value: " + rangierung.getRangierungskriterien());
             }
-        }
+        }*/
 
         return rangliste;
     }
 
-    //TODO auslagern in eigene Klassse
+    //TODO auslagern in eigene Klasse
     @Override
     public void generatePdf(Rangliste rangliste, List<Integer> runden) throws FileNotFoundException, DocumentException {
         String runde = "";

@@ -1,0 +1,57 @@
+<form *ngIf="wettkampf">
+  <h2 id="page-heading" data-cy="OverviewHeading">
+    <span>{{ wettkampf.name + ' ' + wettkampf.jahr }}</span>
+
+    <div class="d-flex justify-content-end">
+      <button type="submit" class="btn btn-success" (click)="generate()"><fa-icon icon="cogs"></fa-icon>&nbsp;<span>Generate</span></button>
+      <button type="submit" class="btn btn-success" (click)="print()"><fa-icon icon="print"></fa-icon>&nbsp;<span>Drucken</span></button>
+    </div>
+  </h2>
+  <jhi-alert-error></jhi-alert-error>
+
+  <div class="container">
+    <div *ngFor="let anzahlRunden of [].constructor(wettkampf.anzahlRunden); let i = index">
+      <label>
+        <input type="checkbox" [value]="i + 1" (change)="onCheckboxChange($event)" />
+        {{ i + 1 }}. Runde
+      </label>
+    </div>
+    <div *ngIf="wettkampf.finalRunde">
+      <label>
+        <input type="checkbox" [value]="99" (change)="onCheckboxChange($event)" />
+        Finalrunde
+      </label>
+    </div>
+  </div>
+
+  <div *ngIf="this.rangliste !== null && this.rangliste !== undefined">
+    <div class="example-container">
+      <h2>Rangliste</h2>
+
+      <div
+        *ngIf="this.rangliste.schuetzeResultatList !== undefined"
+        cdkDropList
+        [cdkDropListData]="this.rangliste.schuetzeResultatList"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <table class="table table-striped" aria-describedby="page-heading">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Jahrgang</th>
+              <th scope="col">Resultat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let schuetze of this.rangliste.schuetzeResultatList" cdkDrag>
+              <td>{{ schuetze.schuetze?.name }}</td>
+              <td>{{ schuetze.schuetze?.jahrgang }}</td>
+              <td>{{ schuetze.resultat }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</form>

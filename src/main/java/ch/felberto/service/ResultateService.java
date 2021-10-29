@@ -1,5 +1,6 @@
 package ch.felberto.service;
 
+import ch.felberto.domain.Resultate;
 import ch.felberto.service.dto.ResultateDTO;
 import java.util.List;
 import java.util.Optional;
@@ -40,7 +41,7 @@ public interface ResultateService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<ResultateDTO> findOne(Long id);
+    Optional<Resultate> findOne(Long id);
 
     /**
      * Get the "id" resultate.

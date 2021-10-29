@@ -89,9 +89,9 @@ public class ResultateServiceImpl implements ResultateService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<ResultateDTO> findOne(Long id) {
+    public Optional<Resultate> findOne(Long id) {
         log.debug("Request to get Resultate : {}", id);
-        return resultateRepository.findById(id).map(resultateMapper::toDto);
+        return resultateRepository.findById(id);
     }
 
     @Override

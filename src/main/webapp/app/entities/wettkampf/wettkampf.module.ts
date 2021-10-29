@@ -12,10 +12,11 @@ import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { ResultateDialogComponent } from './resultate-dialog/resultate-dialog.component';
 import { PassenDialogComponent } from './passen-dialog/passen-dialog.component';
 import { FormsModule } from '@angular/forms';
-import { GenerateRanglisteDialogComponent } from './generate-rangliste-dialog/generate-rangliste-dialog.component';
+import { RanglisteComponent } from './rangliste/rangliste.component';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
-  imports: [SharedModule, WettkampfRoutingModule, DragDropModule, CdkAccordionModule, FormsModule],
+  imports: [SharedModule, WettkampfRoutingModule, DragDropModule, CdkAccordionModule, FormsModule, MatTableModule],
   declarations: [
     WettkampfComponent,
     WettkampfDetailComponent,
@@ -25,8 +26,8 @@ import { GenerateRanglisteDialogComponent } from './generate-rangliste-dialog/ge
     WettkampfOverviewComponent,
     ResultateDialogComponent,
     PassenDialogComponent,
-    GenerateRanglisteDialogComponent,
+    RanglisteComponent,
   ],
-  entryComponents: [WettkampfDeleteDialogComponent, ResultateDialogComponent, GenerateRanglisteDialogComponent],
+  entryComponents: [WettkampfDeleteDialogComponent, ResultateDialogComponent, RanglisteComponent],
 })
 export class WettkampfModule {}

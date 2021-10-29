@@ -1,5 +1,6 @@
 package ch.felberto.web.rest;
 
+import ch.felberto.domain.Resultate;
 import ch.felberto.repository.ResultateRepository;
 import ch.felberto.service.ResultateQueryService;
 import ch.felberto.service.ResultateService;
@@ -183,10 +184,10 @@ public class ResultateResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the resultateDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/resultates/{id}")
-    public ResponseEntity<ResultateDTO> getResultate(@PathVariable Long id) {
+    public ResponseEntity<Resultate> getResultate(@PathVariable Long id) {
         log.debug("REST request to get Resultate : {}", id);
-        Optional<ResultateDTO> resultateDTO = resultateService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(resultateDTO);
+        Optional<Resultate> resultate = resultateService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(resultate);
     }
 
     /**

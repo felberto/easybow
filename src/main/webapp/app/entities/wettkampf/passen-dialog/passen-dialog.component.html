@@ -1,31 +1,117 @@
-<form *ngIf="resultat">
-  <div class="modal-header">
-    <h4 class="modal-title">{{ resultat.schuetze?.name }} {{ resultat.runde }}. Runde</h4>
+<div *ngIf="isDataAvailable">
+  <div *ngIf="resultat && wettkampf">
+    <div class="modal-header">
+      <h4 class="modal-title">{{ resultat.schuetze?.name }} {{ resultat.runde }}. Runde</h4>
 
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
-  </div>
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+    </div>
 
-  <div class="modal-body">
-    <jhi-alert-error></jhi-alert-error>
+    <div class="modal-body">
+      <jhi-alert-error></jhi-alert-error>
 
-    <div class="container">
-      <div class="row row-cols-1 row-cols-sm-5 row-cols-md-10">
-        <div class="col" *ngFor="let a of [].constructor(getShootNumber()); let i = index">
-          <div>
-            <label>S{{ i + 1 }}</label>
-            <input class="form-control" type="number" name="{{ i }}" min="0" max="11" step="1" [(ngModel)]="shoots[i]" />
+      <div class="container">
+        <div *ngIf="wettkampf.anzahlPassen !== undefined && wettkampf.anzahlPassen > 0" class="row row-cols-1 row-cols-sm-5 row-cols-md-10">
+          <div class="col" *ngFor="let a of [].constructor(10); let y = index">
+            <div class="form__group field">
+              <input
+                class="form-control form__field"
+                type="number"
+                name="{{ y }}"
+                id="1 {{ y }}"
+                placeholder="{{ y }}"
+                min="0"
+                max="11"
+                step="1"
+                [(ngModel)]="passe1[y]"
+              />
+              <label for="1 {{ y }}" class="form__label">{{ y + 1 }}</label>
+            </div>
           </div>
         </div>
+        <div *ngIf="wettkampf.anzahlPassen !== undefined && wettkampf.anzahlPassen > 0">
+          <br />
+          <div class="resultat">1. Passe: {{ getSumPassen(passe1) }}</div>
+          <br />
+        </div>
+        <div *ngIf="wettkampf.anzahlPassen !== undefined && wettkampf.anzahlPassen > 1" class="row row-cols-1 row-cols-sm-5 row-cols-md-10">
+          <div class="col" *ngFor="let a of [].constructor(10); let y = index">
+            <div class="form__group field">
+              <input
+                class="form-control form__field"
+                type="number"
+                name="{{ y }}"
+                id="2 {{ y }}"
+                placeholder="{{ y }}"
+                min="0"
+                max="11"
+                step="1"
+                [(ngModel)]="passe2[y]"
+              />
+              <label for="2 {{ y }}" class="form__label">{{ y + 1 }}</label>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="wettkampf.anzahlPassen !== undefined && wettkampf.anzahlPassen > 1">
+          <br />
+          <div class="resultat">2. Passe: {{ getSumPassen(passe2) }}</div>
+          <br />
+        </div>
+        <div *ngIf="wettkampf.anzahlPassen !== undefined && wettkampf.anzahlPassen > 2" class="row row-cols-1 row-cols-sm-5 row-cols-md-10">
+          <div class="col" *ngFor="let a of [].constructor(10); let y = index">
+            <div class="form__group field">
+              <input
+                class="form-control form__field"
+                type="number"
+                name="{{ y }}"
+                id="3 {{ y }}"
+                placeholder="{{ y }}"
+                min="0"
+                max="11"
+                step="1"
+                [(ngModel)]="passe3[y]"
+              />
+              <label for="3 {{ y }}" class="form__label">{{ y + 1 }}</label>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="wettkampf.anzahlPassen !== undefined && wettkampf.anzahlPassen > 2">
+          <br />
+          <div class="resultat">3. Passe: {{ getSumPassen(passe3) }}</div>
+          <br />
+        </div>
+        <div *ngIf="wettkampf.anzahlPassen !== undefined && wettkampf.anzahlPassen > 3" class="row row-cols-1 row-cols-sm-5 row-cols-md-10">
+          <div class="col" *ngFor="let a of [].constructor(10); let y = index">
+            <div class="form__group field">
+              <input
+                class="form-control form__field"
+                type="number"
+                name="{{ y }}"
+                id="4 {{ y }}"
+                placeholder="{{ y }}"
+                min="0"
+                max="11"
+                step="1"
+                [(ngModel)]="passe4[y]"
+              />
+              <label for="4 {{ y }}" class="form__label">{{ y + 1 }}</label>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="wettkampf.anzahlPassen !== undefined && wettkampf.anzahlPassen > 3">
+          <br />
+          <div class="resultat">4. Passe: {{ getSumPassen(passe4) }}</div>
+          <br />
+        </div>
+        <br />
+        <div class="resultat">Resultat: {{ getSum() }}</div>
       </div>
-      <br />
-      <div>Resultat: {{ getSum() }}</div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+      </button>
+      <button type="submit" class="btn btn-success" (click)="save()"><fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span></button>
     </div>
   </div>
-
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
-      <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
-    </button>
-    <button type="submit" class="btn btn-success" (click)="save()"><fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span></button>
-  </div>
-</form>
+</div>

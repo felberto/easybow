@@ -8,6 +8,7 @@ import { WettkampfUpdateComponent } from '../update/wettkampf-update.component';
 import { WettkampfRoutingResolveService } from './wettkampf-routing-resolve.service';
 import { WettkampfRangierungComponent } from '../rangierung/wettkampf-rangierung.component';
 import { WettkampfOverviewComponent } from '../overview/wettkampf-overview.component';
+import { RanglisteComponent } from '../rangliste/rangliste.component';
 
 const wettkampfRoute: Routes = [
   {
@@ -53,6 +54,14 @@ const wettkampfRoute: Routes = [
   {
     path: ':id/edit',
     component: WettkampfUpdateComponent,
+    resolve: {
+      wettkampf: WettkampfRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id/rangliste',
+    component: RanglisteComponent,
     resolve: {
       wettkampf: WettkampfRoutingResolveService,
     },

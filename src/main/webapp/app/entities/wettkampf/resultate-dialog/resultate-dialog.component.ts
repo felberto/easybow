@@ -34,7 +34,6 @@ export class ResultateDialogComponent implements OnInit {
 
       if (this.wettkampf) {
         this.resultateService.findByWettkampf(this.wettkampf).subscribe((res: HttpResponse<Array<IResultate>>) => {
-          console.log(res.body);
           this.resultate = res.body;
 
           const tempSchuetzen: Array<ISchuetze> = [];
@@ -51,8 +50,8 @@ export class ResultateDialogComponent implements OnInit {
   }
 
   addSchuetze(schuetze: ISchuetze): void {
-    if (this.wettkampf?.anzahlPassen !== undefined) {
-      for (let i = 0; i < this.wettkampf.anzahlPassen; i++) {
+    if (this.wettkampf?.anzahlRunden !== undefined) {
+      for (let i = 0; i < this.wettkampf.anzahlRunden; i++) {
         const result: IResultate = {
           wettkampf: this.wettkampf,
           schuetze,
