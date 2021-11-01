@@ -66,7 +66,6 @@ public class SchuetzeResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/schuetzes")
-    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\" + \"" + AuthoritiesConstants.ZSAV + "\")")
     public ResponseEntity<Schuetze> createSchuetze(@Valid @RequestBody Schuetze schuetzeDTO) throws URISyntaxException {
         log.debug("REST request to save Schuetze : {}", schuetzeDTO);
         if (schuetzeDTO.getId() != null) {

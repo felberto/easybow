@@ -78,6 +78,18 @@
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
       >
+        <a class="nav-link" routerLink="runde" (click)="collapseNavbar()">
+          <span>
+            <span>Runden</span>
+          </span>
+        </a>
+      </li>
+      <li
+        *jhiHasAnyAuthority="['ROLE_ZSAV', 'ROLE_ADMIN']"
+        class="nav-item"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <a class="nav-link" routerLink="rangierung" (click)="collapseNavbar()">
           <span>
             <span>Rangierung</span>
