@@ -1,10 +1,10 @@
 package ch.felberto.web.rest;
 
+import ch.felberto.domain.Verband;
 import ch.felberto.repository.VerbandRepository;
 import ch.felberto.service.VerbandQueryService;
 import ch.felberto.service.VerbandService;
 import ch.felberto.service.criteria.VerbandCriteria;
-import ch.felberto.service.dto.VerbandDTO;
 import ch.felberto.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -61,12 +60,12 @@ public class VerbandResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/verbands")
-    public ResponseEntity<VerbandDTO> createVerband(@Valid @RequestBody VerbandDTO verbandDTO) throws URISyntaxException {
+    public ResponseEntity<Verband> createVerband(@Valid @RequestBody Verband verbandDTO) throws URISyntaxException {
         log.debug("REST request to save Verband : {}", verbandDTO);
         if (verbandDTO.getId() != null) {
             throw new BadRequestAlertException("A new verband cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        VerbandDTO result = verbandService.save(verbandDTO);
+        Verband result = verbandService.save(verbandDTO);
         return ResponseEntity
             .created(new URI("/api/verbands/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -76,7 +75,7 @@ public class VerbandResource {
     /**
      * {@code PUT  /verbands/:id} : Updates an existing verband.
      *
-     * @param id the id of the verbandDTO to save.
+     * @param id         the id of the verbandDTO to save.
      * @param verbandDTO the verbandDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated verbandDTO,
      * or with status {@code 400 (Bad Request)} if the verbandDTO is not valid,
@@ -84,9 +83,9 @@ public class VerbandResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/verbands/{id}")
-    public ResponseEntity<VerbandDTO> updateVerband(
+    public ResponseEntity<Verband> updateVerband(
         @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody VerbandDTO verbandDTO
+        @Valid @RequestBody Verband verbandDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Verband : {}, {}", id, verbandDTO);
         if (verbandDTO.getId() == null) {
@@ -100,7 +99,7 @@ public class VerbandResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        VerbandDTO result = verbandService.save(verbandDTO);
+        Verband result = verbandService.save(verbandDTO);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, verbandDTO.getId().toString()))
@@ -110,7 +109,7 @@ public class VerbandResource {
     /**
      * {@code PATCH  /verbands/:id} : Partial updates given fields of an existing verband, field will ignore if it is null
      *
-     * @param id the id of the verbandDTO to save.
+     * @param id         the id of the verbandDTO to save.
      * @param verbandDTO the verbandDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated verbandDTO,
      * or with status {@code 400 (Bad Request)} if the verbandDTO is not valid,
@@ -119,9 +118,9 @@ public class VerbandResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/verbands/{id}", consumes = "application/merge-patch+json")
-    public ResponseEntity<VerbandDTO> partialUpdateVerband(
+    public ResponseEntity<Verband> partialUpdateVerband(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody VerbandDTO verbandDTO
+        @NotNull @RequestBody Verband verbandDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Verband partially : {}, {}", id, verbandDTO);
         if (verbandDTO.getId() == null) {
@@ -135,7 +134,7 @@ public class VerbandResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<VerbandDTO> result = verbandService.partialUpdate(verbandDTO);
+        Optional<Verband> result = verbandService.partialUpdate(verbandDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -151,9 +150,9 @@ public class VerbandResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of verbands in body.
      */
     @GetMapping("/verbands")
-    public ResponseEntity<List<VerbandDTO>> getAllVerbands(VerbandCriteria criteria, Pageable pageable) {
+    public ResponseEntity<List<Verband>> getAllVerbands(VerbandCriteria criteria, Pageable pageable) {
         log.debug("REST request to get Verbands by criteria: {}", criteria);
-        Page<VerbandDTO> page = verbandQueryService.findByCriteria(criteria, pageable);
+        Page<Verband> page = verbandQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -177,9 +176,9 @@ public class VerbandResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the verbandDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/verbands/{id}")
-    public ResponseEntity<VerbandDTO> getVerband(@PathVariable Long id) {
+    public ResponseEntity<Verband> getVerband(@PathVariable Long id) {
         log.debug("REST request to get Verband : {}", id);
-        Optional<VerbandDTO> verbandDTO = verbandService.findOne(id);
+        Optional<Verband> verbandDTO = verbandService.findOne(id);
         return ResponseUtil.wrapOrNotFound(verbandDTO);
     }
 

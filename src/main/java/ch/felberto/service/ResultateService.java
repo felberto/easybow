@@ -1,7 +1,6 @@
 package ch.felberto.service;
 
 import ch.felberto.domain.Resultate;
-import ch.felberto.service.dto.ResultateDTO;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -17,7 +16,7 @@ public interface ResultateService {
      * @param resultateDTO the entity to save.
      * @return the persisted entity.
      */
-    ResultateDTO save(ResultateDTO resultateDTO);
+    Resultate save(Resultate resultateDTO);
 
     /**
      * Partially updates a resultate.
@@ -25,7 +24,7 @@ public interface ResultateService {
      * @param resultateDTO the entity to update partially.
      * @return the persisted entity.
      */
-    Optional<ResultateDTO> partialUpdate(ResultateDTO resultateDTO);
+    Optional<Resultate> partialUpdate(Resultate resultateDTO);
 
     /**
      * Get all the resultates.
@@ -33,7 +32,7 @@ public interface ResultateService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<ResultateDTO> findAll(Pageable pageable);
+    Page<Resultate> findAll(Pageable pageable);
 
     /**
      * Get the "id" resultate.
@@ -49,7 +48,7 @@ public interface ResultateService {
      * @param wettkampfId the id of the entity.
      * @return the entity.
      */
-    List<ResultateDTO> findByWettkampf(Long wettkampfId);
+    List<Resultate> findByWettkampf(Long wettkampfId);
 
     /**
      * Delete the "id" resultate.

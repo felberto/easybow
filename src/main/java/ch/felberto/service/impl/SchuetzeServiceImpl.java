@@ -3,8 +3,6 @@ package ch.felberto.service.impl;
 import ch.felberto.domain.Schuetze;
 import ch.felberto.repository.SchuetzeRepository;
 import ch.felberto.service.SchuetzeService;
-import ch.felberto.service.dto.SchuetzeDTO;
-import ch.felberto.service.mapper.SchuetzeMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,64 +24,65 @@ public class SchuetzeServiceImpl implements SchuetzeService {
 
     private final SchuetzeRepository schuetzeRepository;
 
-    private final SchuetzeMapper schuetzeMapper;
-
-    public SchuetzeServiceImpl(SchuetzeRepository schuetzeRepository, SchuetzeMapper schuetzeMapper) {
+    public SchuetzeServiceImpl(SchuetzeRepository schuetzeRepository) {
         this.schuetzeRepository = schuetzeRepository;
-        this.schuetzeMapper = schuetzeMapper;
     }
 
     @Override
-    public SchuetzeDTO save(SchuetzeDTO schuetzeDTO) {
-        log.debug("Request to save Schuetze : {}", schuetzeDTO);
-        Schuetze schuetze = schuetzeMapper.toEntity(schuetzeDTO);
-        schuetze = schuetzeRepository.save(schuetze);
-        return schuetzeMapper.toDto(schuetze);
+    public Schuetze save(Schuetze schuetze) {
+        log.debug("Request to save Schuetze : {}", schuetze);
+        return schuetzeRepository.save(schuetze);
     }
 
     @Override
-    public Optional<SchuetzeDTO> partialUpdate(SchuetzeDTO schuetzeDTO) {
-        log.debug("Request to partially update Schuetze : {}", schuetzeDTO);
+    public Optional<Schuetze> partialUpdate(Schuetze schuetze) {
+        log.debug("Request to partially update Schuetze : {}", schuetze);
 
         return schuetzeRepository
-            .findById(schuetzeDTO.getId())
+            .findById(schuetze.getId())
             .map(
                 existingSchuetze -> {
-                    schuetzeMapper.partialUpdate(existingSchuetze, schuetzeDTO);
+                    if (schuetze.getName() != null) {
+                        existingSchuetze.setName(schuetze.getName());
+                    }
+                    if (schuetze.getJahrgang() != null) {
+                        existingSchuetze.setJahrgang(schuetze.getJahrgang());
+                    }
+                    if (schuetze.getStellung() != null) {
+                        existingSchuetze.setStellung(schuetze.getStellung());
+                    }
+                    if (schuetze.getRolle() != null) {
+                        existingSchuetze.setRolle(schuetze.getRolle());
+                    }
 
                     return existingSchuetze;
                 }
             )
-            .map(schuetzeRepository::save)
-            .map(schuetzeMapper::toDto);
+            .map(schuetzeRepository::save);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<SchuetzeDTO> findAll(Pageable pageable) {
+    public Page<Schuetze> findAll(Pageable pageable) {
         log.debug("Request to get all Schuetzes");
-        return schuetzeRepository.findAll(pageable).map(schuetzeMapper::toDto);
-    }
-
-    @Override
-    public List<SchuetzeDTO> findAll() {
-        List<SchuetzeDTO> list = new ArrayList<SchuetzeDTO>(schuetzeRepository.findAll().size());
-        for (Schuetze schuetze : schuetzeRepository.findAll()) {
-            list.add(schuetzeMapper.toDto(schuetze));
-        }
-        return list;
+        return schuetzeRepository.findAll(pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<SchuetzeDTO> findOne(Long id) {
+    public Optional<Schuetze> findOne(Long id) {
         log.debug("Request to get Schuetze : {}", id);
-        return schuetzeRepository.findById(id).map(schuetzeMapper::toDto);
+        return schuetzeRepository.findById(id);
     }
 
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Schuetze : {}", id);
         schuetzeRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Schuetze> findAll() {
+        return schuetzeRepository.findAll();
     }
 }

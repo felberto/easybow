@@ -2,7 +2,7 @@
   <h2 id="page-heading" data-cy="OverviewHeading">
     <span>{{ wettkampf.name + ' ' + wettkampf.jahr }}</span>
 
-    <div class="d-flex justify-content-end">
+    <div *jhiHasAnyAuthority="['ROLE_ZSAV', 'ROLE_ADMIN']" class="d-flex justify-content-end">
       <button id="jh-create-entity" data-cy="entityCreateButton" class="btn btn-primary" (click)="adminSchuetze(wettkampf)">
         <fa-icon icon="plus"></fa-icon>
         <span> Schützen verwalten </span>
@@ -31,7 +31,7 @@
     >
       <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
         {{ schuetze.name }} {{ schuetze.verein?.name }}
-        <span class="example-accordion-item-description"> Click to {{ accordionItem.expanded ? 'close' : 'open' }} </span>
+        <span class="example-accordion-item-description"> Klicken zum {{ accordionItem.expanded ? 'schliessen' : 'öffnen' }} </span>
       </div>
       <div
         class="example-accordion-item-body"
@@ -44,7 +44,7 @@
           <div class="btn-group">
             <button
               *ngFor="let resultat of getResultateBySchuetze(schuetze); let i = index"
-              class="btn btn-primary btn-sm"
+              class="btn btn-primary btn-sm mr-4"
               (click)="openPassenDialog(resultat)"
             >
               <span class="d-none d-md-inline">{{ resultat.runde }}. Runde</span>

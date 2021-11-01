@@ -1,10 +1,10 @@
 package ch.felberto.web.rest;
 
+import ch.felberto.domain.Verein;
 import ch.felberto.repository.VereinRepository;
 import ch.felberto.service.VereinQueryService;
 import ch.felberto.service.VereinService;
 import ch.felberto.service.criteria.VereinCriteria;
-import ch.felberto.service.dto.VereinDTO;
 import ch.felberto.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -61,12 +60,12 @@ public class VereinResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/vereins")
-    public ResponseEntity<VereinDTO> createVerein(@Valid @RequestBody VereinDTO vereinDTO) throws URISyntaxException {
+    public ResponseEntity<Verein> createVerein(@Valid @RequestBody Verein vereinDTO) throws URISyntaxException {
         log.debug("REST request to save Verein : {}", vereinDTO);
         if (vereinDTO.getId() != null) {
             throw new BadRequestAlertException("A new verein cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        VereinDTO result = vereinService.save(vereinDTO);
+        Verein result = vereinService.save(vereinDTO);
         return ResponseEntity
             .created(new URI("/api/vereins/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -76,7 +75,7 @@ public class VereinResource {
     /**
      * {@code PUT  /vereins/:id} : Updates an existing verein.
      *
-     * @param id the id of the vereinDTO to save.
+     * @param id        the id of the vereinDTO to save.
      * @param vereinDTO the vereinDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated vereinDTO,
      * or with status {@code 400 (Bad Request)} if the vereinDTO is not valid,
@@ -84,9 +83,9 @@ public class VereinResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/vereins/{id}")
-    public ResponseEntity<VereinDTO> updateVerein(
+    public ResponseEntity<Verein> updateVerein(
         @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody VereinDTO vereinDTO
+        @Valid @RequestBody Verein vereinDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Verein : {}, {}", id, vereinDTO);
         if (vereinDTO.getId() == null) {
@@ -100,7 +99,7 @@ public class VereinResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        VereinDTO result = vereinService.save(vereinDTO);
+        Verein result = vereinService.save(vereinDTO);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, vereinDTO.getId().toString()))
@@ -110,7 +109,7 @@ public class VereinResource {
     /**
      * {@code PATCH  /vereins/:id} : Partial updates given fields of an existing verein, field will ignore if it is null
      *
-     * @param id the id of the vereinDTO to save.
+     * @param id        the id of the vereinDTO to save.
      * @param vereinDTO the vereinDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated vereinDTO,
      * or with status {@code 400 (Bad Request)} if the vereinDTO is not valid,
@@ -119,9 +118,9 @@ public class VereinResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/vereins/{id}", consumes = "application/merge-patch+json")
-    public ResponseEntity<VereinDTO> partialUpdateVerein(
+    public ResponseEntity<Verein> partialUpdateVerein(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody VereinDTO vereinDTO
+        @NotNull @RequestBody Verein vereinDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Verein partially : {}, {}", id, vereinDTO);
         if (vereinDTO.getId() == null) {
@@ -135,7 +134,7 @@ public class VereinResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<VereinDTO> result = vereinService.partialUpdate(vereinDTO);
+        Optional<Verein> result = vereinService.partialUpdate(vereinDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -151,9 +150,9 @@ public class VereinResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of vereins in body.
      */
     @GetMapping("/vereins")
-    public ResponseEntity<List<VereinDTO>> getAllVereins(VereinCriteria criteria, Pageable pageable) {
+    public ResponseEntity<List<Verein>> getAllVereins(VereinCriteria criteria, Pageable pageable) {
         log.debug("REST request to get Vereins by criteria: {}", criteria);
-        Page<VereinDTO> page = vereinQueryService.findByCriteria(criteria, pageable);
+        Page<Verein> page = vereinQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -177,9 +176,9 @@ public class VereinResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the vereinDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/vereins/{id}")
-    public ResponseEntity<VereinDTO> getVerein(@PathVariable Long id) {
+    public ResponseEntity<Verein> getVerein(@PathVariable Long id) {
         log.debug("REST request to get Verein : {}", id);
-        Optional<VereinDTO> vereinDTO = vereinService.findOne(id);
+        Optional<Verein> vereinDTO = vereinService.findOne(id);
         return ResponseUtil.wrapOrNotFound(vereinDTO);
     }
 

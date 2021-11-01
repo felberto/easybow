@@ -3,8 +3,6 @@ package ch.felberto.service.impl;
 import ch.felberto.domain.Verband;
 import ch.felberto.repository.VerbandRepository;
 import ch.felberto.service.VerbandService;
-import ch.felberto.service.dto.VerbandDTO;
-import ch.felberto.service.mapper.VerbandMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,50 +22,46 @@ public class VerbandServiceImpl implements VerbandService {
 
     private final VerbandRepository verbandRepository;
 
-    private final VerbandMapper verbandMapper;
-
-    public VerbandServiceImpl(VerbandRepository verbandRepository, VerbandMapper verbandMapper) {
+    public VerbandServiceImpl(VerbandRepository verbandRepository) {
         this.verbandRepository = verbandRepository;
-        this.verbandMapper = verbandMapper;
     }
 
     @Override
-    public VerbandDTO save(VerbandDTO verbandDTO) {
-        log.debug("Request to save Verband : {}", verbandDTO);
-        Verband verband = verbandMapper.toEntity(verbandDTO);
-        verband = verbandRepository.save(verband);
-        return verbandMapper.toDto(verband);
+    public Verband save(Verband verband) {
+        log.debug("Request to save Verband : {}", verband);
+        return verbandRepository.save(verband);
     }
 
     @Override
-    public Optional<VerbandDTO> partialUpdate(VerbandDTO verbandDTO) {
-        log.debug("Request to partially update Verband : {}", verbandDTO);
+    public Optional<Verband> partialUpdate(Verband verband) {
+        log.debug("Request to partially update Verband : {}", verband);
 
         return verbandRepository
-            .findById(verbandDTO.getId())
+            .findById(verband.getId())
             .map(
                 existingVerband -> {
-                    verbandMapper.partialUpdate(existingVerband, verbandDTO);
+                    if (verband.getName() != null) {
+                        existingVerband.setName(verband.getName());
+                    }
 
                     return existingVerband;
                 }
             )
-            .map(verbandRepository::save)
-            .map(verbandMapper::toDto);
+            .map(verbandRepository::save);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<VerbandDTO> findAll(Pageable pageable) {
+    public Page<Verband> findAll(Pageable pageable) {
         log.debug("Request to get all Verbands");
-        return verbandRepository.findAll(pageable).map(verbandMapper::toDto);
+        return verbandRepository.findAll(pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<VerbandDTO> findOne(Long id) {
+    public Optional<Verband> findOne(Long id) {
         log.debug("Request to get Verband : {}", id);
-        return verbandRepository.findById(id).map(verbandMapper::toDto);
+        return verbandRepository.findById(id);
     }
 
     @Override

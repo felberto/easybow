@@ -63,7 +63,7 @@
     }
   ],
   "entityTableName": "resultate",
-  "dto": "mapstruct",
+  "dto": "no",
   "pagination": "pagination",
   "service": "serviceImpl",
   "jpaMetamodelFiltering": true,
@@ -71,5 +71,5 @@
   "readOnly": false,
   "embedded": false,
   "applications": "*",
-  "changelogDate": "20210710113114"
+  "changelogDate": "20211031084608"
 }

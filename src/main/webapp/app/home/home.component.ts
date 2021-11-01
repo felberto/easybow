@@ -1,13 +1,14 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
 import { Wettkampf } from '../entities/wettkampf/wettkampf.model';
 import { WettkampfService } from '../entities/wettkampf/service/wettkampf.service';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { RundeService } from '../entities/runde/service/runde.service';
+import { IRunde, Runde } from '../entities/runde/runde.model';
 
 @Component({
   selector: 'jhi-home',
@@ -17,10 +18,16 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
   wettkampfList: Array<Wettkampf> | null = null;
+  rundeList: Array<Runde> = [];
 
   private readonly destroy$ = new Subject<void>();
 
-  constructor(private accountService: AccountService, private router: Router, private wettkampfService: WettkampfService) {}
+  constructor(
+    private accountService: AccountService,
+    private router: Router,
+    private wettkampfService: WettkampfService,
+    private rundeService: RundeService
+  ) {}
 
   ngOnInit(): void {
     this.accountService
@@ -29,6 +36,19 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe(account => (this.account = account));
     this.wettkampfService.findAll().subscribe(result => {
       this.wettkampfList = result.body;
+      console.log('test');
+
+      this.wettkampfList?.forEach(wettkampf => {
+        if (wettkampf.id !== undefined) {
+          this.rundeService.findByWettkampf(wettkampf.id).subscribe(runde => {
+            if (runde.body !== null) {
+              runde.body.forEach(round => {
+                this.rundeList.push(round);
+              });
+            }
+          });
+        }
+      });
     });
   }
 
@@ -39,5 +59,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  getList(wettkampf: Wettkampf): IRunde[] {
+    return this.rundeList.filter(runde => runde.wettkampf!.id === wettkampf.id);
   }
 }

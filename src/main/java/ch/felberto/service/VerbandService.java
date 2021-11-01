@@ -1,6 +1,6 @@
 package ch.felberto.service;
 
-import ch.felberto.service.dto.VerbandDTO;
+import ch.felberto.domain.Verband;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +15,7 @@ public interface VerbandService {
      * @param verbandDTO the entity to save.
      * @return the persisted entity.
      */
-    VerbandDTO save(VerbandDTO verbandDTO);
+    Verband save(Verband verbandDTO);
 
     /**
      * Partially updates a verband.
@@ -23,7 +23,7 @@ public interface VerbandService {
      * @param verbandDTO the entity to update partially.
      * @return the persisted entity.
      */
-    Optional<VerbandDTO> partialUpdate(VerbandDTO verbandDTO);
+    Optional<Verband> partialUpdate(Verband verbandDTO);
 
     /**
      * Get all the verbands.
@@ -31,7 +31,7 @@ public interface VerbandService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<VerbandDTO> findAll(Pageable pageable);
+    Page<Verband> findAll(Pageable pageable);
 
     /**
      * Get the "id" verband.
@@ -39,7 +39,7 @@ public interface VerbandService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<VerbandDTO> findOne(Long id);
+    Optional<Verband> findOne(Long id);
 
     /**
      * Delete the "id" verband.

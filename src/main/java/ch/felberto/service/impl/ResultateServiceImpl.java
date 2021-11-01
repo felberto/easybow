@@ -4,9 +4,6 @@ import ch.felberto.domain.Resultate;
 import ch.felberto.repository.ResultateRepository;
 import ch.felberto.repository.SchuetzeRepository;
 import ch.felberto.service.ResultateService;
-import ch.felberto.service.dto.ResultateDTO;
-import ch.felberto.service.mapper.ResultateMapper;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -29,22 +26,14 @@ public class ResultateServiceImpl implements ResultateService {
 
     private final SchuetzeRepository schuetzeRepository;
 
-    private final ResultateMapper resultateMapper;
-
-    public ResultateServiceImpl(
-        ResultateRepository resultateRepository,
-        SchuetzeRepository schuetzeRepository,
-        ResultateMapper resultateMapper
-    ) {
+    public ResultateServiceImpl(ResultateRepository resultateRepository, SchuetzeRepository schuetzeRepository) {
         this.resultateRepository = resultateRepository;
         this.schuetzeRepository = schuetzeRepository;
-        this.resultateMapper = resultateMapper;
     }
 
     @Override
-    public ResultateDTO save(ResultateDTO resultateDTO) {
-        log.debug("Request to save Resultate : {}", resultateDTO);
-        Resultate resultate = resultateMapper.toEntity(resultateDTO);
+    public Resultate save(Resultate resultate) {
+        log.debug("Request to save Resultate : {}", resultate);
         int resultat = 0;
         if (resultate.getPasse1() != null && resultate.getPasse1().getResultat() != null) {
             resultat = resultat + resultate.getPasse1().getResultat();
@@ -59,32 +48,35 @@ public class ResultateServiceImpl implements ResultateService {
             resultat = resultat + resultate.getPasse4().getResultat();
         }
         resultate.setResultat(resultat);
-        resultate = resultateRepository.save(resultate);
-        return resultateMapper.toDto(resultate);
+        return resultateRepository.save(resultate);
     }
 
     @Override
-    public Optional<ResultateDTO> partialUpdate(ResultateDTO resultateDTO) {
-        log.debug("Request to partially update Resultate : {}", resultateDTO);
+    public Optional<Resultate> partialUpdate(Resultate resultate) {
+        log.debug("Request to partially update Resultate : {}", resultate);
 
         return resultateRepository
-            .findById(resultateDTO.getId())
+            .findById(resultate.getId())
             .map(
                 existingResultate -> {
-                    resultateMapper.partialUpdate(existingResultate, resultateDTO);
+                    if (resultate.getRunde() != null) {
+                        existingResultate.setRunde(resultate.getRunde());
+                    }
+                    if (resultate.getResultat() != null) {
+                        existingResultate.setResultat(resultate.getResultat());
+                    }
 
                     return existingResultate;
                 }
             )
-            .map(resultateRepository::save)
-            .map(resultateMapper::toDto);
+            .map(resultateRepository::save);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<ResultateDTO> findAll(Pageable pageable) {
+    public Page<Resultate> findAll(Pageable pageable) {
         log.debug("Request to get all Resultates");
-        return resultateRepository.findAll(pageable).map(resultateMapper::toDto);
+        return resultateRepository.findAll(pageable);
     }
 
     @Override
@@ -95,14 +87,9 @@ public class ResultateServiceImpl implements ResultateService {
     }
 
     @Override
-    public List<ResultateDTO> findByWettkampf(Long wettkampfId) {
+    public List<Resultate> findByWettkampf(Long wettkampfId) {
         log.debug("Request to get Resultate : {}", wettkampfId);
-
-        List<ResultateDTO> list = new ArrayList<ResultateDTO>(resultateRepository.findByWettkampf_Id(wettkampfId).size());
-        for (Resultate resultate : resultateRepository.findByWettkampf_Id(wettkampfId)) {
-            list.add(resultateMapper.toDto(resultate));
-        }
-        return list;
+        return resultateRepository.findByWettkampf_Id(wettkampfId);
     }
 
     @Override

@@ -1,0 +1,33 @@
+{
+  "name": "Runde",
+  "fields": [
+    {
+      "fieldName": "runde",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "datum",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "wettkampf",
+      "otherEntityRelationshipName": "runde",
+      "relationshipName": "wettkampf",
+      "otherEntityField": "name"
+    }
+  ],
+  "entityTableName": "runde",
+  "dto": "no",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20211031084604"
+}

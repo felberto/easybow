@@ -1,7 +1,6 @@
 package ch.felberto.service;
 
-import ch.felberto.service.dto.RangierungDTO;
-import ch.felberto.service.dto.WettkampfDTO;
+import ch.felberto.domain.Rangierung;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -17,7 +16,7 @@ public interface RangierungService {
      * @param rangierungDTO the entity to save.
      * @return the persisted entity.
      */
-    RangierungDTO save(RangierungDTO rangierungDTO);
+    Rangierung save(Rangierung rangierungDTO);
 
     /**
      * Partially updates a rangierung.
@@ -25,7 +24,7 @@ public interface RangierungService {
      * @param rangierungDTO the entity to update partially.
      * @return the persisted entity.
      */
-    Optional<RangierungDTO> partialUpdate(RangierungDTO rangierungDTO);
+    Optional<Rangierung> partialUpdate(Rangierung rangierungDTO);
 
     /**
      * Get all the rangierungs.
@@ -33,7 +32,7 @@ public interface RangierungService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<RangierungDTO> findAll(Pageable pageable);
+    Page<Rangierung> findAll(Pageable pageable);
 
     /**
      * Get the "id" rangierung.
@@ -41,7 +40,7 @@ public interface RangierungService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<RangierungDTO> findOne(Long id);
+    Optional<Rangierung> findOne(Long id);
 
     /**
      * Get all "wettkampf" rangierung.
@@ -49,7 +48,7 @@ public interface RangierungService {
      * @param wettkampfId the id of the entity.
      * @return the entity.
      */
-    List<RangierungDTO> findByWettkampf(Long wettkampfId);
+    List<Rangierung> findByWettkampf(Long wettkampfId);
 
     /**
      * Delete the "id" rangierung.

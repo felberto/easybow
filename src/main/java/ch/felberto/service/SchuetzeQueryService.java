@@ -1,11 +1,10 @@
 package ch.felberto.service;
 
-import ch.felberto.domain.*; // for static metamodels
 import ch.felberto.domain.Schuetze;
+import ch.felberto.domain.Schuetze_;
+import ch.felberto.domain.Verein_;
 import ch.felberto.repository.SchuetzeRepository;
 import ch.felberto.service.criteria.SchuetzeCriteria;
-import ch.felberto.service.dto.SchuetzeDTO;
-import ch.felberto.service.mapper.SchuetzeMapper;
 import java.util.List;
 import javax.persistence.criteria.JoinType;
 import org.slf4j.Logger;
@@ -21,7 +20,7 @@ import tech.jhipster.service.QueryService;
  * Service for executing complex queries for {@link Schuetze} entities in the database.
  * The main input is a {@link SchuetzeCriteria} which gets converted to {@link Specification},
  * in a way that all the filters must apply.
- * It returns a {@link List} of {@link SchuetzeDTO} or a {@link Page} of {@link SchuetzeDTO} which fulfills the criteria.
+ * It returns a {@link List} of {@link Schuetze} or a {@link Page} of {@link Schuetze} which fulfills the criteria.
  */
 @Service
 @Transactional(readOnly = true)
@@ -31,40 +30,40 @@ public class SchuetzeQueryService extends QueryService<Schuetze> {
 
     private final SchuetzeRepository schuetzeRepository;
 
-    private final SchuetzeMapper schuetzeMapper;
-
-    public SchuetzeQueryService(SchuetzeRepository schuetzeRepository, SchuetzeMapper schuetzeMapper) {
+    public SchuetzeQueryService(SchuetzeRepository schuetzeRepository) {
         this.schuetzeRepository = schuetzeRepository;
-        this.schuetzeMapper = schuetzeMapper;
     }
 
     /**
-     * Return a {@link List} of {@link SchuetzeDTO} which matches the criteria from the database.
+     * Return a {@link List} of {@link Schuetze} which matches the criteria from the database.
+     *
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public List<SchuetzeDTO> findByCriteria(SchuetzeCriteria criteria) {
+    public List<Schuetze> findByCriteria(SchuetzeCriteria criteria) {
         log.debug("find by criteria : {}", criteria);
         final Specification<Schuetze> specification = createSpecification(criteria);
-        return schuetzeMapper.toDto(schuetzeRepository.findAll(specification));
+        return schuetzeRepository.findAll(specification);
     }
 
     /**
-     * Return a {@link Page} of {@link SchuetzeDTO} which matches the criteria from the database.
+     * Return a {@link Page} of {@link Schuetze} which matches the criteria from the database.
+     *
      * @param criteria The object which holds all the filters, which the entities should match.
-     * @param page The page, which should be returned.
+     * @param page     The page, which should be returned.
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public Page<SchuetzeDTO> findByCriteria(SchuetzeCriteria criteria, Pageable page) {
+    public Page<Schuetze> findByCriteria(SchuetzeCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<Schuetze> specification = createSpecification(criteria);
-        return schuetzeRepository.findAll(specification, page).map(schuetzeMapper::toDto);
+        return schuetzeRepository.findAll(specification, page);
     }
 
     /**
      * Return the number of matching entities in the database.
+     *
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the number of matching entities.
      */
@@ -77,6 +76,7 @@ public class SchuetzeQueryService extends QueryService<Schuetze> {
 
     /**
      * Function to convert {@link SchuetzeCriteria} to a {@link Specification}
+     *
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching {@link Specification} of the entity.
      */
@@ -94,6 +94,9 @@ public class SchuetzeQueryService extends QueryService<Schuetze> {
             }
             if (criteria.getStellung() != null) {
                 specification = specification.and(buildSpecification(criteria.getStellung(), Schuetze_.stellung));
+            }
+            if (criteria.getRolle() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getRolle(), Schuetze_.rolle));
             }
             if (criteria.getVereinId() != null) {
                 specification =

@@ -35,7 +35,7 @@ export class PassenDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.resultat?.wettkampf?.id !== undefined) {
+    if (this.resultat?.wettkampf?.id !== undefined && this.resultat.runde !== undefined) {
       this.wettkampfService.find(this.resultat.wettkampf.id).subscribe(
         result => {
           this.wettkampf = result.body;
@@ -130,9 +130,10 @@ export class PassenDialogComponent implements OnInit {
       p8: numbers[7],
       p9: numbers[8],
       p10: numbers[9],
-      resultat:
-        numbers[0] + numbers[1] + numbers[2] + numbers[3] + numbers[4] + numbers[5] + numbers[6] + numbers[7] + numbers[8] + numbers[9],
     };
+    let tempPasse1: number[] = [];
+    tempPasse1 = this.replacingElmnts(numbers, 11, 10);
+    iPassen.resultat = tempPasse1.reduce((a, b) => a + b, 0);
     switch (passeNumber) {
       case 1:
         if (this.resultat?.passe1 !== undefined) {
@@ -162,24 +163,75 @@ export class PassenDialogComponent implements OnInit {
   }
 
   getSumPassen(passe: number[]): any {
-    return passe.reduce((a, b) => a + b, 0);
+    if (passe.includes(11)) {
+      let tempPasse1: number[] = [];
+      tempPasse1 = this.replacingElmnts(passe, 11, 10);
+      return tempPasse1.reduce((a, b) => a + b, 0);
+    } else {
+      return passe.reduce((a, b) => a + b, 0);
+    }
   }
 
   getSum(): any {
     switch (this.wettkampf?.anzahlPassen) {
       case 1:
-        return this.passe1.reduce((a, b) => a + b, 0);
+        if (this.passe1.includes(11)) {
+          let tempPasse1: number[] = [];
+          tempPasse1 = this.replacingElmnts(this.passe1, 11, 10);
+          return tempPasse1.reduce((a, b) => a + b, 0);
+        } else {
+          return this.passe1.reduce((a, b) => a + b, 0);
+        }
       case 2:
-        return this.passe1.reduce((a, b) => a + b, 0) + this.passe2.reduce((a, b) => a + b, 0);
+        if (this.passe1.includes(11) || this.passe2.includes(11)) {
+          let tempPasse1: number[] = [];
+          let tempPasse2: number[] = [];
+          tempPasse1 = this.replacingElmnts(this.passe1, 11, 10);
+          tempPasse2 = this.replacingElmnts(this.passe2, 11, 10);
+          return tempPasse1.reduce((a, b) => a + b, 0) + tempPasse2.reduce((a, b) => a + b, 0);
+        } else {
+          return this.passe1.reduce((a, b) => a + b, 0) + this.passe2.reduce((a, b) => a + b, 0);
+        }
       case 3:
-        return this.passe1.reduce((a, b) => a + b, 0) + this.passe2.reduce((a, b) => a + b, 0) + this.passe3.reduce((a, b) => a + b, 0);
+        if (this.passe1.includes(11) || this.passe2.includes(11) || this.passe3.includes(11)) {
+          let tempPasse1: number[] = [];
+          let tempPasse2: number[] = [];
+          let tempPasse3: number[] = [];
+          tempPasse1 = this.replacingElmnts(this.passe1, 11, 10);
+          tempPasse2 = this.replacingElmnts(this.passe2, 11, 10);
+          tempPasse3 = this.replacingElmnts(this.passe3, 11, 10);
+          return tempPasse1.reduce((a, b) => a + b, 0) + tempPasse2.reduce((a, b) => a + b, 0) + tempPasse3.reduce((a, b) => a + b, 0);
+        } else {
+          return this.passe1.reduce((a, b) => a + b, 0) + this.passe2.reduce((a, b) => a + b, 0) + this.passe3.reduce((a, b) => a + b, 0);
+        }
       case 4:
-        return (
-          this.passe1.reduce((a, b) => a + b, 0) +
-          this.passe2.reduce((a, b) => a + b, 0) +
-          this.passe3.reduce((a, b) => a + b, 0) +
-          this.passe4.reduce((a, b) => a + b, 0)
-        );
+        if (this.passe1.includes(11) || this.passe2.includes(11) || this.passe3.includes(11) || this.passe4.includes(11)) {
+          let tempPasse1: number[] = [];
+          let tempPasse2: number[] = [];
+          let tempPasse3: number[] = [];
+          let tempPasse4: number[] = [];
+          tempPasse1 = this.replacingElmnts(this.passe1, 11, 10);
+          tempPasse2 = this.replacingElmnts(this.passe2, 11, 10);
+          tempPasse3 = this.replacingElmnts(this.passe3, 11, 10);
+          tempPasse4 = this.replacingElmnts(this.passe4, 11, 10);
+          return (
+            tempPasse1.reduce((a, b) => a + b, 0) +
+            tempPasse2.reduce((a, b) => a + b, 0) +
+            tempPasse3.reduce((a, b) => a + b, 0) +
+            tempPasse4.reduce((a, b) => a + b, 0)
+          );
+        } else {
+          return (
+            this.passe1.reduce((a, b) => a + b, 0) +
+            this.passe2.reduce((a, b) => a + b, 0) +
+            this.passe3.reduce((a, b) => a + b, 0) +
+            this.passe4.reduce((a, b) => a + b, 0)
+          );
+        }
     }
+  }
+
+  replacingElmnts(nums: number[], oldNum: number, newNum: number): any {
+    return nums.map(e => (e === oldNum ? newNum : e));
   }
 }

@@ -5,7 +5,6 @@ import ch.felberto.repository.ResultateRepository;
 import ch.felberto.service.ResultateQueryService;
 import ch.felberto.service.ResultateService;
 import ch.felberto.service.criteria.ResultateCriteria;
-import ch.felberto.service.dto.ResultateDTO;
 import ch.felberto.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -20,7 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -68,12 +66,12 @@ public class ResultateResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/resultates")
-    public ResponseEntity<ResultateDTO> createResultate(@Valid @RequestBody ResultateDTO resultateDTO) throws URISyntaxException {
+    public ResponseEntity<Resultate> createResultate(@Valid @RequestBody Resultate resultateDTO) throws URISyntaxException {
         log.debug("REST request to save Resultate : {}", resultateDTO);
         if (resultateDTO.getId() != null) {
             throw new BadRequestAlertException("A new resultate cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        ResultateDTO result = resultateService.save(resultateDTO);
+        Resultate result = resultateService.save(resultateDTO);
         return ResponseEntity
             .created(new URI("/api/resultates/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -83,7 +81,7 @@ public class ResultateResource {
     /**
      * {@code PUT  /resultates/:id} : Updates an existing resultate.
      *
-     * @param id the id of the resultateDTO to save.
+     * @param id           the id of the resultateDTO to save.
      * @param resultateDTO the resultateDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated resultateDTO,
      * or with status {@code 400 (Bad Request)} if the resultateDTO is not valid,
@@ -91,9 +89,9 @@ public class ResultateResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/resultates/{id}")
-    public ResponseEntity<ResultateDTO> updateResultate(
+    public ResponseEntity<Resultate> updateResultate(
         @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody ResultateDTO resultateDTO
+        @Valid @RequestBody Resultate resultateDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Resultate : {}, {}", id, resultateDTO);
         if (resultateDTO.getId() == null) {
@@ -107,7 +105,7 @@ public class ResultateResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        ResultateDTO result = resultateService.save(resultateDTO);
+        Resultate result = resultateService.save(resultateDTO);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, resultateDTO.getId().toString()))
@@ -117,7 +115,7 @@ public class ResultateResource {
     /**
      * {@code PATCH  /resultates/:id} : Partial updates given fields of an existing resultate, field will ignore if it is null
      *
-     * @param id the id of the resultateDTO to save.
+     * @param id           the id of the resultateDTO to save.
      * @param resultateDTO the resultateDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated resultateDTO,
      * or with status {@code 400 (Bad Request)} if the resultateDTO is not valid,
@@ -126,9 +124,9 @@ public class ResultateResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/resultates/{id}", consumes = "application/merge-patch+json")
-    public ResponseEntity<ResultateDTO> partialUpdateResultate(
+    public ResponseEntity<Resultate> partialUpdateResultate(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody ResultateDTO resultateDTO
+        @NotNull @RequestBody Resultate resultateDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Resultate partially : {}, {}", id, resultateDTO);
         if (resultateDTO.getId() == null) {
@@ -142,7 +140,7 @@ public class ResultateResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<ResultateDTO> result = resultateService.partialUpdate(resultateDTO);
+        Optional<Resultate> result = resultateService.partialUpdate(resultateDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -158,9 +156,9 @@ public class ResultateResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of resultates in body.
      */
     @GetMapping("/resultates")
-    public ResponseEntity<List<ResultateDTO>> getAllResultates(ResultateCriteria criteria, Pageable pageable) {
+    public ResponseEntity<List<Resultate>> getAllResultates(ResultateCriteria criteria, Pageable pageable) {
         log.debug("REST request to get Resultates by criteria: {}", criteria);
-        Page<ResultateDTO> page = resultateQueryService.findByCriteria(criteria, pageable);
+        Page<Resultate> page = resultateQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -197,9 +195,8 @@ public class ResultateResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the resultateDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/resultates/wettkampf/{wettkampfId}")
-    public ResponseEntity<List<ResultateDTO>> getResultateByWettkampf(@PathVariable Long wettkampfId) {
+    public ResponseEntity<List<Resultate>> getResultateByWettkampf(@PathVariable Long wettkampfId) {
         log.debug("REST request to get Resultate : {}", wettkampfId);
-
         return ResponseEntity.ok().body(resultateService.findByWettkampf(wettkampfId));
     }
 

@@ -1,10 +1,10 @@
-id;name;jahrgang;stellung;verein_id
-1;Huwiler Jana;2002;FREI;19
-2;Helfenstein Sarina;2003;FREI;7
-3;Iranyi Ilian;2003;FREI;21
-4;Marti Nils;2001;FREI;21
-5;Barmettler Lara;2001;FREI;9
-6;Schraner Roman;2001;FREI;7
-7;Niederberger Michelle;2002;FREI;9
-8;Iten Yanik;2002;FREI;2
-9;Anicic Josip;2003;FREI;10
+id;name;jahrgang;stellung;verein_id;rolle
+1;Huwiler Jana;2002;FREI;19;ROLE_ROT
+2;Helfenstein Sarina;2003;FREI;7;ROLE_BRE
+3;Iranyi Ilian;2003;FREI;21;ROLE_STE
+4;Marti Nils;2001;FREI;21;ROLE_STE
+5;Barmettler Lara;2001;FREI;9;ROLE_DAL
+6;Schraner Roman;2001;FREI;7;ROLE_BRE
+7;Niederberger Michelle;2002;FREI;9;ROLE_DAL
+8;Iten Yanik;2002;FREI;2;ROLE_AEG
+9;Anicic Josip;2003;FREI;10;ROLE_EMM

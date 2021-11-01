@@ -1,10 +1,10 @@
 package ch.felberto.web.rest;
 
+import ch.felberto.domain.Wettkampf;
 import ch.felberto.repository.WettkampfRepository;
 import ch.felberto.service.WettkampfQueryService;
 import ch.felberto.service.WettkampfService;
 import ch.felberto.service.criteria.WettkampfCriteria;
-import ch.felberto.service.dto.WettkampfDTO;
 import ch.felberto.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -65,12 +64,12 @@ public class WettkampfResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/wettkampfs")
-    public ResponseEntity<WettkampfDTO> createWettkampf(@Valid @RequestBody WettkampfDTO wettkampfDTO) throws URISyntaxException {
+    public ResponseEntity<Wettkampf> createWettkampf(@Valid @RequestBody Wettkampf wettkampfDTO) throws URISyntaxException {
         log.debug("REST request to save Wettkampf : {}", wettkampfDTO);
         if (wettkampfDTO.getId() != null) {
             throw new BadRequestAlertException("A new wettkampf cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        WettkampfDTO result = wettkampfService.save(wettkampfDTO);
+        Wettkampf result = wettkampfService.save(wettkampfDTO);
         return ResponseEntity
             .created(new URI("/api/wettkampfs/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -80,7 +79,7 @@ public class WettkampfResource {
     /**
      * {@code PUT  /wettkampfs/:id} : Updates an existing wettkampf.
      *
-     * @param id the id of the wettkampfDTO to save.
+     * @param id           the id of the wettkampfDTO to save.
      * @param wettkampfDTO the wettkampfDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated wettkampfDTO,
      * or with status {@code 400 (Bad Request)} if the wettkampfDTO is not valid,
@@ -88,9 +87,9 @@ public class WettkampfResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/wettkampfs/{id}")
-    public ResponseEntity<WettkampfDTO> updateWettkampf(
+    public ResponseEntity<Wettkampf> updateWettkampf(
         @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody WettkampfDTO wettkampfDTO
+        @Valid @RequestBody Wettkampf wettkampfDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Wettkampf : {}, {}", id, wettkampfDTO);
         if (wettkampfDTO.getId() == null) {
@@ -104,7 +103,7 @@ public class WettkampfResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        WettkampfDTO result = wettkampfService.save(wettkampfDTO);
+        Wettkampf result = wettkampfService.save(wettkampfDTO);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, wettkampfDTO.getId().toString()))
@@ -114,7 +113,7 @@ public class WettkampfResource {
     /**
      * {@code PATCH  /wettkampfs/:id} : Partial updates given fields of an existing wettkampf, field will ignore if it is null
      *
-     * @param id the id of the wettkampfDTO to save.
+     * @param id           the id of the wettkampfDTO to save.
      * @param wettkampfDTO the wettkampfDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated wettkampfDTO,
      * or with status {@code 400 (Bad Request)} if the wettkampfDTO is not valid,
@@ -123,9 +122,9 @@ public class WettkampfResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/wettkampfs/{id}", consumes = "application/merge-patch+json")
-    public ResponseEntity<WettkampfDTO> partialUpdateWettkampf(
+    public ResponseEntity<Wettkampf> partialUpdateWettkampf(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody WettkampfDTO wettkampfDTO
+        @NotNull @RequestBody Wettkampf wettkampfDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Wettkampf partially : {}, {}", id, wettkampfDTO);
         if (wettkampfDTO.getId() == null) {
@@ -139,7 +138,7 @@ public class WettkampfResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<WettkampfDTO> result = wettkampfService.partialUpdate(wettkampfDTO);
+        Optional<Wettkampf> result = wettkampfService.partialUpdate(wettkampfDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -155,9 +154,9 @@ public class WettkampfResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of wettkampfs in body.
      */
     @GetMapping("/wettkampfs")
-    public ResponseEntity<List<WettkampfDTO>> getAllWettkampfs(WettkampfCriteria criteria, Pageable pageable) {
+    public ResponseEntity<List<Wettkampf>> getAllWettkampfs(WettkampfCriteria criteria, Pageable pageable) {
         log.debug("REST request to get Wettkampfs by criteria: {}", criteria);
-        Page<WettkampfDTO> page = wettkampfQueryService.findByCriteria(criteria, pageable);
+        Page<Wettkampf> page = wettkampfQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -181,9 +180,9 @@ public class WettkampfResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the wettkampfDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/wettkampfs/{id}")
-    public ResponseEntity<WettkampfDTO> getWettkampf(@PathVariable Long id) {
+    public ResponseEntity<Wettkampf> getWettkampf(@PathVariable Long id) {
         log.debug("REST request to get Wettkampf : {}", id);
-        Optional<WettkampfDTO> wettkampfDTO = wettkampfService.findOne(id);
+        Optional<Wettkampf> wettkampfDTO = wettkampfService.findOne(id);
         return ResponseUtil.wrapOrNotFound(wettkampfDTO);
     }
 

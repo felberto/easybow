@@ -9,6 +9,7 @@ import { ISchuetze } from '../schuetze.model';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/config/pagination.constants';
 import { SchuetzeService } from '../service/schuetze.service';
 import { SchuetzeDeleteDialogComponent } from '../delete/schuetze-delete-dialog.component';
+import { AccountService } from '../../../core/auth/account.service';
 
 @Component({
   selector: 'jhi-schuetze',
@@ -28,7 +29,8 @@ export class SchuetzeComponent implements OnInit {
     protected schuetzeService: SchuetzeService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected accountService: AccountService
   ) {}
 
   loadPage(page?: number, dontNavigate?: boolean): void {
@@ -107,7 +109,15 @@ export class SchuetzeComponent implements OnInit {
         },
       });
     }
-    this.schuetzes = data ?? [];
+    //filter only verein schützen
+    this.accountService.getAuthorites().forEach(role => {
+      if (role !== 'ROLE_USER' && role !== 'ROLE_VEREIN' && role !== 'ROLE_ADMIN' && role !== 'ROLE_ZSAV') {
+        this.schuetzes = data?.filter(schuetze => schuetze.rolle === role);
+      } else {
+        this.schuetzes = data ?? [];
+      }
+    });
+
     this.ngbPaginationPage = this.page;
   }
 

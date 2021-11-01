@@ -6,6 +6,7 @@ export interface ISchuetze {
   name?: string;
   jahrgang?: number;
   stellung?: Stellung;
+  rolle?: string;
   verein?: IVerein | null;
 }
 
@@ -15,6 +16,7 @@ export class Schuetze implements ISchuetze {
     public name?: string,
     public jahrgang?: number,
     public stellung?: Stellung,
+    public rolle?: string,
     public verein?: IVerein | null
   ) {}
 }

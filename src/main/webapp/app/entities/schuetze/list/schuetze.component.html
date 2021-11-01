@@ -36,6 +36,7 @@
           <th scope="col" jhiSortBy="name"><span>Name</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="jahrgang"><span>Jahrgang</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="stellung"><span>Stellung</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="rolle"><span>Rolle</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="verein.name"><span>Verein</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col"></th>
         </tr>
@@ -48,6 +49,7 @@
           <td>{{ schuetze.name }}</td>
           <td>{{ schuetze.jahrgang }}</td>
           <td>{{ schuetze.stellung }}</td>
+          <td>{{ schuetze.rolle }}</td>
           <td>
             <div *ngIf="schuetze.verein">
               <a [routerLink]="['/verein', schuetze.verein?.id, 'view']">{{ schuetze.verein?.name }}</a>

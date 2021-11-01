@@ -9,7 +9,7 @@
   ],
   "relationships": [],
   "entityTableName": "verband",
-  "dto": "mapstruct",
+  "dto": "no",
   "pagination": "pagination",
   "service": "serviceImpl",
   "jpaMetamodelFiltering": true,
@@ -17,5 +17,5 @@
   "readOnly": false,
   "embedded": false,
   "applications": "*",
-  "changelogDate": "20210710113108"
+  "changelogDate": "20211031084600"
 }

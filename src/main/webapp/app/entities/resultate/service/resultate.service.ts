@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { getResultateIdentifier, IResultate } from '../resultate.model';
+import { getResultateIdentifier, IResultate, Resultate } from '../resultate.model';
 import { getWettkampfIdentifier, IWettkampf } from '../../wettkampf/wettkampf.model';
 import { getSchuetzeIdentifier, ISchuetze } from 'app/entities/schuetze/schuetze.model';
 
@@ -38,8 +38,8 @@ export class ResultateService {
     return this.http.get<IResultate>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
-  findByWettkampf(wettkampf: IWettkampf): Observable<HttpResponse<Array<IResultate>>> {
-    return this.http.get<Array<IResultate>>(`${this.resourceUrl}/wettkampf/${getWettkampfIdentifier(wettkampf) as number}`, {
+  findByWettkampf(wettkampf: IWettkampf): Observable<HttpResponse<IResultate[]>> {
+    return this.http.get<IResultate[]>(`${this.resourceUrl}/wettkampf/${getWettkampfIdentifier(wettkampf) as number}`, {
       observe: 'response',
     });
   }

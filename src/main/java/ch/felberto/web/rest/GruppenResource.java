@@ -1,10 +1,10 @@
 package ch.felberto.web.rest;
 
+import ch.felberto.domain.Gruppen;
 import ch.felberto.repository.GruppenRepository;
 import ch.felberto.service.GruppenQueryService;
 import ch.felberto.service.GruppenService;
 import ch.felberto.service.criteria.GruppenCriteria;
-import ch.felberto.service.dto.GruppenDTO;
 import ch.felberto.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -61,12 +60,12 @@ public class GruppenResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/gruppens")
-    public ResponseEntity<GruppenDTO> createGruppen(@Valid @RequestBody GruppenDTO gruppenDTO) throws URISyntaxException {
+    public ResponseEntity<Gruppen> createGruppen(@Valid @RequestBody Gruppen gruppenDTO) throws URISyntaxException {
         log.debug("REST request to save Gruppen : {}", gruppenDTO);
         if (gruppenDTO.getId() != null) {
             throw new BadRequestAlertException("A new gruppen cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        GruppenDTO result = gruppenService.save(gruppenDTO);
+        Gruppen result = gruppenService.save(gruppenDTO);
         return ResponseEntity
             .created(new URI("/api/gruppens/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -76,7 +75,7 @@ public class GruppenResource {
     /**
      * {@code PUT  /gruppens/:id} : Updates an existing gruppen.
      *
-     * @param id the id of the gruppenDTO to save.
+     * @param id         the id of the gruppenDTO to save.
      * @param gruppenDTO the gruppenDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated gruppenDTO,
      * or with status {@code 400 (Bad Request)} if the gruppenDTO is not valid,
@@ -84,9 +83,9 @@ public class GruppenResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/gruppens/{id}")
-    public ResponseEntity<GruppenDTO> updateGruppen(
+    public ResponseEntity<Gruppen> updateGruppen(
         @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody GruppenDTO gruppenDTO
+        @Valid @RequestBody Gruppen gruppenDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Gruppen : {}, {}", id, gruppenDTO);
         if (gruppenDTO.getId() == null) {
@@ -100,7 +99,7 @@ public class GruppenResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        GruppenDTO result = gruppenService.save(gruppenDTO);
+        Gruppen result = gruppenService.save(gruppenDTO);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, gruppenDTO.getId().toString()))
@@ -110,7 +109,7 @@ public class GruppenResource {
     /**
      * {@code PATCH  /gruppens/:id} : Partial updates given fields of an existing gruppen, field will ignore if it is null
      *
-     * @param id the id of the gruppenDTO to save.
+     * @param id         the id of the gruppenDTO to save.
      * @param gruppenDTO the gruppenDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated gruppenDTO,
      * or with status {@code 400 (Bad Request)} if the gruppenDTO is not valid,
@@ -119,9 +118,9 @@ public class GruppenResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/gruppens/{id}", consumes = "application/merge-patch+json")
-    public ResponseEntity<GruppenDTO> partialUpdateGruppen(
+    public ResponseEntity<Gruppen> partialUpdateGruppen(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody GruppenDTO gruppenDTO
+        @NotNull @RequestBody Gruppen gruppenDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Gruppen partially : {}, {}", id, gruppenDTO);
         if (gruppenDTO.getId() == null) {
@@ -135,7 +134,7 @@ public class GruppenResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<GruppenDTO> result = gruppenService.partialUpdate(gruppenDTO);
+        Optional<Gruppen> result = gruppenService.partialUpdate(gruppenDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -151,9 +150,9 @@ public class GruppenResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of gruppens in body.
      */
     @GetMapping("/gruppens")
-    public ResponseEntity<List<GruppenDTO>> getAllGruppens(GruppenCriteria criteria, Pageable pageable) {
+    public ResponseEntity<List<Gruppen>> getAllGruppens(GruppenCriteria criteria, Pageable pageable) {
         log.debug("REST request to get Gruppens by criteria: {}", criteria);
-        Page<GruppenDTO> page = gruppenQueryService.findByCriteria(criteria, pageable);
+        Page<Gruppen> page = gruppenQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -177,9 +176,9 @@ public class GruppenResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the gruppenDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/gruppens/{id}")
-    public ResponseEntity<GruppenDTO> getGruppen(@PathVariable Long id) {
+    public ResponseEntity<Gruppen> getGruppen(@PathVariable Long id) {
         log.debug("REST request to get Gruppen : {}", id);
-        Optional<GruppenDTO> gruppenDTO = gruppenService.findOne(id);
+        Optional<Gruppen> gruppenDTO = gruppenService.findOne(id);
         return ResponseUtil.wrapOrNotFound(gruppenDTO);
     }
 
