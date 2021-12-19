@@ -1,0 +1,52 @@
+<div>
+  <div class="modal-header">
+    <h4 class="modal-title">Verbändefinal Junioren</h4>
+
+    <button (click)="cancel()" aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="container">
+      <form (ngSubmit)="print()" [formGroup]="printForm" class="form" role="form">
+        <div class="form-group">
+          <label class="date-label" for="date">Datum</label>
+          <input class="form-control" data-cy="date" formControlName="date" id="date" name="date" placeholder="date" type="date" />
+        </div>
+
+        <div class="form-group">
+          <label class="time-label" for="time">Zeit</label>
+          <input class="form-control" data-cy="time" formControlName="time" id="time" name="time" placeholder="time" type="number" />
+        </div>
+
+        <div class="form-group">
+          <label for="ort">Ort</label>
+          <input class="form-control" data-cy="ort" formControlName="ort" id="ort" name="ort" placeholder="ort" type="text" />
+        </div>
+
+        <div class="form-group">
+          <label for="anzahl">Anzahl</label>
+          <input
+            class="form-control"
+            data-cy="anzahl"
+            formControlName="anzahl"
+            id="anzahl"
+            name="anzahl"
+            placeholder="anzahl"
+            type="number"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button (click)="cancel()" class="btn btn-secondary" data-dismiss="modal" type="button">
+      <fa-icon icon="ban"></fa-icon>&nbsp;<span>Abbrechen</span>
+    </button>
+    <button (click)="print()" class="btn btn-success" data-cy="submit" type="submit">
+      <fa-icon icon="print"></fa-icon>&nbsp;<span>Drucken</span>
+    </button>
+  </div>
+</div>
