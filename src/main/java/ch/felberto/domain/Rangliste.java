@@ -1,5 +1,6 @@
 package ch.felberto.domain;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,6 +9,16 @@ public class Rangliste {
     private Wettkampf wettkampf;
 
     private List<SchuetzeResultat> schuetzeResultatList;
+
+    private Integer type;
+
+    private Date vfDate;
+
+    private Integer vfTime;
+
+    private String vfOrt;
+
+    private Number vfAnzahl;
 
     public Wettkampf getWettkampf() {
         return wettkampf;
@@ -23,6 +34,46 @@ public class Rangliste {
 
     public void setSchuetzeResultatList(List<SchuetzeResultat> schuetzeResultatList) {
         this.schuetzeResultatList = schuetzeResultatList;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Date getVfDate() {
+        return vfDate;
+    }
+
+    public void setVfDate(Date vfDate) {
+        this.vfDate = vfDate;
+    }
+
+    public Integer getVfTime() {
+        return vfTime;
+    }
+
+    public void setVfTime(Integer vfTime) {
+        this.vfTime = vfTime;
+    }
+
+    public String getVfOrt() {
+        return vfOrt;
+    }
+
+    public void setVfOrt(String vfOrt) {
+        this.vfOrt = vfOrt;
+    }
+
+    public Number getVfAnzahl() {
+        return vfAnzahl;
+    }
+
+    public void setVfAnzahl(Number vfAnzahl) {
+        this.vfAnzahl = vfAnzahl;
     }
 
     @Override

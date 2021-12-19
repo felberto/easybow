@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title th:text="${titleDoc}"></title>
+    <bookmarks>
+      <bookmark name="Rangliste" href="#rangliste"></bookmark>
+    </bookmarks>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+  </head>
+
+  <body>
+    <div class="w3-row">
+      <div class="w3-col s9">
+        <h2 class="w3-text-blue title-font" th:text="${title}"></h2>
+      </div>
+      <div class="w3-col s3 w3-center">
+        <img class="zsav" src="images/zsav.png" />
+      </div>
+    </div>
+    <div class="w3-row">
+      <div class="w3-col s9">
+        <h3 class="w3-text-blue title-font" th:text="${subTitle}"></h3>
+      </div>
+      <div class="w3-col s3 w3-center"></div>
+    </div>
+    <div id="rangliste">
+      <div th:if="${not #lists.isEmpty(rangliste.getSchuetzeResultatList())}">
+        <table class="w3-table">
+          <thead>
+            <tr>
+              <th colspan="1" class="w3-right-align">Rang</th>
+              <th colspan="1">Name</th>
+              <th colspan="1">Sektion</th>
+              <th colspan="1" class="w3-right-align">1. Runde</th>
+              <th colspan="1" class="w3-right-align">2. Runde</th>
+              <th colspan="1" class="w3-right-align">Res</th>
+              <th colspan="1" class="w3-center">Stlg</th>
+              <th colspan="1" class="w3-right-align">Jg</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="schuetze : ${rangliste.getSchuetzeResultatList()}">
+              <!-- Rang -->
+              <td
+                th:if="${(rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1) == anzahlQualiFinal}"
+                class="w3-right-align solid"
+                th:text="${rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1}"
+              ></td>
+              <td
+                th:if="${(rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1) != anzahlQualiFinal}"
+                class="w3-right-align"
+                th:text="${rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1}"
+              ></td>
+              <!-- Name -->
+              <td
+                th:if="${(rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1) == anzahlQualiFinal}"
+                class="solid"
+                th:text="${schuetze?.getSchuetze().getName()}"
+              ></td>
+              <td
+                th:if="${(rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1) != anzahlQualiFinal}"
+                th:text="${schuetze?.getSchuetze().getName()}"
+              ></td>
+              <!-- Verein -->
+              <td
+                th:if="${(rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1) == anzahlQualiFinal}"
+                class="solid"
+                th:text="${schuetze?.getSchuetze().getVerein().getName()}"
+              ></td>
+              <td
+                th:if="${(rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1) != anzahlQualiFinal}"
+                th:text="${schuetze?.getSchuetze().getVerein().getName()}"
+              ></td>
+              <!-- Resultat Runde 1 -->
+              <td
+                th:if="${(rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1) == anzahlQualiFinal}"
+                class="w3-right-align solid"
+                th:text="${schuetze?.getResultatRunde1()}"
+              ></td>
+              <td
+                th:if="${(rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1) != anzahlQualiFinal}"
+                class="w3-right-align"
+                th:text="${schuetze?.getResultatRunde1()}"
+              ></td>
+              <!-- Resultat Runde 2 -->
+              <td
+                th:if="${(rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1) == anzahlQualiFinal}"
+                class="w3-right-align solid"
+                th:text="${schuetze?.getResultatRunde2()}"
+              ></td>
+              <td
+                th:if="${(rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1) != anzahlQualiFinal}"
+                class="w3-right-align"
+                th:text="${schuetze?.getResultatRunde2()}"
+              ></td>
+              <!-- Resultat -->
+              <td
+                th:if="${(rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1) == anzahlQualiFinal}"
+                class="w3-right-align solid"
+                style="font-weight: bold"
+                th:text="${schuetze?.getResultat()}"
+              ></td>
+              <td
+                th:if="${(rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1) != anzahlQualiFinal}"
+                class="w3-right-align"
+                style="font-weight: bold"
+                th:text="${schuetze?.getResultat()}"
+              ></td>
+              <!-- Stellung -->
+              <td
+                th:if="${(rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1) == anzahlQualiFinal}"
+                class="w3-center solid"
+                th:text="${schuetze?.getSchuetze().getStellung().toString().substring(0, 1).toLowerCase()}"
+              ></td>
+              <td
+                th:if="${(rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1) != anzahlQualiFinal}"
+                class="w3-center"
+                th:text="${schuetze?.getSchuetze().getStellung().toString().substring(0, 1).toLowerCase()}"
+              ></td>
+              <!-- Jahrgang -->
+              <td
+                th:if="${(rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1) == anzahlQualiFinal}"
+                class="w3-right-align solid"
+                th:text="${schuetze?.getSchuetze().getJahrgang()}"
+              ></td>
+              <td
+                th:if="${(rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1) != anzahlQualiFinal}"
+                class="w3-right-align"
+                th:text="${schuetze?.getSchuetze().getJahrgang()}"
+              ></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <footer class="w3-bottom">
+      <div class="w3-row">
+        <div class="w3-col s4">
+          <img class="jus w3-left-align" src="images/jugendundsport.png" />
+        </div>
+        <div class="w3-col s4">
+          <img class="swisslos center" src="images/swisslos.jpg" />
+        </div>
+        <div class="w3-col s4">
+          <p class="w3-right-align" th:text="${date}"></p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

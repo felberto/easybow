@@ -1,10 +1,15 @@
 
-  ${AnsiColor.GREEN}      ██╗${AnsiColor.RED} ██╗   ██╗ ████████╗ ███████╗   ██████╗ ████████╗ ████████╗ ███████╗
-  ${AnsiColor.GREEN}      ██║${AnsiColor.RED} ██║   ██║ ╚══██╔══╝ ██╔═══██╗ ██╔════╝ ╚══██╔══╝ ██╔═════╝ ██╔═══██╗
-  ${AnsiColor.GREEN}      ██║${AnsiColor.RED} ████████║    ██║    ███████╔╝ ╚█████╗     ██║    ██████╗   ███████╔╝
-  ${AnsiColor.GREEN}██╗   ██║${AnsiColor.RED} ██╔═══██║    ██║    ██╔════╝   ╚═══██╗    ██║    ██╔═══╝   ██╔══██║
-  ${AnsiColor.GREEN}╚██████╔╝${AnsiColor.RED} ██║   ██║ ████████╗ ██║       ██████╔╝    ██║    ████████╗ ██║  ╚██╗
-  ${AnsiColor.GREEN} ╚═════╝ ${AnsiColor.RED} ╚═╝   ╚═╝ ╚═══════╝ ╚═╝       ╚═════╝     ╚═╝    ╚═══════╝ ╚═╝   ╚═╝
+  ${AnsiColor.RED}      ___           ___           ___                                     ___           ___
+  ${AnsiColor.RED}     /  /\         /  /\         /  /\          ___        _____         /  /\         /__/\
+  ${AnsiColor.RED}    /  /:/_       /  /::\       /  /:/_        /__/|      /  /::\       /  /::\       _\_ \:\
+  ${AnsiColor.RED}   /  /:/ /\     /  /:/\:\     /  /:/ /\      |  |:|     /  /:/\:\     /  /:/\:\     /__/\ \:\
+  ${AnsiColor.RED}  /  /:/ /:/_   /  /:/~/::\   /  /:/ /::\     |  |:|    /  /:/~/::\   /  /:/  \:\   _\_ \:\ \:\
+  ${AnsiColor.RED} /__/:/ /:/ /\ /__/:/ /:/\:\ /__/:/ /:/\:\  __|__|:|   /__/:/ /:/\:| /__/:/ \__\:\ /__/\ \:\ \:\
+  ${AnsiColor.RED} \  \:\/:/ /:/ \  \:\/:/__\/ \  \:\/:/~/:/ /__/::::\   \  \:\/:/~/:/ \  \:\ /  /:/ \  \:\ \:\/:/
+  ${AnsiColor.RED}  \  \::/ /:/   \  \::/       \  \::/ /:/     ~\~~\:\   \  \::/ /:/   \  \:\  /:/   \  \:\ \::/
+  ${AnsiColor.RED}   \  \:\/:/     \  \:\        \__\/ /:/        \  \:\   \  \:\/:/     \  \:\/:/     \  \:\/:/
+  ${AnsiColor.RED}    \  \::/       \  \:\         /__/:/          \__\/    \  \::/       \  \::/       \  \::/
+  ${AnsiColor.RED}     \__\/         \__\/         \__\/                     \__\/         \__\/         \__\/
 
-${AnsiColor.BRIGHT_BLUE}:: JHipster 🤓  :: Running Spring Boot ${spring-boot.version} ::
-:: https://www.jhipster.tech ::${AnsiColor.DEFAULT}
+${AnsiColor.BRIGHT_BLUE}:: Easybow 🤓  :: Running Spring Boot ${spring-boot.version} ::
+:: https://www.easybow.ch ::${AnsiColor.DEFAULT}

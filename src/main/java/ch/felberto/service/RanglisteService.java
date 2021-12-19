@@ -1,9 +1,8 @@
 package ch.felberto.service;
 
+import ch.felberto.domain.Passen;
 import ch.felberto.domain.Rangliste;
 import ch.felberto.domain.Wettkampf;
-import com.itextpdf.text.DocumentException;
-import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
@@ -14,33 +13,75 @@ public interface RanglisteService {
      * Generate rangliste.
      *
      * @param wettkampfId the id of wettkampf for the rangliste.
-     * @param runden      the id of runden for the rangliste.
+     * @param type      the type for the rangliste.
      * @return the persisted entity.
      */
-    Rangliste generateRangliste(Long wettkampfId, List<Integer> runden) throws DocumentException, FileNotFoundException;
+    Rangliste generateRangliste(Long wettkampfId, Integer type);
 
     /**
      * get all schuetze by wettkampf
      *
      * @param wettkampf
-     * @param runden
+     * @param type
      * @return ranglisteDTO
      */
-    Rangliste getAllSchuetzesByWettkampf(Wettkampf wettkampf, List<Integer> runden);
+    Rangliste getAllSchuetzesByWettkampf(Wettkampf wettkampf, Integer type);
 
     /**
-     * sort list by rangierung
+     * sort list by 1 runde and 1 passe
      *
      * @param rangliste
-     * @param wettkampf
      * @return ranglisteDTO
      */
-    Rangliste sortRangliste(Rangliste rangliste, Wettkampf wettkampf);
+    Rangliste sortRanglisteRunde1Passe1(Rangliste rangliste);
 
     /**
-     * generate pdf document
+     * sort list by 1 runde and 2 passen
      *
      * @param rangliste
+     * @param runde
+     * @return ranglisteDTO
      */
-    void generatePdf(Rangliste rangliste, List<Integer> runden) throws FileNotFoundException, DocumentException;
+    Rangliste sortRanglisteRunde1Passe2(Rangliste rangliste, Integer runde);
+
+    /**
+     * sort list by 2 runden and 1 passe
+     *
+     * @param rangliste
+     * @return ranglisteDTO
+     */
+    Rangliste sortRanglisteRunde2Passe1(Rangliste rangliste);
+
+    /**
+     * sort list by 2 runden and 2 passen
+     *
+     * @param rangliste
+     * @return ranglisteDTO
+     */
+    Rangliste sortRanglisteRunde2Passe2(Rangliste rangliste);
+
+    /**
+     * sort list by 2 runden, final and 1 passen
+     *
+     * @param rangliste
+     * @return ranglisteDTO
+     */
+    Rangliste sortRanglisteRunde2FinalPasse1(Rangliste rangliste);
+
+    /**
+     * sort list by 2 runden, final and 2 passen
+     *
+     * @param rangliste
+     * @return ranglisteDTO
+     */
+    Rangliste sortRanglisteRunde2FinalPasse2(Rangliste rangliste);
+
+    /**
+     * get tiefschuesse by number
+     *
+     * @param passen
+     * @param number
+     * @return ranglisteDTO
+     */
+    Integer getTiefschuesseForPasse(Passen passen, Integer number);
 }

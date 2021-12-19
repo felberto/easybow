@@ -3,11 +3,11 @@
     <span>{{ wettkampf.name + ' ' + wettkampf.jahr }}</span>
 
     <div *jhiHasAnyAuthority="['ROLE_ZSAV', 'ROLE_ADMIN']" class="d-flex justify-content-end">
-      <button id="jh-create-entity" data-cy="entityCreateButton" class="btn btn-primary" (click)="adminSchuetze(wettkampf)">
+      <button id="jh-create-entity" data-cy="entityCreateButton" class="btn btn-color mr-4" (click)="adminSchuetze(wettkampf)">
         <fa-icon icon="plus"></fa-icon>
         <span> Schützen verwalten </span>
       </button>
-      <button class="btn btn-primary" [routerLink]="['/wettkampf', wettkampf.id, 'rangliste']">
+      <button class="btn btn-color mr-4" [routerLink]="['/wettkampf', wettkampf.id, 'rangliste']">
         <fa-icon icon="cogs"></fa-icon>
         <span> Rangliste erstellen </span>
       </button>
@@ -44,7 +44,7 @@
           <div class="btn-group">
             <button
               *ngFor="let resultat of getResultateBySchuetze(schuetze); let i = index"
-              class="btn btn-primary btn-sm mr-4"
+              class="btn btn-color btn-sm mr-4"
               (click)="openPassenDialog(resultat)"
             >
               <span class="d-none d-md-inline">{{ resultat.runde }}. Runde</span>

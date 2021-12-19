@@ -3,51 +3,110 @@
     <span>{{ wettkampf.name + ' ' + wettkampf.jahr }}</span>
 
     <div class="d-flex justify-content-end">
-      <button type="submit" class="btn btn-success" (click)="generate()"><fa-icon icon="cogs"></fa-icon>&nbsp;<span>Generate</span></button>
-      <button type="submit" class="btn btn-success" (click)="print()"><fa-icon icon="print"></fa-icon>&nbsp;<span>Drucken</span></button>
+      <button type="submit" class="btn btn-color mr-4" (click)="print()"><fa-icon icon="print"></fa-icon>&nbsp;<span>Drucken</span></button>
     </div>
   </h2>
   <jhi-alert-error></jhi-alert-error>
 
   <div class="container">
-    <div *ngFor="let anzahlRunden of [].constructor(wettkampf.anzahlRunden); let i = index">
-      <label>
-        <input type="checkbox" [value]="i + 1" (change)="onCheckboxChange($event)" />
-        {{ i + 1 }}. Runde
-      </label>
-    </div>
-    <div *ngIf="wettkampf.finalRunde">
-      <label>
-        <input type="checkbox" [value]="99" (change)="onCheckboxChange($event)" />
-        Finalrunde
-      </label>
-    </div>
+    <button type="submit" class="btn btn-color mr-4" (click)="generate(1)">
+      <fa-icon icon="cogs"></fa-icon>&nbsp;<span>1. Runde</span>
+    </button>
+    <button type="submit" class="btn btn-color mr-4" (click)="generate(2)">
+      <fa-icon icon="cogs"></fa-icon>&nbsp;<span>2. Runde</span>
+    </button>
+    <button type="submit" class="btn btn-color mr-4" (click)="generate(100)">
+      <fa-icon icon="cogs"></fa-icon>&nbsp;<span>Qualifikation Final</span>
+    </button>
+    <button type="submit" class="btn btn-color mr-4" (click)="generate(99)"><fa-icon icon="cogs"></fa-icon>&nbsp;<span>Final</span></button>
+    <button type="submit" class="btn btn-color mr-4" (click)="generate(101)">
+      <fa-icon icon="cogs"></fa-icon>&nbsp;<span>Qualifikation Verbändefinal</span>
+    </button>
   </div>
 
   <div *ngIf="this.rangliste !== null && this.rangliste !== undefined">
-    <div class="example-container">
+    <div class="example-container1">
       <h2>Rangliste</h2>
 
       <div
         *ngIf="this.rangliste.schuetzeResultatList !== undefined"
         cdkDropList
         [cdkDropListData]="this.rangliste.schuetzeResultatList"
-        class="example-list"
+        class="example-list table-responsive"
         (cdkDropListDropped)="drop($event)"
       >
         <table class="table table-striped" aria-describedby="page-heading">
           <thead>
             <tr>
+              <th scope="col">Rang</th>
               <th scope="col">Name</th>
               <th scope="col">Jahrgang</th>
               <th scope="col">Resultat</th>
+              <th
+                *ngIf="rangliste.type == 1 || rangliste.type == 100 || rangliste.type == 101"
+                scope="col"
+                colspan="3"
+                style="text-align: center"
+              >
+                1. Runde
+              </th>
+              <th
+                *ngIf="rangliste.type == 2 || rangliste.type == 100 || rangliste.type == 101"
+                scope="col"
+                colspan="3"
+                style="text-align: center"
+              >
+                2. Runde
+              </th>
+              <th *ngIf="rangliste.type == 99 || rangliste.type == 101" scope="col" colspan="3" style="text-align: center">Final</th>
+              <th scope="col" colspan="5">Tiefschüsse</th>
+            </tr>
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th *ngIf="rangliste.type == 1 || rangliste.type == 100 || rangliste.type == 101">1. Passe</th>
+              <th *ngIf="rangliste.type == 1 || rangliste.type == 100 || rangliste.type == 101">2. Passe</th>
+              <th *ngIf="rangliste.type == 1 || rangliste.type == 100 || rangliste.type == 101">Resultat</th>
+              <th *ngIf="rangliste.type == 2 || rangliste.type == 100 || rangliste.type == 101">1. Passe</th>
+              <th *ngIf="rangliste.type == 2 || rangliste.type == 100 || rangliste.type == 101">2. Passe</th>
+              <th *ngIf="rangliste.type == 2 || rangliste.type == 100 || rangliste.type == 101">Resultat</th>
+              <th *ngIf="rangliste.type == 99 || rangliste.type == 101">1. Passe</th>
+              <th *ngIf="rangliste.type == 99 || rangliste.type == 101">2. Passe</th>
+              <th *ngIf="rangliste.type == 99 || rangliste.type == 101">Resultat</th>
+              <th class="w3-center">10</th>
+              <th class="w3-center">9</th>
+              <th class="w3-center">8</th>
+              <th class="w3-center">7</th>
+              <th class="w3-center">M</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let schuetze of this.rangliste.schuetzeResultatList" cdkDrag>
+            <tr *ngFor="let schuetze of this.rangliste.schuetzeResultatList; let i = index" cdkDrag>
+              <td>
+                <strong>{{ i + 1 }}</strong>
+              </td>
               <td>{{ schuetze.schuetze?.name }}</td>
               <td>{{ schuetze.schuetze?.jahrgang }}</td>
-              <td>{{ schuetze.resultat }}</td>
+              <td>
+                <strong>{{ schuetze.resultat }}</strong>
+              </td>
+              <td *ngIf="schuetze.resultatRunde1 !== null">{{ schuetze.resultatRunde1Passe1 }}</td>
+              <td *ngIf="schuetze.resultatRunde1 !== null">{{ schuetze.resultatRunde1Passe2 }}</td>
+              <td *ngIf="schuetze.resultatRunde1 !== null">{{ schuetze.resultatRunde1 }}</td>
+              <td *ngIf="schuetze.resultatRunde2 !== null">{{ schuetze.resultatRunde2Passe1 }}</td>
+              <td *ngIf="schuetze.resultatRunde2 !== null">{{ schuetze.resultatRunde2Passe2 }}</td>
+              <td *ngIf="schuetze.resultatRunde2 !== null">{{ schuetze.resultatRunde2 }}</td>
+              <td *ngIf="schuetze.resultatFinal !== null">{{ schuetze.resultatFinalPasse1 }}</td>
+              <td *ngIf="schuetze.resultatFinal !== null">{{ schuetze.resultatFinalPasse2 }}</td>
+              <td *ngIf="schuetze.resultatFinal !== null">{{ schuetze.resultatFinal }}</td>
+              <td>{{ schuetze.t10 }}</td>
+              <td>{{ schuetze.t9 }}</td>
+              <td>{{ schuetze.t8 }}</td>
+              <td>{{ schuetze.t7 }}</td>
+              <td>{{ schuetze.t11 }}</td>
             </tr>
           </tbody>
         </table>

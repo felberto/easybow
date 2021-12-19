@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
   wettkampfList: Array<Wettkampf> | null = null;
   rundeList: Array<Runde> = [];
+  breakpoint: any;
 
   private readonly destroy$ = new Subject<void>();
 
@@ -30,10 +31,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.breakpoint = window.innerWidth <= 990 ? 1 : 3;
     this.accountService
       .getAuthenticationState()
       .pipe(takeUntil(this.destroy$))
-      .subscribe(account => (this.account = account));
+      .subscribe(account => {
+        this.account = account;
+      });
     this.wettkampfService.findAll().subscribe(result => {
       this.wettkampfList = result.body;
       console.log('test');
@@ -50,6 +54,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
       });
     });
+  }
+
+  onResize(event: any): any {
+    this.breakpoint = event.target.innerWidth <= 400 ? 1 : 6;
   }
 
   login(): void {
