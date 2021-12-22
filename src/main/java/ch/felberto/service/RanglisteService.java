@@ -3,7 +3,6 @@ package ch.felberto.service;
 import ch.felberto.domain.Passen;
 import ch.felberto.domain.Rangliste;
 import ch.felberto.domain.Wettkampf;
-import java.util.List;
 
 /**
  * Service Interface for managing RanglisteDTO.
@@ -13,7 +12,7 @@ public interface RanglisteService {
      * Generate rangliste.
      *
      * @param wettkampfId the id of wettkampf for the rangliste.
-     * @param type      the type for the rangliste.
+     * @param type        the type for the rangliste.
      * @return the persisted entity.
      */
     Rangliste generateRangliste(Long wettkampfId, Integer type);
@@ -84,4 +83,13 @@ public interface RanglisteService {
      * @return ranglisteDTO
      */
     Integer getTiefschuesseForPasse(Passen passen, Integer number);
+
+    /**
+     * Create final.
+     *
+     * @param wettkampfId the id of wettkampf for the rangliste.
+     * @param type        the type for the rangliste.
+     * @return the persisted entity.
+     */
+    Rangliste createFinal(Long wettkampfId, Integer type);
 }

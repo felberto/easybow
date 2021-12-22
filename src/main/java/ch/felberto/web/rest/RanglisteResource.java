@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.ResponseUtil;
@@ -47,13 +45,27 @@ public class RanglisteResource {
      * {@code POST  /rangliste/:id} : get the "id" wettkampf.
      *
      * @param wettkampfId the id of the wettkampfDTO to retrieve.
-     * @param type      the type to retrieve.
+     * @param type        the type to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the ranglisteDTO, or with status {@code 404 (Not Found)}.
      */
     @PostMapping("/rangliste/{wettkampfId}")
     public ResponseEntity<Rangliste> createRangliste(@PathVariable Long wettkampfId, @RequestBody Integer type) {
         log.debug("REST request to get Rangliste for Wettkampf : {} and type : {}", wettkampfId, type);
         Optional<Rangliste> rangliste = Optional.ofNullable(ranglisteService.generateRangliste(wettkampfId, type));
+        return ResponseUtil.wrapOrNotFound(rangliste);
+    }
+
+    /**
+     * {@code POST  /rangliste/final/:id} : get the "id" wettkampf.
+     *
+     * @param wettkampfId the id of the wettkampfDTO to retrieve.
+     * @param type        the type to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the ranglisteDTO, or with status {@code 404 (Not Found)}.
+     */
+    @PostMapping("/rangliste/final/{wettkampfId}")
+    public ResponseEntity<Rangliste> createFinal(@PathVariable Long wettkampfId, @RequestBody Integer type) {
+        log.debug("REST request to create final for Wettkampf : {} and type : {}", wettkampfId, type);
+        Optional<Rangliste> rangliste = Optional.ofNullable(ranglisteService.createFinal(wettkampfId, type));
         return ResponseUtil.wrapOrNotFound(rangliste);
     }
 

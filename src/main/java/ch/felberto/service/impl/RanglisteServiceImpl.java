@@ -5,6 +5,7 @@ import ch.felberto.repository.RangierungRepository;
 import ch.felberto.repository.ResultateRepository;
 import ch.felberto.repository.WettkampfRepository;
 import ch.felberto.service.RanglisteService;
+import ch.felberto.service.ResultateService;
 import com.google.common.collect.ComparisonChain;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -26,14 +27,39 @@ public class RanglisteServiceImpl implements RanglisteService {
 
     private final RangierungRepository rangierungRepository;
 
+    private final ResultateService resultateService;
+
     public RanglisteServiceImpl(
         ResultateRepository resultateRepository,
         WettkampfRepository wettkampfRepository,
-        RangierungRepository rangierungRepository
+        RangierungRepository rangierungRepository,
+        ResultateService resultateService
     ) {
         this.resultateRepository = resultateRepository;
         this.wettkampfRepository = wettkampfRepository;
         this.rangierungRepository = rangierungRepository;
+        this.resultateService = resultateService;
+    }
+
+    @Override
+    public Rangliste createFinal(Long wettkampfId, Integer type) {
+        Rangliste rangliste = generateRangliste(wettkampfId, 100);
+        List<SchuetzeResultat> tempFinalList;
+        if (rangliste.getSchuetzeResultatList().size() >= rangliste.getWettkampf().getAnzahlFinalteilnehmer()) {
+            tempFinalList = rangliste.getSchuetzeResultatList().subList(0, rangliste.getWettkampf().getAnzahlFinalteilnehmer());
+        } else {
+            tempFinalList = rangliste.getSchuetzeResultatList();
+        }
+        tempFinalList.forEach(
+            schuetzeResultat -> {
+                Resultate resultate = new Resultate();
+                resultate.setWettkampf(wettkampfRepository.getOne(wettkampfId));
+                resultate.setSchuetze(schuetzeResultat.getSchuetze());
+                resultate.setRunde(type);
+                resultateService.save(resultate);
+            }
+        );
+        return rangliste;
     }
 
     @Override

@@ -1,13 +1,17 @@
 <div xmlns="http://www.w3.org/1999/html">
-  <h2 id="page-heading" data-cy="OverviewHeading">
+  <h2 data-cy="OverviewHeading" id="page-heading">
     <span>{{ wettkampf.name + ' ' + wettkampf.jahr }}</span>
 
     <div *jhiHasAnyAuthority="['ROLE_ZSAV', 'ROLE_ADMIN']" class="d-flex justify-content-end">
-      <button id="jh-create-entity" data-cy="entityCreateButton" class="btn btn-color mr-4" (click)="adminSchuetze(wettkampf)">
+      <button (click)="adminSchuetze(wettkampf)" class="btn btn-color mr-4" data-cy="entityCreateButton" id="jh-create-entity">
         <fa-icon icon="plus"></fa-icon>
         <span> Schützen verwalten </span>
       </button>
-      <button class="btn btn-color mr-4" [routerLink]="['/wettkampf', wettkampf.id, 'rangliste']">
+      <button (click)="createFinal(wettkampf)" class="btn btn-color mr-4">
+        <fa-icon icon="cogs"></fa-icon>
+        <span> Finalvorbereitung starten </span>
+      </button>
+      <button [routerLink]="['/wettkampf', wettkampf.id, 'rangliste']" class="btn btn-color mr-4">
         <fa-icon icon="cogs"></fa-icon>
         <span> Rangliste erstellen </span>
       </button>
@@ -20,34 +24,35 @@
 
   <cdk-accordion class="example-accordion">
     <cdk-accordion-item
-      *ngFor="let schuetze of schuetzen; let index = index"
       #accordionItem="cdkAccordionItem"
+      *ngFor="let schuetze of schuetzen; let index = index"
+      [attr.aria-controls]="'accordion-body-' + index"
+      [attr.aria-expanded]="accordionItem.expanded"
+      [attr.id]="'accordion-header-' + index"
       class="example-accordion-item"
       role="button"
       tabindex="0"
-      [attr.id]="'accordion-header-' + index"
-      [attr.aria-expanded]="accordionItem.expanded"
-      [attr.aria-controls]="'accordion-body-' + index"
     >
-      <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
+      <div (click)="accordionItem.toggle()" class="example-accordion-item-header">
         {{ schuetze.name }} {{ schuetze.verein?.name }}
         <span class="example-accordion-item-description"> Klicken zum {{ accordionItem.expanded ? 'schliessen' : 'öffnen' }} </span>
       </div>
       <div
+        [attr.aria-labelledby]="'accordion-header-' + index"
+        [attr.id]="'accordion-body-' + index"
+        [style.display]="accordionItem.expanded ? '' : 'none'"
         class="example-accordion-item-body"
         role="region"
-        [style.display]="accordionItem.expanded ? '' : 'none'"
-        [attr.id]="'accordion-body-' + index"
-        [attr.aria-labelledby]="'accordion-header-' + index"
       >
         <div class="btn-group">
           <div class="btn-group">
             <button
+              (click)="openPassenDialog(resultat)"
               *ngFor="let resultat of getResultateBySchuetze(schuetze); let i = index"
               class="btn btn-color btn-sm mr-4"
-              (click)="openPassenDialog(resultat)"
             >
-              <span class="d-none d-md-inline">{{ resultat.runde }}. Runde</span>
+              <span *ngIf="resultat.runde != 99" class="d-none d-md-inline">{{ resultat.runde }} . Runde</span>
+              <span *ngIf="resultat.runde == 99" class="d-none d-md-inline">Finalrunde</span>
             </button>
           </div>
         </div>
