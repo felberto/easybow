@@ -44,7 +44,6 @@ export class RanglisteComponent implements OnInit {
 
   print(): void {
     if (this.rangliste !== null && this.rangliste !== undefined) {
-      //TODO if verbändefinal 101 open modal and date and anzahl for wettkampf, more things needed probably
       if (this.rangliste.type === 101) {
         const modalRef = this.modalService.open(RanglisteDialogComponent, { size: 'xl', backdrop: 'static' });
         modalRef.componentInstance.rangliste = this.rangliste;

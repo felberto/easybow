@@ -3,9 +3,9 @@
   <head>
     <title th:text="${titleDoc}"></title>
     <bookmarks>
-      <bookmark name="Rangliste" href="#rangliste"></bookmark>
+      <bookmark href="#rangliste" name="Rangliste"></bookmark>
     </bookmarks>
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
   </head>
 
   <body>
@@ -28,13 +28,13 @@
         <table class="w3-table">
           <thead>
             <tr>
-              <th colspan="1" class="w3-right-align">Rang</th>
+              <th class="w3-right-align" colspan="1">Rang</th>
               <th colspan="1">Name</th>
               <th colspan="1">Sektion</th>
-              <th colspan="1" class="w3-right-align">Res</th>
-              <th colspan="1" class="w3-center">Stlg</th>
+              <th class="w3-right-align" colspan="1">Res</th>
+              <th class="w3-center" colspan="1">Stlg</th>
               <th colspan="5">Tiefschüsse</th>
-              <th colspan="1" class="w3-right-align">Jg</th>
+              <th class="w3-right-align" colspan="1">Jg</th>
             </tr>
             <tr>
               <th></th>
@@ -63,6 +63,8 @@
               <td class="w3-center" th:text="${schuetze?.getT7()}"></td>
               <td class="w3-center" th:text="${schuetze?.getT11()}"></td>
               <td class="w3-right-align" th:text="${schuetze?.getSchuetze().getJahrgang()}"></td>
+              <p style="page-break-after: always" th:if="${(rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1) == 25}">&nbsp;</p>
+              <p style="page-break-before: always" th:if="${(rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1) == 25}">&nbsp;</p>
             </tr>
           </tbody>
         </table>
