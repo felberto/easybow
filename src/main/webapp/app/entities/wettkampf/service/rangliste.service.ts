@@ -24,6 +24,12 @@ export class RanglisteService {
     });
   }
 
+  createFinal(wettkampf: IWettkampf, type: number): Observable<HttpResponse<IRangliste>> {
+    return this.http.post<IRangliste>(`${this.resourceUrl}/final/${getWettkampfIdentifier(wettkampf) as number}`, type, {
+      observe: 'response',
+    });
+  }
+
   printRangliste(rangliste: IRangliste): Observable<Blob> {
     const headers = new HttpHeaders().set('Accept', 'application/pdf');
     return this.http.post<Blob>(`${this.resourceUrl}/print`, rangliste, { headers, responseType: 'blob' as 'json' });

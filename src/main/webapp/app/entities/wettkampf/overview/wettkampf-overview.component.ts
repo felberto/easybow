@@ -12,6 +12,7 @@ import * as dayjs from 'dayjs';
 import { RundeService } from '../../runde/service/runde.service';
 import { AlertService } from '../../../core/util/alert.service';
 import { AccountService } from '../../../core/auth/account.service';
+import { RanglisteService } from '../service/rangliste.service';
 
 @Component({
   selector: 'jhi-overview',
@@ -27,6 +28,7 @@ export class WettkampfOverviewComponent implements OnInit {
   constructor(
     protected activatedRoute: ActivatedRoute,
     private resultateService: ResultateService,
+    private ranglisteService: RanglisteService,
     protected modalService: NgbModal,
     private rundeService: RundeService,
     private alertService: AlertService,
@@ -78,7 +80,10 @@ export class WettkampfOverviewComponent implements OnInit {
               message: 'Resultateingabe bereits geschlossen',
             });
           } else {
-            const modalRef = this.modalService.open(PassenDialogComponent, { size: 'xl', backdrop: 'static' });
+            const modalRef = this.modalService.open(PassenDialogComponent, {
+              size: 'xl',
+              backdrop: 'static',
+            });
             modalRef.componentInstance.resultat = resultat;
           }
         }
@@ -92,6 +97,22 @@ export class WettkampfOverviewComponent implements OnInit {
     } else {
       return [];
     }
+  }
+
+  createFinal(wettkampf: IWettkampf): void {
+    this.ranglisteService.createFinal(wettkampf, 99).subscribe(res => {
+      if (res.ok) {
+        this.alertService.addAlert({
+          type: 'success',
+          message: 'Finalvorbereitung erfolgreich abgeschlossen',
+        });
+      } else {
+        this.alertService.addAlert({
+          type: 'warning',
+          message: 'Finalvorbereitung konnte nicht ausgeführt werden',
+        });
+      }
+    });
   }
 
   private loadPage(): void {
