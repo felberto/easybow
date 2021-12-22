@@ -146,17 +146,32 @@ public class RanglisteServiceImpl implements RanglisteService {
                 resultateSchuetze.forEach(
                     result -> {
                         if (result.getRunde() == 1) {
-                            schuetzeResultat.setResultatRunde1(result.getResultat());
-                            schuetzeResultat.setResultatRunde1Passe1(result.getPasse1().getResultat());
-                            schuetzeResultat.setResultatRunde1Passe2(result.getPasse2().getResultat());
+                            if (result.getWettkampf().getAnzahlPassen() == 1) {
+                                schuetzeResultat.setResultatRunde1(result.getResultat());
+                                schuetzeResultat.setResultatRunde1Passe1(result.getPasse1().getResultat());
+                            } else if (result.getWettkampf().getAnzahlPassen() == 2) {
+                                schuetzeResultat.setResultatRunde1(result.getResultat());
+                                schuetzeResultat.setResultatRunde1Passe1(result.getPasse1().getResultat());
+                                schuetzeResultat.setResultatRunde1Passe2(result.getPasse2().getResultat());
+                            }
                         } else if (result.getRunde() == 2) {
-                            schuetzeResultat.setResultatRunde2(result.getResultat());
-                            schuetzeResultat.setResultatRunde2Passe1(result.getPasse1().getResultat());
-                            schuetzeResultat.setResultatRunde2Passe2(result.getPasse2().getResultat());
+                            if (result.getWettkampf().getAnzahlPassen() == 1) {
+                                schuetzeResultat.setResultatRunde2(result.getResultat());
+                                schuetzeResultat.setResultatRunde2Passe1(result.getPasse1().getResultat());
+                            } else if (result.getWettkampf().getAnzahlPassen() == 2) {
+                                schuetzeResultat.setResultatRunde2(result.getResultat());
+                                schuetzeResultat.setResultatRunde2Passe1(result.getPasse1().getResultat());
+                                schuetzeResultat.setResultatRunde2Passe2(result.getPasse2().getResultat());
+                            }
                         } else if (result.getRunde() == 99) {
-                            schuetzeResultat.setResultatFinal(result.getResultat());
-                            schuetzeResultat.setResultatFinalPasse1(result.getPasse1().getResultat());
-                            schuetzeResultat.setResultatFinalPasse2(result.getPasse2().getResultat());
+                            if (result.getWettkampf().getAnzahlPassen() == 1) {
+                                schuetzeResultat.setResultatFinal(result.getResultat());
+                                schuetzeResultat.setResultatFinalPasse1(result.getPasse1().getResultat());
+                            } else if (result.getWettkampf().getAnzahlPassen() == 2) {
+                                schuetzeResultat.setResultatFinal(result.getResultat());
+                                schuetzeResultat.setResultatFinalPasse1(result.getPasse1().getResultat());
+                                schuetzeResultat.setResultatFinalPasse2(result.getPasse2().getResultat());
+                            }
                         }
                         if (result.getWettkampf().getAnzahlPassen() == 1) {
                             schuetzeResultat.setT0(schuetzeResultat.getT0() + getTiefschuesseForPasse(result.getPasse1(), 0));
