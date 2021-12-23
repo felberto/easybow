@@ -1,1 +1,10 @@
-defaultBranch: 'development'
+branches:
+  - label: enhancement
+    name: development
+    prefix: feature/${issue.user.login}/
+  - label: bug
+    name: development
+    prefix: bugfix/${issue.user.login}/
+  - label: improvement
+    name: development
+    prefix: improvement/${issue.user.login}/

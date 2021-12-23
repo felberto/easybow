@@ -1,0 +1,124 @@
+<div *ngIf="wettkampf" class="div-view">
+  <div>
+    <p>{{ wettkampf!.name }}</p>
+  </div>
+
+  <div *ngIf="this.rangliste !== null && this.rangliste !== undefined">
+    <div class="example-container1">
+      <h2>Rangliste</h2>
+
+      <div class="example-list table-responsive">
+        <table aria-describedby="page-heading" class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Rang</th>
+              <th scope="col">Name</th>
+              <th scope="col">Jahrgang</th>
+              <th scope="col">Resultat</th>
+              <th
+                *ngIf="wettkampf.anzahlPassen == 1 && (rangliste.type == 1 || rangliste.type == 100 || rangliste.type == 101)"
+                colspan="2"
+                scope="col"
+                style="text-align: center"
+              >
+                1. Runde
+              </th>
+              <th
+                *ngIf="wettkampf.anzahlPassen == 2 && (rangliste.type == 1 || rangliste.type == 100 || rangliste.type == 101)"
+                colspan="3"
+                scope="col"
+                style="text-align: center"
+              >
+                1. Runde
+              </th>
+              <th
+                *ngIf="wettkampf.anzahlPassen == 1 && (rangliste.type == 2 || rangliste.type == 100 || rangliste.type == 101)"
+                colspan="2"
+                scope="col"
+                style="text-align: center"
+              >
+                2. Runde
+              </th>
+              <th
+                *ngIf="wettkampf.anzahlPassen == 2 && (rangliste.type == 2 || rangliste.type == 100 || rangliste.type == 101)"
+                colspan="3"
+                scope="col"
+                style="text-align: center"
+              >
+                2. Runde
+              </th>
+              <th
+                *ngIf="wettkampf.anzahlPassen == 1 && (rangliste.type == 99 || rangliste.type == 101)"
+                colspan="2"
+                scope="col"
+                style="text-align: center"
+              >
+                Final
+              </th>
+              <th
+                *ngIf="wettkampf.anzahlPassen == 2 && (rangliste.type == 99 || rangliste.type == 101)"
+                colspan="3"
+                scope="col"
+                style="text-align: center"
+              >
+                Final
+              </th>
+              <th colspan="5" scope="col">Tiefschüsse</th>
+            </tr>
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th *ngIf="rangliste.type == 1 || rangliste.type == 100 || rangliste.type == 101">1. Passe</th>
+              <th *ngIf="wettkampf.anzahlPassen == 2 && (rangliste.type == 1 || rangliste.type == 100 || rangliste.type == 101)">
+                2. Passe
+              </th>
+              <th *ngIf="rangliste.type == 1 || rangliste.type == 100 || rangliste.type == 101">Resultat</th>
+              <th *ngIf="rangliste.type == 2 || rangliste.type == 100 || rangliste.type == 101">1. Passe</th>
+              <th *ngIf="wettkampf.anzahlPassen == 2 && (rangliste.type == 2 || rangliste.type == 100 || rangliste.type == 101)">
+                2. Passe
+              </th>
+              <th *ngIf="rangliste.type == 2 || rangliste.type == 100 || rangliste.type == 101">Resultat</th>
+              <th *ngIf="rangliste.type == 99 || rangliste.type == 101">1. Passe</th>
+              <th *ngIf="wettkampf.anzahlPassenFinal == 2 && (rangliste.type == 99 || rangliste.type == 101)">2. Passe</th>
+              <th *ngIf="rangliste.type == 99 || rangliste.type == 101">Resultat</th>
+              <th class="w3-center">10</th>
+              <th class="w3-center">9</th>
+              <th class="w3-center">8</th>
+              <th class="w3-center">7</th>
+              <th class="w3-center">M</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let schuetze of this.rangliste.schuetzeResultatList; let i = index" cdkDrag>
+              <td>
+                <strong>{{ i + 1 }}</strong>
+              </td>
+              <td>{{ schuetze.schuetze?.name }}</td>
+              <td>{{ schuetze.schuetze?.jahrgang }}</td>
+              <td>
+                <strong>{{ schuetze.resultat }}</strong>
+              </td>
+              <td *ngIf="schuetze.resultatRunde1 !== null">{{ schuetze.resultatRunde1Passe1 }}</td>
+              <td *ngIf="wettkampf.anzahlPassen == 2 && schuetze.resultatRunde1 !== null">{{ schuetze.resultatRunde1Passe2 }}</td>
+              <td *ngIf="schuetze.resultatRunde1 !== null">{{ schuetze.resultatRunde1 }}</td>
+              <td *ngIf="schuetze.resultatRunde2 !== null">{{ schuetze.resultatRunde2Passe1 }}</td>
+              <td *ngIf="wettkampf.anzahlPassen == 2 && schuetze.resultatRunde2 !== null">{{ schuetze.resultatRunde2Passe2 }}</td>
+              <td *ngIf="schuetze.resultatRunde2 !== null">{{ schuetze.resultatRunde2 }}</td>
+              <td *ngIf="schuetze.resultatFinal !== null">{{ schuetze.resultatFinalPasse1 }}</td>
+              <td *ngIf="wettkampf.anzahlPassenFinal == 2 && schuetze.resultatFinal !== null">{{ schuetze.resultatFinalPasse2 }}</td>
+              <td *ngIf="schuetze.resultatFinal !== null">{{ schuetze.resultatFinal }}</td>
+              <td>{{ schuetze.t10 }}</td>
+              <td>{{ schuetze.t9 }}</td>
+              <td>{{ schuetze.t8 }}</td>
+              <td>{{ schuetze.t7 }}</td>
+              <td>{{ schuetze.t11 }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
