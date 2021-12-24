@@ -50,6 +50,11 @@ import { Authority } from '../config/authority.constants';
         data: { pageTitle: 'Rangierung', authorities: [Authority.ADMIN, Authority.ZSAV] },
         loadChildren: () => import('./rangierung/rangierung.module').then(m => m.RangierungModule),
       },
+      {
+        path: 'live',
+        data: { pageTitle: 'LiveView', authorities: [Authority.ADMIN, Authority.ZSAV, Authority.LIVE] },
+        loadChildren: () => import('./live/live.module').then(m => m.LiveModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

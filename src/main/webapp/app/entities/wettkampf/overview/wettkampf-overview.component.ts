@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IWettkampf } from '../wettkampf.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ResultateService } from 'app/entities/resultate/service/resultate.service';
 import { HttpResponse } from '@angular/common/http';
 import { IResultate } from 'app/entities/resultate/resultate.model';
@@ -21,6 +21,7 @@ import { RanglisteService } from '../service/rangliste.service';
 })
 export class WettkampfOverviewComponent implements OnInit {
   wettkampf!: IWettkampf;
+  liveviewPath = '';
 
   resultate: Array<IResultate> | null = [];
   schuetzen: Array<ISchuetze> | null = [];
@@ -32,10 +33,13 @@ export class WettkampfOverviewComponent implements OnInit {
     protected modalService: NgbModal,
     private rundeService: RundeService,
     private alertService: AlertService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.liveviewPath = window.location.origin + '/liveview/';
+
     this.activatedRoute.data.subscribe(({ wettkampf }) => {
       this.wettkampf = wettkampf;
       this.resultateService.findByWettkampf(wettkampf).subscribe(res => {

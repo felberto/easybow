@@ -13,6 +13,8 @@ public final class AuthoritiesConstants {
 
     public static final String ZSAV = "ROLE_ZSAV";
 
+    public static final String LIVE = "ROLE_LIVE";
+
     public static final String VEREIN = "ROLE_VEREIN";
     //Vereine
     public static final String AAR = "ROLE_AAR";

@@ -8,9 +8,9 @@
       <span>Bitte einloggen</span>
     </div>
     <!--<div class="alert alert-warning" *ngSwitchCase="false">
-          <span>You don't have an account yet?</span>&nbsp;
-          <a class="alert-link" routerLink="account/register">Register a new account</a>
-        </div>-->
+              <span>You don't have an account yet?</span>&nbsp;
+              <a class="alert-link" routerLink="account/register">Register a new account</a>
+            </div>-->
   </div>
 </div>
 
@@ -19,7 +19,16 @@
   <!--  <mat-grid-list cols="4" rowHeight="120px">-->
   <mat-grid-list [cols]="breakpoint" rowHeight="2:0.5" (window:resize)="onResize($event)">
     <mat-grid-tile *ngFor="let wettkampf of wettkampfList" [colspan]="1" [rowspan]="2">
-      <mat-card class="card" [routerLink]="['/wettkampf', wettkampf.id, 'overview']">
+      <mat-card *ngIf="account.authorities[0] !== 'ROLE_LIVE'" class="card" [routerLink]="['/wettkampf', wettkampf.id, 'overview']">
+        <mat-card-title class="card-title">{{ wettkampf.name }} {{ wettkampf.jahr }}</mat-card-title>
+        <mat-card-content>
+          <div *ngFor="let runde of getList(wettkampf)">
+            <div *ngIf="runde.runde !== 99">{{ runde.runde }}. Runde Schiessende: {{ runde.datum?.format('dddd, MMMM D, YYYY') }}</div>
+            <div *ngIf="runde.runde === 99">Final {{ runde.datum?.format('dddd, MMMM D, YYYY') }}</div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card *ngIf="account.authorities[0] == 'ROLE_LIVE'" class="card" (click)="openLiveView(wettkampf)">
         <mat-card-title class="card-title">{{ wettkampf.name }} {{ wettkampf.jahr }}</mat-card-title>
         <mat-card-content>
           <div *ngFor="let runde of getList(wettkampf)">

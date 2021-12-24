@@ -52,6 +52,7 @@ export class ResultateDialogComponent implements OnInit {
   addSchuetze(schuetze: ISchuetze): void {
     if (this.wettkampf?.anzahlRunden !== undefined) {
       for (let i = 0; i < this.wettkampf.anzahlRunden; i++) {
+        //TODO add passe with 0 anstatt null oder Resultat auf 0 setzen
         const result: IResultate = {
           wettkampf: this.wettkampf,
           schuetze,

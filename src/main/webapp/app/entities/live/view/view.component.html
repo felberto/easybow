@@ -1,0 +1,43 @@
+<div *ngIf="wettkampf" class="div-view">
+  <div>
+    <h1 class="center liveview-title">{{ wettkampf.name }} {{ wettkampf.jahr }}</h1>
+    <br />
+  </div>
+
+  <div *ngIf="this.rangliste !== null && this.rangliste !== undefined">
+    <div class="example-container1">
+      <div class="example-list table-responsive liveview">
+        <table aria-describedby="page-heading" class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Rang</th>
+              <th scope="col">Name</th>
+              <th scope="col">Verein</th>
+              <th scope="col">Jahrgang</th>
+              <th>1. Passe</th>
+              <th *ngIf="wettkampf.anzahlPassen == 2">2. Passe</th>
+              <th>Resultat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let schuetze of this.rangliste.schuetzeResultatList; let i = index">
+              <td>
+                <strong>{{ i + 1 }}</strong>
+              </td>
+              <td>
+                <strong>{{ schuetze.schuetze?.name }}</strong>
+              </td>
+              <td>{{ schuetze.schuetze?.verein?.name }}</td>
+              <td>{{ schuetze.schuetze?.jahrgang }}</td>
+              <td *ngIf="schuetze.resultatFinal !== null">{{ schuetze.resultatFinalPasse1 }}</td>
+              <td *ngIf="wettkampf.anzahlPassenFinal == 2 && schuetze.resultatFinal !== null">{{ schuetze.resultatFinalPasse2 }}</td>
+              <td *ngIf="schuetze.resultatFinal !== null">
+                <strong>{{ schuetze.resultatFinal }}</strong>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

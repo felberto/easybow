@@ -4,6 +4,7 @@ import ch.felberto.domain.*;
 import ch.felberto.repository.RangierungRepository;
 import ch.felberto.repository.ResultateRepository;
 import ch.felberto.repository.WettkampfRepository;
+import ch.felberto.service.PassenService;
 import ch.felberto.service.RanglisteService;
 import ch.felberto.service.ResultateService;
 import com.google.common.collect.ComparisonChain;
@@ -29,16 +30,20 @@ public class RanglisteServiceImpl implements RanglisteService {
 
     private final ResultateService resultateService;
 
+    private final PassenService passenService;
+
     public RanglisteServiceImpl(
         ResultateRepository resultateRepository,
         WettkampfRepository wettkampfRepository,
         RangierungRepository rangierungRepository,
-        ResultateService resultateService
+        ResultateService resultateService,
+        PassenService passenService
     ) {
         this.resultateRepository = resultateRepository;
         this.wettkampfRepository = wettkampfRepository;
         this.rangierungRepository = rangierungRepository;
         this.resultateService = resultateService;
+        this.passenService = passenService;
     }
 
     @Override
@@ -56,6 +61,39 @@ public class RanglisteServiceImpl implements RanglisteService {
                 resultate.setWettkampf(wettkampfRepository.getOne(wettkampfId));
                 resultate.setSchuetze(schuetzeResultat.getSchuetze());
                 resultate.setRunde(type);
+
+                Passen tempP1 = new Passen();
+                tempP1.setp1(0);
+                tempP1.setp2(0);
+                tempP1.setp3(0);
+                tempP1.setp4(0);
+                tempP1.setp5(0);
+                tempP1.setp6(0);
+                tempP1.setp7(0);
+                tempP1.setp8(0);
+                tempP1.setp9(0);
+                tempP1.setp10(0);
+                tempP1.setResultat(0);
+                Passen passe1 = passenService.save(tempP1);
+                resultate.setPasse1(passe1);
+
+                if (wettkampfRepository.getOne(wettkampfId).getAnzahlPassenFinal() == 2) {
+                    Passen tempP2 = new Passen();
+                    tempP2.setp1(0);
+                    tempP2.setp2(0);
+                    tempP2.setp3(0);
+                    tempP2.setp4(0);
+                    tempP2.setp5(0);
+                    tempP2.setp6(0);
+                    tempP2.setp7(0);
+                    tempP2.setp8(0);
+                    tempP2.setp9(0);
+                    tempP2.setp10(0);
+                    tempP2.setResultat(0);
+                    Passen passe2 = passenService.save(tempP2);
+                    resultate.setPasse2(passe2);
+                }
+
                 resultateService.save(resultate);
             }
         );

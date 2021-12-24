@@ -5,7 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
-import { Wettkampf } from '../entities/wettkampf/wettkampf.model';
+import { IWettkampf, Wettkampf } from '../entities/wettkampf/wettkampf.model';
 import { WettkampfService } from '../entities/wettkampf/service/wettkampf.service';
 import { RundeService } from '../entities/runde/service/runde.service';
 import { IRunde, Runde } from '../entities/runde/runde.model';
@@ -54,6 +54,12 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
       });
     });
+  }
+
+  openLiveView(wettkampf: IWettkampf): void {
+    if (wettkampf.id !== undefined) {
+      this.router.navigate([`/live/${wettkampf.id}`]);
+    }
   }
 
   onResize(event: any): any {
