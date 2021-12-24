@@ -19,11 +19,20 @@ export class ViewComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ wettkampf }) => {
       this.wettkampf = wettkampf;
       if (this.wettkampf != null) {
-        this.ranglisteService.getRangliste(this.wettkampf, 99).subscribe(res => {
-          this.rangliste = res.body;
-          console.log(this.rangliste);
-        });
+        this.refreshData();
+        setInterval(() => {
+          this.refreshData();
+        }, 10000);
       }
     });
+  }
+
+  refreshData(): void {
+    if (this.wettkampf != null) {
+      this.ranglisteService.getRangliste(this.wettkampf, 99).subscribe(res => {
+        this.rangliste = res.body;
+        console.log(this.rangliste);
+      });
+    }
   }
 }
