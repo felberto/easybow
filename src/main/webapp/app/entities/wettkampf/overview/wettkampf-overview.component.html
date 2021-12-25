@@ -44,6 +44,7 @@
         class="example-accordion-item-body"
         role="region"
       >
+        Resultat erfassen:
         <div class="btn-group">
           <div class="btn-group">
             <button
@@ -55,6 +56,11 @@
               <span *ngIf="resultat.runde == 99" class="d-none d-md-inline">Finalrunde</span>
             </button>
           </div>
+        </div>
+        <br />
+        Gespeicherte Resultate:
+        <div *ngFor="let resultat of getResultateBySchuetze(schuetze); let i = index">
+          <div>{{ i + 1 }}. Runde {{ resultat.resultat }}</div>
         </div>
       </div>
     </cdk-accordion-item>
