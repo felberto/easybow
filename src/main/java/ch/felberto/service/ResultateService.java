@@ -63,4 +63,11 @@ public interface ResultateService {
      * @param id the id of the entity.
      */
     void deleteBySchuetze(Long id);
+
+    /**
+     * Delete the "id" resultate.
+     *
+     * @param id the id of the entity.
+     */
+    void deleteByWettkampf_IdAndRunde(Long wettkampfId, Integer runde);
 }

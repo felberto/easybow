@@ -1,17 +1,5 @@
 <div class="col-md-9">
-  <div [ngSwitch]="account !== null">
-    <div class="alert alert-success" *ngSwitchCase="true">
-      <span id="home-logged-message" *ngIf="account">Du bist eingeloggt als Benutzer "{{ account.login }}".</span>
-    </div>
-
-    <div class="alert alert-warning" *ngSwitchCase="false">
-      <span>Bitte einloggen</span>
-    </div>
-    <!--<div class="alert alert-warning" *ngSwitchCase="false">
-              <span>You don't have an account yet?</span>&nbsp;
-              <a class="alert-link" routerLink="account/register">Register a new account</a>
-            </div>-->
-  </div>
+  <tui-notification status="warning" class="tui-space_top-4" *ngIf="account == null"> Bitte einloggen </tui-notification>
 </div>
 
 <div *ngIf="account !== null">
