@@ -117,7 +117,6 @@ export class WettkampfOverviewComponent implements OnInit {
           }
         }
       });
-      //todo if dialog closes, update data
     }
   }
 
