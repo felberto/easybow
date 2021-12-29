@@ -128,6 +128,29 @@ export class WettkampfOverviewComponent implements OnInit {
     }
   }
 
+  getResultateBySchuetzeAndRunde(schuetze: ISchuetze, runde: number): number {
+    let returnValue = 0;
+    if (this.resultate !== null) {
+      this.resultate
+        .filter(s => s.schuetze?.id === schuetze.id)
+        .filter(r => r.runde === runde)
+        .map(value => {
+          if (typeof value.resultat === 'number') {
+            returnValue = value.resultat;
+          }
+        });
+    }
+    return returnValue;
+  }
+
+  getResultateBySchuetzeIfRunde99(schuetze: ISchuetze): boolean {
+    let returnValue = false;
+    if (this.resultate !== null) {
+      returnValue = this.resultate.filter(s => s.schuetze?.id === schuetze.id).find(e => e.runde === 99) !== undefined;
+    }
+    return returnValue;
+  }
+
   createFinal(wettkampf: IWettkampf): void {
     const modalRef = this.modalService.open(ConfirmDialogComponent, { size: 'xl', backdrop: 'static' });
     modalRef.componentInstance.wettkampf = wettkampf;
