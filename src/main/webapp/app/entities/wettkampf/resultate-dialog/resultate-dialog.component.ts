@@ -66,15 +66,9 @@ export class ResultateDialogComponent implements OnInit {
   }
 
   removeSchuetze(schuetze: ISchuetze): void {
-    console.log(schuetze);
-    console.log(this.addedSchuetzen);
-
     if (this.addedSchuetzen !== null && this.addedSchuetzen !== undefined) {
       this.addedSchuetzen.forEach(s => {
         if (s.id === schuetze.id) {
-          console.log(s);
-          console.log(schuetze);
-          console.log('true 1');
           this.addedSchuetzen?.splice(this.addedSchuetzen.indexOf(s), 1);
           this.resultateService.deleteBySchuetze(schuetze).subscribe();
         }

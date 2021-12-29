@@ -1,68 +1,46 @@
-<div xmlns="http://www.w3.org/1999/html">
-  <h2 data-cy="OverviewHeading" id="page-heading">
-    <span>{{ wettkampf.name + ' ' + wettkampf.jahr }}</span>
+<div class="tui-container">
+  <h4 class="tui-form__header tui-form__header_margin-top_none">{{ wettkampf.name + ' ' + wettkampf.jahr }}</h4>
 
-    <div *jhiHasAnyAuthority="['ROLE_ZSAV', 'ROLE_ADMIN']" class="d-flex justify-content-end">
-      <button (click)="adminSchuetze(wettkampf)" class="btn btn-color mr-4" data-cy="entityCreateButton" id="jh-create-entity">
-        <fa-icon icon="plus"></fa-icon>
-        <span> Schützen verwalten </span>
-      </button>
-      <button (click)="createFinal(wettkampf)" class="btn btn-color mr-4">
-        <fa-icon icon="cogs"></fa-icon>
-        <span> Finalvorbereitung starten </span>
-      </button>
-      <button [routerLink]="['/wettkampf', wettkampf.id, 'rangliste']" class="btn btn-color mr-4">
-        <fa-icon icon="cogs"></fa-icon>
-        <span> Rangliste erstellen </span>
-      </button>
-    </div>
-  </h2>
-
-  <jhi-alert-error></jhi-alert-error>
-
-  <jhi-alert></jhi-alert>
-
-  <cdk-accordion class="example-accordion">
-    <cdk-accordion-item
-      #accordionItem="cdkAccordionItem"
-      *ngFor="let schuetze of schuetzen; let index = index"
-      [attr.aria-controls]="'accordion-body-' + index"
-      [attr.aria-expanded]="accordionItem.expanded"
-      [attr.id]="'accordion-header-' + index"
-      class="example-accordion-item"
-      role="button"
-      tabindex="0"
+  <div *jhiHasAnyAuthority="['ROLE_ZSAV', 'ROLE_ADMIN']" class="d-flex justify-content-center">
+    <button
+      (click)="adminSchuetze(wettkampf)"
+      tuiButton
+      type="button"
+      appearance="customButton"
+      class="tui-space_right-3 tui-space_bottom-3"
     >
-      <div (click)="accordionItem.toggle()" class="example-accordion-item-header">
-        {{ schuetze.name }} {{ schuetze.verein?.name }}
-        <span class="example-accordion-item-description"> Klicken zum {{ accordionItem.expanded ? 'schliessen' : 'öffnen' }} </span>
-      </div>
-      <div
-        [attr.aria-labelledby]="'accordion-header-' + index"
-        [attr.id]="'accordion-body-' + index"
-        [style.display]="accordionItem.expanded ? '' : 'none'"
-        class="example-accordion-item-body"
-        role="region"
-      >
-        Resultat erfassen:
-        <div class="btn-group">
-          <div class="btn-group">
-            <button
-              (click)="openPassenDialog(resultat)"
-              *ngFor="let resultat of getResultateBySchuetze(schuetze); let i = index"
-              class="btn btn-color btn-sm mr-4"
-            >
-              <span *ngIf="resultat.runde != 99" class="d-none d-md-inline">{{ resultat.runde }} . Runde</span>
-              <span *ngIf="resultat.runde == 99" class="d-none d-md-inline">Finalrunde</span>
-            </button>
-          </div>
-        </div>
-        <br />
-        Gespeicherte Resultate:
-        <div *ngFor="let resultat of getResultateBySchuetze(schuetze); let i = index">
-          <div>{{ i + 1 }}. Runde {{ resultat.resultat }}</div>
-        </div>
-      </div>
-    </cdk-accordion-item>
-  </cdk-accordion>
+      Schützen verwalten
+    </button>
+    <button (click)="createFinal(wettkampf)" tuiButton type="button" appearance="customButton" class="tui-space_right-3 tui-space_bottom-3">
+      Finalvorbereitung starten
+    </button>
+    <button
+      [routerLink]="['/wettkampf', wettkampf.id, 'rangliste']"
+      tuiButton
+      type="button"
+      appearance="customButton"
+      class="tui-space_right-3 tui-space_bottom-3"
+    >
+      Rangliste erstellen
+    </button>
+  </div>
+
+  <tui-accordion class="container">
+    <tui-accordion-item *ngFor="let schuetze of schuetzen; let index = index">
+      {{ schuetze.name }} {{ schuetze.verein?.name }}
+      <ng-template tuiAccordionItemContent>
+        <button
+          (click)="openPassenDialog(resultat)"
+          *ngFor="let resultat of getResultateBySchuetze(schuetze); let i = index"
+          tuiButton
+          type="button"
+          appearance="customButton"
+          class="tui-space_right-3 tui-space_bottom-3"
+        >
+          <span *ngIf="resultat.runde != 99" class="d-none d-md-inline">{{ resultat.runde }} . Runde</span>
+          <span *ngIf="resultat.runde == 99" class="d-none d-md-inline">Finalrunde</span>
+        </button>
+      </ng-template>
+    </tui-accordion-item>
+  </tui-accordion>
 </div>

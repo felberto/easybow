@@ -105,4 +105,10 @@ public class ResultateServiceImpl implements ResultateService {
             resultateRepository.deleteBySchuetze(schuetzeRepository.findById(id).get());
         }
     }
+
+    @Override
+    public void deleteByWettkampf_IdAndRunde(Long wettkampfId, Integer runde) {
+        log.debug("Request to delete Resultate : {}", wettkampfId);
+        resultateRepository.deleteByWettkampf_IdAndRunde(wettkampfId, runde);
+    }
 }

@@ -14,9 +14,9 @@
       <a th:with="url=(@{|${baseUrl}/account/reset/finish?key=${user.resetKey}|})" th:href="${url}" th:text="${url}">Login Link</a>
     </p>
     <p>
-      <span th:text="#{email.activation.text2}">Mit freundlichen Grüßen, </span>
+      <span th:text="#{email.activation.text2}">Mit freundlichem Gruss, </span>
       <br />
-      <em th:text="#{email.signature}">easybow Team.</em>
+      <em th:text="#{email.signature}">easybow</em>
     </p>
   </body>
 </html>

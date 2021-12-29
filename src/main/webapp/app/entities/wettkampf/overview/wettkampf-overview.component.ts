@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { IWettkampf } from '../wettkampf.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ResultateService } from 'app/entities/resultate/service/resultate.service';
@@ -13,6 +13,8 @@ import { RundeService } from '../../runde/service/runde.service';
 import { AlertService } from '../../../core/util/alert.service';
 import { AccountService } from '../../../core/auth/account.service';
 import { RanglisteService } from '../service/rangliste.service';
+import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'jhi-overview',
@@ -34,7 +36,9 @@ export class WettkampfOverviewComponent implements OnInit {
     private rundeService: RundeService,
     private alertService: AlertService,
     private accountService: AccountService,
-    private router: Router
+    private router: Router,
+    @Inject(TuiNotificationsService)
+    private readonly notificationsService: TuiNotificationsService
   ) {}
 
   ngOnInit(): void {
@@ -79,16 +83,37 @@ export class WettkampfOverviewComponent implements OnInit {
       this.rundeService.findByRundeAndWettkampf(resultat.runde, resultat.wettkampf.id).subscribe(res => {
         if (res.body?.datum?.toDate() !== undefined) {
           if (res.body.datum.toDate() < dayjs().toDate()) {
-            this.alertService.addAlert({
-              type: 'warning',
-              message: 'Resultateingabe bereits geschlossen',
-            });
+            this.notificationsService
+              .show(`Resultateingabe geschlossen seit ${res.body.datum.toDate().toLocaleDateString('de-DE')}`, {
+                label: 'Resultateingabe bereits geschlossen',
+                status: TuiNotification.Warning,
+              })
+              .subscribe();
           } else {
-            const modalRef = this.modalService.open(PassenDialogComponent, {
-              size: 'xl',
-              backdrop: 'static',
-            });
-            modalRef.componentInstance.resultat = resultat;
+            if (resultat.runde === 99) {
+              this.accountService.getAuthorites().forEach(role => {
+                if (role !== 'ROLE_USER' && role !== 'ROLE_VEREIN' && role !== 'ROLE_ADMIN' && role !== 'ROLE_ZSAV') {
+                  this.notificationsService
+                    .show('Nicht berechtigt Finalresultat zu bearbeiten', {
+                      label: 'Keine Berechtigung',
+                      status: TuiNotification.Warning,
+                    })
+                    .subscribe();
+                } else if (role === 'ROLE_ZSAV') {
+                  const modalRef = this.modalService.open(PassenDialogComponent, {
+                    size: 'xl',
+                    backdrop: 'static',
+                  });
+                  modalRef.componentInstance.resultat = resultat;
+                }
+              });
+            } else {
+              const modalRef = this.modalService.open(PassenDialogComponent, {
+                size: 'xl',
+                backdrop: 'static',
+              });
+              modalRef.componentInstance.resultat = resultat;
+            }
           }
         }
       });
@@ -105,18 +130,10 @@ export class WettkampfOverviewComponent implements OnInit {
   }
 
   createFinal(wettkampf: IWettkampf): void {
-    this.ranglisteService.createFinal(wettkampf, 99).subscribe(res => {
-      if (res.ok) {
-        this.alertService.addAlert({
-          type: 'success',
-          message: 'Finalvorbereitung erfolgreich abgeschlossen',
-        });
-      } else {
-        this.alertService.addAlert({
-          type: 'warning',
-          message: 'Finalvorbereitung konnte nicht ausgeführt werden',
-        });
-      }
+    const modalRef = this.modalService.open(ConfirmDialogComponent, { size: 'xl', backdrop: 'static' });
+    modalRef.componentInstance.wettkampf = wettkampf;
+    modalRef.closed.subscribe(reason => {
+      this.loadPage();
     });
   }
 
