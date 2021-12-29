@@ -48,6 +48,7 @@ public class RanglisteServiceImpl implements RanglisteService {
 
     @Override
     public Rangliste createFinal(Long wettkampfId, Integer type) {
+        resultateService.deleteByWettkampf_IdAndRunde(wettkampfId, type);
         Rangliste rangliste = generateRangliste(wettkampfId, 100);
         List<SchuetzeResultat> tempFinalList;
         if (rangliste.getSchuetzeResultatList().size() >= rangliste.getWettkampf().getAnzahlFinalteilnehmer()) {

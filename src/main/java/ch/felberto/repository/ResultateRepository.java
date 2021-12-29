@@ -3,7 +3,8 @@ package ch.felberto.repository;
 import ch.felberto.domain.Resultate;
 import ch.felberto.domain.Schuetze;
 import java.util.List;
-import org.springframework.data.jpa.repository.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -17,4 +18,5 @@ public interface ResultateRepository extends JpaRepository<Resultate, Long>, Jpa
     List<Resultate> findByWettkampf_IdAndRunde(Long wettkampfId, Integer runde);
 
     void deleteBySchuetze(Schuetze schuetze);
+    void deleteByWettkampf_IdAndRunde(Long wettkampfId, Integer runde);
 }

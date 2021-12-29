@@ -16,6 +16,8 @@ import { RanglisteComponent } from './rangliste/rangliste.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatRadioModule } from '@angular/material/radio';
 import { RanglisteDialogComponent } from './rangliste-dialog/rangliste-dialog.component';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   imports: [SharedModule, WettkampfRoutingModule, DragDropModule, CdkAccordionModule, FormsModule, MatTableModule, MatRadioModule],
@@ -30,7 +32,16 @@ import { RanglisteDialogComponent } from './rangliste-dialog/rangliste-dialog.co
     PassenDialogComponent,
     RanglisteComponent,
     RanglisteDialogComponent,
+    ConfirmDialogComponent,
   ],
-  entryComponents: [WettkampfDeleteDialogComponent, ResultateDialogComponent, RanglisteComponent],
+  entryComponents: [
+    WettkampfDeleteDialogComponent,
+    ResultateDialogComponent,
+    RanglisteComponent,
+    PassenDialogComponent,
+    ConfirmDialogComponent,
+  ],
+  providers: [NgbActiveModal],
+  exports: [PassenDialogComponent],
 })
 export class WettkampfModule {}

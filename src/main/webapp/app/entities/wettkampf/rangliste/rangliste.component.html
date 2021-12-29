@@ -1,26 +1,36 @@
 <form *ngIf="wettkampf">
-  <h2 data-cy="OverviewHeading" id="page-heading">
+  <h4 class="tui-form__header tui-form__header_margin-top_none">
     <span>{{ wettkampf.name + ' ' + wettkampf.jahr }}</span>
 
     <div class="d-flex justify-content-end">
-      <button (click)="print()" class="btn btn-color mr-4" type="submit"><fa-icon icon="print"></fa-icon>&nbsp;<span>Drucken</span></button>
+      <button (click)="print()" tuiButton type="button" appearance="customButton" class="tui-space_right-3 tui-space_bottom-3">
+        Drucken
+      </button>
     </div>
-  </h2>
-  <jhi-alert-error></jhi-alert-error>
+  </h4>
 
   <div class="container">
-    <button (click)="generate(1)" class="btn btn-color mr-4" type="submit">
-      <fa-icon icon="cogs"></fa-icon>&nbsp;<span>1. Runde</span>
+    <button (click)="generate(1)" tuiButton type="button" appearance="customButton" class="tui-space_right-3 tui-space_bottom-3">
+      1. Runde
     </button>
-    <button (click)="generate(2)" class="btn btn-color mr-4" type="submit">
-      <fa-icon icon="cogs"></fa-icon>&nbsp;<span>2. Runde</span>
+    <button (click)="generate(2)" tuiButton type="button" appearance="customButton" class="tui-space_right-3 tui-space_bottom-3">
+      2. Runde
     </button>
-    <button (click)="generate(100)" class="btn btn-color mr-4" type="submit">
-      <fa-icon icon="cogs"></fa-icon>&nbsp;<span>Qualifikation Final</span>
+    <button (click)="generate(100)" tuiButton type="button" appearance="customButton" class="tui-space_right-3 tui-space_bottom-3">
+      Qualifikation Final
     </button>
-    <button (click)="generate(99)" class="btn btn-color mr-4" type="submit"><fa-icon icon="cogs"></fa-icon>&nbsp;<span>Final</span></button>
-    <button (click)="generate(101)" *ngIf="wettkampf.anzahlPassen == 2" class="btn btn-color mr-4" type="submit">
-      <fa-icon icon="cogs"></fa-icon>&nbsp;<span>Qualifikation Verbändefinal</span>
+    <button (click)="generate(99)" tuiButton type="button" appearance="customButton" class="tui-space_right-3 tui-space_bottom-3">
+      Final
+    </button>
+    <button
+      (click)="generate(101)"
+      *ngIf="wettkampf.anzahlPassen == 2"
+      tuiButton
+      type="button"
+      appearance="customButton"
+      class="tui-space_right-3 tui-space_bottom-3"
+    >
+      Qualifikation Verbändefinal
     </button>
   </div>
 

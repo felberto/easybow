@@ -1,119 +1,101 @@
-<div *ngIf="isDataAvailable">
+<tui-loader [overlay]="true" [showLoader]="!isDataAvailable">
   <div *ngIf="resultat && wettkampf">
     <div class="modal-header">
-      <h4 class="modal-title">{{ resultat.schuetze?.name }} {{ resultat.runde }}. Runde</h4>
+      <div class="modal-title tui-text_h4">{{ resultat.schuetze?.name }} {{ resultat.runde }}. Runde</div>
 
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
     </div>
 
     <div class="modal-body">
-      <jhi-alert-error></jhi-alert-error>
-
-      <div class="container">
-        <span>Hinweis: Mouchen als 11 eingeben</span>
-
-        <div *ngIf="wettkampf.anzahlPassen !== undefined && wettkampf.anzahlPassen > 0" class="row row-cols-1 row-cols-sm-5 row-cols-md-10">
-          <div class="col" *ngFor="let a of [].constructor(10); let y = index">
-            <div class="form__group field">
-              <input
-                class="form-control form__field"
-                type="number"
-                name="{{ y }}"
-                id="1 {{ y }}"
-                placeholder="{{ y }}"
-                min="0"
-                max="11"
-                step="1"
-                [(ngModel)]="passe1[y]"
-              />
-              <label for="1 {{ y }}" class="form__label">{{ y + 1 }}</label>
-            </div>
-          </div>
-        </div>
-        <div *ngIf="wettkampf.anzahlPassen !== undefined && wettkampf.anzahlPassen > 0">
-          <br />
-          <div class="resultat">1. Passe: {{ getSumPassen(passe1) }}</div>
-          <br />
-        </div>
-        <div *ngIf="wettkampf.anzahlPassen !== undefined && wettkampf.anzahlPassen > 1" class="row row-cols-1 row-cols-sm-5 row-cols-md-10">
-          <div class="col" *ngFor="let a of [].constructor(10); let y = index">
-            <div class="form__group field">
-              <input
-                class="form-control form__field"
-                type="number"
-                name="{{ y }}"
-                id="2 {{ y }}"
-                placeholder="{{ y }}"
-                min="0"
-                max="11"
-                step="1"
-                [(ngModel)]="passe2[y]"
-              />
-              <label for="2 {{ y }}" class="form__label">{{ y + 1 }}</label>
-            </div>
-          </div>
-        </div>
-        <div *ngIf="wettkampf.anzahlPassen !== undefined && wettkampf.anzahlPassen > 1">
-          <br />
-          <div class="resultat">2. Passe: {{ getSumPassen(passe2) }}</div>
-          <br />
-        </div>
-        <div *ngIf="wettkampf.anzahlPassen !== undefined && wettkampf.anzahlPassen > 2" class="row row-cols-1 row-cols-sm-5 row-cols-md-10">
-          <div class="col" *ngFor="let a of [].constructor(10); let y = index">
-            <div class="form__group field">
-              <input
-                class="form-control form__field"
-                type="number"
-                name="{{ y }}"
-                id="3 {{ y }}"
-                placeholder="{{ y }}"
-                min="0"
-                max="11"
-                step="1"
-                [(ngModel)]="passe3[y]"
-              />
-              <label for="3 {{ y }}" class="form__label">{{ y + 1 }}</label>
-            </div>
-          </div>
-        </div>
-        <div *ngIf="wettkampf.anzahlPassen !== undefined && wettkampf.anzahlPassen > 2">
-          <br />
-          <div class="resultat">3. Passe: {{ getSumPassen(passe3) }}</div>
-          <br />
-        </div>
-        <div *ngIf="wettkampf.anzahlPassen !== undefined && wettkampf.anzahlPassen > 3" class="row row-cols-1 row-cols-sm-5 row-cols-md-10">
-          <div class="col" *ngFor="let a of [].constructor(10); let y = index">
-            <div class="form__group field">
-              <input
-                class="form-control form__field"
-                type="number"
-                name="{{ y }}"
-                id="4 {{ y }}"
-                placeholder="{{ y }}"
-                min="0"
-                max="11"
-                step="1"
-                [(ngModel)]="passe4[y]"
-              />
-              <label for="4 {{ y }}" class="form__label">{{ y + 1 }}</label>
-            </div>
-          </div>
-        </div>
-        <div *ngIf="wettkampf.anzahlPassen !== undefined && wettkampf.anzahlPassen > 3">
-          <br />
-          <div class="resultat">4. Passe: {{ getSumPassen(passe4) }}</div>
-          <br />
-        </div>
+      <div class="tui-container">
+        <span class="tui-text_body-l">Hinweis: Mouchen als 11 eingeben</span>
         <br />
-        <div class="resultat">Resultat: {{ getSum() }}</div>
+        <form [formGroup]="testForm">
+          <br />
+          <span class="tui-text_h6">1. Passe Resultat: {{ getSumPassen(1) }}</span>
+          <div class="tui-form__row tui-form__row_multi-fields">
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number1"> 1 </tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number2"> 2 </tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number3"> 3 </tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number4"> 4 </tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number5"> 5 </tui-input-number>
+            </div>
+          </div>
+          <div class="tui-form__row tui-form__row_multi-fields">
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number6"> 6 </tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number7"> 7 </tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number8"> 8 </tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number9"> 9 </tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number10"> 10 </tui-input-number>
+            </div>
+          </div>
+          <br />
+          <span class="tui-text_h6">2. Passe Resultat: {{ getSumPassen(2) }}</span>
+          <div class="tui-form__row tui-form__row_multi-fields">
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number11"> 11 </tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number12"> 12 </tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number13"> 13 </tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number14"> 14 </tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number15"> 15 </tui-input-number>
+            </div>
+          </div>
+          <div class="tui-form__row tui-form__row_multi-fields">
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number16"> 16 </tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number17"> 17 </tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number18"> 18 </tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number19"> 19 </tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number20"> 20 </tui-input-number>
+            </div>
+          </div>
+          <br />
+          <div class="tui-text_h6">Gesamtresultat: {{ getSum() }}</div>
+        </form>
       </div>
     </div>
 
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
-        <fa-icon icon="ban"></fa-icon>&nbsp;<span>Abbrechen</span>
+      <button (click)="cancel()" tuiButton type="button" appearance="greyButton" class="tui-space_right-3 tui-space_bottom-3">
+        Abbrechen
       </button>
-      <button type="submit" class="btn btn-success" (click)="save()"><fa-icon icon="save"></fa-icon>&nbsp;<span>Speichern</span></button>
+      <button (click)="save()" tuiButton type="button" appearance="customButton" class="tui-space_right-3 tui-space_bottom-3">
+        Speichern
+      </button>
     </div>
   </div>
-</div>
+</tui-loader>

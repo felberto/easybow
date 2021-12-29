@@ -52,7 +52,6 @@ export class ResultateDialogComponent implements OnInit {
   addSchuetze(schuetze: ISchuetze): void {
     if (this.wettkampf?.anzahlRunden !== undefined) {
       for (let i = 0; i < this.wettkampf.anzahlRunden; i++) {
-        //TODO add passe with 0 anstatt null oder Resultat auf 0 setzen
         const result: IResultate = {
           wettkampf: this.wettkampf,
           schuetze,
@@ -67,15 +66,9 @@ export class ResultateDialogComponent implements OnInit {
   }
 
   removeSchuetze(schuetze: ISchuetze): void {
-    console.log(schuetze);
-    console.log(this.addedSchuetzen);
-
     if (this.addedSchuetzen !== null && this.addedSchuetzen !== undefined) {
       this.addedSchuetzen.forEach(s => {
         if (s.id === schuetze.id) {
-          console.log(s);
-          console.log(schuetze);
-          console.log('true 1');
           this.addedSchuetzen?.splice(this.addedSchuetzen.indexOf(s), 1);
           this.resultateService.deleteBySchuetze(schuetze).subscribe();
         }
