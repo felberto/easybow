@@ -107,6 +107,12 @@ export class WettkampfOverviewComponent implements OnInit {
                   modalRef.componentInstance.resultat = resultat;
                 }
               });
+            } else {
+              const modalRef = this.modalService.open(PassenDialogComponent, {
+                size: 'xl',
+                backdrop: 'static',
+              });
+              modalRef.componentInstance.resultat = resultat;
             }
           }
         }

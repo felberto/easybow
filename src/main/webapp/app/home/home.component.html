@@ -3,7 +3,7 @@
 </div>
 
 <div *ngIf="account !== null">
-  <h2>Wettkämpfe</h2>
+  <h4 class="tui-form__header tui-form__header_margin-top_none">Wettkämpfe</h4>
   <!--  <mat-grid-list cols="4" rowHeight="120px">-->
   <mat-grid-list [cols]="breakpoint" rowHeight="2:0.5" (window:resize)="onResize($event)">
     <mat-grid-tile *ngFor="let wettkampf of wettkampfList" [colspan]="1" [rowspan]="2">
