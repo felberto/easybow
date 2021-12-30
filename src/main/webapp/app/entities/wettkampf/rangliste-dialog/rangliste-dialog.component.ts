@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { IRangliste } from '../rangliste.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { RanglisteService } from '../service/rangliste.service';
@@ -9,7 +9,7 @@ import { FormBuilder, Validators } from '@angular/forms';
   templateUrl: './rangliste-dialog.component.html',
   styleUrls: ['./rangliste-dialog.component.scss'],
 })
-export class RanglisteDialogComponent implements OnInit {
+export class RanglisteDialogComponent {
   isDataAvailable: boolean;
   rangliste?: IRangliste | null;
 
@@ -26,10 +26,6 @@ export class RanglisteDialogComponent implements OnInit {
 
   cancel(): void {
     this.activeModal.close('');
-  }
-
-  ngOnInit(): void {
-    console.log('this');
   }
 
   print(): void {

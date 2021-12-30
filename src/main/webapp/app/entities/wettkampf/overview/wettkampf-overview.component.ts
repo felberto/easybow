@@ -47,20 +47,17 @@ export class WettkampfOverviewComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ wettkampf }) => {
       this.wettkampf = wettkampf;
       this.resultateService.findByWettkampf(wettkampf).subscribe(res => {
-        console.log(res.body);
         this.resultate = res.body;
 
         const tempSchuetzen: Array<ISchuetze> = [];
         this.resultate?.forEach(value => {
           if (value.schuetze) {
-            console.log(value.schuetze);
-            console.log(value.schuetze.verein?.name);
             tempSchuetzen.push(value.schuetze);
           }
         });
 
         this.schuetzen = tempSchuetzen.filter((s, i, arr) => arr.indexOf(<ISchuetze>arr.find(t => t.id === s.id)) === i);
-        //filter only verein schützen
+        // filter only verein schützen
         this.accountService.getAuthorites().forEach(role => {
           if (role !== 'ROLE_USER' && role !== 'ROLE_VEREIN' && role !== 'ROLE_ADMIN' && role !== 'ROLE_ZSAV') {
             this.schuetzen = this.schuetzen!.filter(schuetze => schuetze.rolle === role);
@@ -73,7 +70,7 @@ export class WettkampfOverviewComponent implements OnInit {
   adminSchuetze(wettkampf: IWettkampf): void {
     const modalRef = this.modalService.open(ResultateDialogComponent, { size: 'xl', backdrop: 'static' });
     modalRef.componentInstance.wettkampf = wettkampf;
-    modalRef.closed.subscribe(reason => {
+    modalRef.closed.subscribe(() => {
       this.loadPage();
     });
   }
@@ -113,6 +110,9 @@ export class WettkampfOverviewComponent implements OnInit {
                 backdrop: 'static',
               });
               modalRef.componentInstance.resultat = resultat;
+              modalRef.closed.subscribe(() => {
+                this.loadPage();
+              });
             }
           }
         }
@@ -151,10 +151,18 @@ export class WettkampfOverviewComponent implements OnInit {
     return returnValue;
   }
 
+  isFinalReady(): boolean {
+    let returnValue = false;
+    if (this.resultate !== null) {
+      returnValue = this.resultate.find(e => e.runde === 99) !== undefined;
+    }
+    return returnValue;
+  }
+
   createFinal(wettkampf: IWettkampf): void {
     const modalRef = this.modalService.open(ConfirmDialogComponent, { size: 'xl', backdrop: 'static' });
     modalRef.componentInstance.wettkampf = wettkampf;
-    modalRef.closed.subscribe(reason => {
+    modalRef.closed.subscribe(() => {
       this.loadPage();
     });
   }
@@ -163,7 +171,6 @@ export class WettkampfOverviewComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ wettkampf }) => {
       this.wettkampf = wettkampf;
       this.resultateService.findByWettkampf(wettkampf).subscribe((res: HttpResponse<Array<IResultate>>) => {
-        console.log(res.body);
         this.resultate = res.body;
 
         const tempSchuetzen: Array<ISchuetze> = [];

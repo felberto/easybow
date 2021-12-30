@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
             })
             .subscribe();
         },
-        res => {
+        () => {
           this.authenticationError = true;
           this.notificationsService
             .show('', {

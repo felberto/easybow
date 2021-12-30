@@ -109,7 +109,7 @@ export class SchuetzeComponent implements OnInit {
         },
       });
     }
-    //filter only verein schützen
+    // filter only verein schützen
     this.accountService.getAuthorites().forEach(role => {
       if (role !== 'ROLE_USER' && role !== 'ROLE_VEREIN' && role !== 'ROLE_ADMIN' && role !== 'ROLE_ZSAV') {
         this.schuetzes = data?.filter(schuetze => schuetze.rolle === role);

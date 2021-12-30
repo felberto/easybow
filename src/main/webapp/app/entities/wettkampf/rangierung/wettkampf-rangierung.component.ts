@@ -49,11 +49,10 @@ export class WettkampfRangierungComponent implements OnInit {
         this.available = this.available.filter(item => this.used.indexOf(item) < 0);
       });
     });
-    console.log(this.used);
   }
 
   save(): void {
-    this.rangierungService.deleteAllByWettkampf(this.wettkampf).subscribe(value => {
+    this.rangierungService.deleteAllByWettkampf(this.wettkampf).subscribe(() => {
       this.used.forEach(item => {
         switch (item) {
           case Rangierungskriterien.RESULTAT: {
@@ -102,7 +101,7 @@ export class WettkampfRangierungComponent implements OnInit {
             break;
           }
           default: {
-            //statements;
+            // statements;
             break;
           }
         }

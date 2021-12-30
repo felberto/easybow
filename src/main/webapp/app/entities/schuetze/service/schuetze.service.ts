@@ -5,8 +5,7 @@ import { Observable } from 'rxjs';
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { ISchuetze, getSchuetzeIdentifier } from '../schuetze.model';
-import { IResultate } from '../../resultate/resultate.model';
+import { getSchuetzeIdentifier, ISchuetze } from '../schuetze.model';
 
 export type EntityResponseType = HttpResponse<ISchuetze>;
 export type EntityArrayResponseType = HttpResponse<ISchuetze[]>;

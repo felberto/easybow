@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { getResultateIdentifier, IResultate, Resultate } from '../resultate.model';
+import { getResultateIdentifier, IResultate } from '../resultate.model';
 import { getWettkampfIdentifier, IWettkampf } from '../../wettkampf/wettkampf.model';
 import { getSchuetzeIdentifier, ISchuetze } from 'app/entities/schuetze/schuetze.model';
 

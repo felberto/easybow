@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { RanglisteService } from '../service/rangliste.service';
 import { IWettkampf } from '../wettkampf.model';
@@ -9,7 +9,7 @@ import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
   templateUrl: './confirm-dialog.component.html',
   styleUrls: ['./confirm-dialog.component.scss'],
 })
-export class ConfirmDialogComponent implements OnInit {
+export class ConfirmDialogComponent {
   wettkampf?: IWettkampf;
 
   constructor(
@@ -21,10 +21,6 @@ export class ConfirmDialogComponent implements OnInit {
 
   cancel(): void {
     this.activeModal.close('');
-  }
-
-  ngOnInit(): void {
-    console.log('this');
   }
 
   createFinal(): void {

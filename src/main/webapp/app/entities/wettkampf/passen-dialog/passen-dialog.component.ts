@@ -66,10 +66,9 @@ export class PassenDialogComponent implements OnInit {
       this.wettkampfService.find(this.resultat.wettkampf.id).subscribe(
         result => {
           this.wettkampf = result.body;
-          console.log(this.wettkampf);
           this.resultateService.find(<number>this.resultat?.id).subscribe(r => {
             this.resultat = r.body;
-            //passe1
+            // passe1
             this.passe1.push(<number>this.resultat?.passe1?.p1);
             this.passe1.push(<number>this.resultat?.passe1?.p2);
             this.passe1.push(<number>this.resultat?.passe1?.p3);
@@ -80,7 +79,7 @@ export class PassenDialogComponent implements OnInit {
             this.passe1.push(<number>this.resultat?.passe1?.p8);
             this.passe1.push(<number>this.resultat?.passe1?.p9);
             this.passe1.push(<number>this.resultat?.passe1?.p10);
-            //passe2
+            // passe2
             this.passe2.push(<number>this.resultat?.passe2?.p1);
             this.passe2.push(<number>this.resultat?.passe2?.p2);
             this.passe2.push(<number>this.resultat?.passe2?.p3);
@@ -91,7 +90,7 @@ export class PassenDialogComponent implements OnInit {
             this.passe2.push(<number>this.resultat?.passe2?.p8);
             this.passe2.push(<number>this.resultat?.passe2?.p9);
             this.passe2.push(<number>this.resultat?.passe2?.p10);
-            //passe3
+            // passe3
             this.passe3.push(<number>this.resultat?.passe3?.p1);
             this.passe3.push(<number>this.resultat?.passe3?.p2);
             this.passe3.push(<number>this.resultat?.passe3?.p3);
@@ -102,7 +101,7 @@ export class PassenDialogComponent implements OnInit {
             this.passe3.push(<number>this.resultat?.passe3?.p8);
             this.passe3.push(<number>this.resultat?.passe3?.p9);
             this.passe3.push(<number>this.resultat?.passe3?.p10);
-            //passe4
+            // passe4
             this.passe4.push(<number>this.resultat?.passe4?.p1);
             this.passe4.push(<number>this.resultat?.passe4?.p2);
             this.passe4.push(<number>this.resultat?.passe4?.p3);
@@ -113,8 +112,7 @@ export class PassenDialogComponent implements OnInit {
             this.passe4.push(<number>this.resultat?.passe4?.p8);
             this.passe4.push(<number>this.resultat?.passe4?.p9);
             this.passe4.push(<number>this.resultat?.passe4?.p10);
-            console.log(this.resultat);
-            //set form values
+            // set form values
             this.testForm.setValue({
               number1: this.resultat?.passe1?.p1,
               number2: this.resultat?.passe1?.p2,
