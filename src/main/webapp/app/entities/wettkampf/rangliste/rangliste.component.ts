@@ -29,7 +29,6 @@ export class RanglisteComponent implements OnInit {
     if (this.wettkampf != null) {
       this.ranglisteService.getRangliste(this.wettkampf, type).subscribe(res => {
         this.rangliste = res.body;
-        console.log(this.rangliste);
       });
     }
   }

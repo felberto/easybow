@@ -28,6 +28,49 @@
   <tui-accordion class="container">
     <tui-accordion-item *ngFor="let schuetze of schuetzen; let index = index">
       {{ schuetze.name }} {{ schuetze.verein?.name }}
+      <tui-badge
+        *ngIf="getResultateBySchuetzeAndRunde(schuetze, 1) !== 0"
+        status="success"
+        value="1. Runde"
+        class="tui-space_right-2"
+      ></tui-badge>
+      <tui-badge
+        *ngIf="getResultateBySchuetzeAndRunde(schuetze, 1) == 0"
+        status="warning"
+        value="1. Runde"
+        class="tui-space_right-2"
+      ></tui-badge>
+      <tui-badge
+        *ngIf="getResultateBySchuetzeAndRunde(schuetze, 2) !== 0"
+        status="success"
+        value="2. Runde"
+        class="tui-space_right-2"
+      ></tui-badge>
+      <tui-badge
+        *ngIf="getResultateBySchuetzeAndRunde(schuetze, 2) == 0"
+        status="warning"
+        value="2. Runde"
+        class="tui-space_right-2"
+      ></tui-badge>
+      <tui-badge
+        *ngIf="getResultateBySchuetzeAndRunde(schuetze, 99) !== 0"
+        status="success"
+        value="Finalrunde"
+        class="tui-space_right-2"
+      ></tui-badge>
+      <tui-badge
+        *ngIf="getResultateBySchuetzeAndRunde(schuetze, 99) == 0 && getResultateBySchuetzeIfRunde99(schuetze)"
+        status="warning"
+        value="Finalrunde"
+        class="tui-space_right-2"
+      ></tui-badge>
+      <!-- todo nur anzeigen wenn final schon erstellt wurde, sonst ausblenden -->
+      <tui-badge
+        *ngIf="!getResultateBySchuetzeIfRunde99(schuetze) && isFinalReady()"
+        status="error"
+        value="nicht qualifiziert für Final"
+        class="tui-space_right-2"
+      ></tui-badge>
       <ng-template tuiAccordionItemContent>
         <button
           (click)="openPassenDialog(resultat)"
@@ -37,7 +80,7 @@
           appearance="customButton"
           class="tui-space_right-3 tui-space_bottom-3"
         >
-          <span *ngIf="resultat.runde != 99" class="d-none d-md-inline">{{ resultat.runde }} . Runde</span>
+          <span *ngIf="resultat.runde != 99" class="d-none d-md-inline">{{ resultat.runde }}. Runde</span>
           <span *ngIf="resultat.runde == 99" class="d-none d-md-inline">Finalrunde</span>
         </button>
       </ng-template>

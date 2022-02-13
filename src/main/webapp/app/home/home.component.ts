@@ -40,7 +40,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
     this.wettkampfService.findAll().subscribe(result => {
       this.wettkampfList = result.body;
-      console.log('test');
 
       this.wettkampfList?.forEach(wettkampf => {
         if (wettkampf.id !== undefined) {

@@ -1,7 +1,8 @@
 <tui-loader [overlay]="true" [showLoader]="!isDataAvailable">
   <div *ngIf="resultat && wettkampf">
     <div class="modal-header">
-      <div class="modal-title tui-text_h4">{{ resultat.schuetze?.name }} {{ resultat.runde }}. Runde</div>
+      <div *ngIf="resultat.runde !== 99" class="modal-title tui-text_h4">{{ resultat.schuetze?.name }} {{ resultat.runde }}. Runde</div>
+      <div *ngIf="resultat.runde == 99" class="modal-title tui-text_h4">{{ resultat.schuetze?.name }} Finalrunde</div>
 
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
     </div>

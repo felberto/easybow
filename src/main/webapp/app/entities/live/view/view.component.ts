@@ -31,7 +31,6 @@ export class ViewComponent implements OnInit {
     if (this.wettkampf != null) {
       this.ranglisteService.getRangliste(this.wettkampf, 99).subscribe(res => {
         this.rangliste = res.body;
-        console.log(this.rangliste);
       });
     }
   }

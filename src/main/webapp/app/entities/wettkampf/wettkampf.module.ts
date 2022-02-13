@@ -18,9 +18,21 @@ import { MatRadioModule } from '@angular/material/radio';
 import { RanglisteDialogComponent } from './rangliste-dialog/rangliste-dialog.component';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { TuiSvgModule } from '@taiga-ui/core';
+import { TuiBadgeModule } from '@taiga-ui/kit';
 
 @NgModule({
-  imports: [SharedModule, WettkampfRoutingModule, DragDropModule, CdkAccordionModule, FormsModule, MatTableModule, MatRadioModule],
+  imports: [
+    SharedModule,
+    WettkampfRoutingModule,
+    DragDropModule,
+    CdkAccordionModule,
+    FormsModule,
+    MatTableModule,
+    MatRadioModule,
+    TuiSvgModule,
+    TuiBadgeModule,
+  ],
   declarations: [
     WettkampfComponent,
     WettkampfDetailComponent,

@@ -11,6 +11,14 @@ tui-wrapper[data-appearance='customButton'] {
   background: #e09e50;
 }
 
+tui-wrapper[data-appearance='errorButton'] {
+  background: var(--tui-error-fill);
+}
+
+tui-wrapper[data-appearance='successButton'] {
+  background: var(--tui-success-fill);
+}
+
 tui-wrapper[data-appearance='greyButton'] {
   background: grey;
 }
