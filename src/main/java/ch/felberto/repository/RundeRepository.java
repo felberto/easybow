@@ -14,5 +14,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RundeRepository extends JpaRepository<Runde, Long>, JpaSpecificationExecutor<Runde> {
     Optional<Runde> findByRundeAndWettkampf_Id(Integer runde, Long wettkampfId);
+
     List<Runde> findByWettkampf_Id(Long wettkampfId);
+
+    Boolean existsByRundeAndWettkampf_Id(Integer runde, Long wettkampfId);
 }

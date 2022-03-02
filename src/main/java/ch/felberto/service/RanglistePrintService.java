@@ -18,7 +18,7 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 /**
- * Service Interface for printing Rangliste.
+ * Service for printing Rangliste.
  */
 @Service
 @Transactional

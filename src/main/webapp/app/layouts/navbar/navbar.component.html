@@ -24,6 +24,14 @@
           <span>Login</span>
         </a>
       </li>
+      <!-- admin import menu -->
+      <li *jhiHasAnyAuthority="['ROLE_ADMIN']" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="import" (click)="collapseNavbar()">
+          <span>
+            <span>Import</span>
+          </span>
+        </a>
+      </li>
       <!-- zsav menu -->
       <li
         *jhiHasAnyAuthority="['ROLE_ZSAV', 'ROLE_ADMIN']"

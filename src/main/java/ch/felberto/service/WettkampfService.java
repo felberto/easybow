@@ -25,6 +25,8 @@ public interface WettkampfService {
      */
     Optional<Wettkampf> partialUpdate(Wettkampf wettkampfDTO);
 
+    Optional<Wettkampf> partialUpdateByName(Wettkampf wettkampf);
+
     /**
      * Get all the wettkampfs.
      *

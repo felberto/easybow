@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IWettkampf, getWettkampfIdentifier } from '../wettkampf.model';
+import { getWettkampfIdentifier, IWettkampf } from '../wettkampf.model';
 
 export type EntityResponseType = HttpResponse<IWettkampf>;
 export type EntityArrayResponseType = HttpResponse<IWettkampf[]>;
@@ -15,6 +15,15 @@ export class WettkampfService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/wettkampfs');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
+
+  exportData(wettkampf: IWettkampf): Observable<Blob> {
+    const headers = new HttpHeaders().set('Accept', 'application/json');
+    return this.http.post<Blob>(`${this.resourceUrl}/export`, wettkampf, { headers, responseType: 'blob' as 'json' });
+  }
+
+  importData(string: string): Observable<HttpResponse<boolean>> {
+    return this.http.post<boolean>(`${this.resourceUrl}/import`, string, { observe: 'response' });
+  }
 
   create(wettkampf: IWettkampf): Observable<EntityResponseType> {
     return this.http.post<IWettkampf>(this.resourceUrl, wettkampf, { observe: 'response' });

@@ -26,6 +26,8 @@ public interface SchuetzeService {
      */
     Optional<Schuetze> partialUpdate(Schuetze schuetzeDTO);
 
+    Optional<Schuetze> partialUpdateByName(Schuetze schuetze);
+
     /**
      * Get all the schuetzes.
      *
