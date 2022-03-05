@@ -15,6 +15,7 @@ import { AccountService } from '../../../core/auth/account.service';
 import { RanglisteService } from '../service/rangliste.service';
 import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { WettkampfService } from '../service/wettkampf.service';
 
 @Component({
   selector: 'jhi-overview',
@@ -32,6 +33,7 @@ export class WettkampfOverviewComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     private resultateService: ResultateService,
     private ranglisteService: RanglisteService,
+    private wettkampfService: WettkampfService,
     protected modalService: NgbModal,
     private rundeService: RundeService,
     private alertService: AlertService,
@@ -72,6 +74,20 @@ export class WettkampfOverviewComponent implements OnInit {
     modalRef.componentInstance.wettkampf = wettkampf;
     modalRef.closed.subscribe(() => {
       this.loadPage();
+    });
+  }
+
+  exportWettkampf(wettkampf: IWettkampf): void {
+    this.wettkampfService.exportData(wettkampf).subscribe(data => {
+      const blob = new Blob([data], {
+        type: 'application/json', // must match the Accept type
+      });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.target = '_blank';
+      link.download = wettkampf.name! + '_' + wettkampf.jahr!.toString();
+      link.click();
+      window.URL.revokeObjectURL(link.href);
     });
   }
 

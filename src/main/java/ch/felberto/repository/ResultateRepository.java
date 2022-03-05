@@ -17,6 +17,11 @@ public interface ResultateRepository extends JpaRepository<Resultate, Long>, Jpa
 
     List<Resultate> findByWettkampf_IdAndRunde(Long wettkampfId, Integer runde);
 
+    Resultate findByWettkampf_IdAndRundeAndSchuetze_Id(Long wettkampfId, Integer runde, Long schuetzeId);
+
+    Boolean existsByWettkampf_IdAndRundeAndSchuetze_Id(Long wettkampfId, Integer runde, Long schuetzeId);
+
     void deleteBySchuetze(Schuetze schuetze);
+
     void deleteByWettkampf_IdAndRunde(Long wettkampfId, Integer runde);
 }

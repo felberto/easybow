@@ -78,6 +78,51 @@ public class WettkampfServiceImpl implements WettkampfService {
     }
 
     @Override
+    public Optional<Wettkampf> partialUpdateByName(Wettkampf wettkampf) {
+        log.debug("Request to partially update Wettkampf : {}", wettkampf);
+
+        return wettkampfRepository
+            .findByNameAndJahr(wettkampf.getName(), wettkampf.getJahr())
+            .map(
+                existingWettkampf -> {
+                    if (wettkampf.getName() != null) {
+                        existingWettkampf.setName(wettkampf.getName());
+                    }
+                    if (wettkampf.getJahr() != null) {
+                        existingWettkampf.setJahr(wettkampf.getJahr());
+                    }
+                    if (wettkampf.getAnzahlRunden() != null) {
+                        existingWettkampf.setAnzahlRunden(wettkampf.getAnzahlRunden());
+                    }
+                    if (wettkampf.getAnzahlPassen() != null) {
+                        existingWettkampf.setAnzahlPassen(wettkampf.getAnzahlPassen());
+                    }
+                    if (wettkampf.getFinalRunde() != null) {
+                        existingWettkampf.setFinalRunde(wettkampf.getFinalRunde());
+                    }
+                    if (wettkampf.getFinalVorbereitung() != null) {
+                        existingWettkampf.setFinalVorbereitung(wettkampf.getFinalVorbereitung());
+                    }
+                    if (wettkampf.getAnzahlFinalteilnehmer() != null) {
+                        existingWettkampf.setAnzahlFinalteilnehmer(wettkampf.getAnzahlFinalteilnehmer());
+                    }
+                    if (wettkampf.getAnzahlPassenFinal() != null) {
+                        existingWettkampf.setAnzahlPassenFinal(wettkampf.getAnzahlPassenFinal());
+                    }
+                    if (wettkampf.getAnzahlTeam() != null) {
+                        existingWettkampf.setAnzahlTeam(wettkampf.getAnzahlTeam());
+                    }
+                    if (wettkampf.getTemplate() != null) {
+                        existingWettkampf.setTemplate(wettkampf.getTemplate());
+                    }
+
+                    return existingWettkampf;
+                }
+            )
+            .map(wettkampfRepository::save);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Page<Wettkampf> findAll(Pageable pageable) {
         log.debug("Request to get all Wettkampfs");

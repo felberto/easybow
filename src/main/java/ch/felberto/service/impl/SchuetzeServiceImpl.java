@@ -3,7 +3,6 @@ package ch.felberto.service.impl;
 import ch.felberto.domain.Schuetze;
 import ch.felberto.repository.SchuetzeRepository;
 import ch.felberto.service.SchuetzeService;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -40,6 +39,33 @@ public class SchuetzeServiceImpl implements SchuetzeService {
 
         return schuetzeRepository
             .findById(schuetze.getId())
+            .map(
+                existingSchuetze -> {
+                    if (schuetze.getName() != null) {
+                        existingSchuetze.setName(schuetze.getName());
+                    }
+                    if (schuetze.getJahrgang() != null) {
+                        existingSchuetze.setJahrgang(schuetze.getJahrgang());
+                    }
+                    if (schuetze.getStellung() != null) {
+                        existingSchuetze.setStellung(schuetze.getStellung());
+                    }
+                    if (schuetze.getRolle() != null) {
+                        existingSchuetze.setRolle(schuetze.getRolle());
+                    }
+
+                    return existingSchuetze;
+                }
+            )
+            .map(schuetzeRepository::save);
+    }
+
+    @Override
+    public Optional<Schuetze> partialUpdateByName(Schuetze schuetze) {
+        log.debug("Request to partially update Schuetze : {}", schuetze);
+
+        return schuetzeRepository
+            .findByName(schuetze.getName())
             .map(
                 existingSchuetze -> {
                     if (schuetze.getName() != null) {
