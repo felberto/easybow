@@ -161,6 +161,13 @@ public class WettkampfResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/wettkampfs/jahr/{jahr}")
+    public ResponseEntity<List<Wettkampf>> getAllWettkampfByJahr(@PathVariable Integer jahr) {
+        log.debug("REST request to get Wettkampfs by jahr: {}", jahr);
+        List<Wettkampf> wettkampfList = wettkampfService.findByJahr(jahr);
+        return ResponseEntity.ok().body(wettkampfList);
+    }
+
     /**
      * {@code GET  /wettkampfs/count} : count all the wettkampfs.
      *

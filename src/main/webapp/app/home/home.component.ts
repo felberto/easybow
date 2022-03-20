@@ -38,7 +38,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe(account => {
         this.account = account;
       });
-    this.wettkampfService.findAll().subscribe(result => {
+    const fullYear = new Date().getFullYear();
+    this.wettkampfService.findByJahr(fullYear).subscribe(result => {
       this.wettkampfList = result.body;
 
       this.wettkampfList?.forEach(wettkampf => {

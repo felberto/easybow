@@ -1,6 +1,7 @@
 package ch.felberto.repository;
 
 import ch.felberto.domain.Wettkampf;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -15,4 +16,5 @@ public interface WettkampfRepository extends JpaRepository<Wettkampf, Long>, Jpa
     Boolean existsByNameAndJahr(String name, Integer jahr);
 
     Optional<Wettkampf> findByNameAndJahr(String name, Integer jahr);
+    List<Wettkampf> findByJahr(Integer jahr);
 }
