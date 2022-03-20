@@ -3,6 +3,7 @@ package ch.felberto.service.impl;
 import ch.felberto.domain.Wettkampf;
 import ch.felberto.repository.WettkampfRepository;
 import ch.felberto.service.WettkampfService;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -127,6 +128,12 @@ public class WettkampfServiceImpl implements WettkampfService {
     public Page<Wettkampf> findAll(Pageable pageable) {
         log.debug("Request to get all Wettkampfs");
         return wettkampfRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Wettkampf> findByJahr(Integer jahr) {
+        log.debug("Request to get all Wettkampf by Jahr");
+        return wettkampfRepository.findByJahr(jahr);
     }
 
     @Override

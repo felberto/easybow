@@ -35,6 +35,10 @@ export class WettkampfService {
     });
   }
 
+  findByJahr(jahr: number): Observable<HttpResponse<Array<IWettkampf>>> {
+    return this.http.get<Array<IWettkampf>>(`${this.resourceUrl}/jahr/${jahr}`, { observe: 'response' });
+  }
+
   partialUpdate(wettkampf: IWettkampf): Observable<EntityResponseType> {
     return this.http.patch<IWettkampf>(`${this.resourceUrl}/${getWettkampfIdentifier(wettkampf) as number}`, wettkampf, {
       observe: 'response',

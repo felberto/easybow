@@ -1,6 +1,7 @@
 package ch.felberto.service;
 
 import ch.felberto.domain.Wettkampf;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +35,8 @@ public interface WettkampfService {
      * @return the list of entities.
      */
     Page<Wettkampf> findAll(Pageable pageable);
+
+    List<Wettkampf> findByJahr(Integer jahr);
 
     /**
      * Get the "id" wettkampf.
