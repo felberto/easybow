@@ -21,6 +21,27 @@ export class HomeComponent implements OnInit, OnDestroy {
   rundeList: Array<Runde> = [];
   breakpoint: any;
 
+  open = false;
+
+  index = 0;
+
+  get background(): string {
+    switch (this.index) {
+      case 0:
+        return 'url(../../content/images/anleitung/Wettkampf_auswaehlen.jpg)';
+      case 1:
+        return 'url(../../content/images/anleitung/Ubersicht_Schuetzen.jpg)';
+      case 2:
+        return 'url(../../content/images/anleitung/Runde_auswaehlen.jpg)';
+      case 3:
+        return 'url(../../content/images/anleitung/Resultat_eingeben.jpg)';
+      case 4:
+        return 'url(../../content/images/anleitung/Resultat_eingegeben.jpg)';
+      default:
+        return 'url(../../content/images/anleitung/Wettkampf_auswaehlen.jpg)';
+    }
+  }
+
   private readonly destroy$ = new Subject<void>();
 
   constructor(
@@ -54,6 +75,15 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
       });
     });
+  }
+
+  openAnleitung(): void {
+    this.index = 0;
+    this.open = true;
+  }
+
+  navigate(delta: number): void {
+    this.index = (this.index + delta) % 5;
   }
 
   openLiveView(wettkampf: IWettkampf): void {

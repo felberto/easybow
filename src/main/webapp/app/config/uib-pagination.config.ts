@@ -9,6 +9,6 @@ export class PaginationConfig {
     config.boundaryLinks = true;
     config.maxSize = 5;
     config.pageSize = ITEMS_PER_PAGE;
-    config.size = 'sm';
+    config.size = 'lg';
   }
 }

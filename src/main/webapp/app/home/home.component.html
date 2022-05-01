@@ -3,6 +3,12 @@
 </div>
 
 <div *ngIf="account !== null">
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-info mr-2" (click)="openAnleitung()">
+      <fa-icon icon="book"></fa-icon>
+      <span>Anleitung</span>
+    </button>
+  </div>
   <h4 class="tui-form__header tui-form__header_margin-top_none">Wettkämpfe</h4>
   <!--  <mat-grid-list cols="4" rowHeight="120px">-->
   <mat-grid-list [cols]="breakpoint" rowHeight="2:0.5" (window:resize)="onResize($event)">
@@ -28,3 +34,52 @@
     </mat-grid-tile>
   </mat-grid-list>
 </div>
+
+<ng-template #header>
+  <div class="header" [style.backgroundImage]="background"></div>
+</ng-template>
+<ng-template [tuiDialogOptions]="$any({ size: 'l', header: header })" [(tuiDialog)]="open">
+  <div tuiCarouselButtons class="wrapper" (touchstart.passive.stop)="(0)">
+    <button tuiIconButton tuiMode="onDark" icon="tuiIconChevronLeftLarge" class="tui-space_right-4" (click)="navigate(-1)"></button>
+    <tui-carousel [(index)]="index">
+      <div *tuiItem>
+        <h2>Wettkampfübersicht</h2>
+        <p>
+          Auf der Startseite befinden sich alle aktuellen Wettkämpfe. Mit einem Klick auf den Wettkampf kommt man zur Schützenübersicht.
+        </p>
+      </div>
+      <div *tuiItem>
+        <h2>Schützenübersicht</h2>
+        <p>
+          Hier sind alle Schützen von deinem Verein aufgelistet. Mit einem Klick auf den Namen öffnet sich das Dropdown und man sieht die
+          Runden. Falls Schützen fehlen, dies bitte melden, damit diese hinzugefügt werden können.
+        </p>
+      </div>
+      <div *tuiItem>
+        <h2>Runden</h2>
+        <p>
+          Mit einem Klick auf die Runde, öffnet sich das Dialogfenster zur Resultateingabe. Sobald die Eingabefrist durch ist, lässt sich
+          das Dialogfenster nicht mehr öffnen.
+        </p>
+      </div>
+      <div *tuiItem>
+        <h2>Resultateingabe</h2>
+        <p>
+          In der Resultateingabe werden die Resultate eingegeben und mit Speichern gespeichert. Die Mouchen müssen mit 11 erfasst werden.
+        </p>
+      </div>
+      <div *tuiItem>
+        <h2>Kontrolle</h2>
+        <p>
+          Nach dem Speichern der Resultate landet man wieder in der Schützenübersicht des Wettkampfes. Die bereits erfassten Runden werden
+          bei den Schützen mit grün markiert. Noch offene Runden sind mit orange markiert.
+        </p>
+      </div>
+    </tui-carousel>
+    <button tuiIconButton tuiMode="onDark" icon="tuiIconChevronRightLarge" class="tui-space_left-4" (click)="navigate(1)"></button>
+  </div>
+  <tui-pagination size="s" class="tui-space_top-4" [length]="5" [(index)]="index"></tui-pagination>
+  <div class="tui-space_top-4">
+    <button tuiButton appearance="primary" (click)="open = false">Verstanden</button>
+  </div>
+</ng-template>

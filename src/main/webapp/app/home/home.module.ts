@@ -9,7 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
-import { TuiAccordionModule } from '@taiga-ui/kit';
+import { TuiAccordionModule, TuiCarouselModule, TuiPaginationModule } from '@taiga-ui/kit';
 
 @NgModule({
   imports: [
@@ -21,6 +21,8 @@ import { TuiAccordionModule } from '@taiga-ui/kit';
     MatMenuModule,
     MatIconModule,
     TuiAccordionModule,
+    TuiCarouselModule,
+    TuiPaginationModule,
   ],
   declarations: [HomeComponent],
 })
