@@ -1,61 +1,85 @@
-<mat-grid-list cols="2" rowHeight="2:1">
-  <mat-grid-tile>1</mat-grid-tile>
-  <mat-grid-tile>2</mat-grid-tile>
-  <mat-grid-tile>3</mat-grid-tile>
-  <mat-grid-tile>4</mat-grid-tile>
-</mat-grid-list>
-
-<div class="row">
-  <div class="col-md-3">
-    <span class="hipster img-fluid rounded"></span>
-  </div>
-
-  <div class="col-md-9">
-    <h1 class="display-4"><span>Welcome, Java Hipster!</span> (Easybow)</h1>
-
-    <p class="lead">This is your homepage</p>
-
-    <div [ngSwitch]="account !== null">
-      <div class="alert alert-success" *ngSwitchCase="true">
-        <span id="home-logged-message" *ngIf="account">You are logged in as user "{{ account.login }}".</span>
-      </div>
-
-      <div class="alert alert-warning" *ngSwitchCase="false">
-        <span>If you want to </span>
-        <a class="alert-link" (click)="login()">sign in</a
-        ><span
-          >, you can try the default accounts:<br />- Administrator (login="admin" and password="admin") <br />- User (login="user" and
-          password="user").</span
-        >
-      </div>
-
-      <div class="alert alert-warning" *ngSwitchCase="false">
-        <span>You don't have an account yet?</span>&nbsp;
-        <a class="alert-link" routerLink="account/register">Register a new account</a>
-      </div>
-    </div>
-
-    <p>If you have any question on JHipster:</p>
-
-    <ul>
-      <li><a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer">JHipster homepage</a></li>
-      <li>
-        <a href="https://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener noreferrer">JHipster on Stack Overflow</a>
-      </li>
-      <li>
-        <a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer"
-          >JHipster bug tracker</a
-        >
-      </li>
-      <li>
-        <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">JHipster public chat room</a>
-      </li>
-      <li><a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer">follow @jhipster on Twitter</a></li>
-    </ul>
-
-    <p>
-      <span>If you like JHipster, don't forget to give us a star on</span>
-      <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">GitHub</a>!
-    </p>
-  </div>
+<div class="col-md-9">
+  <tui-notification status="warning" class="tui-space_top-4" *ngIf="account == null"> Bitte einloggen</tui-notification>
 </div>
+
+<div *ngIf="account !== null">
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-info mr-2" (click)="openAnleitung()">
+      <fa-icon icon="book"></fa-icon>
+      <span>Anleitung</span>
+    </button>
+  </div>
+  <h4 class="tui-form__header tui-form__header_margin-top_none">Wettkämpfe</h4>
+  <!--  <mat-grid-list cols="4" rowHeight="120px">-->
+  <mat-grid-list [cols]="breakpoint" rowHeight="2:0.5" (window:resize)="onResize($event)">
+    <mat-grid-tile *ngFor="let wettkampf of wettkampfList" [colspan]="1" [rowspan]="2">
+      <mat-card *ngIf="account.authorities[0] !== 'ROLE_LIVE'" class="card" [routerLink]="['/wettkampf', wettkampf.id, 'overview']">
+        <mat-card-title class="card-title">{{ wettkampf.name }} {{ wettkampf.jahr }}</mat-card-title>
+        <mat-card-content>
+          <div *ngFor="let runde of getList(wettkampf)">
+            <div *ngIf="runde.runde !== 99">{{ runde.runde }}. Runde Schiessende: {{ runde.datum?.format('dddd, MMMM D, YYYY') }}</div>
+            <div *ngIf="runde.runde === 99">Final {{ runde.datum?.format('dddd, MMMM D, YYYY') }}</div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card *ngIf="account.authorities[0] == 'ROLE_LIVE'" class="card" (click)="openLiveView(wettkampf)">
+        <mat-card-title class="card-title">{{ wettkampf.name }} {{ wettkampf.jahr }}</mat-card-title>
+        <mat-card-content>
+          <div *ngFor="let runde of getList(wettkampf)">
+            <div *ngIf="runde.runde !== 99">{{ runde.runde }}. Runde Schiessende: {{ runde.datum?.format('dddd, MMMM D, YYYY') }}</div>
+            <div *ngIf="runde.runde === 99">Final {{ runde.datum?.format('dddd, MMMM D, YYYY') }}</div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+
+<ng-template #header>
+  <div class="header" [style.backgroundImage]="background"></div>
+</ng-template>
+<ng-template [tuiDialogOptions]="$any({ size: 'l', header: header })" [(tuiDialog)]="open">
+  <div tuiCarouselButtons class="wrapper" (touchstart.passive.stop)="(0)">
+    <button tuiIconButton tuiMode="onDark" icon="tuiIconChevronLeftLarge" class="tui-space_right-4" (click)="navigate(-1)"></button>
+    <tui-carousel [(index)]="index">
+      <div *tuiItem>
+        <h2>Wettkampfübersicht</h2>
+        <p>
+          Auf der Startseite befinden sich alle aktuellen Wettkämpfe. Mit einem Klick auf den Wettkampf kommt man zur Schützenübersicht.
+        </p>
+      </div>
+      <div *tuiItem>
+        <h2>Schützenübersicht</h2>
+        <p>
+          Hier sind alle Schützen von deinem Verein aufgelistet. Mit einem Klick auf den Namen öffnet sich das Dropdown und man sieht die
+          Runden. Falls Schützen fehlen, dies bitte melden, damit diese hinzugefügt werden können.
+        </p>
+      </div>
+      <div *tuiItem>
+        <h2>Runden</h2>
+        <p>
+          Mit einem Klick auf die Runde, öffnet sich das Dialogfenster zur Resultateingabe. Sobald die Eingabefrist durch ist, lässt sich
+          das Dialogfenster nicht mehr öffnen.
+        </p>
+      </div>
+      <div *tuiItem>
+        <h2>Resultateingabe</h2>
+        <p>
+          In der Resultateingabe werden die Resultate eingegeben und mit Speichern gespeichert. Die Mouchen müssen mit 11 erfasst werden.
+        </p>
+      </div>
+      <div *tuiItem>
+        <h2>Kontrolle</h2>
+        <p>
+          Nach dem Speichern der Resultate landet man wieder in der Schützenübersicht des Wettkampfes. Die bereits erfassten Runden werden
+          bei den Schützen mit grün markiert. Noch offene Runden sind mit orange markiert.
+        </p>
+      </div>
+    </tui-carousel>
+    <button tuiIconButton tuiMode="onDark" icon="tuiIconChevronRightLarge" class="tui-space_left-4" (click)="navigate(1)"></button>
+  </div>
+  <tui-pagination size="s" class="tui-space_top-4" [length]="5" [(index)]="index"></tui-pagination>
+  <div class="tui-space_top-4">
+    <button tuiButton appearance="primary" (click)="open = false">Verstanden</button>
+  </div>
+</ng-template>

@@ -4,10 +4,7 @@ import ch.felberto.domain.enumeration.Stellung;
 import java.io.Serializable;
 import java.util.Objects;
 import tech.jhipster.service.Criteria;
-import tech.jhipster.service.filter.BooleanFilter;
-import tech.jhipster.service.filter.DoubleFilter;
 import tech.jhipster.service.filter.Filter;
-import tech.jhipster.service.filter.FloatFilter;
 import tech.jhipster.service.filter.IntegerFilter;
 import tech.jhipster.service.filter.LongFilter;
 import tech.jhipster.service.filter.StringFilter;
@@ -50,6 +47,8 @@ public class SchuetzeCriteria implements Serializable, Criteria {
 
     private StellungFilter stellung;
 
+    private StringFilter rolle;
+
     private LongFilter vereinId;
 
     public SchuetzeCriteria() {}
@@ -59,6 +58,7 @@ public class SchuetzeCriteria implements Serializable, Criteria {
         this.name = other.name == null ? null : other.name.copy();
         this.jahrgang = other.jahrgang == null ? null : other.jahrgang.copy();
         this.stellung = other.stellung == null ? null : other.stellung.copy();
+        this.rolle = other.rolle == null ? null : other.rolle.copy();
         this.vereinId = other.vereinId == null ? null : other.vereinId.copy();
     }
 
@@ -127,6 +127,21 @@ public class SchuetzeCriteria implements Serializable, Criteria {
         this.stellung = stellung;
     }
 
+    public StringFilter getRolle() {
+        return rolle;
+    }
+
+    public StringFilter rolle() {
+        if (rolle == null) {
+            rolle = new StringFilter();
+        }
+        return rolle;
+    }
+
+    public void setRolle(StringFilter rolle) {
+        this.rolle = rolle;
+    }
+
     public LongFilter getVereinId() {
         return vereinId;
     }
@@ -156,13 +171,14 @@ public class SchuetzeCriteria implements Serializable, Criteria {
             Objects.equals(name, that.name) &&
             Objects.equals(jahrgang, that.jahrgang) &&
             Objects.equals(stellung, that.stellung) &&
+            Objects.equals(rolle, that.rolle) &&
             Objects.equals(vereinId, that.vereinId)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, jahrgang, stellung, vereinId);
+        return Objects.hash(id, name, jahrgang, stellung, rolle, vereinId);
     }
 
     // prettier-ignore
@@ -173,6 +189,7 @@ public class SchuetzeCriteria implements Serializable, Criteria {
             (name != null ? "name=" + name + ", " : "") +
             (jahrgang != null ? "jahrgang=" + jahrgang + ", " : "") +
             (stellung != null ? "stellung=" + stellung + ", " : "") +
+            (rolle != null ? "rolle=" + rolle + ", " : "") +
             (vereinId != null ? "vereinId=" + vereinId + ", " : "") +
             "}";
     }

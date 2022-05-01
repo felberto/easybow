@@ -26,6 +26,17 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ErrorComponent } from './layouts/error/error.component';
 import { MatIconModule } from '@angular/material/icon';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { LayoutModule } from '@angular/cdk/layout';
+import { TuiDialogModule, TuiNotificationsModule, TuiRootModule } from '@taiga-ui/core';
+import { TuiInputModule } from '@taiga-ui/kit';
+import { TUI_GERMAN_LANGUAGE, TUI_LANGUAGE } from '@taiga-ui/i18n';
+import { of } from 'rxjs';
 
 @NgModule({
   imports: [
@@ -40,10 +51,25 @@ import { MatIconModule } from '@angular/material/icon';
     HttpClientModule,
     NgxWebstorageModule.forRoot({ prefix: 'jhi', separator: '-', caseSensitive: true }),
     MatIconModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    MatGridListModule,
+    MatCardModule,
+    MatMenuModule,
+    MatButtonModule,
+    LayoutModule,
+    TuiRootModule,
+    TuiNotificationsModule,
+    TuiDialogModule,
+    TuiInputModule,
   ],
   providers: [
     Title,
-    { provide: LOCALE_ID, useValue: 'en' },
+    { provide: LOCALE_ID, useValue: 'de' },
+    {
+      provide: TUI_LANGUAGE,
+      useValue: of(TUI_GERMAN_LANGUAGE),
+    },
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
     httpInterceptorProviders,
   ],

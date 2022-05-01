@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title th:text="${titleDoc}"></title>
+    <bookmarks>
+      <bookmark href="#rangliste" name="Rangliste"></bookmark>
+    </bookmarks>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body>
+    <div class="w3-row">
+      <div class="w3-col s9">
+        <h2 class="w3-text-blue title-font" th:text="${title}"></h2>
+      </div>
+      <div class="w3-col s3 w3-center">
+        <img class="zsav" src="images/zsav.png" />
+      </div>
+    </div>
+    <div class="w3-row">
+      <div class="w3-col s9">
+        <h3 class="w3-text-blue title-font" th:text="${subTitle}"></h3>
+      </div>
+      <div class="w3-col s3 w3-center"></div>
+    </div>
+    <div id="rangliste">
+      <div th:if="${not #lists.isEmpty(rangliste.getSchuetzeResultatList())}">
+        <table class="w3-table">
+          <thead>
+            <tr>
+              <th class="w3-right-align" colspan="1">Rang</th>
+              <th colspan="1">Name</th>
+              <th colspan="1">Sektion</th>
+              <th class="w3-right-align" colspan="1">Res</th>
+              <th class="w3-center" colspan="1">Stlg</th>
+              <th colspan="5">Tiefschüsse</th>
+              <th class="w3-right-align" colspan="1">Jg</th>
+            </tr>
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th class="w3-center">10</th>
+              <th class="w3-center">9</th>
+              <th class="w3-center">8</th>
+              <th class="w3-center">7</th>
+              <th class="w3-center">M</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="schuetze : ${rangliste.getSchuetzeResultatList()}">
+              <td class="w3-right-align" th:text="${rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1}"></td>
+              <td th:text="${schuetze?.getSchuetze().getName()}"></td>
+              <td th:text="${schuetze?.getSchuetze().getVerein().getName()}"></td>
+              <td class="w3-right-align" style="font-weight: bold" th:text="${schuetze?.getResultat()}"></td>
+              <td class="w3-center" th:text="${schuetze?.getSchuetze().getStellung().toString().substring(0, 1).toLowerCase()}"></td>
+              <td class="w3-center" th:text="${schuetze?.getT10()}"></td>
+              <td class="w3-center" th:text="${schuetze?.getT9()}"></td>
+              <td class="w3-center" th:text="${schuetze?.getT8()}"></td>
+              <td class="w3-center" th:text="${schuetze?.getT7()}"></td>
+              <td class="w3-center" th:text="${schuetze?.getT11()}"></td>
+              <td class="w3-right-align" th:text="${schuetze?.getSchuetze().getJahrgang()}"></td>
+              <p style="page-break-after: always" th:if="${(rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1) == 25}">&nbsp;</p>
+              <p style="page-break-before: always" th:if="${(rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1) == 25}">&nbsp;</p>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <footer class="w3-bottom">
+      <div class="w3-row">
+        <div class="w3-col s4">
+          <img class="jus w3-left-align" src="images/jugendundsport.png" />
+        </div>
+        <div class="w3-col s4">
+          <img class="swisslos center" src="images/swisslos.jpg" />
+        </div>
+        <div class="w3-col s4">
+          <p class="w3-right-align" th:text="${date}"></p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

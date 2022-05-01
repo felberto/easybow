@@ -43,6 +43,14 @@
         </div>
 
         <div class="form-group">
+          <label class="form-control-label" for="field_rolle">Rolle</label>
+          <input type="text" class="form-control" name="rolle" id="field_rolle" data-cy="rolle" formControlName="rolle" />
+          <div *ngIf="editForm.get('rolle')!.invalid && (editForm.get('rolle')!.dirty || editForm.get('rolle')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('rolle')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
           <label class="form-control-label" for="field_verein">Verein</label>
           <select class="form-control" id="field_verein" data-cy="verein" name="verein" formControlName="verein">
             <option [ngValue]="null"></option>

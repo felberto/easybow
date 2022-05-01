@@ -34,6 +34,7 @@ export class ResultateUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     runde: [null, [Validators.required]],
+    resultat: [],
     passe1: [],
     passe2: [],
     passe3: [],
@@ -114,6 +115,7 @@ export class ResultateUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: resultate.id,
       runde: resultate.runde,
+      resultat: resultate.resultat,
       passe1: resultate.passe1,
       passe2: resultate.passe2,
       passe3: resultate.passe3,
@@ -197,6 +199,7 @@ export class ResultateUpdateComponent implements OnInit {
       ...new Resultate(),
       id: this.editForm.get(['id'])!.value,
       runde: this.editForm.get(['runde'])!.value,
+      resultat: this.editForm.get(['resultat'])!.value,
       passe1: this.editForm.get(['passe1'])!.value,
       passe2: this.editForm.get(['passe2'])!.value,
       passe3: this.editForm.get(['passe3'])!.value,

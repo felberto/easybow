@@ -4,10 +4,7 @@ import ch.felberto.domain.*; // for static metamodels
 import ch.felberto.domain.Gruppen;
 import ch.felberto.repository.GruppenRepository;
 import ch.felberto.service.criteria.GruppenCriteria;
-import ch.felberto.service.dto.GruppenDTO;
-import ch.felberto.service.mapper.GruppenMapper;
 import java.util.List;
-import javax.persistence.criteria.JoinType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -21,7 +18,7 @@ import tech.jhipster.service.QueryService;
  * Service for executing complex queries for {@link Gruppen} entities in the database.
  * The main input is a {@link GruppenCriteria} which gets converted to {@link Specification},
  * in a way that all the filters must apply.
- * It returns a {@link List} of {@link GruppenDTO} or a {@link Page} of {@link GruppenDTO} which fulfills the criteria.
+ * It returns a {@link List} of {@link Gruppen} or a {@link Page} of {@link Gruppen} which fulfills the criteria.
  */
 @Service
 @Transactional(readOnly = true)
@@ -31,36 +28,33 @@ public class GruppenQueryService extends QueryService<Gruppen> {
 
     private final GruppenRepository gruppenRepository;
 
-    private final GruppenMapper gruppenMapper;
-
-    public GruppenQueryService(GruppenRepository gruppenRepository, GruppenMapper gruppenMapper) {
+    public GruppenQueryService(GruppenRepository gruppenRepository) {
         this.gruppenRepository = gruppenRepository;
-        this.gruppenMapper = gruppenMapper;
     }
 
     /**
-     * Return a {@link List} of {@link GruppenDTO} which matches the criteria from the database.
+     * Return a {@link List} of {@link Gruppen} which matches the criteria from the database.
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public List<GruppenDTO> findByCriteria(GruppenCriteria criteria) {
+    public List<Gruppen> findByCriteria(GruppenCriteria criteria) {
         log.debug("find by criteria : {}", criteria);
         final Specification<Gruppen> specification = createSpecification(criteria);
-        return gruppenMapper.toDto(gruppenRepository.findAll(specification));
+        return gruppenRepository.findAll(specification);
     }
 
     /**
-     * Return a {@link Page} of {@link GruppenDTO} which matches the criteria from the database.
+     * Return a {@link Page} of {@link Gruppen} which matches the criteria from the database.
      * @param criteria The object which holds all the filters, which the entities should match.
      * @param page The page, which should be returned.
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public Page<GruppenDTO> findByCriteria(GruppenCriteria criteria, Pageable page) {
+    public Page<Gruppen> findByCriteria(GruppenCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<Gruppen> specification = createSpecification(criteria);
-        return gruppenRepository.findAll(specification, page).map(gruppenMapper::toDto);
+        return gruppenRepository.findAll(specification, page);
     }
 
     /**

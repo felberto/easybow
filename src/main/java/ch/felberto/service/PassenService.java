@@ -1,6 +1,6 @@
 package ch.felberto.service;
 
-import ch.felberto.service.dto.PassenDTO;
+import ch.felberto.domain.Passen;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +15,7 @@ public interface PassenService {
      * @param passenDTO the entity to save.
      * @return the persisted entity.
      */
-    PassenDTO save(PassenDTO passenDTO);
+    Passen save(Passen passenDTO);
 
     /**
      * Partially updates a passen.
@@ -23,7 +23,7 @@ public interface PassenService {
      * @param passenDTO the entity to update partially.
      * @return the persisted entity.
      */
-    Optional<PassenDTO> partialUpdate(PassenDTO passenDTO);
+    Optional<Passen> partialUpdate(Passen passenDTO);
 
     /**
      * Get all the passens.
@@ -31,7 +31,7 @@ public interface PassenService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<PassenDTO> findAll(Pageable pageable);
+    Page<Passen> findAll(Pageable pageable);
 
     /**
      * Get the "id" passen.
@@ -39,7 +39,7 @@ public interface PassenService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<PassenDTO> findOne(Long id);
+    Optional<Passen> findOne(Long id);
 
     /**
      * Delete the "id" passen.

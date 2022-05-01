@@ -36,6 +36,10 @@ public class Schuetze implements Serializable {
     @Column(name = "stellung", nullable = false)
     private Stellung stellung;
 
+    @NotNull
+    @Column(name = "rolle", nullable = false)
+    private String rolle;
+
     @ManyToOne
     @JsonIgnoreProperties(value = { "verband" }, allowSetters = true)
     private Verein verein;
@@ -93,6 +97,19 @@ public class Schuetze implements Serializable {
         this.stellung = stellung;
     }
 
+    public String getRolle() {
+        return this.rolle;
+    }
+
+    public Schuetze rolle(String rolle) {
+        this.rolle = rolle;
+        return this;
+    }
+
+    public void setRolle(String rolle) {
+        this.rolle = rolle;
+    }
+
     public Verein getVerein() {
         return this.verein;
     }
@@ -133,6 +150,7 @@ public class Schuetze implements Serializable {
             ", name='" + getName() + "'" +
             ", jahrgang=" + getJahrgang() +
             ", stellung='" + getStellung() + "'" +
+            ", rolle='" + getRolle() + "'" +
             "}";
     }
 }

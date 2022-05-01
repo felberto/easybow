@@ -1,13 +1,10 @@
 package ch.felberto.service;
 
-import ch.felberto.domain.*; // for static metamodels
 import ch.felberto.domain.Passen;
+import ch.felberto.domain.Passen_;
 import ch.felberto.repository.PassenRepository;
 import ch.felberto.service.criteria.PassenCriteria;
-import ch.felberto.service.dto.PassenDTO;
-import ch.felberto.service.mapper.PassenMapper;
 import java.util.List;
-import javax.persistence.criteria.JoinType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -21,7 +18,7 @@ import tech.jhipster.service.QueryService;
  * Service for executing complex queries for {@link Passen} entities in the database.
  * The main input is a {@link PassenCriteria} which gets converted to {@link Specification},
  * in a way that all the filters must apply.
- * It returns a {@link List} of {@link PassenDTO} or a {@link Page} of {@link PassenDTO} which fulfills the criteria.
+ * It returns a {@link List} of {@link Passen} or a {@link Page} of {@link Passen} which fulfills the criteria.
  */
 @Service
 @Transactional(readOnly = true)
@@ -31,40 +28,40 @@ public class PassenQueryService extends QueryService<Passen> {
 
     private final PassenRepository passenRepository;
 
-    private final PassenMapper passenMapper;
-
-    public PassenQueryService(PassenRepository passenRepository, PassenMapper passenMapper) {
+    public PassenQueryService(PassenRepository passenRepository) {
         this.passenRepository = passenRepository;
-        this.passenMapper = passenMapper;
     }
 
     /**
-     * Return a {@link List} of {@link PassenDTO} which matches the criteria from the database.
+     * Return a {@link List} of {@link Passen} which matches the criteria from the database.
+     *
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public List<PassenDTO> findByCriteria(PassenCriteria criteria) {
+    public List<Passen> findByCriteria(PassenCriteria criteria) {
         log.debug("find by criteria : {}", criteria);
         final Specification<Passen> specification = createSpecification(criteria);
-        return passenMapper.toDto(passenRepository.findAll(specification));
+        return passenRepository.findAll(specification);
     }
 
     /**
-     * Return a {@link Page} of {@link PassenDTO} which matches the criteria from the database.
+     * Return a {@link Page} of {@link Passen} which matches the criteria from the database.
+     *
      * @param criteria The object which holds all the filters, which the entities should match.
-     * @param page The page, which should be returned.
+     * @param page     The page, which should be returned.
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public Page<PassenDTO> findByCriteria(PassenCriteria criteria, Pageable page) {
+    public Page<Passen> findByCriteria(PassenCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<Passen> specification = createSpecification(criteria);
-        return passenRepository.findAll(specification, page).map(passenMapper::toDto);
+        return passenRepository.findAll(specification, page);
     }
 
     /**
      * Return the number of matching entities in the database.
+     *
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the number of matching entities.
      */
@@ -77,6 +74,7 @@ public class PassenQueryService extends QueryService<Passen> {
 
     /**
      * Function to convert {@link PassenCriteria} to a {@link Specification}
+     *
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching {@link Specification} of the entity.
      */

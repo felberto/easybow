@@ -1,7 +1,10 @@
 package ch.felberto.repository;
 
 import ch.felberto.domain.Wettkampf;
-import org.springframework.data.jpa.repository.*;
+import java.util.List;
+import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,4 +12,9 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface WettkampfRepository extends JpaRepository<Wettkampf, Long>, JpaSpecificationExecutor<Wettkampf> {}
+public interface WettkampfRepository extends JpaRepository<Wettkampf, Long>, JpaSpecificationExecutor<Wettkampf> {
+    Boolean existsByNameAndJahr(String name, Integer jahr);
+
+    Optional<Wettkampf> findByNameAndJahr(String name, Integer jahr);
+    List<Wettkampf> findByJahr(Integer jahr);
+}

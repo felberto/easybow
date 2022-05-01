@@ -3,8 +3,8 @@ package ch.felberto.service.impl;
 import ch.felberto.domain.Rangierung;
 import ch.felberto.repository.RangierungRepository;
 import ch.felberto.service.RangierungService;
-import ch.felberto.service.dto.RangierungDTO;
-import ch.felberto.service.mapper.RangierungMapper;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,55 +24,66 @@ public class RangierungServiceImpl implements RangierungService {
 
     private final RangierungRepository rangierungRepository;
 
-    private final RangierungMapper rangierungMapper;
-
-    public RangierungServiceImpl(RangierungRepository rangierungRepository, RangierungMapper rangierungMapper) {
+    public RangierungServiceImpl(RangierungRepository rangierungRepository) {
         this.rangierungRepository = rangierungRepository;
-        this.rangierungMapper = rangierungMapper;
     }
 
     @Override
-    public RangierungDTO save(RangierungDTO rangierungDTO) {
-        log.debug("Request to save Rangierung : {}", rangierungDTO);
-        Rangierung rangierung = rangierungMapper.toEntity(rangierungDTO);
-        rangierung = rangierungRepository.save(rangierung);
-        return rangierungMapper.toDto(rangierung);
+    public Rangierung save(Rangierung rangierung) {
+        log.debug("Request to save Rangierung : {}", rangierung);
+        return rangierungRepository.save(rangierung);
     }
 
     @Override
-    public Optional<RangierungDTO> partialUpdate(RangierungDTO rangierungDTO) {
-        log.debug("Request to partially update Rangierung : {}", rangierungDTO);
+    public Optional<Rangierung> partialUpdate(Rangierung rangierung) {
+        log.debug("Request to partially update Rangierung : {}", rangierung);
 
         return rangierungRepository
-            .findById(rangierungDTO.getId())
+            .findById(rangierung.getId())
             .map(
                 existingRangierung -> {
-                    rangierungMapper.partialUpdate(existingRangierung, rangierungDTO);
+                    if (rangierung.getPosition() != null) {
+                        existingRangierung.setPosition(rangierung.getPosition());
+                    }
+                    if (rangierung.getRangierungskriterien() != null) {
+                        existingRangierung.setRangierungskriterien(rangierung.getRangierungskriterien());
+                    }
 
                     return existingRangierung;
                 }
             )
-            .map(rangierungRepository::save)
-            .map(rangierungMapper::toDto);
+            .map(rangierungRepository::save);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<RangierungDTO> findAll(Pageable pageable) {
+    public Page<Rangierung> findAll(Pageable pageable) {
         log.debug("Request to get all Rangierungs");
-        return rangierungRepository.findAll(pageable).map(rangierungMapper::toDto);
+        return rangierungRepository.findAll(pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<RangierungDTO> findOne(Long id) {
+    public Optional<Rangierung> findOne(Long id) {
         log.debug("Request to get Rangierung : {}", id);
-        return rangierungRepository.findById(id).map(rangierungMapper::toDto);
+        return rangierungRepository.findById(id);
+    }
+
+    @Override
+    public List<Rangierung> findByWettkampf(Long wettkampfId) {
+        log.debug("Request to get Rangierung : {}", wettkampfId);
+        return rangierungRepository.findByWettkampf_Id(wettkampfId);
     }
 
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Rangierung : {}", id);
         rangierungRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteByWettkampf(Long id) {
+        log.debug("Request to delete Rangierung by Wettkampf: {}", id);
+        rangierungRepository.deleteByWettkampf_Id(id);
     }
 }

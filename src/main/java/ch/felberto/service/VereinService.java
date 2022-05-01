@@ -1,6 +1,6 @@
 package ch.felberto.service;
 
-import ch.felberto.service.dto.VereinDTO;
+import ch.felberto.domain.Verein;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +15,7 @@ public interface VereinService {
      * @param vereinDTO the entity to save.
      * @return the persisted entity.
      */
-    VereinDTO save(VereinDTO vereinDTO);
+    Verein save(Verein vereinDTO);
 
     /**
      * Partially updates a verein.
@@ -23,7 +23,7 @@ public interface VereinService {
      * @param vereinDTO the entity to update partially.
      * @return the persisted entity.
      */
-    Optional<VereinDTO> partialUpdate(VereinDTO vereinDTO);
+    Optional<Verein> partialUpdate(Verein vereinDTO);
 
     /**
      * Get all the vereins.
@@ -31,7 +31,7 @@ public interface VereinService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<VereinDTO> findAll(Pageable pageable);
+    Page<Verein> findAll(Pageable pageable);
 
     /**
      * Get the "id" verein.
@@ -39,7 +39,7 @@ public interface VereinService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<VereinDTO> findOne(Long id);
+    Optional<Verein> findOne(Long id);
 
     /**
      * Delete the "id" verein.

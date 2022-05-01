@@ -1,10 +1,42 @@
 @import 'bootstrap-variables';
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
+@import '~@taiga-ui/core/styles/taiga-ui-local';
 
+/* ==============================================================
+Taiga Custom Styles
+===============================================================*/
+
+tui-wrapper[data-appearance='customButton'] {
+  background: #e09e50;
+}
+
+tui-wrapper[data-appearance='errorButton'] {
+  background: var(--tui-error-fill);
+}
+
+tui-wrapper[data-appearance='successButton'] {
+  background: var(--tui-success-fill);
+}
+
+tui-wrapper[data-appearance='greyButton'] {
+  background: grey;
+}
+
+tui-notification-alert {
+  box-shadow: none !important;
+}
+
+:root {
+  --tui-primary-text: #000;
+}
 /* ==============================================================
 Bootstrap tweaks
 ===============================================================*/
+
+.btn-color {
+  background-color: #e09e50;
+}
 
 body,
 h1,
@@ -57,22 +89,13 @@ Browser Upgrade Prompt
 Generic styles
 ========================================================================== */
 
-/* Error highlight on input fields */
-.ng-valid[required],
-.ng-valid.required {
-  border-left: 5px solid green;
-}
-
-.ng-invalid:not(form) {
-  border-left: 5px solid red;
-}
-
 /* other generic styles */
 
 .jh-card {
   padding: 1.5%;
   margin-top: 20px;
   border: none;
+  background: #e8eceb;
 }
 
 .error {
@@ -117,6 +140,7 @@ Custom alerts for notification
 .alerts {
   .alert {
     text-overflow: ellipsis;
+
     pre {
       background: none;
       border: none;
@@ -125,22 +149,28 @@ Custom alerts for notification
       padding: 0;
       margin: 0;
     }
+
     .popover pre {
       font-size: 10px;
     }
   }
+
   .jhi-toast {
     position: fixed;
     width: 100%;
+
     &.left {
       left: 5px;
     }
+
     &.right {
       right: 5px;
     }
+
     &.top {
       top: 55px;
     }
+
     &.bottom {
       bottom: 55px;
     }
@@ -174,6 +204,7 @@ entity detail page css
       white-space: nowrap;
       padding: 0.5em 0;
     }
+
     dd {
       border-bottom: 1px solid #eee;
       padding: 0.5em 0;
@@ -200,3 +231,8 @@ ui bootstrap tweaks
 }
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+
+.html,
+.body {
+  background: #8cbdb9;
+}

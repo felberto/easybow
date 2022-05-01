@@ -1,6 +1,6 @@
 package ch.felberto.service;
 
-import ch.felberto.service.dto.GruppenDTO;
+import ch.felberto.domain.Gruppen;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +15,7 @@ public interface GruppenService {
      * @param gruppenDTO the entity to save.
      * @return the persisted entity.
      */
-    GruppenDTO save(GruppenDTO gruppenDTO);
+    Gruppen save(Gruppen gruppenDTO);
 
     /**
      * Partially updates a gruppen.
@@ -23,7 +23,7 @@ public interface GruppenService {
      * @param gruppenDTO the entity to update partially.
      * @return the persisted entity.
      */
-    Optional<GruppenDTO> partialUpdate(GruppenDTO gruppenDTO);
+    Optional<Gruppen> partialUpdate(Gruppen gruppenDTO);
 
     /**
      * Get all the gruppens.
@@ -31,7 +31,7 @@ public interface GruppenService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<GruppenDTO> findAll(Pageable pageable);
+    Page<Gruppen> findAll(Pageable pageable);
 
     /**
      * Get the "id" gruppen.
@@ -39,7 +39,7 @@ public interface GruppenService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<GruppenDTO> findOne(Long id);
+    Optional<Gruppen> findOne(Long id);
 
     /**
      * Delete the "id" gruppen.

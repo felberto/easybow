@@ -1,7 +1,6 @@
-<nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md bg-dark">
+<nav data-cy="navbar" class="navbar navbar-expand-md">
   <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
     <span class="logo-img"></span>
-    <span class="navbar-title">Easybow</span>
     <span class="navbar-version">{{ version }}</span>
   </a>
   <a
@@ -18,41 +17,88 @@
   </a>
   <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="account !== null">
     <ul class="navbar-nav ml-auto">
+      <!-- login for user -->
+      <li *ngIf="account === null" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" (click)="login()">
+          <fa-icon icon="sign-in-alt" [fixedWidth]="true"></fa-icon>
+          <span>Login</span>
+        </a>
+      </li>
+      <!-- admin import menu -->
+      <li *jhiHasAnyAuthority="['ROLE_ADMIN']" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="import" (click)="collapseNavbar()">
+          <span>
+            <span>Import</span>
+          </span>
+        </a>
+      </li>
       <!-- zsav menu -->
-      <li *jhiHasAnyAuthority="'ROLE_ZSAV'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <li
+        *jhiHasAnyAuthority="['ROLE_ZSAV', 'ROLE_ADMIN']"
+        class="nav-item"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <a class="nav-link" routerLink="verein" (click)="collapseNavbar()">
           <span>
-            <mat-icon>holiday_village</mat-icon>
             <span>Vereine</span>
           </span>
         </a>
       </li>
-      <li *jhiHasAnyAuthority="'ROLE_ZSAV'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <li
+        *jhiHasAnyAuthority="['ROLE_ZSAV', 'ROLE_ADMIN']"
+        class="nav-item"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <a class="nav-link" routerLink="gruppen" (click)="collapseNavbar()">
-          <mat-icon>groups</mat-icon>
           <span>Gruppen</span>
         </a>
       </li>
-      <li *jhiHasAnyAuthority="'ROLE_ZSAV'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <li
+        *jhiHasAnyAuthority="['ROLE_ZSAV', 'ROLE_ADMIN']"
+        class="nav-item"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <a class="nav-link" routerLink="schuetze" (click)="collapseNavbar()">
           <span>
-            <mat-icon>people</mat-icon>
             <span>Schützen</span>
           </span>
         </a>
       </li>
-      <li *jhiHasAnyAuthority="'ROLE_ZSAV'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <li
+        *jhiHasAnyAuthority="['ROLE_ZSAV', 'ROLE_ADMIN']"
+        class="nav-item"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <a class="nav-link" routerLink="wettkampf" (click)="collapseNavbar()">
           <span>
-            <mat-icon>emoji_events</mat-icon>
             <span>Wettkämpfe</span>
           </span>
         </a>
       </li>
-      <li *jhiHasAnyAuthority="'ROLE_ZSAV'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <li
+        *jhiHasAnyAuthority="['ROLE_ZSAV', 'ROLE_ADMIN']"
+        class="nav-item"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <a class="nav-link" routerLink="runde" (click)="collapseNavbar()">
+          <span>
+            <span>Runden</span>
+          </span>
+        </a>
+      </li>
+      <li
+        *jhiHasAnyAuthority="['ROLE_ZSAV', 'ROLE_ADMIN']"
+        class="nav-item"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <a class="nav-link" routerLink="rangierung" (click)="collapseNavbar()">
           <span>
-            <mat-icon>import_export</mat-icon>
             <span>Rangierung</span>
           </span>
         </a>
@@ -227,15 +273,26 @@
         </ul>
       </li>
       <li
+        *ngIf="account !== null && account.authorities[0] == 'ROLE_LIVE'"
+        class="nav-item"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <a class="dropdown-item" (click)="logout()" data-cy="logout">
+          <fa-icon icon="sign-out-alt" [fixedWidth]="true"></fa-icon>
+          <span>Logout</span>
+        </a>
+      </li>
+      <li
         ngbDropdown
         class="nav-item dropdown pointer"
         display="dynamic"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
+        *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE'"
       >
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu" data-cy="accountMenu">
           <span *ngIf="!account?.imageUrl">
-            <mat-icon>person</mat-icon>
             <span>Account</span>
           </span>
           <span *ngIf="account?.imageUrl">
@@ -264,21 +321,22 @@
           <li *ngSwitchCase="true">
             <a class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
               <fa-icon icon="sign-out-alt" [fixedWidth]="true"></fa-icon>
-              <span>Sign out</span>
+              <span>Logout</span>
             </a>
           </li>
-          <li *ngSwitchCase="false">
-            <a class="dropdown-item" (click)="login()" id="login" data-cy="login">
-              <fa-icon icon="sign-in-alt" [fixedWidth]="true"></fa-icon>
-              <span>Sign in</span>
-            </a>
-          </li>
-          <li *ngSwitchCase="false">
-            <a class="dropdown-item" routerLink="account/register" routerLinkActive="active" (click)="collapseNavbar()" data-cy="register">
-              <fa-icon icon="user-plus" [fixedWidth]="true"></fa-icon>
-              <span>Register</span>
-            </a>
-          </li>
+          <!--<li *ngSwitchCase="false">
+                                <a class="dropdown-item" (click)="login()" id="login" data-cy="login">
+                                  <fa-icon icon="sign-in-alt" [fixedWidth]="true"></fa-icon>
+                                  <span>Einloggen</span>
+                                </a>
+                              </li>
+                              <li *ngSwitchCase="false">
+                                <a class="dropdown-item" routerLink="account/register" routerLinkActive="active" (click)="collapseNavbar()"
+                                   data-cy="register">
+                                  <fa-icon icon="user-plus" [fixedWidth]="true"></fa-icon>
+                                  <span>Registrieren</span>
+                                </a>
+                              </li>-->
         </ul>
       </li>
     </ul>

@@ -3,8 +3,6 @@ package ch.felberto.service.impl;
 import ch.felberto.domain.Passen;
 import ch.felberto.repository.PassenRepository;
 import ch.felberto.service.PassenService;
-import ch.felberto.service.dto.PassenDTO;
-import ch.felberto.service.mapper.PassenMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,50 +22,76 @@ public class PassenServiceImpl implements PassenService {
 
     private final PassenRepository passenRepository;
 
-    private final PassenMapper passenMapper;
-
-    public PassenServiceImpl(PassenRepository passenRepository, PassenMapper passenMapper) {
+    public PassenServiceImpl(PassenRepository passenRepository) {
         this.passenRepository = passenRepository;
-        this.passenMapper = passenMapper;
     }
 
     @Override
-    public PassenDTO save(PassenDTO passenDTO) {
-        log.debug("Request to save Passen : {}", passenDTO);
-        Passen passen = passenMapper.toEntity(passenDTO);
-        passen = passenRepository.save(passen);
-        return passenMapper.toDto(passen);
+    public Passen save(Passen passen) {
+        log.debug("Request to save Passen : {}", passen);
+        return passenRepository.save(passen);
     }
 
     @Override
-    public Optional<PassenDTO> partialUpdate(PassenDTO passenDTO) {
-        log.debug("Request to partially update Passen : {}", passenDTO);
+    public Optional<Passen> partialUpdate(Passen passen) {
+        log.debug("Request to partially update Passen : {}", passen);
 
         return passenRepository
-            .findById(passenDTO.getId())
+            .findById(passen.getId())
             .map(
                 existingPassen -> {
-                    passenMapper.partialUpdate(existingPassen, passenDTO);
+                    if (passen.getp1() != null) {
+                        existingPassen.setp1(passen.getp1());
+                    }
+                    if (passen.getp2() != null) {
+                        existingPassen.setp2(passen.getp2());
+                    }
+                    if (passen.getp3() != null) {
+                        existingPassen.setp3(passen.getp3());
+                    }
+                    if (passen.getp4() != null) {
+                        existingPassen.setp4(passen.getp4());
+                    }
+                    if (passen.getp5() != null) {
+                        existingPassen.setp5(passen.getp5());
+                    }
+                    if (passen.getp6() != null) {
+                        existingPassen.setp6(passen.getp6());
+                    }
+                    if (passen.getp7() != null) {
+                        existingPassen.setp7(passen.getp7());
+                    }
+                    if (passen.getp8() != null) {
+                        existingPassen.setp8(passen.getp8());
+                    }
+                    if (passen.getp9() != null) {
+                        existingPassen.setp9(passen.getp9());
+                    }
+                    if (passen.getp10() != null) {
+                        existingPassen.setp10(passen.getp10());
+                    }
+                    if (passen.getResultat() != null) {
+                        existingPassen.setResultat(passen.getResultat());
+                    }
 
                     return existingPassen;
                 }
             )
-            .map(passenRepository::save)
-            .map(passenMapper::toDto);
+            .map(passenRepository::save);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<PassenDTO> findAll(Pageable pageable) {
+    public Page<Passen> findAll(Pageable pageable) {
         log.debug("Request to get all Passens");
-        return passenRepository.findAll(pageable).map(passenMapper::toDto);
+        return passenRepository.findAll(pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<PassenDTO> findOne(Long id) {
+    public Optional<Passen> findOne(Long id) {
         log.debug("Request to get Passen : {}", id);
-        return passenRepository.findById(id).map(passenMapper::toDto);
+        return passenRepository.findById(id);
     }
 
     @Override

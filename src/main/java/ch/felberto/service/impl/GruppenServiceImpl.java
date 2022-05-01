@@ -3,8 +3,6 @@ package ch.felberto.service.impl;
 import ch.felberto.domain.Gruppen;
 import ch.felberto.repository.GruppenRepository;
 import ch.felberto.service.GruppenService;
-import ch.felberto.service.dto.GruppenDTO;
-import ch.felberto.service.mapper.GruppenMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,50 +22,46 @@ public class GruppenServiceImpl implements GruppenService {
 
     private final GruppenRepository gruppenRepository;
 
-    private final GruppenMapper gruppenMapper;
-
-    public GruppenServiceImpl(GruppenRepository gruppenRepository, GruppenMapper gruppenMapper) {
+    public GruppenServiceImpl(GruppenRepository gruppenRepository) {
         this.gruppenRepository = gruppenRepository;
-        this.gruppenMapper = gruppenMapper;
     }
 
     @Override
-    public GruppenDTO save(GruppenDTO gruppenDTO) {
-        log.debug("Request to save Gruppen : {}", gruppenDTO);
-        Gruppen gruppen = gruppenMapper.toEntity(gruppenDTO);
-        gruppen = gruppenRepository.save(gruppen);
-        return gruppenMapper.toDto(gruppen);
+    public Gruppen save(Gruppen gruppen) {
+        log.debug("Request to save Gruppen : {}", gruppen);
+        return gruppenRepository.save(gruppen);
     }
 
     @Override
-    public Optional<GruppenDTO> partialUpdate(GruppenDTO gruppenDTO) {
-        log.debug("Request to partially update Gruppen : {}", gruppenDTO);
+    public Optional<Gruppen> partialUpdate(Gruppen gruppen) {
+        log.debug("Request to partially update Gruppen : {}", gruppen);
 
         return gruppenRepository
-            .findById(gruppenDTO.getId())
+            .findById(gruppen.getId())
             .map(
                 existingGruppen -> {
-                    gruppenMapper.partialUpdate(existingGruppen, gruppenDTO);
+                    if (gruppen.getName() != null) {
+                        existingGruppen.setName(gruppen.getName());
+                    }
 
                     return existingGruppen;
                 }
             )
-            .map(gruppenRepository::save)
-            .map(gruppenMapper::toDto);
+            .map(gruppenRepository::save);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<GruppenDTO> findAll(Pageable pageable) {
+    public Page<Gruppen> findAll(Pageable pageable) {
         log.debug("Request to get all Gruppens");
-        return gruppenRepository.findAll(pageable).map(gruppenMapper::toDto);
+        return gruppenRepository.findAll(pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<GruppenDTO> findOne(Long id) {
+    public Optional<Gruppen> findOne(Long id) {
         log.debug("Request to get Gruppen : {}", id);
-        return gruppenRepository.findById(id).map(gruppenMapper::toDto);
+        return gruppenRepository.findById(id);
     }
 
     @Override

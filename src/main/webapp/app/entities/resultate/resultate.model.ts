@@ -6,6 +6,7 @@ import { IWettkampf } from 'app/entities/wettkampf/wettkampf.model';
 export interface IResultate {
   id?: number;
   runde?: number;
+  resultat?: number | null;
   passe1?: IPassen | null;
   passe2?: IPassen | null;
   passe3?: IPassen | null;
@@ -19,6 +20,7 @@ export class Resultate implements IResultate {
   constructor(
     public id?: number,
     public runde?: number,
+    public resultat?: number | null,
     public passe1?: IPassen | null,
     public passe2?: IPassen | null,
     public passe3?: IPassen | null,

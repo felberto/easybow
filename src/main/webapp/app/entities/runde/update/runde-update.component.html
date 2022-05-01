@@ -1,0 +1,73 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-runde-heading" data-cy="RundeCreateUpdateHeading">Create or edit a Runde</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_runde">Runde</label>
+          <input type="number" class="form-control" name="runde" id="field_runde" data-cy="runde" formControlName="runde" />
+          <div *ngIf="editForm.get('runde')!.invalid && (editForm.get('runde')!.dirty || editForm.get('runde')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('runde')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('runde')?.errors?.number"> This field should be a number. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_datum">Datum</label>
+          <div class="input-group">
+            <input
+              id="field_datum"
+              data-cy="datum"
+              type="text"
+              class="form-control"
+              name="datum"
+              ngbDatepicker
+              #datumDp="ngbDatepicker"
+              formControlName="datum"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="datumDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_wettkampf">Wettkampf</label>
+          <select class="form-control" id="field_wettkampf" data-cy="wettkampf" name="wettkampf" formControlName="wettkampf">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="wettkampfOption.id === editForm.get('wettkampf')!.value?.id ? editForm.get('wettkampf')!.value : wettkampfOption"
+              *ngFor="let wettkampfOption of wettkampfsSharedCollection; trackBy: trackWettkampfById"
+            >
+              {{ wettkampfOption.name }}{{ wettkampfOption.jahr }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -24,6 +24,7 @@ export class SchuetzeUpdateComponent implements OnInit {
     name: [null, [Validators.required]],
     jahrgang: [null, [Validators.required]],
     stellung: [null, [Validators.required]],
+    rolle: [null, [Validators.required]],
     verein: [],
   });
 
@@ -85,6 +86,7 @@ export class SchuetzeUpdateComponent implements OnInit {
       name: schuetze.name,
       jahrgang: schuetze.jahrgang,
       stellung: schuetze.stellung,
+      rolle: schuetze.rolle,
       verein: schuetze.verein,
     });
 
@@ -93,7 +95,10 @@ export class SchuetzeUpdateComponent implements OnInit {
 
   protected loadRelationshipsOptions(): void {
     this.vereinService
-      .query()
+      .query({
+        page: 0,
+        size: 100,
+      })
       .pipe(map((res: HttpResponse<IVerein[]>) => res.body ?? []))
       .pipe(map((vereins: IVerein[]) => this.vereinService.addVereinToCollectionIfMissing(vereins, this.editForm.get('verein')!.value)))
       .subscribe((vereins: IVerein[]) => (this.vereinsSharedCollection = vereins));
@@ -106,6 +111,7 @@ export class SchuetzeUpdateComponent implements OnInit {
       name: this.editForm.get(['name'])!.value,
       jahrgang: this.editForm.get(['jahrgang'])!.value,
       stellung: this.editForm.get(['stellung'])!.value,
+      rolle: this.editForm.get(['rolle'])!.value,
       verein: this.editForm.get(['verein'])!.value,
     };
   }

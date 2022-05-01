@@ -1,11 +1,9 @@
-@dto(mapstruct)
 @paginate(pagination)
 @service(serviceImpl)
 @filter(true)
 entity Verband {
 	name String required
 }
-@dto(mapstruct)
 @paginate(pagination)
 @service(serviceImpl)
 @filter(true)
@@ -16,16 +14,15 @@ entity Verein {
 enum Stellung {
 	FREI, AUFGELEGT
 }
-@dto(mapstruct)
 @paginate(pagination)
 @service(serviceImpl)
 @filter(true)
 entity Schuetze {
 	name String required,
     jahrgang Integer required,
-    stellung Stellung required
+    stellung Stellung required,
+    rolle String required
 }
-@dto(mapstruct)
 @paginate(pagination)
 @service(serviceImpl)
 @filter(true)
@@ -41,11 +38,16 @@ entity Wettkampf {
     anzahlTeam Integer,
     template Boolean
 }
-
+@paginate(pagination)
+@service(serviceImpl)
+@filter(true)
+entity Runde {
+    runde Integer required,
+    datum LocalDate
+}
 enum Rangierungskriterien {
 	RESULTAT, SERIE, TIEFSCHUESSE, MOUCHEN, ALTER
 }
-@dto(mapstruct)
 @paginate(pagination)
 @service(serviceImpl)
 @filter(true)
@@ -53,7 +55,6 @@ entity Rangierung {
 	position Integer required,
     rangierungskriterien Rangierungskriterien required
 }
-@dto(mapstruct)
 @paginate(pagination)
 @service(serviceImpl)
 @filter(true)
@@ -70,19 +71,19 @@ entity Passen {
     p10 Integer min(0) max(11) required,
     resultat Integer
 }
-@dto(mapstruct)
 @paginate(pagination)
 @service(serviceImpl)
 @filter(true)
 entity Gruppen {
 	name String required
 }
-@dto(mapstruct)
+
 @paginate(pagination)
 @service(serviceImpl)
 @filter(true)
 entity Resultate {
-	runde Integer required
+	runde Integer required,
+	resultat Integer
 }
 
 relationship ManyToOne {
@@ -92,6 +93,7 @@ relationship ManyToOne {
     Resultate{schuetze(name)} to Schuetze
     Resultate{wettkampf(name)} to Wettkampf
     Rangierung{wettkampf(name)} to Wettkampf
+    Runde{wettkampf(name)} to Wettkampf
 }
 
 relationship OneToOne {

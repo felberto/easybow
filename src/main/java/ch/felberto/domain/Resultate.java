@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cascade;
 
 /**
  * A Resultate.
@@ -26,20 +27,27 @@ public class Resultate implements Serializable {
     @Column(name = "runde", nullable = false)
     private Integer runde;
 
+    @Column(name = "resultat")
+    private Integer resultat;
+
     @OneToOne
     @JoinColumn(unique = true)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Passen passe1;
 
     @OneToOne
     @JoinColumn(unique = true)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Passen passe2;
 
     @OneToOne
     @JoinColumn(unique = true)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Passen passe3;
 
     @OneToOne
     @JoinColumn(unique = true)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Passen passe4;
 
     @ManyToOne
@@ -77,6 +85,19 @@ public class Resultate implements Serializable {
 
     public void setRunde(Integer runde) {
         this.runde = runde;
+    }
+
+    public Integer getResultat() {
+        return this.resultat;
+    }
+
+    public Resultate resultat(Integer resultat) {
+        this.resultat = resultat;
+        return this;
+    }
+
+    public void setResultat(Integer resultat) {
+        this.resultat = resultat;
     }
 
     public Passen getPasse1() {
@@ -195,6 +216,7 @@ public class Resultate implements Serializable {
         return "Resultate{" +
             "id=" + getId() +
             ", runde=" + getRunde() +
+            ", resultat=" + getResultat() +
             "}";
     }
 }

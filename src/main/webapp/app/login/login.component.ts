@@ -1,9 +1,10 @@
-import { Component, ViewChild, OnInit, AfterViewInit, ElementRef } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { LoginService } from 'app/login/login.service';
 import { AccountService } from 'app/core/auth/account.service';
+import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
 
 @Component({
   selector: 'jhi-login',
@@ -21,11 +22,19 @@ export class LoginComponent implements OnInit, AfterViewInit {
     rememberMe: [false],
   });
 
+  testForm = new FormGroup({
+    usernameValue: new FormControl('', Validators.required),
+    passwordValue: new FormControl('', Validators.required),
+    rememberMeValue: new FormControl(false),
+  });
+
   constructor(
     private accountService: AccountService,
     private loginService: LoginService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    @Inject(TuiNotificationsService)
+    private readonly notificationsService: TuiNotificationsService
   ) {}
 
   ngOnInit(): void {
@@ -44,19 +53,33 @@ export class LoginComponent implements OnInit, AfterViewInit {
   login(): void {
     this.loginService
       .login({
-        username: this.loginForm.get('username')!.value,
-        password: this.loginForm.get('password')!.value,
-        rememberMe: this.loginForm.get('rememberMe')!.value,
+        username: this.testForm.get('usernameValue')!.value,
+        password: this.testForm.get('passwordValue')!.value,
+        rememberMe: this.testForm.get('rememberMeValue')!.value,
       })
       .subscribe(
-        () => {
+        res => {
           this.authenticationError = false;
           if (!this.router.getCurrentNavigation()) {
             // There were no routing during login (eg from navigationToStoredUrl)
             this.router.navigate(['']);
           }
+          this.notificationsService
+            .show(`Angemeldet mit User ${res!.login}`, {
+              label: 'Erfolgreich angemeldet',
+              status: TuiNotification.Success,
+            })
+            .subscribe();
         },
-        () => (this.authenticationError = true)
+        () => {
+          this.authenticationError = true;
+          this.notificationsService
+            .show('', {
+              label: `Fehler beim Anmelden`,
+              status: TuiNotification.Error,
+            })
+            .subscribe();
+        }
       );
   }
 }

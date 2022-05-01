@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IRangierung, getRangierungIdentifier } from '../rangierung.model';
+import { getRangierungIdentifier, IRangierung } from '../rangierung.model';
+import { getWettkampfIdentifier, IWettkampf } from '../../wettkampf/wettkampf.model';
 
 export type EntityResponseType = HttpResponse<IRangierung>;
 export type EntityArrayResponseType = HttpResponse<IRangierung[]>;
@@ -36,6 +37,12 @@ export class RangierungService {
     return this.http.get<IRangierung>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  findByWettkampf(wettkampf: IWettkampf): Observable<HttpResponse<Array<IRangierung>>> {
+    return this.http.get<Array<IRangierung>>(`${this.resourceUrl}/wettkampf/${getWettkampfIdentifier(wettkampf) as number}`, {
+      observe: 'response',
+    });
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IRangierung[]>(this.resourceUrl, { params: options, observe: 'response' });
@@ -43,6 +50,10 @@ export class RangierungService {
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  deleteAllByWettkampf(wettkampf: IWettkampf): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}/wettkampf/${getWettkampfIdentifier(wettkampf) as number}`, { observe: 'response' });
   }
 
   addRangierungToCollectionIfMissing(

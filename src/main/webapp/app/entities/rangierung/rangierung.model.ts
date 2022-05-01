@@ -20,3 +20,7 @@ export class Rangierung implements IRangierung {
 export function getRangierungIdentifier(rangierung: IRangierung): number | undefined {
   return rangierung.id;
 }
+
+export function getRangierungKriterien(rangierung: IRangierung): string | undefined {
+  return rangierung.rangierungskriterien;
+}

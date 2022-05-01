@@ -2,3 +2,4 @@ id;login;password_hash;first_name;last_name;email;image_url;activated;lang_key;c
 1;admin;$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC;Administrator;Administrator;admin@localhost;;true;en;system;system
 2;user;$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K;User;User;user@localhost;;true;en;system;system
 3;zsav;$2a$10$me5Cj73frq6DJhQWnVxV5uF7hslwtWTJY9z3SdHM88pT26481cEwi;ZSAV;ZSAV;zsav@localhost;;true;en;system;system
+4;live;$2a$04$/jPxD/Nsq81WcNu8Rf9Xh.xFZk6mQWmgYLs5ojruAs3fKZRr5JrSS;LIVE;LIVE;live@localhost;;true;en;system;system

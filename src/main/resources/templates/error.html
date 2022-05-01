@@ -9,7 +9,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="icon" href="${baseUrl}/favicon.ico" />
-    <title>Your request cannot be processed</title>
+    <title>Ihre Anfrage kann nicht bearbeitet werden</title>
     <style>
       ::-moz-selection {
         background: #b3d4fc;
@@ -79,9 +79,9 @@
   </head>
   <body>
     <div class="container">
-      <h1 th:text="#{error.title}">Your request cannot be processed <span>:(</span></h1>
+      <h1 th:text="#{error.title}">Ihre Anfrage kann nicht bearbeitet werden <span>:(</span></h1>
 
-      <p th:text="#{error.subtitle}">Sorry, an error has occurred.</p>
+      <p th:text="#{error.subtitle}">Es ist ein Fehler aufgetreten.</p>
 
       <span th:text="#{error.status}">Status:</span>&nbsp;<span th:text="${error}"></span>&nbsp;(<span th:text="${error}"></span>)<br />
       <span th:if="${!#strings.isEmpty(message)}">

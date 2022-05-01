@@ -1,10 +1,11 @@
 package ch.felberto.web.rest;
 
+import ch.felberto.domain.Schuetze;
 import ch.felberto.repository.SchuetzeRepository;
+import ch.felberto.security.AuthoritiesConstants;
 import ch.felberto.service.SchuetzeQueryService;
 import ch.felberto.service.SchuetzeService;
 import ch.felberto.service.criteria.SchuetzeCriteria;
-import ch.felberto.service.dto.SchuetzeDTO;
 import ch.felberto.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -19,8 +20,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -65,12 +66,12 @@ public class SchuetzeResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/schuetzes")
-    public ResponseEntity<SchuetzeDTO> createSchuetze(@Valid @RequestBody SchuetzeDTO schuetzeDTO) throws URISyntaxException {
+    public ResponseEntity<Schuetze> createSchuetze(@Valid @RequestBody Schuetze schuetzeDTO) throws URISyntaxException {
         log.debug("REST request to save Schuetze : {}", schuetzeDTO);
         if (schuetzeDTO.getId() != null) {
             throw new BadRequestAlertException("A new schuetze cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        SchuetzeDTO result = schuetzeService.save(schuetzeDTO);
+        Schuetze result = schuetzeService.save(schuetzeDTO);
         return ResponseEntity
             .created(new URI("/api/schuetzes/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -80,7 +81,7 @@ public class SchuetzeResource {
     /**
      * {@code PUT  /schuetzes/:id} : Updates an existing schuetze.
      *
-     * @param id the id of the schuetzeDTO to save.
+     * @param id          the id of the schuetzeDTO to save.
      * @param schuetzeDTO the schuetzeDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated schuetzeDTO,
      * or with status {@code 400 (Bad Request)} if the schuetzeDTO is not valid,
@@ -88,9 +89,9 @@ public class SchuetzeResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/schuetzes/{id}")
-    public ResponseEntity<SchuetzeDTO> updateSchuetze(
+    public ResponseEntity<Schuetze> updateSchuetze(
         @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody SchuetzeDTO schuetzeDTO
+        @Valid @RequestBody Schuetze schuetzeDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Schuetze : {}, {}", id, schuetzeDTO);
         if (schuetzeDTO.getId() == null) {
@@ -104,7 +105,7 @@ public class SchuetzeResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        SchuetzeDTO result = schuetzeService.save(schuetzeDTO);
+        Schuetze result = schuetzeService.save(schuetzeDTO);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, schuetzeDTO.getId().toString()))
@@ -114,7 +115,7 @@ public class SchuetzeResource {
     /**
      * {@code PATCH  /schuetzes/:id} : Partial updates given fields of an existing schuetze, field will ignore if it is null
      *
-     * @param id the id of the schuetzeDTO to save.
+     * @param id          the id of the schuetzeDTO to save.
      * @param schuetzeDTO the schuetzeDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated schuetzeDTO,
      * or with status {@code 400 (Bad Request)} if the schuetzeDTO is not valid,
@@ -123,9 +124,9 @@ public class SchuetzeResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/schuetzes/{id}", consumes = "application/merge-patch+json")
-    public ResponseEntity<SchuetzeDTO> partialUpdateSchuetze(
+    public ResponseEntity<Schuetze> partialUpdateSchuetze(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody SchuetzeDTO schuetzeDTO
+        @NotNull @RequestBody Schuetze schuetzeDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Schuetze partially : {}, {}", id, schuetzeDTO);
         if (schuetzeDTO.getId() == null) {
@@ -139,7 +140,7 @@ public class SchuetzeResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<SchuetzeDTO> result = schuetzeService.partialUpdate(schuetzeDTO);
+        Optional<Schuetze> result = schuetzeService.partialUpdate(schuetzeDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -155,9 +156,9 @@ public class SchuetzeResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of schuetzes in body.
      */
     @GetMapping("/schuetzes")
-    public ResponseEntity<List<SchuetzeDTO>> getAllSchuetzes(SchuetzeCriteria criteria, Pageable pageable) {
+    public ResponseEntity<List<Schuetze>> getAllSchuetzes(SchuetzeCriteria criteria, Pageable pageable) {
         log.debug("REST request to get Schuetzes by criteria: {}", criteria);
-        Page<SchuetzeDTO> page = schuetzeQueryService.findByCriteria(criteria, pageable);
+        Page<Schuetze> page = schuetzeQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -181,10 +182,21 @@ public class SchuetzeResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the schuetzeDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/schuetzes/{id}")
-    public ResponseEntity<SchuetzeDTO> getSchuetze(@PathVariable Long id) {
+    public ResponseEntity<Schuetze> getSchuetze(@PathVariable Long id) {
         log.debug("REST request to get Schuetze : {}", id);
-        Optional<SchuetzeDTO> schuetzeDTO = schuetzeService.findOne(id);
+        Optional<Schuetze> schuetzeDTO = schuetzeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(schuetzeDTO);
+    }
+
+    /**
+     * {@code GET  /schuetzes}.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the schuetzeDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/schuetzes/all")
+    public ResponseEntity<List<Schuetze>> getAll() {
+        log.debug("REST request to get Schuetzen");
+        return ResponseEntity.ok().body(schuetzeService.findAll());
     }
 
     /**

@@ -78,7 +78,7 @@
   ],
   "relationships": [],
   "entityTableName": "passen",
-  "dto": "mapstruct",
+  "dto": "no",
   "pagination": "pagination",
   "service": "serviceImpl",
   "jpaMetamodelFiltering": true,
@@ -86,5 +86,5 @@
   "readOnly": false,
   "embedded": false,
   "applications": "*",
-  "changelogDate": "20210710113112"
+  "changelogDate": "20211031084606"
 }

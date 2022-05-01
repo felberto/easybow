@@ -1,11 +1,8 @@
 package ch.felberto.service;
 
-import ch.felberto.domain.*; // for static metamodels
-import ch.felberto.domain.Resultate;
+import ch.felberto.domain.*;
 import ch.felberto.repository.ResultateRepository;
 import ch.felberto.service.criteria.ResultateCriteria;
-import ch.felberto.service.dto.ResultateDTO;
-import ch.felberto.service.mapper.ResultateMapper;
 import java.util.List;
 import javax.persistence.criteria.JoinType;
 import org.slf4j.Logger;
@@ -21,7 +18,7 @@ import tech.jhipster.service.QueryService;
  * Service for executing complex queries for {@link Resultate} entities in the database.
  * The main input is a {@link ResultateCriteria} which gets converted to {@link Specification},
  * in a way that all the filters must apply.
- * It returns a {@link List} of {@link ResultateDTO} or a {@link Page} of {@link ResultateDTO} which fulfills the criteria.
+ * It returns a {@link List} of {@link Resultate} or a {@link Page} of {@link Resultate} which fulfills the criteria.
  */
 @Service
 @Transactional(readOnly = true)
@@ -31,40 +28,40 @@ public class ResultateQueryService extends QueryService<Resultate> {
 
     private final ResultateRepository resultateRepository;
 
-    private final ResultateMapper resultateMapper;
-
-    public ResultateQueryService(ResultateRepository resultateRepository, ResultateMapper resultateMapper) {
+    public ResultateQueryService(ResultateRepository resultateRepository) {
         this.resultateRepository = resultateRepository;
-        this.resultateMapper = resultateMapper;
     }
 
     /**
-     * Return a {@link List} of {@link ResultateDTO} which matches the criteria from the database.
+     * Return a {@link List} of {@link Resultate} which matches the criteria from the database.
+     *
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public List<ResultateDTO> findByCriteria(ResultateCriteria criteria) {
+    public List<Resultate> findByCriteria(ResultateCriteria criteria) {
         log.debug("find by criteria : {}", criteria);
         final Specification<Resultate> specification = createSpecification(criteria);
-        return resultateMapper.toDto(resultateRepository.findAll(specification));
+        return resultateRepository.findAll(specification);
     }
 
     /**
-     * Return a {@link Page} of {@link ResultateDTO} which matches the criteria from the database.
+     * Return a {@link Page} of {@link Resultate} which matches the criteria from the database.
+     *
      * @param criteria The object which holds all the filters, which the entities should match.
-     * @param page The page, which should be returned.
+     * @param page     The page, which should be returned.
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public Page<ResultateDTO> findByCriteria(ResultateCriteria criteria, Pageable page) {
+    public Page<Resultate> findByCriteria(ResultateCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<Resultate> specification = createSpecification(criteria);
-        return resultateRepository.findAll(specification, page).map(resultateMapper::toDto);
+        return resultateRepository.findAll(specification, page);
     }
 
     /**
      * Return the number of matching entities in the database.
+     *
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the number of matching entities.
      */
@@ -77,6 +74,7 @@ public class ResultateQueryService extends QueryService<Resultate> {
 
     /**
      * Function to convert {@link ResultateCriteria} to a {@link Specification}
+     *
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching {@link Specification} of the entity.
      */
@@ -88,6 +86,9 @@ public class ResultateQueryService extends QueryService<Resultate> {
             }
             if (criteria.getRunde() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getRunde(), Resultate_.runde));
+            }
+            if (criteria.getResultat() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getResultat(), Resultate_.resultat));
             }
             if (criteria.getPasse1Id() != null) {
                 specification =

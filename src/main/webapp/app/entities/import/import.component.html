@@ -1,0 +1,10 @@
+<form [formGroup]="dataForm">
+  <div class="tui-row">
+    <div class="tui-col_md-6">
+      <tui-text-area [expandable]="true" formControlName="data" class="tui-space_bottom-4"> JSON Data </tui-text-area>
+    </div>
+  </div>
+</form>
+<button (click)="import()" tuiButton type="button" appearance="customButton" class="tui-space_right-3 tui-space_bottom-3">
+  Import Wettkampf
+</button>

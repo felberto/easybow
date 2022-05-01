@@ -10,6 +10,24 @@ import { FormatMediumDatePipe } from './date/format-medium-date.pipe';
 import { SortByDirective } from './sort/sort-by.directive';
 import { SortDirective } from './sort/sort.directive';
 import { ItemCountComponent } from './pagination/item-count.component';
+import {
+  TuiAccordionModule,
+  TuiCheckboxLabeledModule,
+  TuiFieldErrorModule,
+  TuiInputModule,
+  TuiInputNumberModule,
+  TuiInputPasswordModule,
+  TuiRadioBlockModule,
+} from '@taiga-ui/kit';
+import {
+  TuiButtonModule,
+  TuiDialogModule,
+  TuiHintControllerModule,
+  TuiLoaderModule,
+  TuiNotificationModule,
+  TuiTextfieldControllerModule,
+} from '@taiga-ui/core';
+import { TuiAutoFocusModule } from '@taiga-ui/cdk';
 
 @NgModule({
   imports: [SharedLibsModule],
@@ -35,6 +53,20 @@ import { ItemCountComponent } from './pagination/item-count.component';
     SortByDirective,
     SortDirective,
     ItemCountComponent,
+    TuiInputModule,
+    TuiFieldErrorModule,
+    TuiTextfieldControllerModule,
+    TuiHintControllerModule,
+    TuiInputPasswordModule,
+    TuiButtonModule,
+    TuiNotificationModule,
+    TuiRadioBlockModule,
+    TuiCheckboxLabeledModule,
+    TuiDialogModule,
+    TuiAccordionModule,
+    TuiLoaderModule,
+    TuiInputNumberModule,
+    TuiAutoFocusModule,
   ],
 })
 export class SharedModule {}
