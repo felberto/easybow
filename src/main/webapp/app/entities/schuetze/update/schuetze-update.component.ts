@@ -95,7 +95,10 @@ export class SchuetzeUpdateComponent implements OnInit {
 
   protected loadRelationshipsOptions(): void {
     this.vereinService
-      .query()
+      .query({
+        page: 0,
+        size: 100,
+      })
       .pipe(map((res: HttpResponse<IVerein[]>) => res.body ?? []))
       .pipe(map((vereins: IVerein[]) => this.vereinService.addVereinToCollectionIfMissing(vereins, this.editForm.get('verein')!.value)))
       .subscribe((vereins: IVerein[]) => (this.vereinsSharedCollection = vereins));
