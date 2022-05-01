@@ -47,7 +47,7 @@
               [ngValue]="wettkampfOption.id === editForm.get('wettkampf')!.value?.id ? editForm.get('wettkampf')!.value : wettkampfOption"
               *ngFor="let wettkampfOption of wettkampfsSharedCollection; trackBy: trackWettkampfById"
             >
-              {{ wettkampfOption.name }}
+              {{ wettkampfOption.name }}{{ wettkampfOption.jahr }}
             </option>
           </select>
         </div>
