@@ -104,6 +104,7 @@ export class WettkampfOverviewComponent implements OnInit {
               .subscribe();
           } else {
             if (resultat.runde === 99) {
+              //TODO stimmt gar nicht, zsav soll Resultat bei Final eingeben können
               this.accountService.getAuthorites().forEach(role => {
                 if (role !== 'ROLE_USER' && role !== 'ROLE_VEREIN' && role !== 'ROLE_ADMIN' && role !== 'ROLE_ZSAV') {
                   this.notificationsService
