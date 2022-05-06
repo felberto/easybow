@@ -57,7 +57,6 @@ export class ResultateDialogComponent implements OnInit {
           schuetze,
           runde: i + 1,
         };
-        //todo passen miterstellen
         this.resultateService.create(result).subscribe();
       }
     }
