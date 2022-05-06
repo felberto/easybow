@@ -65,7 +65,7 @@ public class WettkampfResource {
      */
     @PostMapping("/wettkampfs")
     public ResponseEntity<Wettkampf> createWettkampf(@Valid @RequestBody Wettkampf wettkampfDTO) throws URISyntaxException {
-        log.debug("REST request to save Wettkampf : {}", wettkampfDTO);
+        log.info("REST request to save Wettkampf : {}", wettkampfDTO);
         if (wettkampfDTO.getId() != null) {
             throw new BadRequestAlertException("A new wettkampf cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -91,7 +91,7 @@ public class WettkampfResource {
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody Wettkampf wettkampfDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update Wettkampf : {}, {}", id, wettkampfDTO);
+        log.info("REST request to update Wettkampf : {}, {}", id, wettkampfDTO);
         if (wettkampfDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -126,7 +126,7 @@ public class WettkampfResource {
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Wettkampf wettkampfDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update Wettkampf partially : {}, {}", id, wettkampfDTO);
+        log.info("REST request to partial update Wettkampf partially : {}, {}", id, wettkampfDTO);
         if (wettkampfDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }

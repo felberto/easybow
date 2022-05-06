@@ -61,7 +61,7 @@ public class RundeResource {
      */
     @PostMapping("/rundes")
     public ResponseEntity<Runde> createRunde(@Valid @RequestBody Runde runde) throws URISyntaxException {
-        log.debug("REST request to save Runde : {}", runde);
+        log.info("REST request to save Runde : {}", runde);
         if (runde.getId() != null) {
             throw new BadRequestAlertException("A new runde cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -85,7 +85,7 @@ public class RundeResource {
     @PutMapping("/rundes/{id}")
     public ResponseEntity<Runde> updateRunde(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Runde runde)
         throws URISyntaxException {
-        log.debug("REST request to update Runde : {}, {}", id, runde);
+        log.info("REST request to update Runde : {}, {}", id, runde);
         if (runde.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -120,7 +120,7 @@ public class RundeResource {
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Runde runde
     ) throws URISyntaxException {
-        log.debug("REST request to partial update Runde partially : {}, {}", id, runde);
+        log.info("REST request to partial update Runde partially : {}, {}", id, runde);
         if (runde.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }

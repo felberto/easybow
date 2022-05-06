@@ -61,7 +61,7 @@ public class VerbandResource {
      */
     @PostMapping("/verbands")
     public ResponseEntity<Verband> createVerband(@Valid @RequestBody Verband verbandDTO) throws URISyntaxException {
-        log.debug("REST request to save Verband : {}", verbandDTO);
+        log.info("REST request to save Verband : {}", verbandDTO);
         if (verbandDTO.getId() != null) {
             throw new BadRequestAlertException("A new verband cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -87,7 +87,7 @@ public class VerbandResource {
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody Verband verbandDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update Verband : {}, {}", id, verbandDTO);
+        log.info("REST request to update Verband : {}, {}", id, verbandDTO);
         if (verbandDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -122,7 +122,7 @@ public class VerbandResource {
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Verband verbandDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update Verband partially : {}, {}", id, verbandDTO);
+        log.info("REST request to partial update Verband partially : {}, {}", id, verbandDTO);
         if (verbandDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }

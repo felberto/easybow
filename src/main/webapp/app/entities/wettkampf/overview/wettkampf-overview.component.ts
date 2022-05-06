@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { IWettkampf } from '../wettkampf.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ResultateService } from 'app/entities/resultate/service/resultate.service';
-import { HttpResponse } from '@angular/common/http';
 import { IResultate } from 'app/entities/resultate/resultate.model';
 import { ISchuetze } from 'app/entities/schuetze/schuetze.model';
 import { ResultateDialogComponent } from '../resultate-dialog/resultate-dialog.component';
@@ -94,7 +93,16 @@ export class WettkampfOverviewComponent implements OnInit {
   openPassenDialog(resultat: IResultate): void {
     if (resultat.wettkampf?.id !== undefined && resultat.runde !== undefined) {
       this.rundeService.findByRundeAndWettkampf(resultat.runde, resultat.wettkampf.id).subscribe(res => {
-        if (res.body?.datum?.toDate() !== undefined) {
+        if (this.userIsZsavOrAdmin()) {
+          const modalRef = this.modalService.open(PassenDialogComponent, {
+            size: 'xl',
+            backdrop: 'static',
+          });
+          modalRef.componentInstance.resultat = resultat;
+          modalRef.closed.subscribe(() => {
+            this.loadPage();
+          });
+        } else if (res.body?.datum?.toDate() !== undefined) {
           if (res.body.datum.toDate() < dayjs().toDate()) {
             this.notificationsService
               .show(`Resultateingabe geschlossen seit ${res.body.datum.toDate().toLocaleDateString('de-DE')}`, {
@@ -103,25 +111,7 @@ export class WettkampfOverviewComponent implements OnInit {
               })
               .subscribe();
           } else {
-            if (resultat.runde === 99) {
-              //TODO stimmt gar nicht, zsav soll Resultat bei Final eingeben können
-              this.accountService.getAuthorites().forEach(role => {
-                if (role !== 'ROLE_USER' && role !== 'ROLE_VEREIN' && role !== 'ROLE_ADMIN' && role !== 'ROLE_ZSAV') {
-                  this.notificationsService
-                    .show('Nicht berechtigt Finalresultat zu bearbeiten', {
-                      label: 'Keine Berechtigung',
-                      status: TuiNotification.Warning,
-                    })
-                    .subscribe();
-                } else if (role === 'ROLE_ZSAV') {
-                  const modalRef = this.modalService.open(PassenDialogComponent, {
-                    size: 'xl',
-                    backdrop: 'static',
-                  });
-                  modalRef.componentInstance.resultat = resultat;
-                }
-              });
-            } else {
+            if (resultat.runde !== 99) {
               const modalRef = this.modalService.open(PassenDialogComponent, {
                 size: 'xl',
                 backdrop: 'static',
@@ -130,11 +120,28 @@ export class WettkampfOverviewComponent implements OnInit {
               modalRef.closed.subscribe(() => {
                 this.loadPage();
               });
+            } else {
+              this.notificationsService
+                .show('Nicht berechtigt Finalresultat zu bearbeiten', {
+                  label: 'Keine Berechtigung',
+                  status: TuiNotification.Warning,
+                })
+                .subscribe();
             }
           }
         }
       });
     }
+  }
+
+  userIsZsavOrAdmin(): boolean {
+    let isZsavOrAdmin = false;
+    this.accountService.getAuthorites().forEach(role => {
+      if (role === 'ROLE_ADMIN' || role === 'ROLE_ZSAV') {
+        isZsavOrAdmin = true;
+      }
+    });
+    return isZsavOrAdmin;
   }
 
   getResultateBySchuetze(schuetze: ISchuetze): Array<IResultate> {
@@ -185,7 +192,11 @@ export class WettkampfOverviewComponent implements OnInit {
   }
 
   private loadPage(): void {
-    this.activatedRoute.data.subscribe(({ wettkampf }) => {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
+    /*this.activatedRoute.data.subscribe(({ wettkampf }) => {
       this.wettkampf = wettkampf;
       this.resultateService.findByWettkampf(wettkampf).subscribe((res: HttpResponse<Array<IResultate>>) => {
         this.resultate = res.body;
@@ -199,6 +210,6 @@ export class WettkampfOverviewComponent implements OnInit {
 
         this.schuetzen = tempSchuetzen.filter((s, i, arr) => arr.indexOf(<ISchuetze>arr.find(t => t.id === s.id)) === i);
       });
-    });
+    });*/
   }
 }

@@ -61,7 +61,7 @@ public class PassenResource {
      */
     @PostMapping("/passens")
     public ResponseEntity<Passen> createPassen(@Valid @RequestBody Passen passenDTO) throws URISyntaxException {
-        log.debug("REST request to save Passen : {}", passenDTO);
+        log.info("REST request to save Passen : {}", passenDTO);
         if (passenDTO.getId() != null) {
             throw new BadRequestAlertException("A new passen cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -87,7 +87,7 @@ public class PassenResource {
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody Passen passenDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update Passen : {}, {}", id, passenDTO);
+        log.info("REST request to update Passen : {}, {}", id, passenDTO);
         if (passenDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -122,7 +122,7 @@ public class PassenResource {
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Passen passenDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update Passen partially : {}, {}", id, passenDTO);
+        log.info("REST request to partial update Passen partially : {}, {}", id, passenDTO);
         if (passenDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }

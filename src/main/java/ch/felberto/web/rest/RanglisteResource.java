@@ -50,7 +50,7 @@ public class RanglisteResource {
      */
     @PostMapping("/rangliste/{wettkampfId}")
     public ResponseEntity<Rangliste> createRangliste(@PathVariable Long wettkampfId, @RequestBody Integer type) {
-        log.debug("REST request to get Rangliste for Wettkampf : {} and type : {}", wettkampfId, type);
+        log.info("REST request to get Rangliste for Wettkampf : {} and type : {}", wettkampfId, type);
         Optional<Rangliste> rangliste = Optional.ofNullable(ranglisteService.generateRangliste(wettkampfId, type));
         return ResponseUtil.wrapOrNotFound(rangliste);
     }
@@ -64,7 +64,7 @@ public class RanglisteResource {
      */
     @PostMapping("/rangliste/final/{wettkampfId}")
     public ResponseEntity<Rangliste> createFinal(@PathVariable Long wettkampfId, @RequestBody Integer type) {
-        log.debug("REST request to create final for Wettkampf : {} and type : {}", wettkampfId, type);
+        log.info("REST request to create final for Wettkampf : {} and type : {}", wettkampfId, type);
         Optional<Rangliste> rangliste = Optional.ofNullable(ranglisteService.createFinal(wettkampfId, type));
         return ResponseUtil.wrapOrNotFound(rangliste);
     }
@@ -77,7 +77,7 @@ public class RanglisteResource {
      */
     @PostMapping("/rangliste/print")
     public ResponseEntity<Resource> printRangliste(@RequestBody Rangliste rangliste) throws IOException, DocumentException {
-        log.debug("REST request to print Rangliste : {}", rangliste);
+        log.info("REST request to print Rangliste : {}", rangliste);
         try {
             Path file = Paths.get(ranglistePrintService.generatePdf(rangliste).getAbsolutePath());
             Resource resource = new UrlResource((file.toUri()));

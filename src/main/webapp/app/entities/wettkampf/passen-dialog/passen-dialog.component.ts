@@ -146,31 +146,56 @@ export class PassenDialogComponent implements OnInit {
   save(): void {
     switch (this.wettkampf?.anzahlPassen) {
       case 1:
-        this.saveResult(this.resultat?.passe1, this.passe1, 1);
+        this.updatePasseOnResult(this.resultat?.passe1, this.passe1, 1);
+        this.saveResultat();
         this.cancel();
         break;
       case 2:
-        this.saveResult(this.resultat?.passe1, this.passe1, 1);
-        this.saveResult(this.resultat?.passe2, this.passe2, 2);
+        this.updatePasseOnResult(this.resultat?.passe1, this.passe1, 1);
+        this.updatePasseOnResult(this.resultat?.passe2, this.passe2, 2);
+        this.saveResultat();
         this.cancel();
         break;
       case 3:
-        this.saveResult(this.resultat?.passe1, this.passe1, 1);
-        this.saveResult(this.resultat?.passe2, this.passe2, 2);
-        this.saveResult(this.resultat?.passe3, this.passe3, 3);
+        this.updatePasseOnResult(this.resultat?.passe1, this.passe1, 1);
+        this.updatePasseOnResult(this.resultat?.passe2, this.passe2, 2);
+        this.updatePasseOnResult(this.resultat?.passe3, this.passe3, 3);
+        this.saveResultat();
         this.cancel();
         break;
       case 4:
-        this.saveResult(this.resultat?.passe1, this.passe1, 1);
-        this.saveResult(this.resultat?.passe2, this.passe2, 2);
-        this.saveResult(this.resultat?.passe3, this.passe3, 3);
-        this.saveResult(this.resultat?.passe4, this.passe4, 4);
+        this.updatePasseOnResult(this.resultat?.passe1, this.passe1, 1);
+        this.updatePasseOnResult(this.resultat?.passe2, this.passe2, 2);
+        this.updatePasseOnResult(this.resultat?.passe3, this.passe3, 3);
+        this.updatePasseOnResult(this.resultat?.passe4, this.passe4, 4);
+        this.saveResultat();
         this.cancel();
         break;
     }
   }
 
-  saveResult(passe: IPassen | null | undefined, numbers: number[], passeNumber: number): void {
+  saveResultat(): void {
+    this.resultateService.update(this.resultat!).subscribe(res => {
+      if (res.status) {
+        const content = `Passen mit Resultat ${res.body!.resultat!} wurde gespeichert`;
+        this.notificationsService
+          .show(content, {
+            label: 'Erfolgreich gespeichert',
+            status: TuiNotification.Success,
+          })
+          .subscribe();
+      } else {
+        this.notificationsService
+          .show('Fehler beim Speichern aufgetreten', {
+            label: 'Fehler beim Speichern',
+            status: TuiNotification.Error,
+          })
+          .subscribe();
+      }
+    });
+  }
+
+  updatePasseOnResult(passe: IPassen | null | undefined, numbers: number[], passeNumber: number): void {
     const iPassen: IPassen = {
       p1: numbers[0],
       p2: numbers[1],
@@ -190,93 +215,21 @@ export class PassenDialogComponent implements OnInit {
       case 1:
         if (this.resultat?.passe1 !== undefined) {
           this.resultat.passe1 = iPassen;
-          this.resultateService.update(this.resultat).subscribe(res => {
-            if (res.status) {
-              const content = `Passe 1 mit Resultat ${res.body!.passe1!.resultat!} wurde gespeichert`;
-              this.notificationsService
-                .show(content, {
-                  label: 'Erfolgreich gespeichert',
-                  status: TuiNotification.Success,
-                })
-                .subscribe();
-            } else {
-              this.notificationsService
-                .show('Fehler beim Speichern von Passe 1 aufgetreten', {
-                  label: 'Fehler beim Speichern',
-                  status: TuiNotification.Error,
-                })
-                .subscribe();
-            }
-          });
         }
         break;
       case 2:
         if (this.resultat?.passe2 !== undefined) {
           this.resultat.passe2 = iPassen;
-          this.resultateService.update(this.resultat).subscribe(res => {
-            if (res.status) {
-              const content = `Passe 2 mit Resultat ${res.body!.passe2!.resultat!} wurde gespeichert`;
-              this.notificationsService
-                .show(content, {
-                  label: 'Erfolgreich gespeichert',
-                  status: TuiNotification.Success,
-                })
-                .subscribe();
-            } else {
-              this.notificationsService
-                .show('Fehler beim Speichern von Passe 2 aufgetreten', {
-                  label: 'Fehler beim Speichern',
-                  status: TuiNotification.Error,
-                })
-                .subscribe();
-            }
-          });
         }
         break;
       case 3:
         if (this.resultat?.passe3 !== undefined) {
           this.resultat.passe3 = iPassen;
-          this.resultateService.update(this.resultat).subscribe(res => {
-            if (res.status) {
-              const content = `Passe 3 mit Resultat ${res.body!.passe3!.resultat!} wurde gespeichert`;
-              this.notificationsService
-                .show(content, {
-                  label: 'Erfolgreich gespeichert',
-                  status: TuiNotification.Success,
-                })
-                .subscribe();
-            } else {
-              this.notificationsService
-                .show('Fehler beim Speichern von Passe 3 aufgetreten', {
-                  label: 'Fehler beim Speichern',
-                  status: TuiNotification.Error,
-                })
-                .subscribe();
-            }
-          });
         }
         break;
       case 4:
         if (this.resultat?.passe4 !== undefined) {
           this.resultat.passe4 = iPassen;
-          this.resultateService.update(this.resultat).subscribe(res => {
-            if (res.status) {
-              const content = `Passe 4 mit Resultat ${res.body!.passe4!.resultat!} wurde gespeichert`;
-              this.notificationsService
-                .show(content, {
-                  label: 'Erfolgreich gespeichert',
-                  status: TuiNotification.Success,
-                })
-                .subscribe();
-            } else {
-              this.notificationsService
-                .show('Fehler beim Speichern von Passe 4 aufgetreten', {
-                  label: 'Fehler beim Speichern',
-                  status: TuiNotification.Error,
-                })
-                .subscribe();
-            }
-          });
         }
         break;
     }
