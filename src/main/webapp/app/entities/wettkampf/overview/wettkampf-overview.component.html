@@ -39,6 +39,7 @@
   <tui-accordion class="container">
     <tui-accordion-item *ngFor="let schuetze of schuetzen; let index = index">
       {{ schuetze.name }} {{ schuetze.verein?.name }}
+      <!--todo bei 0 grün anzeigen ausser bei finale, sonst grün anzeigen. bei null warning anzeigen.-->
       <tui-badge
         *ngIf="getResultateBySchuetzeAndRunde(schuetze, 1) !== 0"
         status="success"
