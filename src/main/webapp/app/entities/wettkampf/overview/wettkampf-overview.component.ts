@@ -193,6 +193,7 @@ export class WettkampfOverviewComponent implements OnInit {
   }
 
   createFinal(wettkampf: IWettkampf): void {
+    //todo checkboxen und schützen auswählen
     const modalRef = this.modalService.open(ConfirmDialogComponent, { size: 'xl', backdrop: 'static' });
     modalRef.componentInstance.wettkampf = wettkampf;
     modalRef.closed.subscribe(() => {

@@ -174,7 +174,10 @@ export class ResultateUpdateComponent implements OnInit {
       .subscribe((gruppens: IGruppen[]) => (this.gruppensSharedCollection = gruppens));
 
     this.schuetzeService
-      .query()
+      .query({
+        page: 0,
+        size: 1000,
+      })
       .pipe(map((res: HttpResponse<ISchuetze[]>) => res.body ?? []))
       .pipe(
         map((schuetzes: ISchuetze[]) =>
