@@ -2,6 +2,7 @@ package ch.felberto.web.rest;
 
 import ch.felberto.domain.Resultate;
 import ch.felberto.repository.ResultateRepository;
+import ch.felberto.service.MailService;
 import ch.felberto.service.ResultateQueryService;
 import ch.felberto.service.ResultateService;
 import ch.felberto.service.criteria.ResultateCriteria;
@@ -46,14 +47,18 @@ public class ResultateResource {
 
     private final ResultateQueryService resultateQueryService;
 
+    private final MailService mailService;
+
     public ResultateResource(
         ResultateService resultateService,
         ResultateRepository resultateRepository,
-        ResultateQueryService resultateQueryService
+        ResultateQueryService resultateQueryService,
+        MailService mailService
     ) {
         this.resultateService = resultateService;
         this.resultateRepository = resultateRepository;
         this.resultateQueryService = resultateQueryService;
+        this.mailService = mailService;
     }
 
     //TODO gemsamtresultat updaten wenn passe hinzugefügt oder geupdatet wird
@@ -67,7 +72,7 @@ public class ResultateResource {
      */
     @PostMapping("/resultates")
     public ResponseEntity<Resultate> createResultate(@Valid @RequestBody Resultate resultateDTO) throws URISyntaxException {
-        log.debug("REST request to save Resultate : {}", resultateDTO);
+        log.info("REST request to save Resultate : {}", resultateDTO);
         if (resultateDTO.getId() != null) {
             throw new BadRequestAlertException("A new resultate cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -93,7 +98,7 @@ public class ResultateResource {
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody Resultate resultateDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update Resultate : {}, {}", id, resultateDTO);
+        log.info("REST request to update Resultate : {}, {}", id, resultateDTO);
         if (resultateDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -106,6 +111,7 @@ public class ResultateResource {
         }
 
         Resultate result = resultateService.save(resultateDTO);
+        //mailService.sendUpdateResultMail(result);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, resultateDTO.getId().toString()))
@@ -128,7 +134,7 @@ public class ResultateResource {
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Resultate resultateDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update Resultate partially : {}, {}", id, resultateDTO);
+        log.info("REST request to partial update Resultate partially : {}, {}", id, resultateDTO);
         if (resultateDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }

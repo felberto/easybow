@@ -2,7 +2,6 @@ package ch.felberto.web.rest;
 
 import ch.felberto.domain.Schuetze;
 import ch.felberto.repository.SchuetzeRepository;
-import ch.felberto.security.AuthoritiesConstants;
 import ch.felberto.service.SchuetzeQueryService;
 import ch.felberto.service.SchuetzeService;
 import ch.felberto.service.criteria.SchuetzeCriteria;
@@ -21,7 +20,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -67,7 +65,7 @@ public class SchuetzeResource {
      */
     @PostMapping("/schuetzes")
     public ResponseEntity<Schuetze> createSchuetze(@Valid @RequestBody Schuetze schuetzeDTO) throws URISyntaxException {
-        log.debug("REST request to save Schuetze : {}", schuetzeDTO);
+        log.info("REST request to save Schuetze : {}", schuetzeDTO);
         if (schuetzeDTO.getId() != null) {
             throw new BadRequestAlertException("A new schuetze cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -93,7 +91,7 @@ public class SchuetzeResource {
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody Schuetze schuetzeDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update Schuetze : {}, {}", id, schuetzeDTO);
+        log.info("REST request to update Schuetze : {}, {}", id, schuetzeDTO);
         if (schuetzeDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -128,7 +126,7 @@ public class SchuetzeResource {
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Schuetze schuetzeDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update Schuetze partially : {}, {}", id, schuetzeDTO);
+        log.info("REST request to partial update Schuetze partially : {}, {}", id, schuetzeDTO);
         if (schuetzeDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }

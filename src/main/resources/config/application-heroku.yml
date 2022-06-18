@@ -12,7 +12,7 @@
 
 eureka:
   instance:
-    hostname: easybow.herokuapp.com
+    hostname: tool.easybow.ch
     non-secure-port: 80
     prefer-ip-address: false
   client:

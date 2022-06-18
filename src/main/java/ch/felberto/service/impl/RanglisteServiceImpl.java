@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class RanglisteServiceImpl implements RanglisteService {
+
+    private final Logger log = LoggerFactory.getLogger(RanglisteServiceImpl.class);
 
     private final ResultateRepository resultateRepository;
 
@@ -48,6 +52,7 @@ public class RanglisteServiceImpl implements RanglisteService {
 
     @Override
     public Rangliste createFinal(Long wettkampfId, Integer type) {
+        log.info("createFinal for wettkampfId: {} and type: {}", wettkampfId, type);
         resultateService.deleteByWettkampf_IdAndRunde(wettkampfId, type);
         Rangliste rangliste = generateRangliste(wettkampfId, 100);
         List<SchuetzeResultat> tempFinalList;
@@ -103,6 +108,7 @@ public class RanglisteServiceImpl implements RanglisteService {
 
     @Override
     public Rangliste generateRangliste(Long wettkampfId, Integer type) {
+        log.info("generateRangliste for wettkampfId: {} and type: {}", wettkampfId, type);
         Wettkampf wettkampf = wettkampfRepository.getOne(wettkampfId);
         Rangliste rangliste = getAllSchuetzesByWettkampf(wettkampf, type);
         rangliste.setType(type);
@@ -146,6 +152,7 @@ public class RanglisteServiceImpl implements RanglisteService {
             default:
                 break;
         }
+        log.info("generated rangliste: {}", rangliste);
         return rangliste;
     }
 

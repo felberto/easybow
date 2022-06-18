@@ -39,8 +39,9 @@
   <tui-accordion class="container">
     <tui-accordion-item *ngFor="let schuetze of schuetzen; let index = index">
       {{ schuetze.name }} {{ schuetze.verein?.name }}
+      <!--todo badges dynamisch nach anzahl runden-->
       <tui-badge
-        *ngIf="getResultateBySchuetzeAndRunde(schuetze, 1) !== 0"
+        *ngIf="getResultateBySchuetzeAndRunde(schuetze, 1) > 0"
         status="success"
         value="1. Runde"
         class="tui-space_right-2"
@@ -52,7 +53,13 @@
         class="tui-space_right-2"
       ></tui-badge>
       <tui-badge
-        *ngIf="getResultateBySchuetzeAndRunde(schuetze, 2) !== 0"
+        *ngIf="getResultateBySchuetzeAndRunde(schuetze, 1) == undefined"
+        status="error"
+        value="1. Runde"
+        class="tui-space_right-2"
+      ></tui-badge>
+      <tui-badge
+        *ngIf="getResultateBySchuetzeAndRunde(schuetze, 2) > 0"
         status="success"
         value="2. Runde"
         class="tui-space_right-2"
@@ -64,7 +71,13 @@
         class="tui-space_right-2"
       ></tui-badge>
       <tui-badge
-        *ngIf="getResultateBySchuetzeAndRunde(schuetze, 99) !== 0"
+        *ngIf="getResultateBySchuetzeAndRunde(schuetze, 2) == undefined"
+        status="error"
+        value="2. Runde"
+        class="tui-space_right-2"
+      ></tui-badge>
+      <tui-badge
+        *ngIf="getResultateBySchuetzeAndRunde(schuetze, 99) > 0"
         status="success"
         value="Finalrunde"
         class="tui-space_right-2"
@@ -75,7 +88,6 @@
         value="Finalrunde"
         class="tui-space_right-2"
       ></tui-badge>
-      <!-- todo nur anzeigen wenn final schon erstellt wurde, sonst ausblenden -->
       <tui-badge
         *ngIf="!getResultateBySchuetzeIfRunde99(schuetze) && isFinalReady()"
         status="error"

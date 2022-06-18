@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PassenDialogComponent } from './passen-dialog.component';
+import { PassenDialog1Component } from './passen-dialog-1.component';
 
-describe('PassenDialogComponent', () => {
-  let component: PassenDialogComponent;
-  let fixture: ComponentFixture<PassenDialogComponent>;
+describe('PassenDialog1Component', () => {
+  let component: PassenDialog1Component;
+  let fixture: ComponentFixture<PassenDialog1Component>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PassenDialogComponent],
+      declarations: [PassenDialog1Component],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PassenDialogComponent);
+    fixture = TestBed.createComponent(PassenDialog1Component);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

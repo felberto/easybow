@@ -10,7 +10,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { WettkampfOverviewComponent } from './overview/wettkampf-overview.component';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { ResultateDialogComponent } from './resultate-dialog/resultate-dialog.component';
-import { PassenDialogComponent } from './passen-dialog/passen-dialog.component';
+import { PassenDialog2Component } from './passen-dialog-2/passen-dialog-2.component';
 import { FormsModule } from '@angular/forms';
 import { RanglisteComponent } from './rangliste/rangliste.component';
 import { MatTableModule } from '@angular/material/table';
@@ -20,6 +20,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { TuiSvgModule } from '@taiga-ui/core';
 import { TuiBadgeModule } from '@taiga-ui/kit';
+import { PassenDialog1Component } from './passen-dialog-1/passen-dialog-1.component';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { TuiBadgeModule } from '@taiga-ui/kit';
     WettkampfRangierungComponent,
     WettkampfOverviewComponent,
     ResultateDialogComponent,
-    PassenDialogComponent,
+    PassenDialog1Component,
+    PassenDialog2Component,
     RanglisteComponent,
     RanglisteDialogComponent,
     ConfirmDialogComponent,
@@ -50,10 +52,11 @@ import { TuiBadgeModule } from '@taiga-ui/kit';
     WettkampfDeleteDialogComponent,
     ResultateDialogComponent,
     RanglisteComponent,
-    PassenDialogComponent,
+    PassenDialog1Component,
+    PassenDialog2Component,
     ConfirmDialogComponent,
   ],
   providers: [NgbActiveModal],
-  exports: [PassenDialogComponent],
+  exports: [PassenDialog1Component, PassenDialog2Component],
 })
 export class WettkampfModule {}

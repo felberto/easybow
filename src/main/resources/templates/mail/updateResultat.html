@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}" lang="de">
+  <head>
+    <title th:text="#{email.updateResultat.title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}" />
+  </head>
+  <body>
+    <p th:text="${resultat.wettkampf.name} + ' ' +  ${resultat.wettkampf.jahr}"></p>
+    <p th:text="'Runde: ' + ${resultat.getRunde()}"></p>
+    <p th:text="'Schütze: ' + ${resultat.getSchuetze().name}"></p>
+    <p th:text="'Passe 1: ' + ${resultat.getPasse1()}"></p>
+    <p th:text="'Passe 2: ' + ${resultat.getPasse2()}"></p>
+    <p th:text="'Passe 3: ' + ${resultat.getPasse3()}"></p>
+    <p th:text="'Passe 4: ' + ${resultat.getPasse4()}"></p>
+    <p th:text="'Resultat: ' + ${resultat.getResultat()}"></p>
+  </body>
+</html>

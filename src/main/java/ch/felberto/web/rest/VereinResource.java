@@ -61,7 +61,7 @@ public class VereinResource {
      */
     @PostMapping("/vereins")
     public ResponseEntity<Verein> createVerein(@Valid @RequestBody Verein vereinDTO) throws URISyntaxException {
-        log.debug("REST request to save Verein : {}", vereinDTO);
+        log.info("REST request to save Verein : {}", vereinDTO);
         if (vereinDTO.getId() != null) {
             throw new BadRequestAlertException("A new verein cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -87,7 +87,7 @@ public class VereinResource {
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody Verein vereinDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update Verein : {}, {}", id, vereinDTO);
+        log.info("REST request to update Verein : {}, {}", id, vereinDTO);
         if (vereinDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -122,7 +122,7 @@ public class VereinResource {
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Verein vereinDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update Verein partially : {}, {}", id, vereinDTO);
+        log.info("REST request to partial update Verein partially : {}, {}", id, vereinDTO);
         if (vereinDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }

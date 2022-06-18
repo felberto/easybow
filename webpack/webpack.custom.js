@@ -36,7 +36,7 @@ module.exports = (config, options, targetOptions) => {
       }),
       new WebpackNotifierPlugin({
         title: 'Easybow',
-        contentImage: path.join(__dirname, 'logo-jhipster.png'),
+        contentImage: path.join(__dirname, 'easybow_logo.png'),
       })
     );
   }

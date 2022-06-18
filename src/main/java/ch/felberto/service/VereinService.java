@@ -25,6 +25,8 @@ public interface VereinService {
      */
     Optional<Verein> partialUpdate(Verein vereinDTO);
 
+    Optional<Verein> partialUpdateByName(Verein verein);
+
     /**
      * Get all the vereins.
      *

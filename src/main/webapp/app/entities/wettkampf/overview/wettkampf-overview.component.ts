@@ -2,12 +2,11 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { IWettkampf } from '../wettkampf.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ResultateService } from 'app/entities/resultate/service/resultate.service';
-import { HttpResponse } from '@angular/common/http';
 import { IResultate } from 'app/entities/resultate/resultate.model';
 import { ISchuetze } from 'app/entities/schuetze/schuetze.model';
 import { ResultateDialogComponent } from '../resultate-dialog/resultate-dialog.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PassenDialogComponent } from '../passen-dialog/passen-dialog.component';
+import { PassenDialog2Component } from '../passen-dialog-2/passen-dialog-2.component';
 import * as dayjs from 'dayjs';
 import { RundeService } from '../../runde/service/runde.service';
 import { AlertService } from '../../../core/util/alert.service';
@@ -16,6 +15,7 @@ import { RanglisteService } from '../service/rangliste.service';
 import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { WettkampfService } from '../service/wettkampf.service';
+import { PassenDialog1Component } from '../passen-dialog-1/passen-dialog-1.component';
 
 @Component({
   selector: 'jhi-overview',
@@ -94,7 +94,9 @@ export class WettkampfOverviewComponent implements OnInit {
   openPassenDialog(resultat: IResultate): void {
     if (resultat.wettkampf?.id !== undefined && resultat.runde !== undefined) {
       this.rundeService.findByRundeAndWettkampf(resultat.runde, resultat.wettkampf.id).subscribe(res => {
-        if (res.body?.datum?.toDate() !== undefined) {
+        if (this.userIsZsavOrAdmin()) {
+          this.openDialog(resultat);
+        } else if (res.body?.datum?.toDate() !== undefined) {
           if (res.body.datum.toDate() < dayjs().toDate()) {
             this.notificationsService
               .show(`Resultateingabe geschlossen seit ${res.body.datum.toDate().toLocaleDateString('de-DE')}`, {
@@ -103,37 +105,52 @@ export class WettkampfOverviewComponent implements OnInit {
               })
               .subscribe();
           } else {
-            if (resultat.runde === 99) {
-              this.accountService.getAuthorites().forEach(role => {
-                if (role !== 'ROLE_USER' && role !== 'ROLE_VEREIN' && role !== 'ROLE_ADMIN' && role !== 'ROLE_ZSAV') {
-                  this.notificationsService
-                    .show('Nicht berechtigt Finalresultat zu bearbeiten', {
-                      label: 'Keine Berechtigung',
-                      status: TuiNotification.Warning,
-                    })
-                    .subscribe();
-                } else if (role === 'ROLE_ZSAV') {
-                  const modalRef = this.modalService.open(PassenDialogComponent, {
-                    size: 'xl',
-                    backdrop: 'static',
-                  });
-                  modalRef.componentInstance.resultat = resultat;
-                }
-              });
+            if (resultat.runde !== 99) {
+              this.openDialog(resultat);
             } else {
-              const modalRef = this.modalService.open(PassenDialogComponent, {
-                size: 'xl',
-                backdrop: 'static',
-              });
-              modalRef.componentInstance.resultat = resultat;
-              modalRef.closed.subscribe(() => {
-                this.loadPage();
-              });
+              this.notificationsService
+                .show('Nicht berechtigt Finalresultat zu bearbeiten', {
+                  label: 'Keine Berechtigung',
+                  status: TuiNotification.Warning,
+                })
+                .subscribe();
             }
           }
         }
       });
     }
+  }
+
+  openDialog(resultat: IResultate): void {
+    if (resultat.wettkampf?.anzahlPassen === 1) {
+      const modalRef = this.modalService.open(PassenDialog1Component, {
+        size: 'xl',
+        backdrop: 'static',
+      });
+      modalRef.componentInstance.resultat = resultat;
+      modalRef.closed.subscribe(() => {
+        this.loadPage();
+      });
+    } else if (resultat.wettkampf?.anzahlPassen === 2) {
+      const modalRef = this.modalService.open(PassenDialog2Component, {
+        size: 'xl',
+        backdrop: 'static',
+      });
+      modalRef.componentInstance.resultat = resultat;
+      modalRef.closed.subscribe(() => {
+        this.loadPage();
+      });
+    }
+  }
+
+  userIsZsavOrAdmin(): boolean {
+    let isZsavOrAdmin = false;
+    this.accountService.getAuthorites().forEach(role => {
+      if (role === 'ROLE_ADMIN' || role === 'ROLE_ZSAV') {
+        isZsavOrAdmin = true;
+      }
+    });
+    return isZsavOrAdmin;
   }
 
   getResultateBySchuetze(schuetze: ISchuetze): Array<IResultate> {
@@ -176,6 +193,7 @@ export class WettkampfOverviewComponent implements OnInit {
   }
 
   createFinal(wettkampf: IWettkampf): void {
+    //todo checkboxen und schützen auswählen
     const modalRef = this.modalService.open(ConfirmDialogComponent, { size: 'xl', backdrop: 'static' });
     modalRef.componentInstance.wettkampf = wettkampf;
     modalRef.closed.subscribe(() => {
@@ -184,7 +202,11 @@ export class WettkampfOverviewComponent implements OnInit {
   }
 
   private loadPage(): void {
-    this.activatedRoute.data.subscribe(({ wettkampf }) => {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
+    /*this.activatedRoute.data.subscribe(({ wettkampf }) => {
       this.wettkampf = wettkampf;
       this.resultateService.findByWettkampf(wettkampf).subscribe((res: HttpResponse<Array<IResultate>>) => {
         this.resultate = res.body;
@@ -198,6 +220,6 @@ export class WettkampfOverviewComponent implements OnInit {
 
         this.schuetzen = tempSchuetzen.filter((s, i, arr) => arr.indexOf(<ISchuetze>arr.find(t => t.id === s.id)) === i);
       });
-    });
+    });*/
   }
 }

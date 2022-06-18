@@ -69,6 +69,31 @@
           </div>
         </div>
 
+        <div class="form-group">
+          <label class="form-control-label" for="password">New password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            placeholder="New password"
+            formControlName="password"
+            data-cy="firstPassword"
+          />
+
+          <div *ngIf="editForm.get('password')!.invalid && (editForm.get('password')!.dirty || editForm.get('password')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('password')?.errors?.required"> Your password is required. </small>
+
+            <small class="form-text text-danger" *ngIf="editForm.get('password')?.errors?.minlength">
+              Your password is required to be at least 4 characters.
+            </small>
+
+            <small class="form-text text-danger" *ngIf="editForm.get('password')?.errors?.maxlength">
+              Your password cannot be longer than 50 characters.
+            </small>
+          </div>
+        </div>
+
         <div class="form-check">
           <label class="form-check-label" for="activated">
             <input
