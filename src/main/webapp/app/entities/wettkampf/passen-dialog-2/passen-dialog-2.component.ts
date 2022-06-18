@@ -10,18 +10,16 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
 
 @Component({
-  selector: 'jhi-passen-dialog',
-  templateUrl: './passen-dialog.component.html',
-  styleUrls: ['./passen-dialog.component.scss'],
+  selector: 'jhi-passen-dialog-2',
+  templateUrl: './passen-dialog-2.component.html',
+  styleUrls: ['./passen-dialog-2.component.scss'],
 })
-export class PassenDialogComponent implements OnInit {
+export class PassenDialog2Component implements OnInit {
   isDataAvailable: boolean;
   resultat?: IResultate | null;
   wettkampf?: IWettkampf | null;
   passe1: number[] = [];
   passe2: number[] = [];
-  passe3: number[] = [];
-  passe4: number[] = [];
 
   testForm = new FormGroup({
     number1: new FormControl(),
@@ -90,28 +88,6 @@ export class PassenDialogComponent implements OnInit {
             this.passe2.push(<number>this.resultat?.passe2?.p8);
             this.passe2.push(<number>this.resultat?.passe2?.p9);
             this.passe2.push(<number>this.resultat?.passe2?.p10);
-            // passe3
-            this.passe3.push(<number>this.resultat?.passe3?.p1);
-            this.passe3.push(<number>this.resultat?.passe3?.p2);
-            this.passe3.push(<number>this.resultat?.passe3?.p3);
-            this.passe3.push(<number>this.resultat?.passe3?.p4);
-            this.passe3.push(<number>this.resultat?.passe3?.p5);
-            this.passe3.push(<number>this.resultat?.passe3?.p6);
-            this.passe3.push(<number>this.resultat?.passe3?.p7);
-            this.passe3.push(<number>this.resultat?.passe3?.p8);
-            this.passe3.push(<number>this.resultat?.passe3?.p9);
-            this.passe3.push(<number>this.resultat?.passe3?.p10);
-            // passe4
-            this.passe4.push(<number>this.resultat?.passe4?.p1);
-            this.passe4.push(<number>this.resultat?.passe4?.p2);
-            this.passe4.push(<number>this.resultat?.passe4?.p3);
-            this.passe4.push(<number>this.resultat?.passe4?.p4);
-            this.passe4.push(<number>this.resultat?.passe4?.p5);
-            this.passe4.push(<number>this.resultat?.passe4?.p6);
-            this.passe4.push(<number>this.resultat?.passe4?.p7);
-            this.passe4.push(<number>this.resultat?.passe4?.p8);
-            this.passe4.push(<number>this.resultat?.passe4?.p9);
-            this.passe4.push(<number>this.resultat?.passe4?.p10);
             // set form values
             this.testForm.setValue({
               number1: this.resultat?.passe1?.p1,
@@ -144,34 +120,10 @@ export class PassenDialogComponent implements OnInit {
   }
 
   save(): void {
-    switch (this.wettkampf?.anzahlPassen) {
-      case 1:
-        this.updatePasseOnResult(this.resultat?.passe1, this.passe1, 1);
-        this.saveResultat();
-        this.cancel();
-        break;
-      case 2:
-        this.updatePasseOnResult(this.resultat?.passe1, this.passe1, 1);
-        this.updatePasseOnResult(this.resultat?.passe2, this.passe2, 2);
-        this.saveResultat();
-        this.cancel();
-        break;
-      case 3:
-        this.updatePasseOnResult(this.resultat?.passe1, this.passe1, 1);
-        this.updatePasseOnResult(this.resultat?.passe2, this.passe2, 2);
-        this.updatePasseOnResult(this.resultat?.passe3, this.passe3, 3);
-        this.saveResultat();
-        this.cancel();
-        break;
-      case 4:
-        this.updatePasseOnResult(this.resultat?.passe1, this.passe1, 1);
-        this.updatePasseOnResult(this.resultat?.passe2, this.passe2, 2);
-        this.updatePasseOnResult(this.resultat?.passe3, this.passe3, 3);
-        this.updatePasseOnResult(this.resultat?.passe4, this.passe4, 4);
-        this.saveResultat();
-        this.cancel();
-        break;
-    }
+    this.updatePasseOnResult(this.resultat?.passe1, this.passe1, 1);
+    this.updatePasseOnResult(this.resultat?.passe2, this.passe2, 2);
+    this.saveResultat();
+    this.cancel();
   }
 
   saveResultat(): void {
@@ -220,16 +172,6 @@ export class PassenDialogComponent implements OnInit {
       case 2:
         if (this.resultat?.passe2 !== undefined) {
           this.resultat.passe2 = iPassen;
-        }
-        break;
-      case 3:
-        if (this.resultat?.passe3 !== undefined) {
-          this.resultat.passe3 = iPassen;
-        }
-        break;
-      case 4:
-        if (this.resultat?.passe4 !== undefined) {
-          this.resultat.passe4 = iPassen;
         }
         break;
     }
@@ -281,61 +223,14 @@ export class PassenDialogComponent implements OnInit {
   getSum(): any {
     this.passe1 = this.getPasse(1);
     this.passe2 = this.getPasse(2);
-    switch (this.wettkampf?.anzahlPassen) {
-      case 1:
-        if (this.passe1.includes(11)) {
-          let tempPasse1: number[] = [];
-          tempPasse1 = this.replacingElmnts(this.passe1, 11, 10);
-          return tempPasse1.reduce((a, b) => a + b, 0);
-        } else {
-          return this.passe1.reduce((a, b) => a + b, 0);
-        }
-      case 2:
-        if (this.passe1.includes(11) || this.passe2.includes(11)) {
-          let tempPasse1: number[] = [];
-          let tempPasse2: number[] = [];
-          tempPasse1 = this.replacingElmnts(this.passe1, 11, 10);
-          tempPasse2 = this.replacingElmnts(this.passe2, 11, 10);
-          return tempPasse1.reduce((a, b) => a + b, 0) + tempPasse2.reduce((a, b) => a + b, 0);
-        } else {
-          return this.passe1.reduce((a, b) => a + b, 0) + this.passe2.reduce((a, b) => a + b, 0);
-        }
-      case 3:
-        if (this.passe1.includes(11) || this.passe2.includes(11) || this.passe3.includes(11)) {
-          let tempPasse1: number[] = [];
-          let tempPasse2: number[] = [];
-          let tempPasse3: number[] = [];
-          tempPasse1 = this.replacingElmnts(this.passe1, 11, 10);
-          tempPasse2 = this.replacingElmnts(this.passe2, 11, 10);
-          tempPasse3 = this.replacingElmnts(this.passe3, 11, 10);
-          return tempPasse1.reduce((a, b) => a + b, 0) + tempPasse2.reduce((a, b) => a + b, 0) + tempPasse3.reduce((a, b) => a + b, 0);
-        } else {
-          return this.passe1.reduce((a, b) => a + b, 0) + this.passe2.reduce((a, b) => a + b, 0) + this.passe3.reduce((a, b) => a + b, 0);
-        }
-      case 4:
-        if (this.passe1.includes(11) || this.passe2.includes(11) || this.passe3.includes(11) || this.passe4.includes(11)) {
-          let tempPasse1: number[] = [];
-          let tempPasse2: number[] = [];
-          let tempPasse3: number[] = [];
-          let tempPasse4: number[] = [];
-          tempPasse1 = this.replacingElmnts(this.passe1, 11, 10);
-          tempPasse2 = this.replacingElmnts(this.passe2, 11, 10);
-          tempPasse3 = this.replacingElmnts(this.passe3, 11, 10);
-          tempPasse4 = this.replacingElmnts(this.passe4, 11, 10);
-          return (
-            tempPasse1.reduce((a, b) => a + b, 0) +
-            tempPasse2.reduce((a, b) => a + b, 0) +
-            tempPasse3.reduce((a, b) => a + b, 0) +
-            tempPasse4.reduce((a, b) => a + b, 0)
-          );
-        } else {
-          return (
-            this.passe1.reduce((a, b) => a + b, 0) +
-            this.passe2.reduce((a, b) => a + b, 0) +
-            this.passe3.reduce((a, b) => a + b, 0) +
-            this.passe4.reduce((a, b) => a + b, 0)
-          );
-        }
+    if (this.passe1.includes(11) || this.passe2.includes(11)) {
+      let tempPasse1: number[] = [];
+      let tempPasse2: number[] = [];
+      tempPasse1 = this.replacingElmnts(this.passe1, 11, 10);
+      tempPasse2 = this.replacingElmnts(this.passe2, 11, 10);
+      return tempPasse1.reduce((a, b) => a + b, 0) + tempPasse2.reduce((a, b) => a + b, 0);
+    } else {
+      return this.passe1.reduce((a, b) => a + b, 0) + this.passe2.reduce((a, b) => a + b, 0);
     }
   }
 

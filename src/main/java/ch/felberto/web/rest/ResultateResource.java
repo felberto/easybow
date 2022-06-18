@@ -111,7 +111,7 @@ public class ResultateResource {
         }
 
         Resultate result = resultateService.save(resultateDTO);
-        mailService.sendUpdateResultMail(result);
+        //mailService.sendUpdateResultMail(result);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, resultateDTO.getId().toString()))

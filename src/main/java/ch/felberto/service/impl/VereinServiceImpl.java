@@ -51,6 +51,24 @@ public class VereinServiceImpl implements VereinService {
     }
 
     @Override
+    public Optional<Verein> partialUpdateByName(Verein verein) {
+        log.debug("Request to partially update Verein : {}", verein);
+
+        return vereinRepository
+            .findByName(verein.getName())
+            .map(
+                existingVerein -> {
+                    if (verein.getName() != null) {
+                        existingVerein.setName(verein.getName());
+                    }
+
+                    return existingVerein;
+                }
+            )
+            .map(vereinRepository::save);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Page<Verein> findAll(Pageable pageable) {
         log.debug("Request to get all Vereins");

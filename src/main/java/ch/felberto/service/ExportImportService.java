@@ -1,10 +1,7 @@
 package ch.felberto.service;
 
 import ch.felberto.domain.*;
-import ch.felberto.repository.ResultateRepository;
-import ch.felberto.repository.RundeRepository;
-import ch.felberto.repository.SchuetzeRepository;
-import ch.felberto.repository.WettkampfRepository;
+import ch.felberto.repository.*;
 import com.google.gson.Gson;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -42,33 +39,43 @@ public class ExportImportService {
     private final WettkampfRepository wettkampfRepository;
     private final SchuetzeRepository schuetzeRepository;
     private final RundeRepository rundeRepository;
+    private final VereinRepository vereinRepository;
+
+    private final VerbandRepository verbandRepository;
 
     private final WettkampfService wettkampfService;
     private final SchuetzeService schuetzeService;
     private final PassenService passenService;
     private final ResultateService resultateService;
     private final RundeService rundeService;
+    private final VereinService vereinService;
 
     public ExportImportService(
         ResultateRepository resultateRepository,
         WettkampfRepository wettkampfRepository,
         SchuetzeRepository schuetzeRepository,
         RundeRepository rundeRepository,
+        VereinRepository vereinRepository,
+        VerbandRepository verbandRepository,
         WettkampfService wettkampfService,
         SchuetzeService schuetzeService,
         PassenService passenService,
         ResultateService resultateService,
-        RundeService rundeService
+        RundeService rundeService,
+        VereinService vereinService
     ) {
         this.resultateRepository = resultateRepository;
         this.wettkampfRepository = wettkampfRepository;
         this.schuetzeRepository = schuetzeRepository;
         this.rundeRepository = rundeRepository;
+        this.vereinRepository = vereinRepository;
+        this.verbandRepository = verbandRepository;
         this.wettkampfService = wettkampfService;
         this.schuetzeService = schuetzeService;
         this.passenService = passenService;
         this.resultateService = resultateService;
         this.rundeService = rundeService;
+        this.vereinService = vereinService;
     }
 
     /**
@@ -166,6 +173,18 @@ public class ExportImportService {
         }
 
         for (SchuetzeResultat schuetzeResultat : importExport.getSchuetzeResultatList()) {
+            Verein vereinSchuetze;
+            if (vereinRepository.existsByName(schuetzeResultat.getSchuetze().getVerein().getName())) {
+                log.info("Verein={} already exists and will be updated", schuetzeResultat.getSchuetze().getVerein().getName());
+                vereinSchuetze = vereinService.partialUpdateByName(schuetzeResultat.getSchuetze().getVerein()).get();
+            } else {
+                log.info("Verein={} does not exists and will be imported", schuetzeResultat.getSchuetze().getVerein().getName());
+                Verein verein = schuetzeResultat.getSchuetze().getVerein();
+                verein.setId(null);
+                verein.setVerband(verbandRepository.findByName(verein.getVerband().getName()).get());
+                vereinSchuetze = vereinService.save(verein);
+            }
+
             if (schuetzeRepository.existsByName(schuetzeResultat.getSchuetze().getName())) {
                 log.info("Schuetze={} already exists and will be updated", schuetzeResultat.getSchuetze().getName());
                 schuetzeService.partialUpdateByName(schuetzeResultat.getSchuetze());
@@ -173,6 +192,7 @@ public class ExportImportService {
                 log.info("Schuetze={} does not exists and will be imported", schuetzeResultat.getSchuetze().getName());
                 Schuetze schuetze = schuetzeResultat.getSchuetze();
                 schuetze.setId(null);
+                schuetze.setVerein(vereinSchuetze);
                 schuetzeService.save(schuetze);
             }
         }

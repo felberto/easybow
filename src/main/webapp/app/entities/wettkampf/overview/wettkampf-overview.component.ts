@@ -6,7 +6,7 @@ import { IResultate } from 'app/entities/resultate/resultate.model';
 import { ISchuetze } from 'app/entities/schuetze/schuetze.model';
 import { ResultateDialogComponent } from '../resultate-dialog/resultate-dialog.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PassenDialogComponent } from '../passen-dialog/passen-dialog.component';
+import { PassenDialog2Component } from '../passen-dialog-2/passen-dialog-2.component';
 import * as dayjs from 'dayjs';
 import { RundeService } from '../../runde/service/runde.service';
 import { AlertService } from '../../../core/util/alert.service';
@@ -15,6 +15,7 @@ import { RanglisteService } from '../service/rangliste.service';
 import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { WettkampfService } from '../service/wettkampf.service';
+import { PassenDialog1Component } from '../passen-dialog-1/passen-dialog-1.component';
 
 @Component({
   selector: 'jhi-overview',
@@ -94,14 +95,7 @@ export class WettkampfOverviewComponent implements OnInit {
     if (resultat.wettkampf?.id !== undefined && resultat.runde !== undefined) {
       this.rundeService.findByRundeAndWettkampf(resultat.runde, resultat.wettkampf.id).subscribe(res => {
         if (this.userIsZsavOrAdmin()) {
-          const modalRef = this.modalService.open(PassenDialogComponent, {
-            size: 'xl',
-            backdrop: 'static',
-          });
-          modalRef.componentInstance.resultat = resultat;
-          modalRef.closed.subscribe(() => {
-            this.loadPage();
-          });
+          this.openDialog(resultat);
         } else if (res.body?.datum?.toDate() !== undefined) {
           if (res.body.datum.toDate() < dayjs().toDate()) {
             this.notificationsService
@@ -112,14 +106,7 @@ export class WettkampfOverviewComponent implements OnInit {
               .subscribe();
           } else {
             if (resultat.runde !== 99) {
-              const modalRef = this.modalService.open(PassenDialogComponent, {
-                size: 'xl',
-                backdrop: 'static',
-              });
-              modalRef.componentInstance.resultat = resultat;
-              modalRef.closed.subscribe(() => {
-                this.loadPage();
-              });
+              this.openDialog(resultat);
             } else {
               this.notificationsService
                 .show('Nicht berechtigt Finalresultat zu bearbeiten', {
@@ -130,6 +117,28 @@ export class WettkampfOverviewComponent implements OnInit {
             }
           }
         }
+      });
+    }
+  }
+
+  openDialog(resultat: IResultate): void {
+    if (resultat.wettkampf?.anzahlPassen === 1) {
+      const modalRef = this.modalService.open(PassenDialog1Component, {
+        size: 'xl',
+        backdrop: 'static',
+      });
+      modalRef.componentInstance.resultat = resultat;
+      modalRef.closed.subscribe(() => {
+        this.loadPage();
+      });
+    } else if (resultat.wettkampf?.anzahlPassen === 2) {
+      const modalRef = this.modalService.open(PassenDialog2Component, {
+        size: 'xl',
+        backdrop: 'static',
+      });
+      modalRef.componentInstance.resultat = resultat;
+      modalRef.closed.subscribe(() => {
+        this.loadPage();
       });
     }
   }
@@ -184,6 +193,7 @@ export class WettkampfOverviewComponent implements OnInit {
   }
 
   createFinal(wettkampf: IWettkampf): void {
+    //todo checkboxen und schützen auswählen
     const modalRef = this.modalService.open(ConfirmDialogComponent, { size: 'xl', backdrop: 'static' });
     modalRef.componentInstance.wettkampf = wettkampf;
     modalRef.closed.subscribe(() => {
