@@ -8,7 +8,7 @@
     }
   ],
   "relationships": [],
-  "entityTableName": "verband",
+  "entityTableName": "association",
   "dto": "no",
   "pagination": "pagination",
   "service": "serviceImpl",

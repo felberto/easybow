@@ -1,0 +1,193 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-competition-heading" data-cy="CompetitionCreateUpdateHeading">Create or edit a Competition</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+          <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_year">Year</label>
+          <input type="number" class="form-control" name="year" id="field_year" data-cy="year" formControlName="year" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_competitionType">CompetitionType</label>
+          <select
+            class="form-control"
+            name="competitionType"
+            formControlName="competitionType"
+            id="field_competitionType"
+            data-cy="competitionType"
+          >
+            <option [ngValue]="null"></option>
+            <option value="EASV_WORLDCUP">EASV_WORLDCUP</option>
+            <option value="ZSAV_NAWU">ZSAV_NAWU</option>
+            <option value="ZSAV">ZSAV</option>
+          </select>
+          <div
+            *ngIf="
+              editForm.get('competitionType')!.invalid &&
+              (editForm.get('competitionType')!.dirty || editForm.get('competitionType')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('competitionType')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_numberOfRounds">NumberOfRounds</label>
+          <input
+            type="number"
+            class="form-control"
+            name="numberOfRounds"
+            id="field_numberOfRounds"
+            data-cy="numberOfRounds"
+            formControlName="numberOfRounds"
+          />
+          <div
+            *ngIf="
+              editForm.get('numberOfRounds')!.invalid && (editForm.get('numberOfRounds')!.dirty || editForm.get('numberOfRounds')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('numberOfRounds')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('numberOfRounds')?.errors?.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_numberOfSeries">NumberOfSeries</label>
+          <input
+            type="number"
+            class="form-control"
+            name="numberOfSeries"
+            id="field_numberOfSeries"
+            data-cy="numberOfSeries"
+            formControlName="numberOfSeries"
+          />
+          <div
+            *ngIf="
+              editForm.get('numberOfSeries')!.invalid && (editForm.get('numberOfSeries')!.dirty || editForm.get('numberOfSeries')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('numberOfSeries')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('numberOfSeries')?.errors?.min">
+              This field should be at least 1.
+            </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('numberOfSeries')?.errors?.max">
+              This field cannot be more than 4.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('numberOfSeries')?.errors?.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_finalRound">FinalRound</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="finalRound"
+            id="field_finalRound"
+            data-cy="finalRound"
+            formControlName="finalRound"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_finalPreparation">FinalPreparation</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="finalPreparation"
+            id="field_finalPreparation"
+            data-cy="finalPreparation"
+            formControlName="finalPreparation"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_numberOfFinalAthletes">NumberOfFinalAthletes</label>
+          <input
+            type="number"
+            class="form-control"
+            name="numberOfFinalAthletes"
+            id="field_numberOfFinalAthletes"
+            data-cy="numberOfFinalAthletes"
+            formControlName="numberOfFinalAthletes"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_numberOfFinalSeries">NumberOfFinalSeries</label>
+          <input
+            type="number"
+            class="form-control"
+            name="numberOfFinalSeries"
+            id="field_numberOfFinalSeries"
+            data-cy="numberOfFinalSeries"
+            formControlName="numberOfFinalSeries"
+          />
+          <div
+            *ngIf="
+              editForm.get('numberOfFinalSeries')!.invalid &&
+              (editForm.get('numberOfFinalSeries')!.dirty || editForm.get('numberOfFinalSeries')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('numberOfFinalSeries')?.errors?.min">
+              This field should be at least 1.
+            </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('numberOfFinalSeries')?.errors?.max">
+              This field cannot be more than 4.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('numberOfFinalSeries')?.errors?.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_teamSize">TeamSize</label>
+          <input type="number" class="form-control" name="teamSize" id="field_teamSize" data-cy="teamSize" formControlName="teamSize" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_template">Template</label>
+          <input type="checkbox" class="form-check" name="template" id="field_template" data-cy="template" formControlName="template" />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

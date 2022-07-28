@@ -1,7 +1,7 @@
 <div *ngIf="wettkampf" class="div-view">
   <div>
     <h1 class="center liveview-title">
-      <strong>{{ wettkampf.name }} {{ wettkampf.jahr }}</strong>
+      <strong>{{ wettkampf.name }} {{ wettkampf.year }}</strong>
     </h1>
     <br />
   </div>
@@ -17,7 +17,7 @@
               <th scope="col">Verein</th>
               <th scope="col">Jahrgang</th>
               <th>1. Passe</th>
-              <th *ngIf="wettkampf.anzahlPassen == 2">2. Passe</th>
+              <th *ngIf="wettkampf.numberOfSeries == 2">2. Passe</th>
               <th>Resultat</th>
             </tr>
           </thead>
@@ -27,14 +27,14 @@
                 <strong>{{ i + 1 + this.rang * 10 }}</strong>
               </td>
               <td>
-                <strong>{{ schuetze.schuetze?.name }}</strong>
+                <strong>{{ schuetze.athlete?.name }}</strong>
               </td>
-              <td>{{ schuetze.schuetze?.verein?.name }}</td>
-              <td>{{ schuetze.schuetze?.jahrgang }}</td>
-              <td *ngIf="schuetze.resultatFinal !== null">{{ schuetze.resultatFinalPasse1 }}</td>
-              <td *ngIf="wettkampf.anzahlPassenFinal == 2 && schuetze.resultatFinal !== null">{{ schuetze.resultatFinalPasse2 }}</td>
-              <td *ngIf="schuetze.resultatFinal !== null">
-                <strong>{{ schuetze.resultatFinal }}</strong>
+              <td>{{ schuetze.athlete?.club?.name }}</td>
+              <td>{{ schuetze.athlete?.jahrgang }}</td>
+              <td *ngIf="schuetze.resultFinal !== null">{{ schuetze.resultFinalSerie1 }}</td>
+              <td *ngIf="wettkampf.numberOfFinalSeries == 2 && schuetze.resultFinal !== null">{{ schuetze.resultFinalSerie2 }}</td>
+              <td *ngIf="schuetze.resultFinal !== null">
+                <strong>{{ schuetze.resultFinal }}</strong>
               </td>
             </tr>
           </tbody>

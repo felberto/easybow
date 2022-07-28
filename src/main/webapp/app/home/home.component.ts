@@ -5,10 +5,10 @@ import { takeUntil } from 'rxjs/operators';
 
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
-import { IWettkampf, Wettkampf } from '../entities/wettkampf/wettkampf.model';
-import { WettkampfService } from '../entities/wettkampf/service/wettkampf.service';
-import { RundeService } from '../entities/runde/service/runde.service';
-import { IRunde, Runde } from '../entities/runde/runde.model';
+import { Competition, ICompetition } from '../entities/competition/competition.model';
+import { CompetitionService } from '../entities/competition/service/competition.service';
+import { RoundService } from '../entities/round/service/round.service';
+import { IRound, Round } from '../entities/round/round.model';
 
 @Component({
   selector: 'jhi-home',
@@ -17,8 +17,8 @@ import { IRunde, Runde } from '../entities/runde/runde.model';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
-  wettkampfList: Array<Wettkampf> | null = null;
-  rundeList: Array<Runde> = [];
+  competitionList: Array<Competition> | null = null;
+  roundList: Array<Round> = [];
   breakpoint: any;
 
   open = false;
@@ -47,8 +47,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private accountService: AccountService,
     private router: Router,
-    private wettkampfService: WettkampfService,
-    private rundeService: RundeService
+    private competitionService: CompetitionService,
+    private roundService: RoundService
   ) {}
 
   ngOnInit(): void {
@@ -60,15 +60,15 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.account = account;
       });
     const fullYear = new Date().getFullYear();
-    this.wettkampfService.findByJahr(fullYear).subscribe(result => {
-      this.wettkampfList = result.body;
+    this.competitionService.findByYear(fullYear).subscribe(result => {
+      this.competitionList = result.body;
 
-      this.wettkampfList?.forEach(wettkampf => {
-        if (wettkampf.id !== undefined) {
-          this.rundeService.findByWettkampf(wettkampf.id).subscribe(runde => {
-            if (runde.body !== null) {
-              runde.body.forEach(round => {
-                this.rundeList.push(round);
+      this.competitionList?.forEach(competition => {
+        if (competition.id !== undefined) {
+          this.roundService.findByCompetition(competition.id).subscribe(round => {
+            if (round.body !== null) {
+              round.body.forEach(round => {
+                this.roundList.push(round);
               });
             }
           });
@@ -86,9 +86,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.index = (this.index + delta) % 5;
   }
 
-  openLiveView(wettkampf: IWettkampf): void {
-    if (wettkampf.id !== undefined) {
-      this.router.navigate([`/live/${wettkampf.id}`]);
+  openLiveView(competition: ICompetition): void {
+    if (competition.id !== undefined) {
+      this.router.navigate([`/live/${competition.id}`]);
     }
   }
 
@@ -105,7 +105,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  getList(wettkampf: Wettkampf): IRunde[] {
-    return this.rundeList.filter(runde => runde.wettkampf!.id === wettkampf.id);
+  getList(competition: Competition): IRound[] {
+    return this.roundList.filter(round => round.competition!.id === competition.id);
   }
 }

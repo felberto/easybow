@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IWettkampf } from '../../wettkampf/wettkampf.model';
-import { RanglisteService } from '../../wettkampf/service/rangliste.service';
-import { IRangliste } from '../../wettkampf/rangliste.model';
-import { ISchuetzeResultat } from '../../wettkampf/schuetzeResultat.model';
+import { ICompetition } from '../../competition/competition.model';
+import { RankingListService } from '../../competition/service/rankingList.service';
+import { IRankingList } from '../../competition/rankingList.model';
+import { IAthleteResult } from '../../competition/athleteResult.model';
 
 @Component({
   selector: 'jhi-view',
@@ -11,15 +11,15 @@ import { ISchuetzeResultat } from '../../wettkampf/schuetzeResultat.model';
   styleUrls: ['./view.component.scss'],
 })
 export class ViewComponent implements OnInit {
-  wettkampf?: IWettkampf | null;
-  rangliste?: IRangliste | null;
+  wettkampf?: ICompetition | null;
+  rangliste?: IRankingList | null;
 
-  ranglisteView: ISchuetzeResultat[] = [];
+  ranglisteView: IAthleteResult[] = [];
   rang = 0;
 
   variable = 1;
 
-  constructor(protected activatedRoute: ActivatedRoute, private ranglisteService: RanglisteService) {}
+  constructor(protected activatedRoute: ActivatedRoute, private ranglisteService: RankingListService) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ wettkampf }) => {
@@ -38,13 +38,13 @@ export class ViewComponent implements OnInit {
       this.ranglisteService.getRangliste(this.wettkampf, 99).subscribe(res => {
         console.log(res.body);
         this.rangliste = res.body;
-        if (this.rangliste!.schuetzeResultatList!.length > 10) {
+        if (this.rangliste!.athleteResultList!.length > 10) {
           if (this.variable === 1) {
-            this.ranglisteView = this.rangliste!.schuetzeResultatList!.slice(0, 10);
+            this.ranglisteView = this.rangliste!.athleteResultList!.slice(0, 10);
             this.variable = 2;
             this.rang = 0;
           } else {
-            this.ranglisteView = this.rangliste!.schuetzeResultatList!.slice(10, 21);
+            this.ranglisteView = this.rangliste!.athleteResultList!.slice(10, 21);
             this.variable = 1;
             this.rang = 1;
           }

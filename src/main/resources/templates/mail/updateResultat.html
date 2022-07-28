@@ -6,13 +6,13 @@
     <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}" />
   </head>
   <body>
-    <p th:text="${resultat.wettkampf.name} + ' ' +  ${resultat.wettkampf.jahr}"></p>
-    <p th:text="'Runde: ' + ${resultat.getRunde()}"></p>
-    <p th:text="'Schütze: ' + ${resultat.getSchuetze().name}"></p>
-    <p th:text="'Passe 1: ' + ${resultat.getPasse1()}"></p>
-    <p th:text="'Passe 2: ' + ${resultat.getPasse2()}"></p>
-    <p th:text="'Passe 3: ' + ${resultat.getPasse3()}"></p>
-    <p th:text="'Passe 4: ' + ${resultat.getPasse4()}"></p>
-    <p th:text="'Resultat: ' + ${resultat.getResultat()}"></p>
+    <p th:text="${result.competition.name} + ' ' +  ${result.competition.year}"></p>
+    <p th:text="'Runde: ' + ${result.getRound()}"></p>
+    <p th:text="'Schütze: ' + ${result.getAthlete().name}"></p>
+    <p th:text="'Passe 1: ' + ${result.getSerie1()}"></p>
+    <p th:text="'Passe 2: ' + ${result.getSerie2()}"></p>
+    <p th:text="'Passe 3: ' + ${result.getSerie3()}"></p>
+    <p th:text="'Passe 4: ' + ${result.getSerie4()}"></p>
+    <p th:text="'Resultat: ' + ${result.getResult()}"></p>
   </body>
 </html>

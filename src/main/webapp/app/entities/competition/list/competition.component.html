@@ -1,0 +1,172 @@
+<div>
+  <h2 id="page-heading" data-cy="CompetitionHeading">
+    <span>Competitions</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-competition"
+        [routerLink]="['/competition/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Competition </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="competitions?.length === 0">
+    <span>No competitions found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="competitions && competitions.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+          <th scope="col" jhiSortBy="id">
+            <span>ID</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="name">
+            <span>Name</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="year">
+            <span>Year</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="competitionType">
+            <span>CompetitionType</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="numberOfRounds">
+            <span>NumberOfRounds</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="numberOfSeries">
+            <span>NumberOfSeries</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="finalRound">
+            <span>FinalRound</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="finalPreparation">
+            <span>FinalPreparation</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="numberOfFinalAthletes">
+            <span>NumberOfFinalAthletes</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="numberOfFinalSeries">
+            <span>NumberOfFinalSeries</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="teamSize">
+            <span>TeamSize</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="template">
+            <span>Template</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let competition of competitions; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/competition', competition.id, 'view']">{{ competition.id }}</a>
+          </td>
+          <td>{{ competition.name }}</td>
+          <td>{{ competition.year }}</td>
+          <td>{{ competition.competitionType }}</td>
+          <td>{{ competition.numberOfRounds }}</td>
+          <td>{{ competition.numberOfSeries }}</td>
+          <td>{{ competition.finalRound }}</td>
+          <td>{{ competition.finalPreparation }}</td>
+          <td>{{ competition.numberOfFinalAthletes }}</td>
+          <td>{{ competition.numberOfFinalSeries }}</td>
+          <td>{{ competition.teamSize }}</td>
+          <td>{{ competition.template }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/competition', competition.id, 'overview']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityOverviewButton"
+              >
+                <span class="d-none d-md-inline">Overview</span>
+              </button>
+
+              <!--not available-->
+              <!--<button
+              type="submit"
+              [routerLink]="['/competition', competition.id, 'rangierung']"
+              class="btn btn-success btn-sm"
+              data-cy="entityRangierungButton"
+            >
+              <fa-icon icon="pencil-alt"></fa-icon>
+              <span class="d-none d-md-inline">Rangierung</span>
+            </button>-->
+
+              <button
+                type="submit"
+                [routerLink]="['/competition', competition.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/competition', competition.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(competition)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="competitions && competitions.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

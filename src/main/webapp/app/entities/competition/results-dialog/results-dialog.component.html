@@ -1,0 +1,66 @@
+<form *ngIf="competition">
+  <div class="modal-header">
+    <h4 class="modal-title tui-text_h4" data-cy="competitionDeleteDialogHeading">Schützen verwalten</h4>
+
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="athletes?.length === 0">
+      <span>No schuetzes found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="athletes && athletes.length > 0">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr>
+            <th scope="col"><span>Name</span></th>
+            <th scope="col"><span>FirstName</span></th>
+            <th scope="col"><span>YearOfBirth</span></th>
+            <th scope="col"><span>Nationality</span></th>
+            <th scope="col"><span>Gender</span></th>
+            <th scope="col"><span>Position</span></th>
+            <th scope="col"><span>Club</span></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let athlete of athletes" data-cy="entityTable">
+            <td>{{ athlete.name }}</td>
+            <td>{{ athlete.firstName }}</td>
+            <td>{{ athlete.yearOfBirth }}</td>
+            <td>{{ athlete.nationality }}</td>
+            <td>{{ athlete.gender }}</td>
+            <td>{{ athlete.position }}</td>
+            <td>
+              <div *ngIf="athlete.club">
+                {{ athlete.club?.name }}
+              </div>
+            </td>
+            <td class="text-right">
+              <div class="btn-group">
+                <button type="submit" (click)="addAthlete(athlete)" class="btn btn-success btn-sm">
+                  <fa-icon icon="plus"></fa-icon>
+                  <span class="d-none d-md-inline">Hinzufügen</span>
+                </button>
+
+                <button type="submit" (click)="removeAthlete(athlete)" class="btn btn-danger btn-sm">
+                  <fa-icon icon="minus"></fa-icon>
+                  <span class="d-none d-md-inline">Entfernen</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button (click)="cancel()" tuiButton type="button" appearance="greyButton" class="tui-space_right-3 tui-space_bottom-3">
+      Abbrechen
+    </button>
+  </div>
+</form>

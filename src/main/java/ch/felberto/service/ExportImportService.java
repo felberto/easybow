@@ -25,113 +25,113 @@ import tech.jhipster.web.util.ResponseUtil;
  * REST controller for exporting and importing data
  */
 @RestController
-@RequestMapping("/api/wettkampfs")
+@RequestMapping("/api/competitions")
 public class ExportImportService {
 
     private final Logger log = LoggerFactory.getLogger(ExportImportService.class);
 
-    private static final String ENTITY_NAME = "wettkampf";
+    private static final String ENTITY_NAME = "competition";
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final ResultateRepository resultateRepository;
-    private final WettkampfRepository wettkampfRepository;
-    private final SchuetzeRepository schuetzeRepository;
-    private final RundeRepository rundeRepository;
-    private final VereinRepository vereinRepository;
+    private final ResultsRepository resultsRepository;
+    private final CompetitionRepository competitionRepository;
+    private final AthleteRepository athleteRepository;
+    private final RoundRepository roundRepository;
+    private final ClubRepository clubRepository;
 
-    private final VerbandRepository verbandRepository;
+    private final AssociationRepository associationRepository;
 
-    private final WettkampfService wettkampfService;
-    private final SchuetzeService schuetzeService;
-    private final PassenService passenService;
-    private final ResultateService resultateService;
-    private final RundeService rundeService;
-    private final VereinService vereinService;
+    private final CompetitionService competitionService;
+    private final AthleteService athleteService;
+    private final SeriesService seriesService;
+    private final ResultsService resultsService;
+    private final RoundService roundService;
+    private final ClubService clubService;
 
     public ExportImportService(
-        ResultateRepository resultateRepository,
-        WettkampfRepository wettkampfRepository,
-        SchuetzeRepository schuetzeRepository,
-        RundeRepository rundeRepository,
-        VereinRepository vereinRepository,
-        VerbandRepository verbandRepository,
-        WettkampfService wettkampfService,
-        SchuetzeService schuetzeService,
-        PassenService passenService,
-        ResultateService resultateService,
-        RundeService rundeService,
-        VereinService vereinService
+        ResultsRepository resultsRepository,
+        CompetitionRepository competitionRepository,
+        AthleteRepository athleteRepository,
+        RoundRepository roundRepository,
+        ClubRepository clubRepository,
+        AssociationRepository associationRepository,
+        CompetitionService competitionService,
+        AthleteService athleteService,
+        SeriesService seriesService,
+        ResultsService resultsService,
+        RoundService roundService,
+        ClubService clubService
     ) {
-        this.resultateRepository = resultateRepository;
-        this.wettkampfRepository = wettkampfRepository;
-        this.schuetzeRepository = schuetzeRepository;
-        this.rundeRepository = rundeRepository;
-        this.vereinRepository = vereinRepository;
-        this.verbandRepository = verbandRepository;
-        this.wettkampfService = wettkampfService;
-        this.schuetzeService = schuetzeService;
-        this.passenService = passenService;
-        this.resultateService = resultateService;
-        this.rundeService = rundeService;
-        this.vereinService = vereinService;
+        this.resultsRepository = resultsRepository;
+        this.competitionRepository = competitionRepository;
+        this.athleteRepository = athleteRepository;
+        this.roundRepository = roundRepository;
+        this.clubRepository = clubRepository;
+        this.associationRepository = associationRepository;
+        this.competitionService = competitionService;
+        this.athleteService = athleteService;
+        this.seriesService = seriesService;
+        this.resultsService = resultsService;
+        this.roundService = roundService;
+        this.clubService = clubService;
     }
 
     /**
      * {@code POST  /export} : export data
      *
-     * @param wettkampf wettkampf
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the ranglisteDTO, or with status {@code 404 (Not Found)}.
+     * @param competition competition
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the rankingList, or with status {@code 404 (Not Found)}.
      */
     @PostMapping("/export")
-    public ResponseEntity<byte[]> exportData(@RequestBody Wettkampf wettkampf) {
+    public ResponseEntity<byte[]> exportData(@RequestBody Competition competition) {
         ImportExport importExport = new ImportExport();
-        importExport.setWettkampf(wettkampf);
-        importExport.setRunden(rundeRepository.findByWettkampf_Id(wettkampf.getId()));
+        importExport.setCompetition(competition);
+        importExport.setRoundList(roundRepository.findByCompetition_Id(competition.getId()));
 
-        List<Resultate> resultate = new ArrayList<>(resultateRepository.findByWettkampf_Id(wettkampf.getId()));
+        List<Results> results = new ArrayList<>(resultsRepository.findByCompetition_Id(competition.getId()));
 
-        List<Schuetze> schuetzeList = new ArrayList<>();
-        resultate
+        List<Athlete> athleteList = new ArrayList<>();
+        results
             .stream()
-            .filter(resultat -> !schuetzeList.contains(resultat.getSchuetze()))
-            .forEach(resultat -> schuetzeList.add(resultat.getSchuetze()));
-        List<SchuetzeResultat> schuetzeResultatList = new ArrayList<>();
-        schuetzeList.forEach(
-            schuetze -> {
-                SchuetzeResultat schuetzeResultat = new SchuetzeResultat();
-                schuetzeResultat.setSchuetze(schuetze);
-                List<Resultate> resultateSchuetze = resultate
+            .filter(result -> !athleteList.contains(result.getAthlete()))
+            .forEach(result -> athleteList.add(result.getAthlete()));
+        List<AthleteResult> athleteResultList = new ArrayList<>();
+        athleteList.forEach(
+            athlete -> {
+                AthleteResult athleteResult = new AthleteResult();
+                athleteResult.setAthlete(athlete);
+                List<Results> resultsAthlete = results
                     .stream()
-                    .filter(resultat -> resultat.getSchuetze() == schuetze)
-                    .sorted(Comparator.comparing(Resultate::getRunde))
+                    .filter(result -> result.getAthlete() == athlete)
+                    .sorted(Comparator.comparing(Results::getRound))
                     .collect(Collectors.toList());
-                schuetzeResultat.setResultateList(resultateSchuetze);
-                schuetzeResultatList.add(schuetzeResultat);
+                athleteResult.setResultsList(resultsAthlete);
+                athleteResultList.add(athleteResult);
             }
         );
-        importExport.setSchuetzeResultatList(schuetzeResultatList);
+        importExport.setAthleteResultList(athleteResultList);
 
         Gson gson = new Gson();
-        String ranglisteJson = gson.toJson(importExport);
-        log.info(ranglisteJson);
+        String rankingListJson = gson.toJson(importExport);
+        log.info(rankingListJson);
 
-        byte[] ranglisteJsonBytes = ranglisteJson.getBytes();
+        byte[] rankingListJsonBytes = rankingListJson.getBytes();
 
         return ResponseEntity
             .ok()
             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=data.json")
             .contentType(MediaType.APPLICATION_JSON)
-            .contentLength(ranglisteJsonBytes.length)
-            .body(ranglisteJsonBytes);
+            .contentLength(rankingListJsonBytes.length)
+            .body(rankingListJsonBytes);
     }
 
     /**
-     * {@code POST  /import} : Import wettkampf.
+     * {@code POST  /import} : Import competition.
      *
      * @param string
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new wettkampfDTO, or with status {@code 400 (Bad Request)} if the wettkampf has already an ID.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new competition, or with status {@code 400 (Bad Request)} if the wettkampf has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/import")
@@ -139,148 +139,150 @@ public class ExportImportService {
         log.debug("REST request to import data : {}", string);
         Gson gson = new Gson();
         ImportExport importExport = gson.fromJson(string, ImportExport.class);
-        Wettkampf wettkampf;
+        Competition competition;
 
-        if (wettkampfRepository.existsByNameAndJahr(importExport.getWettkampf().getName(), importExport.getWettkampf().getJahr())) {
+        if (competitionRepository.existsByNameAndYear(importExport.getCompetition().getName(), importExport.getCompetition().getYear())) {
             log.info(
-                "Wettkampf={} {} already exists and will be updated",
-                importExport.getWettkampf().getName(),
-                importExport.getWettkampf().getJahr()
+                "Competition={} {} already exists and will be updated",
+                importExport.getCompetition().getName(),
+                importExport.getCompetition().getYear()
             );
-            wettkampf = wettkampfService.partialUpdateByName(importExport.getWettkampf()).get();
+            competition = competitionService.partialUpdateByName(importExport.getCompetition()).get();
         } else {
             log.info(
-                "Wettkampf={} {} does not exists and will be imported",
-                importExport.getWettkampf().getName(),
-                importExport.getWettkampf().getJahr()
+                "Competition={} {} does not exists and will be imported",
+                importExport.getCompetition().getName(),
+                importExport.getCompetition().getYear()
             );
-            Wettkampf wettkampf1 = importExport.getWettkampf();
-            wettkampf1.setId(null);
-            wettkampf = wettkampfService.save(wettkampf1);
+            Competition competition1 = importExport.getCompetition();
+            competition1.setId(null);
+            competition = competitionService.save(competition1);
         }
 
-        for (Runde runde : importExport.getRunden()) {
-            if (rundeRepository.existsByRundeAndWettkampf_Id(runde.getRunde(), wettkampf.getId())) {
-                log.info("Runde={} already exists and will be updated", runde.getRunde());
-                runde.setWettkampf(wettkampf);
-                rundeService.partialUpdate(runde);
+        for (Round round : importExport.getRoundList()) {
+            if (roundRepository.existsByRoundAndCompetition_Id(round.getRound(), competition.getId())) {
+                log.info("Round={} already exists and will be updated", round.getRound());
+                round.setCompetition(competition);
+                roundService.partialUpdate(round);
             } else {
-                log.info("Runde={} does not exists and will be imported", runde.getRunde());
-                runde.setId(null);
-                runde.setWettkampf(wettkampf);
-                rundeService.save(runde);
+                log.info("Round={} does not exists and will be imported", round.getRound());
+                round.setId(null);
+                round.setCompetition(competition);
+                roundService.save(round);
             }
         }
 
-        for (SchuetzeResultat schuetzeResultat : importExport.getSchuetzeResultatList()) {
-            Verein vereinSchuetze;
-            if (vereinRepository.existsByName(schuetzeResultat.getSchuetze().getVerein().getName())) {
-                log.info("Verein={} already exists and will be updated", schuetzeResultat.getSchuetze().getVerein().getName());
-                vereinSchuetze = vereinService.partialUpdateByName(schuetzeResultat.getSchuetze().getVerein()).get();
+        for (AthleteResult athleteResult : importExport.getAthleteResultList()) {
+            Club clubAthlete;
+            if (clubRepository.existsByName(athleteResult.getAthlete().getClub().getName())) {
+                log.info("Club={} already exists and will be updated", athleteResult.getAthlete().getClub().getName());
+                clubAthlete = clubService.partialUpdateByName(athleteResult.getAthlete().getClub()).get();
             } else {
-                log.info("Verein={} does not exists and will be imported", schuetzeResultat.getSchuetze().getVerein().getName());
-                Verein verein = schuetzeResultat.getSchuetze().getVerein();
-                verein.setId(null);
-                verein.setVerband(verbandRepository.findByName(verein.getVerband().getName()).get());
-                vereinSchuetze = vereinService.save(verein);
+                log.info("Club={} does not exists and will be imported", athleteResult.getAthlete().getClub().getName());
+                Club club = athleteResult.getAthlete().getClub();
+                club.setId(null);
+                club.setAssociation(associationRepository.findByName(club.getAssociation().getName()).get());
+                clubAthlete = clubService.save(club);
             }
 
-            if (schuetzeRepository.existsByName(schuetzeResultat.getSchuetze().getName())) {
-                log.info("Schuetze={} already exists and will be updated", schuetzeResultat.getSchuetze().getName());
-                schuetzeService.partialUpdateByName(schuetzeResultat.getSchuetze());
+            if (athleteRepository.existsByName(athleteResult.getAthlete().getName())) {
+                log.info("Athlete={} already exists and will be updated", athleteResult.getAthlete().getName());
+                athleteService.partialUpdateByName(athleteResult.getAthlete());
             } else {
-                log.info("Schuetze={} does not exists and will be imported", schuetzeResultat.getSchuetze().getName());
-                Schuetze schuetze = schuetzeResultat.getSchuetze();
-                schuetze.setId(null);
-                schuetze.setVerein(vereinSchuetze);
-                schuetzeService.save(schuetze);
+                log.info("Athlete={} does not exists and will be imported", athleteResult.getAthlete().getName());
+                Athlete athlete = athleteResult.getAthlete();
+                athlete.setId(null);
+                athlete.setClub(clubAthlete);
+                athleteService.save(athlete);
             }
         }
 
-        for (SchuetzeResultat schuetzeResultat : importExport.getSchuetzeResultatList()) {
-            Schuetze schuetze = schuetzeRepository.findByName(schuetzeResultat.getSchuetze().getName()).get();
+        for (AthleteResult athleteResult : importExport.getAthleteResultList()) {
+            Athlete athlete = athleteRepository
+                .findByNameAndFirstName(athleteResult.getAthlete().getName(), athleteResult.getAthlete().getFirstName())
+                .get();
 
-            for (Resultate resultat : schuetzeResultat.getResultateList()) {
+            for (Results results : athleteResult.getResultsList()) {
                 if (
-                    resultateRepository.existsByWettkampf_IdAndRundeAndSchuetze_Id(wettkampf.getId(), resultat.getRunde(), schuetze.getId())
+                    resultsRepository.existsByCompetition_IdAndRoundAndAthlete_Id(competition.getId(), results.getRound(), athlete.getId())
                 ) {
-                    log.info("Resultat already exists and will be updated");
-                    Resultate resultateDB = resultateRepository.findByWettkampf_IdAndRundeAndSchuetze_Id(
-                        wettkampf.getId(),
-                        resultat.getRunde(),
-                        schuetze.getId()
+                    log.info("Result already exists and will be updated");
+                    Results resultsDB = resultsRepository.findByCompetition_IdAndRoundAndAthlete_Id(
+                        competition.getId(),
+                        results.getRound(),
+                        athlete.getId()
                     );
-                    if (resultat.getPasse1() != null) {
-                        log.info("Passe 1 already exists and will be updated");
-                        resultat.getPasse1().setId(resultateDB.getPasse1().getId());
-                        passenService.partialUpdate(resultat.getPasse1());
+                    if (results.getSerie1() != null) {
+                        log.info("Serie 1 already exists and will be updated");
+                        results.getSerie1().setId(resultsDB.getSerie1().getId());
+                        seriesService.partialUpdate(results.getSerie1());
                     } else {
-                        log.info("Passe 1 does not exists and will be deleted");
-                        if (resultateDB.getPasse1() != null) {
-                            passenService.delete(resultateDB.getPasse1().getId());
+                        log.info("Serie 1 does not exists and will be deleted");
+                        if (resultsDB.getSerie1() != null) {
+                            seriesService.delete(resultsDB.getSerie1().getId());
                         }
                     }
-                    if (resultat.getPasse2() != null) {
-                        log.info("Passe 2 already exists and will be updated");
-                        resultat.getPasse2().setId(resultateDB.getPasse2().getId());
-                        passenService.partialUpdate(resultat.getPasse2());
+                    if (results.getSerie2() != null) {
+                        log.info("Serie 2 already exists and will be updated");
+                        results.getSerie2().setId(resultsDB.getSerie2().getId());
+                        seriesService.partialUpdate(results.getSerie2());
                     } else {
-                        log.info("Passe 2 does not exists and will be deleted");
-                        if (resultateDB.getPasse2() != null) {
-                            passenService.delete(resultateDB.getPasse2().getId());
+                        log.info("Serie 2 does not exists and will be deleted");
+                        if (resultsDB.getSerie2() != null) {
+                            seriesService.delete(resultsDB.getSerie2().getId());
                         }
                     }
-                    if (resultat.getPasse3() != null) {
-                        log.info("Passe 3 already exists and will be updated");
-                        resultat.getPasse3().setId(resultateDB.getPasse3().getId());
-                        passenService.partialUpdate(resultat.getPasse3());
+                    if (results.getSerie3() != null) {
+                        log.info("Serie 3 already exists and will be updated");
+                        results.getSerie3().setId(resultsDB.getSerie3().getId());
+                        seriesService.partialUpdate(results.getSerie3());
                     } else {
-                        log.info("Passe 3 does not exists and will be deleted");
-                        if (resultateDB.getPasse3() != null) {
-                            passenService.delete(resultateDB.getPasse3().getId());
+                        log.info("Serie 3 does not exists and will be deleted");
+                        if (resultsDB.getSerie3() != null) {
+                            seriesService.delete(resultsDB.getSerie3().getId());
                         }
                     }
-                    if (resultat.getPasse4() != null) {
-                        log.info("Passe 4 already exists and will be updated");
-                        resultat.getPasse4().setId(resultateDB.getPasse4().getId());
-                        passenService.partialUpdate(resultat.getPasse4());
+                    if (results.getSerie4() != null) {
+                        log.info("Serie 4 already exists and will be updated");
+                        results.getSerie4().setId(resultsDB.getSerie4().getId());
+                        seriesService.partialUpdate(results.getSerie4());
                     } else {
-                        log.info("Passe 4 does not exists and will be deleted");
-                        if (resultateDB.getPasse4() != null) {
-                            passenService.delete(resultateDB.getPasse4().getId());
+                        log.info("Serie 4 does not exists and will be deleted");
+                        if (resultsDB.getSerie4() != null) {
+                            seriesService.delete(resultsDB.getSerie4().getId());
                         }
                     }
                 } else {
-                    log.info("Resultat does not exists and will be created");
-                    if (resultat.getPasse1() != null) {
-                        resultat.getPasse1().setId(null);
+                    log.info("Result does not exists and will be created");
+                    if (results.getSerie1() != null) {
+                        results.getSerie1().setId(null);
                     }
-                    if (resultat.getPasse2() != null) {
-                        resultat.getPasse2().setId(null);
+                    if (results.getSerie2() != null) {
+                        results.getSerie2().setId(null);
                     }
-                    if (resultat.getPasse3() != null) {
-                        resultat.getPasse3().setId(null);
+                    if (results.getSerie3() != null) {
+                        results.getSerie3().setId(null);
                     }
-                    if (resultat.getPasse4() != null) {
-                        resultat.getPasse4().setId(null);
+                    if (results.getSerie4() != null) {
+                        results.getSerie4().setId(null);
                     }
 
-                    Resultate newResultate = new Resultate();
-                    newResultate.setRunde(resultat.getRunde());
-                    newResultate.setResultat(resultat.getResultat());
-                    newResultate.setSchuetze(schuetze);
-                    newResultate.setWettkampf(wettkampf);
-                    newResultate.setPasse1(resultat.getPasse1());
-                    newResultate.setPasse2(resultat.getPasse2());
-                    newResultate.setPasse3(resultat.getPasse3());
-                    newResultate.setPasse4(resultat.getPasse4());
-                    newResultate.setGruppe(null);
+                    Results newResults = new Results();
+                    newResults.setRound(results.getRound());
+                    newResults.setResult(results.getResult());
+                    newResults.setAthlete(athlete);
+                    newResults.setCompetition(competition);
+                    newResults.setSerie1(results.getSerie1());
+                    newResults.setSerie2(results.getSerie2());
+                    newResults.setSerie3(results.getSerie3());
+                    newResults.setSerie4(results.getSerie4());
+                    newResults.setGroup(null);
 
-                    resultateService.save(newResultate);
+                    resultsService.save(newResults);
                 }
             }
         }
-        Optional<Boolean> rangliste1 = Optional.ofNullable(true);
-        return ResponseUtil.wrapOrNotFound(rangliste1);
+        Optional<Boolean> rankingList1 = Optional.ofNullable(true);
+        return ResponseUtil.wrapOrNotFound(rankingList1);
     }
 }

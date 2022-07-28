@@ -33,12 +33,15 @@ Main page styles
   align-items: center;
   margin: 0 -5rem;
 }
+
 :host-context(tui-root._mobile) .wrapper {
   margin: 0;
 }
+
 :host-context(tui-root._mobile) .wrapper button {
   display: none;
 }
+
 .header {
   height: 20rem;
   flex: 1;

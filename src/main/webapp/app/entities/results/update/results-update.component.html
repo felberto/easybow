@@ -1,0 +1,139 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-results-heading" data-cy="ResultsCreateUpdateHeading">Create or edit a Results</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_round">Round</label>
+          <input type="number" class="form-control" name="round" id="field_round" data-cy="round" formControlName="round" />
+          <div *ngIf="editForm.get('round')!.invalid && (editForm.get('round')!.dirty || editForm.get('round')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('round')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('round')?.errors?.number"> This field should be a number. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_result">Result</label>
+          <input type="number" class="form-control" name="result" id="field_result" data-cy="result" formControlName="result" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_serie1">Serie 1</label>
+          <select class="form-control" id="field_serie1" data-cy="serie1" name="serie1" formControlName="serie1">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="seriesOption.id === editForm.get('serie1')!.value?.id ? editForm.get('serie1')!.value : seriesOption"
+              *ngFor="let seriesOption of serie1sCollection; trackBy: trackSeriesById"
+            >
+              {{ seriesOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_serie2">Serie 2</label>
+          <select class="form-control" id="field_serie2" data-cy="serie2" name="serie2" formControlName="serie2">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="seriesOption.id === editForm.get('serie2')!.value?.id ? editForm.get('serie2')!.value : seriesOption"
+              *ngFor="let seriesOption of serie2sCollection; trackBy: trackSeriesById"
+            >
+              {{ seriesOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_serie3">Serie 3</label>
+          <select class="form-control" id="field_serie3" data-cy="serie3" name="serie3" formControlName="serie3">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="seriesOption.id === editForm.get('serie3')!.value?.id ? editForm.get('serie3')!.value : seriesOption"
+              *ngFor="let seriesOption of serie3sCollection; trackBy: trackSeriesById"
+            >
+              {{ seriesOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_serie4">Serie 4</label>
+          <select class="form-control" id="field_serie4" data-cy="serie4" name="serie4" formControlName="serie4">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="seriesOption.id === editForm.get('serie4')!.value?.id ? editForm.get('serie4')!.value : seriesOption"
+              *ngFor="let seriesOption of serie4sCollection; trackBy: trackSeriesById"
+            >
+              {{ seriesOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_group">Group</label>
+          <select class="form-control" id="field_group" data-cy="group" name="group" formControlName="group">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="groupsOption.id === editForm.get('group')!.value?.id ? editForm.get('group')!.value : groupsOption"
+              *ngFor="let groupsOption of groupsSharedCollection; trackBy: trackGroupById"
+            >
+              {{ groupsOption.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_athlete">Athlete</label>
+          <select class="form-control" id="field_athlete" data-cy="athlete" name="athlete" formControlName="athlete">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="athleteOption.id === editForm.get('athlete')!.value?.id ? editForm.get('athlete')!.value : athleteOption"
+              *ngFor="let athleteOption of athletesSharedCollection; trackBy: trackAthleteById"
+            >
+              {{ athleteOption.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_competition">Competition</label>
+          <select class="form-control" id="field_competition" data-cy="competition" name="competition" formControlName="competition">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                competitionOption.id === editForm.get('competition')!.value?.id ? editForm.get('competition')!.value : competitionOption
+              "
+              *ngFor="let competitionOption of competitionsSharedCollection; trackBy: trackCompetitionById"
+            >
+              {{ competitionOption.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

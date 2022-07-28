@@ -12,7 +12,7 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "stellung",
+      "fieldName": "position",
       "fieldType": "Stellung",
       "fieldValues": "FREI,AUFGELEGT",
       "fieldValidateRules": ["required"]
@@ -26,9 +26,9 @@
   "relationships": [
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "verein",
+      "otherEntityName": "club",
       "otherEntityRelationshipName": "schuetze",
-      "relationshipName": "verein",
+      "relationshipName": "club",
       "otherEntityField": "name"
     }
   ],

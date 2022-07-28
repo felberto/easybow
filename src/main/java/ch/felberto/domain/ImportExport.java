@@ -6,11 +6,11 @@ import java.util.Objects;
 
 public class ImportExport {
 
-    private Wettkampf wettkampf;
+    private Competition competition;
 
-    private List<Runde> runden;
+    private List<Round> roundList;
 
-    private List<SchuetzeResultat> schuetzeResultatList;
+    private List<AthleteResult> athleteResultList;
 
     private Integer type;
 
@@ -22,28 +22,28 @@ public class ImportExport {
 
     private Number vfAnzahl;
 
-    public Wettkampf getWettkampf() {
-        return wettkampf;
+    public Competition getCompetition() {
+        return competition;
     }
 
-    public void setWettkampf(Wettkampf wettkampf) {
-        this.wettkampf = wettkampf;
+    public void setCompetition(Competition competition) {
+        this.competition = competition;
     }
 
-    public List<Runde> getRunden() {
-        return runden;
+    public List<Round> getRoundList() {
+        return roundList;
     }
 
-    public void setRunden(List<Runde> runden) {
-        this.runden = runden;
+    public void setRoundList(List<Round> roundList) {
+        this.roundList = roundList;
     }
 
-    public List<SchuetzeResultat> getSchuetzeResultatList() {
-        return schuetzeResultatList;
+    public List<AthleteResult> getAthleteResultList() {
+        return athleteResultList;
     }
 
-    public void setSchuetzeResultatList(List<SchuetzeResultat> schuetzeResultatList) {
-        this.schuetzeResultatList = schuetzeResultatList;
+    public void setAthleteResultList(List<AthleteResult> athleteResultList) {
+        this.athleteResultList = athleteResultList;
     }
 
     public Integer getType() {
@@ -91,16 +91,16 @@ public class ImportExport {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ImportExport rangliste = (ImportExport) o;
-        return Objects.equals(wettkampf, rangliste.wettkampf) && Objects.equals(schuetzeResultatList, rangliste.schuetzeResultatList);
+        return Objects.equals(competition, rangliste.competition) && Objects.equals(athleteResultList, rangliste.athleteResultList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(wettkampf, schuetzeResultatList);
+        return Objects.hash(competition, athleteResultList);
     }
 
     @Override
     public String toString() {
-        return "Rangliste{" + "wettkampf=" + wettkampf + ", schuetzeResultatList=" + schuetzeResultatList + '}';
+        return "RankingList{" + "competition=" + competition + ", athleteResultList=" + athleteResultList + '}';
     }
 }
