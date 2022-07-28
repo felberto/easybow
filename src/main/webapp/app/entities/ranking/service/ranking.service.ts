@@ -6,6 +6,7 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { getRankingIdentifier, IRanking } from '../ranking.model';
+import { getCompetitionIdentifier, ICompetition } from '../../competition/competition.model';
 
 export type EntityResponseType = HttpResponse<IRanking>;
 export type EntityArrayResponseType = HttpResponse<IRanking[]>;

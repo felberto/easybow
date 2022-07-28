@@ -14,13 +14,13 @@ export class ImportComponent {
   });
 
   constructor(
-    private wettkampfService: CompetitionService,
+    private competitionService: CompetitionService,
     @Inject(TuiNotificationsService)
     private readonly notificationsService: TuiNotificationsService
   ) {}
 
   import(): void {
-    this.wettkampfService.importData(this.dataForm.get('data')!.value).subscribe(res => {
+    this.competitionService.importData(this.dataForm.get('data')!.value).subscribe(res => {
       if (res.ok) {
         this.notificationsService
           .show('Import abgeschlossen', {

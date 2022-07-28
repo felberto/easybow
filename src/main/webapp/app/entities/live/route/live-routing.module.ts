@@ -5,19 +5,19 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
 import { ViewComponent } from '../view/view.component';
 import { CompetitionRoutingResolveService } from '../../competition/route/competition-routing-resolve.service';
 
-const schuetzeRoute: Routes = [
+const athleteRoute: Routes = [
   {
     path: ':id',
     component: ViewComponent,
     resolve: {
-      wettkampf: CompetitionRoutingResolveService,
+      competition: CompetitionRoutingResolveService,
     },
     canActivate: [UserRouteAccessService],
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(schuetzeRoute)],
+  imports: [RouterModule.forChild(athleteRoute)],
   exports: [RouterModule],
 })
 export class LiveRoutingModule {}

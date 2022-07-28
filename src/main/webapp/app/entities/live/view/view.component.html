@@ -1,12 +1,12 @@
-<div *ngIf="wettkampf" class="div-view">
+<div *ngIf="competition" class="div-view">
   <div>
     <h1 class="center liveview-title">
-      <strong>{{ wettkampf.name }} {{ wettkampf.year }}</strong>
+      <strong>{{ competition.name }} {{ competition.year }}</strong>
     </h1>
     <br />
   </div>
 
-  <div *ngIf="this.ranglisteView !== null && this.ranglisteView !== undefined">
+  <div *ngIf="this.rankingListView !== null && this.rankingListView !== undefined">
     <div class="example-container1">
       <div class="example-list table-responsive liveview">
         <table aria-describedby="page-heading" class="table table-striped">
@@ -17,24 +17,24 @@
               <th scope="col">Verein</th>
               <th scope="col">Jahrgang</th>
               <th>1. Passe</th>
-              <th *ngIf="wettkampf.numberOfSeries == 2">2. Passe</th>
+              <th *ngIf="competition.numberOfSeries == 2">2. Passe</th>
               <th>Resultat</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let schuetze of this.ranglisteView; let i = index">
+            <tr *ngFor="let athlete of this.rankingListView; let i = index">
               <td>
-                <strong>{{ i + 1 + this.rang * 10 }}</strong>
+                <strong>{{ i + 1 + this.rank * 10 }}</strong>
               </td>
               <td>
-                <strong>{{ schuetze.athlete?.name }}</strong>
+                <strong>{{ athlete.athlete?.name }}</strong>
               </td>
-              <td>{{ schuetze.athlete?.club?.name }}</td>
-              <td>{{ schuetze.athlete?.jahrgang }}</td>
-              <td *ngIf="schuetze.resultFinal !== null">{{ schuetze.resultFinalSerie1 }}</td>
-              <td *ngIf="wettkampf.numberOfFinalSeries == 2 && schuetze.resultFinal !== null">{{ schuetze.resultFinalSerie2 }}</td>
-              <td *ngIf="schuetze.resultFinal !== null">
-                <strong>{{ schuetze.resultFinal }}</strong>
+              <td>{{ athlete.athlete?.club?.name }}</td>
+              <td>{{ athlete.athlete?.yearOfBirth }}</td>
+              <td *ngIf="athlete.resultFinal !== null">{{ athlete.resultFinalSerie1 }}</td>
+              <td *ngIf="competition.numberOfFinalSeries == 2 && athlete.resultFinal !== null">{{ athlete.resultFinalSerie2 }}</td>
+              <td *ngIf="athlete.resultFinal !== null">
+                <strong>{{ athlete.resultFinal }}</strong>
               </td>
             </tr>
           </tbody>

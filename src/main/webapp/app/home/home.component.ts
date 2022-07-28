@@ -67,8 +67,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         if (competition.id !== undefined) {
           this.roundService.findByCompetition(competition.id).subscribe(round => {
             if (round.body !== null) {
-              round.body.forEach(round => {
-                this.roundList.push(round);
+              round.body.forEach(round1 => {
+                this.roundList.push(round1);
               });
             }
           });

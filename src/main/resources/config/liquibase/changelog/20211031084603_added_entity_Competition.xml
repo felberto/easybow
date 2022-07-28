@@ -18,7 +18,7 @@
             <column name="year" type="integer">
                 <constraints nullable="true"/>
             </column>
-            <column name="competitionType" type="varchar(255)">
+            <column name="competition_type" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
             <column name="number_of_rounds" type="integer">
@@ -67,7 +67,7 @@
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>
             <column name="year" type="numeric"/>
-            <column name="competitionType" type="numeric"/>
+            <column name="competition_type" type="numeric"/>
             <column name="number_of_rounds" type="numeric"/>
             <column name="number_of_series" type="numeric"/>
             <column name="final_round" type="boolean"/>

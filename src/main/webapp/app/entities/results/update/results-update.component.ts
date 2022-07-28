@@ -7,12 +7,14 @@ import { finalize, map } from 'rxjs/operators';
 
 import { IResults, Results } from '../results.model';
 import { ResultsService } from '../service/results.service';
-import { IPassen, ISeries } from 'app/entities/series/series.model';
+import { ISeries } from 'app/entities/series/series.model';
 import { SeriesService } from 'app/entities/series/service/series.service';
 import { IGroup } from 'app/entities/group/group.model';
 import { GroupService } from 'app/entities/group/service/group.service';
-import { IAthlete, ISchuetze } from 'app/entities/athlete/athlete.model';
+import { IAthlete } from 'app/entities/athlete/athlete.model';
 import { ICompetition } from 'app/entities/competition/competition.model';
+import { AthleteService } from '../../athlete/service/athlete.service';
+import { CompetitionService } from '../../competition/service/competition.service';
 
 @Component({
   selector: 'jhi-results-update',
@@ -74,7 +76,7 @@ export class ResultsUpdateComponent implements OnInit {
     }
   }
 
-  trackSeriesById(index: number, item: IPassen): number {
+  trackSeriesById(index: number, item: ISeries): number {
     return item.id!;
   }
 
@@ -82,7 +84,7 @@ export class ResultsUpdateComponent implements OnInit {
     return item.id!;
   }
 
-  trackAthleteById(index: number, item: ISchuetze): number {
+  trackAthleteById(index: number, item: IAthlete): number {
     return item.id!;
   }
 
@@ -127,7 +129,7 @@ export class ResultsUpdateComponent implements OnInit {
     this.serie2sCollection = this.seriesService.addSeriesToCollectionIfMissing(this.serie2sCollection, results.serie2);
     this.serie3sCollection = this.seriesService.addSeriesToCollectionIfMissing(this.serie3sCollection, results.serie3);
     this.serie4sCollection = this.seriesService.addSeriesToCollectionIfMissing(this.serie4sCollection, results.serie4);
-    this.groupsSharedCollection = this.groupService.addGroupsToCollectionIfMissing(this.groupsSharedCollection, results.group);
+    this.groupsSharedCollection = this.groupService.addGroupToCollectionIfMissing(this.groupsSharedCollection, results.group);
     this.athletesSharedCollection = this.athleteService.addAthleteToCollectionIfMissing(this.athletesSharedCollection, results.athlete);
     this.competitionsSharedCollection = this.competitionService.addCompetitionToCollectionIfMissing(
       this.competitionsSharedCollection,
@@ -163,7 +165,7 @@ export class ResultsUpdateComponent implements OnInit {
     this.groupService
       .query()
       .pipe(map((res: HttpResponse<IGroup[]>) => res.body ?? []))
-      .pipe(map((groups: IGroup[]) => this.groupService.addGroupsToCollectionIfMissing(groups, this.editForm.get('group')!.value)))
+      .pipe(map((groups: IGroup[]) => this.groupService.addGroupToCollectionIfMissing(groups, this.editForm.get('group')!.value)))
       .subscribe((groups: IGroup[]) => (this.groupsSharedCollection = groups));
 
     this.athleteService

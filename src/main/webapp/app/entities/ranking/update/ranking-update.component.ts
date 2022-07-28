@@ -7,6 +7,8 @@ import { finalize, map } from 'rxjs/operators';
 
 import { IRanking, Ranking } from '../ranking.model';
 import { RankingService } from '../service/ranking.service';
+import { ICompetition } from '../../competition/competition.model';
+import { CompetitionService } from '../../competition/service/competition.service';
 
 @Component({
   selector: 'jhi-ranking-update',

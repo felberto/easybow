@@ -9,7 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RankingListDialogComponent } from '../rankingList-dialog/rankingList-dialog.component';
 
 @Component({
-  selector: 'jhi-rankingList',
+  selector: 'jhi-ranking-list',
   templateUrl: './rankingList.component.html',
   styleUrls: ['./rankingList.component.scss'],
 })

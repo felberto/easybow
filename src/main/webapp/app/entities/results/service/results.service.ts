@@ -7,6 +7,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { createRequestOption } from 'app/core/request/request-util';
 import { getResultsIdentifier, IResults } from '../results.model';
 import { getAthleteIdentifier, IAthlete } from 'app/entities/athlete/athlete.model';
+import { getCompetitionIdentifier, ICompetition } from '../../competition/competition.model';
 
 export type EntityResponseType = HttpResponse<IResults>;
 export type EntityArrayResponseType = HttpResponse<IResults[]>;

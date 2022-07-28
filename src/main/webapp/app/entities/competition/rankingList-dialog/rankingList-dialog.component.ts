@@ -5,7 +5,7 @@ import { RankingListService } from '../service/rankingList.service';
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'jhi-rankingList-dialog',
+  selector: 'jhi-ranking-list-dialog',
   templateUrl: './rankingList-dialog.component.html',
   styleUrls: ['./rankingList-dialog.component.scss'],
 })

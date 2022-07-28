@@ -8,6 +8,7 @@ import { finalize, map } from 'rxjs/operators';
 import { IRound, Round } from '../round.model';
 import { RoundService } from '../service/round.service';
 import { ICompetition } from 'app/entities/competition/competition.model';
+import { CompetitionService } from '../../competition/service/competition.service';
 
 @Component({
   selector: 'jhi-round-update',
@@ -27,7 +28,7 @@ export class RoundUpdateComponent implements OnInit {
 
   constructor(
     protected roundService: RoundService,
-    protected competitionService: ComepetitionService,
+    protected competitionService: CompetitionService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {}
@@ -85,7 +86,7 @@ export class RoundUpdateComponent implements OnInit {
       competition: round.competition,
     });
 
-    this.competitionsSharedCollection = this.competitionService.addWettkampfToCollectionIfMissing(
+    this.competitionsSharedCollection = this.competitionService.addCompetitionToCollectionIfMissing(
       this.competitionsSharedCollection,
       round.competition
     );
@@ -97,7 +98,7 @@ export class RoundUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<ICompetition[]>) => res.body ?? []))
       .pipe(
         map((competitions: ICompetition[]) =>
-          this.competitionService.addWettkampfToCollectionIfMissing(competitions, this.editForm.get('competition')!.value)
+          this.competitionService.addCompetitionToCollectionIfMissing(competitions, this.editForm.get('competition')!.value)
         )
       )
       .subscribe((competitions: ICompetition[]) => (this.competitionsSharedCollection = competitions));
