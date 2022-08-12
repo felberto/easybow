@@ -10,7 +10,7 @@ import { DataUtils } from '../../../core/util/data-util.service';
   providedIn: 'root',
 })
 export class RankingListService {
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/rankingList');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/rankinglist');
 
   constructor(
     protected http: HttpClient,

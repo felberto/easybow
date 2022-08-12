@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 import { ViewComponent } from './view/view.component';
 import { SharedModule } from '../../shared/shared.module';
 import { LiveRoutingModule } from './route/live-routing.module';
+import { LiveEasvWorldcupComponent } from './live-easv-worldcup/live-easv-worldcup.component';
+import { TuiTabsModule } from '@taiga-ui/kit';
 
 @NgModule({
-  declarations: [ViewComponent],
-  imports: [CommonModule, SharedModule, LiveRoutingModule],
+  declarations: [ViewComponent, LiveEasvWorldcupComponent],
+  imports: [CommonModule, SharedModule, LiveRoutingModule, TuiTabsModule],
 })
 export class LiveModule {}

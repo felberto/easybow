@@ -18,13 +18,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Service Implementation for managing {@link RankingListService}.
+ * Service Implementation for managing {@link RankingListService} for competitionType ZSAV_NAWU.
  */
 @Service
 @Transactional
-public class RankingListServiceImpl implements RankingListService {
+public class ZsavNawuEinzelRankingListServiceImpl implements RankingListService {
 
-    private final Logger log = LoggerFactory.getLogger(RankingListServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(ZsavNawuEinzelRankingListServiceImpl.class);
 
     private final ResultsRepository resultsRepository;
 
@@ -36,7 +36,7 @@ public class RankingListServiceImpl implements RankingListService {
 
     private final SeriesService seriesService;
 
-    public RankingListServiceImpl(
+    public ZsavNawuEinzelRankingListServiceImpl(
         ResultsRepository resultsRepository,
         CompetitionRepository competitionRepository,
         RankingRepository rankingRepository,

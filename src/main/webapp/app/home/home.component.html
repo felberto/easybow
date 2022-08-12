@@ -1,19 +1,21 @@
-<div class="col-md-9">
-  <tui-notification status="warning" class="tui-space_top-4" *ngIf="account == null"> Bitte einloggen</tui-notification>
-</div>
-
-<div *ngIf="account !== null">
-  <div class="d-flex justify-content-end">
+<div>
+  <!--TODO anleitung anders integrieren-->
+  <!--<div *ngIf="account !== null" class="d-flex justify-content-end">
     <button class="btn btn-info mr-2" (click)="openAnleitung()">
       <fa-icon icon="book"></fa-icon>
       <span>Anleitung</span>
     </button>
-  </div>
-  <h4 class="tui-form__header tui-form__header_margin-top_none">Wettkämpfe</h4>
+  </div>-->
+  <h4 class="tui-form__header tui-form__header_margin-top_none">Competitions</h4>
   <!--  <mat-grid-list cols="4" rowHeight="120px">-->
   <mat-grid-list [cols]="breakpoint" rowHeight="2:0.5" (window:resize)="onResize($event)">
     <mat-grid-tile *ngFor="let competition of competitionList" [colspan]="1" [rowspan]="2">
-      <mat-card *ngIf="account.authorities[0] !== 'ROLE_LIVE'" class="card" [routerLink]="['/competition', competition.id, 'overview']">
+      <!--ZSAV NAWU-->
+      <mat-card
+        *ngIf="account !== null && competition.competitionType?.toString() == 'ZSAV_NAWU'"
+        class="card"
+        (click)="routeTo(competition.id)"
+      >
         <mat-card-title class="card-title">{{ competition.name }} {{ competition.year }}</mat-card-title>
         <mat-card-content>
           <div *ngFor="let round of getList(competition)">
@@ -22,12 +24,43 @@
           </div>
         </mat-card-content>
       </mat-card>
-      <mat-card *ngIf="account.authorities[0] == 'ROLE_LIVE'" class="card" (click)="openLiveView(competition)">
+      <!--EASV WORLDCUP-->
+      <mat-card
+        *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_WORLDCUP'"
+        class="card"
+        (click)="routeTo(competition.id)"
+      >
+        <mat-card-title class="card-title">{{ competition.name }} {{ competition.year }}</mat-card-title>
+        <mat-card-content>
+          <div *ngFor="let round of getList(competition)">
+            <div>{{ round.date?.format('dddd, MMMM D, YYYY') }}</div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <!--ZSAV NAWU-->
+      <mat-card
+        *ngIf="account === null && competition.competitionType?.toString() == 'ZSAV_NAWU'"
+        class="card"
+        (click)="openLiveView(competition)"
+      >
         <mat-card-title class="card-title">{{ competition.name }} {{ competition.year }}</mat-card-title>
         <mat-card-content>
           <div *ngFor="let round of getList(competition)">
             <div *ngIf="round.round !== 99">{{ round.round }}. Runde Schiessende: {{ round.date?.format('dddd, MMMM D, YYYY') }}</div>
             <div *ngIf="round.round === 99">Final {{ round.date?.format('dddd, MMMM D, YYYY') }}</div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <!--EASV WORLDCUP-->
+      <mat-card
+        *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_WORLDCUP'"
+        class="card"
+        (click)="openLiveView(competition)"
+      >
+        <mat-card-title class="card-title">{{ competition.name }} {{ competition.year }}</mat-card-title>
+        <mat-card-content>
+          <div *ngFor="let round of getList(competition)">
+            <div>{{ round.date?.format('dddd, MMMM D, YYYY') }}</div>
           </div>
         </mat-card-content>
       </mat-card>

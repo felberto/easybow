@@ -7,6 +7,7 @@ export interface IResults {
   id?: number;
   round?: number;
   result?: number | null;
+  athleteNumber?: string | null;
   serie1?: ISeries | null;
   serie2?: ISeries | null;
   serie3?: ISeries | null;
@@ -21,6 +22,7 @@ export class Results implements IResults {
     public id?: number,
     public round?: number,
     public result?: number | null,
+    public athleteNumber?: string | null,
     public serie1?: ISeries | null,
     public serie2?: ISeries | null,
     public serie3?: ISeries | null,

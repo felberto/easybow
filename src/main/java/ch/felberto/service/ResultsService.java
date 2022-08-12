@@ -62,7 +62,7 @@ public interface ResultsService {
      *
      * @param id the id of the entity.
      */
-    void deleteByAthlete(Long id);
+    void deleteByAthleteAndCompetition(Long id, Long competitionId);
 
     /**
      * Delete the "id" result.

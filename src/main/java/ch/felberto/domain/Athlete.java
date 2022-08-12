@@ -52,7 +52,7 @@ public class Athlete implements Serializable {
     @Column(name = "position", nullable = false)
     private Position position;
 
-    @Column(name = "role", nullable = false)
+    @Column(name = "role", nullable = true)
     private String role;
 
     @ManyToOne

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -23,64 +22,54 @@ public class Series implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @NotNull
     @Min(value = 0)
     @Max(value = 11)
-    @Column(name = "p_1", nullable = false)
+    @Column(name = "p_1")
     private Integer p1;
 
-    @NotNull
     @Min(value = 0)
     @Max(value = 11)
-    @Column(name = "p_2", nullable = false)
+    @Column(name = "p_2")
     private Integer p2;
 
-    @NotNull
     @Min(value = 0)
     @Max(value = 11)
-    @Column(name = "p_3", nullable = false)
+    @Column(name = "p_3")
     private Integer p3;
 
-    @NotNull
     @Min(value = 0)
     @Max(value = 11)
-    @Column(name = "p_4", nullable = false)
+    @Column(name = "p_4")
     private Integer p4;
 
-    @NotNull
     @Min(value = 0)
     @Max(value = 11)
-    @Column(name = "p_5", nullable = false)
+    @Column(name = "p_5")
     private Integer p5;
 
-    @NotNull
     @Min(value = 0)
     @Max(value = 11)
-    @Column(name = "p_6", nullable = false)
+    @Column(name = "p_6")
     private Integer p6;
 
-    @NotNull
     @Min(value = 0)
     @Max(value = 11)
-    @Column(name = "p_7", nullable = false)
+    @Column(name = "p_7")
     private Integer p7;
 
-    @NotNull
     @Min(value = 0)
     @Max(value = 11)
-    @Column(name = "p_8", nullable = false)
+    @Column(name = "p_8")
     private Integer p8;
 
-    @NotNull
     @Min(value = 0)
     @Max(value = 11)
-    @Column(name = "p_9", nullable = false)
+    @Column(name = "p_9")
     private Integer p9;
 
-    @NotNull
     @Min(value = 0)
     @Max(value = 11)
-    @Column(name = "p_10", nullable = false)
+    @Column(name = "p_10")
     private Integer p10;
 
     @Column(name = "result")

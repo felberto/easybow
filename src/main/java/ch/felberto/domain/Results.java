@@ -30,6 +30,9 @@ public class Results implements Serializable {
     @Column(name = "result")
     private Integer result;
 
+    @Column(name = "athlete_number")
+    private String athleteNumber;
+
     @OneToOne
     @JoinColumn(unique = true)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
@@ -98,6 +101,19 @@ public class Results implements Serializable {
 
     public void setResult(Integer result) {
         this.result = result;
+    }
+
+    public String getAthleteNumber() {
+        return this.athleteNumber;
+    }
+
+    public Results athleteNumber(String athleteNumber) {
+        this.athleteNumber = athleteNumber;
+        return this;
+    }
+
+    public void setAthleteNumber(String athleteNumber) {
+        this.athleteNumber = athleteNumber;
     }
 
     public Series getSerie1() {

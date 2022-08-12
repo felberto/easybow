@@ -5,7 +5,7 @@ export enum Nationality {
   FRA = 'FRA',
   CZE = 'CZE',
   BELG = 'BELG',
-  MGZ = 'MGZ',
+  NLD = 'NLD',
   HUN = 'HUN',
   RUS = 'RUS',
 }

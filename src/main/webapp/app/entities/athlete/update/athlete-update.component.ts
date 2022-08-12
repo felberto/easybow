@@ -27,7 +27,7 @@ export class AthleteUpdateComponent implements OnInit {
     nationality: [null, [Validators.required]],
     gender: [null, [Validators.required]],
     position: [null, [Validators.required]],
-    role: [null, [Validators.required]],
+    role: [],
     club: [],
   });
 

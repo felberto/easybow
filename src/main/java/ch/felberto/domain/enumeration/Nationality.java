@@ -10,7 +10,7 @@ public enum Nationality {
     AUT,
     CZE,
     BELG,
-    MGZ,
+    NLD,
     HUN,
     RUS,
 }

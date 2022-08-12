@@ -65,7 +65,7 @@ import { of } from 'rxjs';
   ],
   providers: [
     Title,
-    { provide: LOCALE_ID, useValue: 'de' },
+    { provide: LOCALE_ID, useValue: 'en-EN' },
     {
       provide: TUI_LANGUAGE,
       useValue: of(TUI_GERMAN_LANGUAGE),

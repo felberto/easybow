@@ -99,10 +99,10 @@ public class ResultsServiceImpl implements ResultsService {
     }
 
     @Override
-    public void deleteByAthlete(Long id) {
+    public void deleteByAthleteAndCompetition(Long id, Long competitionId) {
         log.debug("Request to delete Result : {}", id);
         if (athleteRepository.findById(id).isPresent()) {
-            resultsRepository.deleteByAthlete(athleteRepository.findById(id).get());
+            resultsRepository.deleteByAthleteAndCompetition_Id(athleteRepository.findById(id).get(), competitionId);
         }
     }
 

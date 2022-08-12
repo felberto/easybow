@@ -39,7 +39,7 @@
             <column name="number_of_final_series" type="integer">
                 <constraints nullable="true"/>
             </column>
-            <column name="teamSize" type="integer">
+            <column name="team_size" type="integer">
                 <constraints nullable="true"/>
             </column>
             <column name="template" type="boolean">
@@ -74,7 +74,7 @@
             <column name="final_preparation" type="boolean"/>
             <column name="number_of_final_athletes" type="numeric"/>
             <column name="number_of_final_series" type="numeric"/>
-            <column name="teamSize" type="numeric"/>
+            <column name="team_size" type="numeric"/>
             <column name="template" type="boolean"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>

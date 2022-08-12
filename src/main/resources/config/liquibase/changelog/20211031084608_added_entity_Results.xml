@@ -18,6 +18,9 @@
             <column name="result" type="integer">
                 <constraints nullable="true" />
             </column>
+            <column name="athlete_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <column name="serie1_id" type="bigint">
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_results__serie1_id" />
             </column>

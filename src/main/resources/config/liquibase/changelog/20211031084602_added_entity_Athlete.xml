@@ -13,28 +13,28 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="first_name" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="year_of_birth" type="integer">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="nationality" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="gender" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="position" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="role" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="club_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
@@ -52,9 +52,9 @@
     -->
     <changeSet id="20211031084602-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/athlete.csv"
-                  separator=";"
-                  tableName="athlete">
+                file="config/liquibase/fake-data/athlete.csv"
+                separator=";"
+                tableName="athlete">
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>
             <column name="first_name" type="string"/>

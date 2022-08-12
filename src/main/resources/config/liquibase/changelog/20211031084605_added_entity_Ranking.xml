@@ -15,7 +15,7 @@
             <column name="position" type="integer">
                 <constraints nullable="false"/>
             </column>
-            <column name="rankingCriteria" type="varchar(255)">
+            <column name="ranking_criteria" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="competition_id" type="bigint">
@@ -42,7 +42,7 @@
                 tableName="ranking">
             <column name="id" type="numeric"/>
             <column name="position" type="numeric"/>
-            <column name="rankingCriteria" type="string"/>
+            <column name="ranking_criteria" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

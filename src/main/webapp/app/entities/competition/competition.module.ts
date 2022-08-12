@@ -21,6 +21,10 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 import { TuiSvgModule } from '@taiga-ui/core';
 import { TuiBadgeModule } from '@taiga-ui/kit';
 import { SeriesDialog1Component } from './series-dialog-1/series-dialog-1.component';
+import { CompetitionOverviewEasvWorldcupComponent } from './overview-easv-worldcup/competition-overview-easv-worldcup.component';
+import { SeriesDialog4Component } from './series-dialog-4/series-dialog-4.component';
+import { RankingListEasvWorldcupComponent } from './ranking-list-easv-worldcup/ranking-list-easv-worldcup.component';
+import { AthleteNumberDialogComponent } from './athlete-number-dialog/athlete-number-dialog.component';
 
 @NgModule({
   imports: [
@@ -41,22 +45,29 @@ import { SeriesDialog1Component } from './series-dialog-1/series-dialog-1.compon
     CompetitionDeleteDialogComponent,
     CompetitionRankingComponent,
     CompetitionOverviewComponent,
+    CompetitionOverviewEasvWorldcupComponent,
     ResultsDialogComponent,
     SeriesDialog1Component,
     SeriesDialog2Component,
+    SeriesDialog4Component,
     RankingListComponent,
+    RankingListEasvWorldcupComponent,
     RankingListDialogComponent,
     ConfirmDialogComponent,
+    AthleteNumberDialogComponent,
   ],
   entryComponents: [
     CompetitionDeleteDialogComponent,
     ResultsDialogComponent,
     RankingListComponent,
+    RankingListEasvWorldcupComponent,
     SeriesDialog1Component,
     SeriesDialog2Component,
+    SeriesDialog4Component,
     ConfirmDialogComponent,
+    AthleteNumberDialogComponent,
   ],
   providers: [NgbActiveModal],
-  exports: [SeriesDialog1Component, SeriesDialog2Component],
+  exports: [SeriesDialog1Component, SeriesDialog2Component, SeriesDialog4Component, AthleteNumberDialogComponent],
 })
 export class CompetitionModule {}

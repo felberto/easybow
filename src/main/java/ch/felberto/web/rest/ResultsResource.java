@@ -200,7 +200,7 @@ public class ResultsResource {
      * @param competitionId the id of the competition to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the result, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/results/wettkampf/{wettkampfId}")
+    @GetMapping("/results/competition/{competitionId}")
     public ResponseEntity<List<Results>> getResultByCompetition(@PathVariable Long competitionId) {
         log.debug("REST request to get Result : {}", competitionId);
         return ResponseEntity.ok().body(resultsService.findByCompetition(competitionId));
@@ -228,10 +228,10 @@ public class ResultsResource {
      * @param id the id of athlete of the result to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
-    @DeleteMapping("/results/athlete/{id}")
-    public ResponseEntity<Void> deleteResultByAthlete(@PathVariable Long id) {
+    @DeleteMapping("/results/athlete/{id}/{competitionId}")
+    public ResponseEntity<Void> deleteResultByAthleteAndCompetition(@PathVariable Long id, @PathVariable Long competitionId) {
         log.debug("REST request to delete Result : {}", id);
-        resultsService.deleteByAthlete(id);
+        resultsService.deleteByAthleteAndCompetition(id, competitionId);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))

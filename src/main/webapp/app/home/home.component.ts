@@ -9,6 +9,7 @@ import { Competition, ICompetition } from '../entities/competition/competition.m
 import { CompetitionService } from '../entities/competition/service/competition.service';
 import { RoundService } from '../entities/round/service/round.service';
 import { IRound, Round } from '../entities/round/round.model';
+import { CompetitionType } from '../entities/enumerations/competitionType.model';
 
 @Component({
   selector: 'jhi-home',
@@ -77,6 +78,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
+  routeTo(competitionId: number | undefined): void {
+    this.competitionService.find(competitionId!).subscribe(res => {
+      if (res.body!.competitionType === CompetitionType.ZSAV_NAWU) {
+        this.router.navigate(['/competition', competitionId, 'overview']);
+      } else if (res.body!.competitionType === CompetitionType.EASV_WORLDCUP) {
+        this.router.navigate(['/competition', competitionId, 'overview-easv-worldcup']);
+      }
+    });
+  }
+
   openAnleitung(): void {
     this.index = 0;
     this.open = true;
@@ -88,7 +99,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   openLiveView(competition: ICompetition): void {
     if (competition.id !== undefined) {
-      this.router.navigate([`/live/${competition.id}`]);
+      if (competition.competitionType === CompetitionType.ZSAV_NAWU) {
+        this.router.navigate([`/live/${competition.id}`]);
+      } else if (competition.competitionType === CompetitionType.EASV_WORLDCUP) {
+        this.router.navigate(['/live', competition.id, 'live-easv-worldcup']);
+      }
     }
   }
 

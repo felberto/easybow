@@ -26,6 +26,28 @@
         </div>
 
         <div class="form-group">
+          <label class="form-control-label" for="field_athlete_number">AthleteNumber</label>
+          <input
+            type="string"
+            class="form-control"
+            name="athlete_number"
+            id="field_athlete_number"
+            data-cy="athlete_number"
+            formControlName="athlete_number"
+          />
+          <div
+            *ngIf="
+              editForm.get('athlete_number')!.invalid && (editForm.get('athlete_number')!.dirty || editForm.get('athlete_number')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('athlete_number')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('athlete_number')?.errors?.string">
+              This field should be a string.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
           <label class="form-control-label" for="field_serie1">Serie 1</label>
           <select class="form-control" id="field_serie1" data-cy="serie1" name="serie1" formControlName="serie1">
             <option [ngValue]="null"></option>

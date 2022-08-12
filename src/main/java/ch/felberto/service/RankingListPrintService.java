@@ -34,8 +34,21 @@ public class RankingListPrintService {
     }
 
     public File generatePdf(RankingList rankingList) throws IOException, DocumentException {
-        Context context = getContext(rankingList);
-        String html = loadAndFillTemplate(context, rankingList.getType());
+        Context context;
+        String html;
+        switch (rankingList.getCompetition().getCompetitionType()) {
+            case ZSAV_NAWU:
+                context = getContext(rankingList);
+                html = loadAndFillTemplate(context, rankingList.getType());
+                break;
+            case EASV_WORLDCUP:
+                context = getContextEasvWorldcup(rankingList);
+                html = loadAndFillTemplateEasvWorldcup(context);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + rankingList.getCompetition().getCompetitionType());
+        }
+
         return renderPdf(html);
     }
 
@@ -114,6 +127,32 @@ public class RankingListPrintService {
         return context;
     }
 
+    public Context getContextEasvWorldcup(RankingList rankingList) {
+        Context context = new Context();
+        context.setVariable("rankingList", rankingList);
+
+        String titleDoc = rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
+        String title = rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
+        String subTitle = "";
+        switch (rankingList.getType()) {
+            case 1:
+                subTitle = "MEN";
+                break;
+            case 2:
+                subTitle = "WOMEN";
+                break;
+            default:
+                break;
+        }
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        context.setVariable("titleDoc", titleDoc);
+        context.setVariable("title", title);
+        context.setVariable("subTitle", subTitle);
+        context.setVariable("date", formatter.format(date));
+        return context;
+    }
+
     public String loadAndFillTemplate(Context context, int type) {
         switch (type) {
             case 1:
@@ -131,5 +170,9 @@ public class RankingListPrintService {
                 break;
         }
         return null;
+    }
+
+    public String loadAndFillTemplateEasvWorldcup(Context context) {
+        return templateEngine.process("ranglisten/rangliste_easv_worldcup", context);
     }
 }

@@ -1,8 +1,11 @@
 package ch.felberto.web.rest;
 
+import ch.felberto.domain.Competition;
 import ch.felberto.domain.RankingList;
+import ch.felberto.service.CompetitionService;
 import ch.felberto.service.RankingListPrintService;
-import ch.felberto.service.RankingListService;
+import ch.felberto.service.impl.EasvWorldcupRankingListServiceImpl;
+import ch.felberto.service.impl.ZsavNawuEinzelRankingListServiceImpl;
 import com.lowagie.text.DocumentException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -33,12 +36,22 @@ public class RankingListResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final RankingListService rankingListService;
+    private final ZsavNawuEinzelRankingListServiceImpl zsavNawuEinzelRankingListService;
+    private final EasvWorldcupRankingListServiceImpl easvWorldcupRankingListService;
     private final RankingListPrintService rankingListPrintService;
 
-    public RankingListResource(RankingListService rankingListService, RankingListPrintService rankingListPrintService) {
-        this.rankingListService = rankingListService;
+    private final CompetitionService competitionService;
+
+    public RankingListResource(
+        ZsavNawuEinzelRankingListServiceImpl zsavNawuEinzelRankingListService,
+        EasvWorldcupRankingListServiceImpl easvWorldcupRankingListService,
+        RankingListPrintService rankingListPrintService,
+        CompetitionService competitionService
+    ) {
+        this.zsavNawuEinzelRankingListService = zsavNawuEinzelRankingListService;
+        this.easvWorldcupRankingListService = easvWorldcupRankingListService;
         this.rankingListPrintService = rankingListPrintService;
+        this.competitionService = competitionService;
     }
 
     /**
@@ -51,8 +64,18 @@ public class RankingListResource {
     @PostMapping("/rankinglist/{competitionId}")
     public ResponseEntity<RankingList> createRankingList(@PathVariable Long competitionId, @RequestBody Integer type) {
         log.info("REST request to get RankingList for Competition : {} and type : {}", competitionId, type);
-        Optional<RankingList> rangliste = Optional.ofNullable(rankingListService.generateRankingList(competitionId, type));
-        return ResponseUtil.wrapOrNotFound(rangliste);
+        Optional<Competition> competition = competitionService.findOne(competitionId);
+        Optional<RankingList> rankingList = null;
+        switch (competition.get().getCompetitionType()) {
+            case ZSAV_NAWU:
+                rankingList = Optional.ofNullable(zsavNawuEinzelRankingListService.generateRankingList(competitionId, type));
+            case EASV_WORLDCUP:
+                rankingList = Optional.ofNullable(easvWorldcupRankingListService.generateRankingList(competitionId, type));
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + competition.get().getCompetitionType());
+        }
+        return ResponseUtil.wrapOrNotFound(rankingList);
     }
 
     /**
@@ -65,7 +88,8 @@ public class RankingListResource {
     @PostMapping("/rankinglist/final/{competitionId}")
     public ResponseEntity<RankingList> createFinal(@PathVariable Long competitionId, @RequestBody Integer type) {
         log.info("REST request to create final for Competition : {} and type : {}", competitionId, type);
-        Optional<RankingList> rangliste = Optional.ofNullable(rankingListService.createFinal(competitionId, type));
+        //todo wie oben switch case
+        Optional<RankingList> rangliste = Optional.ofNullable(zsavNawuEinzelRankingListService.createFinal(competitionId, type));
         return ResponseUtil.wrapOrNotFound(rangliste);
     }
 

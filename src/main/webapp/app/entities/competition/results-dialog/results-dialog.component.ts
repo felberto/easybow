@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ICompetition } from '../competition.model';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IAthlete } from '../../athlete/athlete.model';
 import { AthleteService } from '../../athlete/service/athlete.service';
 import { IResults } from 'app/entities/results/results.model';
 import { ResultsService } from 'app/entities/results/service/results.service';
 import { HttpResponse } from '@angular/common/http';
+import { AthleteNumberDialogComponent } from '../athlete-number-dialog/athlete-number-dialog.component';
 
 @Component({
   selector: 'jhi-resultate-dialog',
@@ -18,7 +19,12 @@ export class ResultsDialogComponent implements OnInit {
   athletes?: Array<IAthlete> | null;
   addedAthletes?: Array<IAthlete> | null;
 
-  constructor(protected activeModal: NgbActiveModal, protected athleteService: AthleteService, private resultsService: ResultsService) {}
+  constructor(
+    protected activeModal: NgbActiveModal,
+    protected athleteService: AthleteService,
+    private resultsService: ResultsService,
+    protected modalService: NgbModal
+  ) {}
 
   cancel(): void {
     this.activeModal.close('deleted');
@@ -45,30 +51,13 @@ export class ResultsDialogComponent implements OnInit {
     });
   }
 
-  addAthlete(athlete: IAthlete): void {
-    if (this.competition?.numberOfRounds !== undefined) {
-      for (let i = 0; i < this.competition.numberOfRounds; i++) {
-        const result: IResults = {
-          competition: this.competition,
-          athlete,
-          round: i + 1,
-        };
-        this.resultsService.create(result).subscribe();
-      }
-    }
-    if (this.addedAthletes !== undefined && this.addedAthletes !== null) {
-      this.addedAthletes.push(athlete);
-    }
+  addAthlete(athlete: IAthlete, competition: ICompetition): void {
+    const modalRef = this.modalService.open(AthleteNumberDialogComponent, { size: 'xl', backdrop: 'static' });
+    modalRef.componentInstance.athlete = athlete;
+    modalRef.componentInstance.competition = competition;
   }
 
-  removeAthlete(athlete: IAthlete): void {
-    if (this.addedAthletes !== null && this.addedAthletes !== undefined) {
-      this.addedAthletes.forEach(s => {
-        if (s.id === athlete.id) {
-          this.addedAthletes?.splice(this.addedAthletes.indexOf(s), 1);
-          this.resultsService.deleteByAthlete(athlete).subscribe();
-        }
-      });
-    }
+  removeAthlete(athlete: IAthlete, competition: ICompetition): void {
+    this.resultsService.deleteByAthleteAndCompetition(athlete, competition).subscribe();
   }
 }

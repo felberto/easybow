@@ -52,7 +52,7 @@ import { Authority } from '../config/authority.constants';
       },
       {
         path: 'live',
-        data: { pageTitle: 'LiveView', authorities: [Authority.ADMIN, Authority.ZSAV, Authority.LIVE] },
+        data: { pageTitle: 'LiveView' },
         loadChildren: () => import('./live/live.module').then(m => m.LiveModule),
       },
       {

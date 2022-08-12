@@ -21,7 +21,7 @@ public interface ResultsRepository extends JpaRepository<Results, Long>, JpaSpec
 
     Boolean existsByCompetition_IdAndRoundAndAthlete_Id(Long competitionId, Integer round, Long athleteId);
 
-    void deleteByAthlete(Athlete athlete);
+    void deleteByAthleteAndCompetition_Id(Athlete athlete, Long competitionId);
 
     void deleteByCompetition_IdAndRound(Long competitionId, Integer round);
 }

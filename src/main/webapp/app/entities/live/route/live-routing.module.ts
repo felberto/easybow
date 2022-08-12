@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import { ViewComponent } from '../view/view.component';
 import { CompetitionRoutingResolveService } from '../../competition/route/competition-routing-resolve.service';
+import { LiveEasvWorldcupComponent } from '../live-easv-worldcup/live-easv-worldcup.component';
 
 const athleteRoute: Routes = [
   {
@@ -12,7 +11,13 @@ const athleteRoute: Routes = [
     resolve: {
       competition: CompetitionRoutingResolveService,
     },
-    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id/live-easv-worldcup',
+    component: LiveEasvWorldcupComponent,
+    resolve: {
+      competition: CompetitionRoutingResolveService,
+    },
   },
 ];
 

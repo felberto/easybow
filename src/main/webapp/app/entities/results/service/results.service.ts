@@ -14,7 +14,7 @@ export type EntityArrayResponseType = HttpResponse<IResults[]>;
 
 @Injectable({ providedIn: 'root' })
 export class ResultsService {
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/resultss');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/results');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -53,8 +53,11 @@ export class ResultsService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
-  deleteByAthlete(athlete: IAthlete): Observable<HttpResponse<{}>> {
-    return this.http.delete(`${this.resourceUrl}/athlete/${getAthleteIdentifier(athlete) as number}`, { observe: 'response' });
+  deleteByAthleteAndCompetition(athlete: IAthlete, competition: ICompetition): Observable<HttpResponse<{}>> {
+    return this.http.delete(
+      `${this.resourceUrl}/athlete/${getAthleteIdentifier(athlete) as number}/${getCompetitionIdentifier(competition) as number}`,
+      { observe: 'response' }
+    );
   }
 
   addResultsToCollectionIfMissing(resultsCollection: IResults[], ...resultsToCheck: (IResults | null | undefined)[]): IResults[] {
