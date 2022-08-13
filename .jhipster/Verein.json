@@ -10,13 +10,13 @@
   "relationships": [
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "verband",
-      "otherEntityRelationshipName": "verein",
-      "relationshipName": "verband",
+      "otherEntityName": "association",
+      "otherEntityRelationshipName": "club",
+      "relationshipName": "association",
       "otherEntityField": "name"
     }
   ],
-  "entityTableName": "verein",
+  "entityTableName": "club",
   "dto": "no",
   "pagination": "pagination",
   "service": "serviceImpl",

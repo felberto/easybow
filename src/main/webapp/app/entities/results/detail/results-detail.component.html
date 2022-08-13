@@ -1,0 +1,78 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="results">
+      <h2 data-cy="resultsDetailsHeading"><span>Results</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ results.id }}</span>
+        </dd>
+        <dt><span>Round</span></dt>
+        <dd>
+          <span>{{ results.round }}</span>
+        </dd>
+        <dt><span>Result</span></dt>
+        <dd>
+          <span>{{ results.result }}</span>
+        </dd>
+        <dt><span>Serie 1</span></dt>
+        <dd>
+          <div *ngIf="results.serie1">
+            <a [routerLink]="['/series', results.serie1?.id, 'view']">{{ results.serie1?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Serie 2</span></dt>
+        <dd>
+          <div *ngIf="results.serie2">
+            <a [routerLink]="['/series', results.serie2?.id, 'view']">{{ results.serie2?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Serie 3</span></dt>
+        <dd>
+          <div *ngIf="results.serie3">
+            <a [routerLink]="['/series', results.serie3?.id, 'view']">{{ results.serie3?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Serie 4</span></dt>
+        <dd>
+          <div *ngIf="results.serie4">
+            <a [routerLink]="['/series', results.serie4?.id, 'view']">{{ results.serie4?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Group</span></dt>
+        <dd>
+          <div *ngIf="results.group">
+            <a [routerLink]="['/group', results.group?.id, 'view']">{{ results.group?.name }}</a>
+          </div>
+        </dd>
+        <dt><span>Athlete</span></dt>
+        <dd>
+          <div *ngIf="results.athlete">
+            <a [routerLink]="['/schuetze', results.athlete?.id, 'view']">{{ results.athlete?.name }}</a>
+          </div>
+        </dd>
+        <dt><span>Competition</span></dt>
+        <dd>
+          <div *ngIf="results.competition">
+            <a [routerLink]="['/competition', results.competition?.id, 'view']">{{ results.competition?.name }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/results', results.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="series">
+      <h2 data-cy="seriesDetailsHeading"><span>Series</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ series.id }}</span>
+        </dd>
+        <dt><span>P 1</span></dt>
+        <dd>
+          <span>{{ series.p1 }}</span>
+        </dd>
+        <dt><span>P 2</span></dt>
+        <dd>
+          <span>{{ series.p2 }}</span>
+        </dd>
+        <dt><span>P 3</span></dt>
+        <dd>
+          <span>{{ series.p3 }}</span>
+        </dd>
+        <dt><span>P 4</span></dt>
+        <dd>
+          <span>{{ series.p4 }}</span>
+        </dd>
+        <dt><span>P 5</span></dt>
+        <dd>
+          <span>{{ series.p5 }}</span>
+        </dd>
+        <dt><span>P 6</span></dt>
+        <dd>
+          <span>{{ series.p6 }}</span>
+        </dd>
+        <dt><span>P 7</span></dt>
+        <dd>
+          <span>{{ series.p7 }}</span>
+        </dd>
+        <dt><span>P 8</span></dt>
+        <dd>
+          <span>{{ series.p8 }}</span>
+        </dd>
+        <dt><span>P 9</span></dt>
+        <dd>
+          <span>{{ series.p9 }}</span>
+        </dd>
+        <dt><span>P 10</span></dt>
+        <dd>
+          <span>{{ series.p10 }}</span>
+        </dd>
+        <dt><span>Result</span></dt>
+        <dd>
+          <span>{{ series.result }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/series', series.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

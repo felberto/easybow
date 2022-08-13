@@ -14,9 +14,9 @@
   "relationships": [
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "wettkampf",
+      "otherEntityName": "competition",
       "otherEntityRelationshipName": "runde",
-      "relationshipName": "wettkampf",
+      "relationshipName": "competition",
       "otherEntityField": "name"
     }
   ],

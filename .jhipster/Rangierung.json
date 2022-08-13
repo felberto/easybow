@@ -7,7 +7,7 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "rangierungskriterien",
+      "fieldName": "rankingCriteria",
       "fieldType": "Rangierungskriterien",
       "fieldValues": "RESULTAT,SERIE,TIEFSCHUESSE,MOUCHEN,ALTER",
       "fieldValidateRules": ["required"]
@@ -16,13 +16,13 @@
   "relationships": [
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "wettkampf",
-      "otherEntityRelationshipName": "rangierung",
-      "relationshipName": "wettkampf",
+      "otherEntityName": "competition",
+      "otherEntityRelationshipName": "ranking",
+      "relationshipName": "competition",
       "otherEntityField": "name"
     }
   ],
-  "entityTableName": "rangierung",
+  "entityTableName": "ranking",
   "dto": "no",
   "pagination": "pagination",
   "service": "serviceImpl",

@@ -14,55 +14,55 @@
   "relationships": [
     {
       "relationshipType": "one-to-one",
-      "otherEntityName": "passen",
-      "otherEntityRelationshipName": "resultate",
+      "otherEntityName": "series",
+      "otherEntityRelationshipName": "results",
       "relationshipName": "passe1",
       "ownerSide": true
     },
     {
       "relationshipType": "one-to-one",
-      "otherEntityName": "passen",
-      "otherEntityRelationshipName": "resultate",
+      "otherEntityName": "series",
+      "otherEntityRelationshipName": "results",
       "relationshipName": "passe2",
       "ownerSide": true
     },
     {
       "relationshipType": "one-to-one",
-      "otherEntityName": "passen",
-      "otherEntityRelationshipName": "resultate",
+      "otherEntityName": "series",
+      "otherEntityRelationshipName": "results",
       "relationshipName": "passe3",
       "ownerSide": true
     },
     {
       "relationshipType": "one-to-one",
-      "otherEntityName": "passen",
-      "otherEntityRelationshipName": "resultate",
+      "otherEntityName": "series",
+      "otherEntityRelationshipName": "results",
       "relationshipName": "passe4",
       "ownerSide": true
     },
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "gruppen",
-      "otherEntityRelationshipName": "resultate",
+      "otherEntityName": "group",
+      "otherEntityRelationshipName": "results",
       "relationshipName": "gruppe",
       "otherEntityField": "name"
     },
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "schuetze",
-      "otherEntityRelationshipName": "resultate",
+      "otherEntityRelationshipName": "results",
       "relationshipName": "schuetze",
       "otherEntityField": "name"
     },
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "wettkampf",
-      "otherEntityRelationshipName": "resultate",
-      "relationshipName": "wettkampf",
+      "otherEntityName": "competition",
+      "otherEntityRelationshipName": "results",
+      "relationshipName": "competition",
       "otherEntityField": "name"
     }
   ],
-  "entityTableName": "resultate",
+  "entityTableName": "results",
   "dto": "no",
   "pagination": "pagination",
   "service": "serviceImpl",

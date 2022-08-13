@@ -8,7 +8,7 @@
     }
   ],
   "relationships": [],
-  "entityTableName": "gruppen",
+  "entityTableName": "group",
   "dto": "no",
   "pagination": "pagination",
   "service": "serviceImpl",

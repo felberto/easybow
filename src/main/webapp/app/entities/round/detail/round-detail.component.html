@@ -1,0 +1,42 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="round">
+      <h2 data-cy="roundDetailsHeading"><span>Round</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ round.id }}</span>
+        </dd>
+        <dt><span>Round</span></dt>
+        <dd>
+          <span>{{ round.round }}</span>
+        </dd>
+        <dt><span>Date</span></dt>
+        <dd>
+          <span>{{ round.date | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Competition</span></dt>
+        <dd>
+          <div *ngIf="round.competition">
+            <a [routerLink]="['/competition', round.competition?.id, 'view']">{{ round.competition?.name }}{{ round.competition?.year }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/round', round.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -51,7 +51,7 @@
     }
   ],
   "relationships": [],
-  "entityTableName": "wettkampf",
+  "entityTableName": "competition",
   "dto": "no",
   "pagination": "pagination",
   "service": "serviceImpl",

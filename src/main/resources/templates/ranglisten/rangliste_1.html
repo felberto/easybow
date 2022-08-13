@@ -3,7 +3,7 @@
   <head>
     <title th:text="${titleDoc}"></title>
     <bookmarks>
-      <bookmark href="#rangliste" name="Rangliste"></bookmark>
+      <bookmark href="#rankingList" name="Rangliste"></bookmark>
     </bookmarks>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
   </head>
@@ -23,8 +23,8 @@
       </div>
       <div class="w3-col s3 w3-center"></div>
     </div>
-    <div id="rangliste">
-      <div th:if="${not #lists.isEmpty(rangliste.getSchuetzeResultatList())}">
+    <div id="rankingList">
+      <div th:if="${not #lists.isEmpty(rankingList.getAthleteResultList())}">
         <table class="w3-table">
           <thead>
             <tr>
@@ -51,20 +51,20 @@
             </tr>
           </thead>
           <tbody>
-            <tr th:each="schuetze : ${rangliste.getSchuetzeResultatList()}">
-              <td class="w3-right-align" th:text="${rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1}"></td>
-              <td th:text="${schuetze?.getSchuetze().getName()}"></td>
-              <td th:text="${schuetze?.getSchuetze().getVerein().getName()}"></td>
-              <td class="w3-right-align" style="font-weight: bold" th:text="${schuetze?.getResultat()}"></td>
-              <td class="w3-center" th:text="${schuetze?.getSchuetze().getStellung().toString().substring(0, 1).toLowerCase()}"></td>
-              <td class="w3-center" th:text="${schuetze?.getT10()}"></td>
-              <td class="w3-center" th:text="${schuetze?.getT9()}"></td>
-              <td class="w3-center" th:text="${schuetze?.getT8()}"></td>
-              <td class="w3-center" th:text="${schuetze?.getT7()}"></td>
-              <td class="w3-center" th:text="${schuetze?.getT11()}"></td>
-              <td class="w3-right-align" th:text="${schuetze?.getSchuetze().getJahrgang()}"></td>
-              <p style="page-break-after: always" th:if="${(rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1) == 25}">&nbsp;</p>
-              <p style="page-break-before: always" th:if="${(rangliste.getSchuetzeResultatList().indexOf(schuetze) + 1) == 25}">&nbsp;</p>
+            <tr th:each="athlete : ${rankingList.getAthleteResultList()}">
+              <td class="w3-right-align" th:text="${rankingList.getAthleteResultList().indexOf(athlete) + 1}"></td>
+              <td th:text="${athlete?.getAthlete().getName()}"></td>
+              <td th:text="${athlete?.getAthlete().getClub().getName()}"></td>
+              <td class="w3-right-align" style="font-weight: bold" th:text="${athlete?.getResult()}"></td>
+              <td class="w3-center" th:text="${athlete?.getAthlete().getPosition().toString().substring(0, 1).toLowerCase()}"></td>
+              <td class="w3-center" th:text="${athlete?.getT10()}"></td>
+              <td class="w3-center" th:text="${athlete?.getT9()}"></td>
+              <td class="w3-center" th:text="${athlete?.getT8()}"></td>
+              <td class="w3-center" th:text="${athlete?.getT7()}"></td>
+              <td class="w3-center" th:text="${athlete?.getT11()}"></td>
+              <td class="w3-right-align" th:text="${athlete?.getAthlete().getYear()}"></td>
+              <p style="page-break-after: always" th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) == 25}">&nbsp;</p>
+              <p style="page-break-before: always" th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) == 25}">&nbsp;</p>
             </tr>
           </tbody>
         </table>

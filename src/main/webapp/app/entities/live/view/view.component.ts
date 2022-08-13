@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IWettkampf } from '../../wettkampf/wettkampf.model';
-import { RanglisteService } from '../../wettkampf/service/rangliste.service';
-import { IRangliste } from '../../wettkampf/rangliste.model';
-import { ISchuetzeResultat } from '../../wettkampf/schuetzeResultat.model';
+import { ICompetition } from '../../competition/competition.model';
+import { RankingListService } from '../../competition/service/rankingList.service';
+import { IRankingList } from '../../competition/rankingList.model';
+import { IAthleteResult } from '../../competition/athleteResult.model';
 
 @Component({
   selector: 'jhi-view',
@@ -11,20 +11,20 @@ import { ISchuetzeResultat } from '../../wettkampf/schuetzeResultat.model';
   styleUrls: ['./view.component.scss'],
 })
 export class ViewComponent implements OnInit {
-  wettkampf?: IWettkampf | null;
-  rangliste?: IRangliste | null;
+  competition?: ICompetition | null;
+  rankingList?: IRankingList | null;
 
-  ranglisteView: ISchuetzeResultat[] = [];
-  rang = 0;
+  rankingListView: IAthleteResult[] = [];
+  rank = 0;
 
   variable = 1;
 
-  constructor(protected activatedRoute: ActivatedRoute, private ranglisteService: RanglisteService) {}
+  constructor(protected activatedRoute: ActivatedRoute, private rankingListService: RankingListService) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ wettkampf }) => {
-      this.wettkampf = wettkampf;
-      if (this.wettkampf != null) {
+    this.activatedRoute.data.subscribe(({ competition }) => {
+      this.competition = competition;
+      if (this.competition != null) {
         this.refreshData();
         setInterval(() => {
           this.refreshData();
@@ -34,19 +34,19 @@ export class ViewComponent implements OnInit {
   }
 
   refreshData(): void {
-    if (this.wettkampf != null) {
-      this.ranglisteService.getRangliste(this.wettkampf, 99).subscribe(res => {
+    if (this.competition != null) {
+      this.rankingListService.getRankingList(this.competition, 99).subscribe(res => {
         console.log(res.body);
-        this.rangliste = res.body;
-        if (this.rangliste!.schuetzeResultatList!.length > 10) {
+        this.rankingList = res.body;
+        if (this.rankingList!.athleteResultList!.length > 10) {
           if (this.variable === 1) {
-            this.ranglisteView = this.rangliste!.schuetzeResultatList!.slice(0, 10);
+            this.rankingListView = this.rankingList!.athleteResultList!.slice(0, 10);
             this.variable = 2;
-            this.rang = 0;
+            this.rank = 0;
           } else {
-            this.ranglisteView = this.rangliste!.schuetzeResultatList!.slice(10, 21);
+            this.rankingListView = this.rankingList!.athleteResultList!.slice(10, 21);
             this.variable = 1;
-            this.rang = 1;
+            this.rank = 1;
           }
         }
       });

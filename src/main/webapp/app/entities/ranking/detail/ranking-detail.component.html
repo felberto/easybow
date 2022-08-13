@@ -1,0 +1,42 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="ranking">
+      <h2 data-cy="rankingDetailsHeading"><span>Ranking</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ ranking.id }}</span>
+        </dd>
+        <dt><span>Position</span></dt>
+        <dd>
+          <span>{{ ranking.position }}</span>
+        </dd>
+        <dt><span>RankingCriteria</span></dt>
+        <dd>
+          <span>{{ ranking.rankingCriteria }}</span>
+        </dd>
+        <dt><span>Competition</span></dt>
+        <dd>
+          <div *ngIf="ranking.competition">
+            <a [routerLink]="['/competition', ranking.competition?.id, 'view']">{{ ranking.competition?.name }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/ranking', ranking.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
