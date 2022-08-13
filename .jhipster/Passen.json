@@ -77,7 +77,7 @@
     }
   ],
   "relationships": [],
-  "entityTableName": "passen",
+  "entityTableName": "series",
   "dto": "no",
   "pagination": "pagination",
   "service": "serviceImpl",

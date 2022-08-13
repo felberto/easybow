@@ -1,0 +1,72 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="competition">
+      <h2 data-cy="competitionDetailsHeading"><span>Competition</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ competition.id }}</span>
+        </dd>
+        <dt><span>Name</span></dt>
+        <dd>
+          <span>{{ competition.name }}</span>
+        </dd>
+        <dt><span>Year</span></dt>
+        <dd>
+          <span>{{ competition.year }}</span>
+        </dd>
+        <dt><span>CompetitionType</span></dt>
+        <dd>
+          <span>{{ competition.competitionType }}</span>
+        </dd>
+        <dt><span>NumberOfRounds</span></dt>
+        <dd>
+          <span>{{ competition.numberOfRounds }}</span>
+        </dd>
+        <dt><span>NumberOfSeries</span></dt>
+        <dd>
+          <span>{{ competition.numberOfSeries }}</span>
+        </dd>
+        <dt><span>FinalRound</span></dt>
+        <dd>
+          <span>{{ competition.finalRound }}</span>
+        </dd>
+        <dt><span>FinalPreparation</span></dt>
+        <dd>
+          <span>{{ competition.finalPreparation }}</span>
+        </dd>
+        <dt><span>NumberOfFinalAthletes</span></dt>
+        <dd>
+          <span>{{ competition.numberOfFinalAthletes }}</span>
+        </dd>
+        <dt><span>NumberOfFinalSeries</span></dt>
+        <dd>
+          <span>{{ competition.numberOfFinalSeries }}</span>
+        </dd>
+        <dt><span>TeamSize</span></dt>
+        <dd>
+          <span>{{ competition.teamSize }}</span>
+        </dd>
+        <dt><span>Template</span></dt>
+        <dd>
+          <span>{{ competition.template }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/competition', competition.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

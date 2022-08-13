@@ -1,23 +1,28 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import { ViewComponent } from '../view/view.component';
-import { WettkampfRoutingResolveService } from '../../wettkampf/route/wettkampf-routing-resolve.service';
+import { CompetitionRoutingResolveService } from '../../competition/route/competition-routing-resolve.service';
+import { LiveEasvWorldcupComponent } from '../live-easv-worldcup/live-easv-worldcup.component';
 
-const schuetzeRoute: Routes = [
+const athleteRoute: Routes = [
   {
     path: ':id',
     component: ViewComponent,
     resolve: {
-      wettkampf: WettkampfRoutingResolveService,
+      competition: CompetitionRoutingResolveService,
     },
-    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id/live-easv-worldcup',
+    component: LiveEasvWorldcupComponent,
+    resolve: {
+      competition: CompetitionRoutingResolveService,
+    },
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(schuetzeRoute)],
+  imports: [RouterModule.forChild(athleteRoute)],
   exports: [RouterModule],
 })
 export class LiveRoutingModule {}

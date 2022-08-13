@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { WettkampfService } from '../wettkampf/service/wettkampf.service';
+import { CompetitionService } from '../competition/service/competition.service';
 import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
 
 @Component({
@@ -14,13 +14,13 @@ export class ImportComponent {
   });
 
   constructor(
-    private wettkampfService: WettkampfService,
+    private competitionService: CompetitionService,
     @Inject(TuiNotificationsService)
     private readonly notificationsService: TuiNotificationsService
   ) {}
 
   import(): void {
-    this.wettkampfService.importData(this.dataForm.get('data')!.value).subscribe(res => {
+    this.competitionService.importData(this.dataForm.get('data')!.value).subscribe(res => {
       if (res.ok) {
         this.notificationsService
           .show('Import abgeschlossen', {

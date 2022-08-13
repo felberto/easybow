@@ -1,38 +1,110 @@
-<div class="col-md-9">
-  <tui-notification status="warning" class="tui-space_top-4" *ngIf="account == null"> Bitte einloggen</tui-notification>
-</div>
-
-<div *ngIf="account !== null">
-  <div class="d-flex justify-content-end">
+<div>
+  <!--TODO anleitung anders integrieren-->
+  <!--<div *ngIf="account !== null" class="d-flex justify-content-end">
     <button class="btn btn-info mr-2" (click)="openAnleitung()">
       <fa-icon icon="book"></fa-icon>
       <span>Anleitung</span>
     </button>
+  </div>-->
+  <h4 class="tui-form__header tui-form__header_margin-top_none">Competitions</h4>
+  <div class="row">
+    <div *ngFor="let competition of competitionList" class="column">
+      <!--ZSAV NAWU-->
+      <a
+        *ngIf="account !== null && competition.competitionType?.toString() == 'ZSAV_NAWU'"
+        (click)="routeTo(competition.id)"
+        class="data-card"
+      >
+        <h3>{{ competition.name }} {{ competition.year }}</h3>
+        <h4>ZSAV NAWU</h4>
+        <div *ngFor="let round of getList(competition)">
+          <p *ngIf="round.round !== 99">{{ round.round }}. Runde Schiessende: {{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
+          <p *ngIf="round.round === 99">Final {{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
+        </div>
+        <span class="link-text">
+          View
+          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+              fill="#8cbdb9"
+            />
+          </svg>
+        </span>
+      </a>
+      <!--EASV WORLDCUP-->
+      <a
+        *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_WORLDCUP'"
+        (click)="routeTo(competition.id)"
+        class="data-card"
+      >
+        <h3>{{ competition.name }} {{ competition.year }}</h3>
+        <h4>EASV / IAU</h4>
+        <div *ngFor="let round of getList(competition)">
+          <p>{{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
+        </div>
+        <span class="link-text">
+          View
+          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+              fill="#8cbdb9"
+            />
+          </svg>
+        </span>
+      </a>
+      <!--ZSAV NAWU-->
+      <a
+        *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'ZSAV_NAWU'"
+        (click)="openLiveView(competition)"
+        class="data-card"
+      >
+        <h3>{{ competition.name }} {{ competition.year }}</h3>
+        <h4>ZSAV NAWU</h4>
+        <div *ngFor="let round of getList(competition)">
+          <p *ngIf="round.round !== 99">{{ round.round }}. Runde Schiessende: {{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
+          <p *ngIf="round.round === 99">Final {{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
+        </div>
+        <span class="link-text">
+          View
+          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+              fill="#8cbdb9"
+            />
+          </svg>
+        </span>
+      </a>
+      <!--EASV WORLDCUP-->
+      <a
+        *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_WORLDCUP'"
+        (click)="openLiveView(competition)"
+        class="data-card"
+      >
+        <h3>{{ competition.name }} {{ competition.year }}</h3>
+        <h4>EASV / IAU</h4>
+        <div *ngFor="let round of getList(competition)">
+          <p>{{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
+        </div>
+        <span class="link-text">
+          View
+          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+              fill="#8cbdb9"
+            />
+          </svg>
+        </span>
+      </a>
+    </div>
   </div>
-  <h4 class="tui-form__header tui-form__header_margin-top_none">Wettkämpfe</h4>
-  <!--  <mat-grid-list cols="4" rowHeight="120px">-->
-  <mat-grid-list [cols]="breakpoint" rowHeight="2:0.5" (window:resize)="onResize($event)">
-    <mat-grid-tile *ngFor="let wettkampf of wettkampfList" [colspan]="1" [rowspan]="2">
-      <mat-card *ngIf="account.authorities[0] !== 'ROLE_LIVE'" class="card" [routerLink]="['/wettkampf', wettkampf.id, 'overview']">
-        <mat-card-title class="card-title">{{ wettkampf.name }} {{ wettkampf.jahr }}</mat-card-title>
-        <mat-card-content>
-          <div *ngFor="let runde of getList(wettkampf)">
-            <div *ngIf="runde.runde !== 99">{{ runde.runde }}. Runde Schiessende: {{ runde.datum?.format('dddd, MMMM D, YYYY') }}</div>
-            <div *ngIf="runde.runde === 99">Final {{ runde.datum?.format('dddd, MMMM D, YYYY') }}</div>
-          </div>
-        </mat-card-content>
-      </mat-card>
-      <mat-card *ngIf="account.authorities[0] == 'ROLE_LIVE'" class="card" (click)="openLiveView(wettkampf)">
-        <mat-card-title class="card-title">{{ wettkampf.name }} {{ wettkampf.jahr }}</mat-card-title>
-        <mat-card-content>
-          <div *ngFor="let runde of getList(wettkampf)">
-            <div *ngIf="runde.runde !== 99">{{ runde.runde }}. Runde Schiessende: {{ runde.datum?.format('dddd, MMMM D, YYYY') }}</div>
-            <div *ngIf="runde.runde === 99">Final {{ runde.datum?.format('dddd, MMMM D, YYYY') }}</div>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
 </div>
 
 <ng-template #header>

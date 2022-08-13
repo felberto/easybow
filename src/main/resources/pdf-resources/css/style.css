@@ -2001,9 +2001,29 @@ a {
   font-weight: bold;
 }
 
+.rankinglist-font {
+  font-size: 17px;
+}
+
 .zsav {
   width: 150px;
   height: auto;
+}
+
+.easv {
+  width: auto;
+  height: 125px;
+}
+
+.iau {
+  width: auto;
+  height: 125px;
+}
+
+.nationality {
+  width: auto;
+  height: 20px;
+  vertical-align: middle;
 }
 
 .jus {

@@ -1,3 +1,4 @@
+//old
 @paginate(pagination)
 @service(serviceImpl)
 @filter(true)
@@ -20,7 +21,7 @@ enum Stellung {
 entity Schuetze {
 	name String required,
     jahrgang Integer required,
-    stellung Stellung required,
+    position Stellung required,
     rolle String required
 }
 @paginate(pagination)
@@ -53,7 +54,7 @@ enum Rangierungskriterien {
 @filter(true)
 entity Rangierung {
 	position Integer required,
-    rangierungskriterien Rangierungskriterien required
+    rankingCriteria Rangierungskriterien required
 }
 @paginate(pagination)
 @service(serviceImpl)
@@ -87,13 +88,13 @@ entity Resultate {
 }
 
 relationship ManyToOne {
-	Schuetze{verein(name)} to Verein
-    Verein{verband(name)} to Verband
+	Schuetze{club(name)} to Verein
+    Verein{association(name)} to Verband
     Resultate{gruppe(name)} to Gruppen
     Resultate{schuetze(name)} to Schuetze
-    Resultate{wettkampf(name)} to Wettkampf
-    Rangierung{wettkampf(name)} to Wettkampf
-    Runde{wettkampf(name)} to Wettkampf
+    Resultate{competition(name)} to Wettkampf
+    Rangierung{competition(name)} to Wettkampf
+    Runde{competition(name)} to Wettkampf
 }
 
 relationship OneToOne {

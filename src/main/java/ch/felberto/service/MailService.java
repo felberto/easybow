@@ -1,6 +1,6 @@
 package ch.felberto.service;
 
-import ch.felberto.domain.Resultate;
+import ch.felberto.domain.Results;
 import ch.felberto.domain.User;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
@@ -30,7 +30,7 @@ public class MailService {
 
     private static final String USER = "user";
 
-    private static final String RESULTAT = "resultat";
+    private static final String RESULT = "result";
 
     private static final String BASE_URL = "baseUrl";
 
@@ -96,10 +96,10 @@ public class MailService {
     }
 
     @Async
-    public void sendEmailFromTemplate(Resultate resultate, String templateName, String titleKey) {
+    public void sendEmailFromTemplate(Results results, String templateName, String titleKey) {
         Locale locale = Locale.forLanguageTag("DE");
         Context context = new Context(locale);
-        context.setVariable(RESULTAT, resultate);
+        context.setVariable(RESULT, results);
         context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
         String content = templateEngine.process(templateName, context);
         String subject = messageSource.getMessage(titleKey, null, locale);
@@ -125,7 +125,7 @@ public class MailService {
     }
 
     @Async
-    public void sendUpdateResultMail(Resultate resultat) {
+    public void sendUpdateResultMail(Results resultat) {
         log.info("Sending update result");
         sendEmailFromTemplate(resultat, "mail/updateResultat", "email.updateResultat.title");
     }

@@ -15,21 +15,21 @@
     <property name="datetimeType" value="datetime" dbms="oracle, mssql, postgresql, h2"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20211031084600_added_entity_Verband.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20211031084601_added_entity_Verein.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20211031084602_added_entity_Schuetze.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20211031084603_added_entity_Wettkampf.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20211031084604_added_entity_Runde.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20211031084605_added_entity_Rangierung.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20211031084606_added_entity_Passen.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20211031084607_added_entity_Gruppen.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20211031084608_added_entity_Resultate.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211031084600_added_entity_Association.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211031084601_added_entity_Club.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211031084602_added_entity_Athlete.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211031084603_added_entity_Competition.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211031084604_added_entity_Round.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211031084605_added_entity_Ranking.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211031084606_added_entity_Series.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211031084607_added_entity_Group.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211031084608_added_entity_Results.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <include file="config/liquibase/changelog/20211031084601_added_entity_constraints_Verein.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20211031084602_added_entity_constraints_Schuetze.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20211031084604_added_entity_constraints_Runde.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20211031084605_added_entity_constraints_Rangierung.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20211031084608_added_entity_constraints_Resultate.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211031084601_added_entity_constraints_Club.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211031084602_added_entity_constraints_Athlete.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211031084604_added_entity_constraints_Round.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211031084605_added_entity_constraints_Ranking.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211031084608_added_entity_constraints_Results.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>
