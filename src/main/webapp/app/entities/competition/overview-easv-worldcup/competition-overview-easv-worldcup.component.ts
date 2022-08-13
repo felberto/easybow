@@ -45,7 +45,17 @@ export class CompetitionOverviewEasvWorldcupComponent implements OnInit {
       this.resultsService.findByCompetition(competition).subscribe(res => {
         this.results = res.body;
 
-        /*sort results per athleteNumber*/
+        this.results!.sort((n1, n2) => {
+          if (n1.athleteNumber! > n2.athleteNumber!) {
+            return 1;
+          }
+
+          if (n1.athleteNumber! < n2.athleteNumber!) {
+            return -1;
+          }
+
+          return 0;
+        });
 
         const tempAthlete: Array<IAthlete> = [];
         this.results?.forEach(value => {
