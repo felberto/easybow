@@ -35,7 +35,8 @@
 
   <tui-accordion class="container">
     <tui-accordion-item *ngFor="let result of results; let index = index">
-      {{ result.athleteNumber }} {{ result.athlete?.name }} {{ result.athlete?.firstName }} {{ result.athlete?.nationality }}
+      {{ result.athleteNumber }} | <strong>{{ result.athlete?.name }} {{ result.athlete?.firstName }}</strong>
+      {{ result.athlete?.nationality }}
       <ng-template tuiAccordionItemContent>
         <button
           (click)="openSeriesDialog(result)"
