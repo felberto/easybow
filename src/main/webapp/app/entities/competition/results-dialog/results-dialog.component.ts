@@ -7,6 +7,7 @@ import { IResults } from 'app/entities/results/results.model';
 import { ResultsService } from 'app/entities/results/service/results.service';
 import { HttpResponse } from '@angular/common/http';
 import { AthleteNumberDialogComponent } from '../athlete-number-dialog/athlete-number-dialog.component';
+import { GroupDialogComponent } from '../group-dialog/group-dialog.component';
 
 @Component({
   selector: 'jhi-resultate-dialog',
@@ -52,9 +53,16 @@ export class ResultsDialogComponent implements OnInit {
   }
 
   addAthlete(athlete: IAthlete, competition: ICompetition): void {
-    const modalRef = this.modalService.open(AthleteNumberDialogComponent, { size: 'xl', backdrop: 'static' });
-    modalRef.componentInstance.athlete = athlete;
-    modalRef.componentInstance.competition = competition;
+    let modalRef;
+    if (competition.competitionType === 'EASV_WORLDCUP') {
+      modalRef = this.modalService.open(AthleteNumberDialogComponent, { size: 'xl', backdrop: 'static' });
+      modalRef.componentInstance.athlete = athlete;
+      modalRef.componentInstance.competition = competition;
+    } else if (competition.competitionType === 'ZSAV_NAWU_GM') {
+      modalRef = this.modalService.open(GroupDialogComponent, { size: 'xl', backdrop: 'static' });
+      modalRef.componentInstance.athlete = athlete;
+      modalRef.componentInstance.competition = competition;
+    }
   }
 
   removeAthlete(athlete: IAthlete, competition: ICompetition): void {

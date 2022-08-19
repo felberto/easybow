@@ -47,6 +47,9 @@ public class CompetitionServiceImpl implements CompetitionService {
                     if (competition.getYear() != null) {
                         existingCompetition.setYear(competition.getYear());
                     }
+                    if (competition.getCompetitionType() != null) {
+                        existingCompetition.setCompetitionType(competition.getCompetitionType());
+                    }
                     if (competition.getNumberOfRounds() != null) {
                         existingCompetition.setNumberOfRounds(competition.getNumberOfRounds());
                     }
@@ -91,6 +94,9 @@ public class CompetitionServiceImpl implements CompetitionService {
                     }
                     if (competition.getYear() != null) {
                         existingCompetition.setYear(competition.getYear());
+                    }
+                    if (competition.getCompetitionType() != null) {
+                        existingCompetition.setCompetitionType(competition.getCompetitionType());
                     }
                     if (competition.getNumberOfRounds() != null) {
                         existingCompetition.setNumberOfRounds(competition.getNumberOfRounds());

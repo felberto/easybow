@@ -5,12 +5,13 @@ import { getCompetitionIdentifier, ICompetition } from '../competition.model';
 import { Observable } from 'rxjs';
 import { IRankingList } from '../rankingList.model';
 import { DataUtils } from '../../../core/util/data-util.service';
+import { IGroupRankingList } from '../groupRankingList.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RankingListService {
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/rankinglist');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api');
 
   constructor(
     protected http: HttpClient,
@@ -19,19 +20,34 @@ export class RankingListService {
   ) {}
 
   getRankingList(competition: ICompetition, type: number): Observable<HttpResponse<IRankingList>> {
-    return this.http.post<IRankingList>(`${this.resourceUrl}/${getCompetitionIdentifier(competition) as number}`, type, {
+    return this.http.post<IRankingList>(`${this.resourceUrl}/rankinglist/${getCompetitionIdentifier(competition) as number}`, type, {
       observe: 'response',
     });
   }
 
+  getGroupRankingList(competition: ICompetition, type: number): Observable<HttpResponse<IGroupRankingList>> {
+    return this.http.post<IGroupRankingList>(
+      `${this.resourceUrl}/grouprankinglist/${getCompetitionIdentifier(competition) as number}`,
+      type,
+      {
+        observe: 'response',
+      }
+    );
+  }
+
   createFinal(competition: ICompetition, type: number): Observable<HttpResponse<IRankingList>> {
-    return this.http.post<IRankingList>(`${this.resourceUrl}/final/${getCompetitionIdentifier(competition) as number}`, type, {
+    return this.http.post<IRankingList>(`${this.resourceUrl}/rankinglist/final/${getCompetitionIdentifier(competition) as number}`, type, {
       observe: 'response',
     });
   }
 
   printRankingList(rankingList: IRankingList): Observable<Blob> {
     const headers = new HttpHeaders().set('Accept', 'application/pdf');
-    return this.http.post<Blob>(`${this.resourceUrl}/print`, rankingList, { headers, responseType: 'blob' as 'json' });
+    return this.http.post<Blob>(`${this.resourceUrl}/rankinglist/print`, rankingList, { headers, responseType: 'blob' as 'json' });
+  }
+
+  printGroupRankingList(rankingList: IGroupRankingList): Observable<Blob> {
+    const headers = new HttpHeaders().set('Accept', 'application/pdf');
+    return this.http.post<Blob>(`${this.resourceUrl}/grouprankinglist/print`, rankingList, { headers, responseType: 'blob' as 'json' });
   }
 }

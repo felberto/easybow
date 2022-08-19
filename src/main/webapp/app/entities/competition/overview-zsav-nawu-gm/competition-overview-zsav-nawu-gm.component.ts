@@ -12,18 +12,20 @@ import { AccountService } from '../../../core/auth/account.service';
 import { RankingListService } from '../service/rankingList.service';
 import { TuiNotificationsService } from '@taiga-ui/core';
 import { CompetitionService } from '../service/competition.service';
-import { SeriesDialog4Component } from '../series-dialog-4/series-dialog-4.component';
+import { IGroup } from '../../group/group.model';
+import { SeriesDialog2Component } from '../series-dialog-2/series-dialog-2.component';
 
 @Component({
-  selector: 'jhi-overview-easv-worldcup',
-  templateUrl: './competition-overview-easv-worldcup.component.html',
-  styleUrls: ['./competition-overview-easv-worldcup.component.scss'],
+  selector: 'jhi-overview-zsav-nawu-gm',
+  templateUrl: './competition-overview-zsav-nawu-gm.component.html',
+  styleUrls: ['./competition-overview-zsav-nawu-gm.component.scss'],
 })
-export class CompetitionOverviewEasvWorldcupComponent implements OnInit {
+export class CompetitionOverviewZsavNawuGmComponent implements OnInit {
   competition!: ICompetition;
 
   results: Array<IResults> | null = [];
   athletes: Array<IAthlete> | null = [];
+  groups: Array<IGroup> | null = [];
 
   constructor(
     protected activatedRoute: ActivatedRoute,
@@ -45,26 +47,23 @@ export class CompetitionOverviewEasvWorldcupComponent implements OnInit {
       this.resultsService.findByCompetition(competition).subscribe(res => {
         this.results = res.body;
 
-        this.results!.sort((n1, n2) => {
-          if (n1.athleteNumber! > n2.athleteNumber!) {
-            return 1;
+        /*todo get all groups*/
+        const tempGroups: Array<IGroup> = [];
+        this.results?.forEach(value => {
+          if (value.group) {
+            tempGroups.push(value.group);
           }
-
-          if (n1.athleteNumber! < n2.athleteNumber!) {
-            return -1;
-          }
-
-          return 0;
         });
+        this.groups = tempGroups.filter((s, i, arr) => arr.indexOf(<IGroup>arr.find(t => t.id === s.id)) === i);
 
-        const tempAthlete: Array<IAthlete> = [];
+        /*const tempAthlete: Array<IAthlete> = [];
         this.results?.forEach(value => {
           if (value.athlete) {
             tempAthlete.push(value.athlete);
           }
         });
 
-        this.athletes = tempAthlete.filter((s, i, arr) => arr.indexOf(<IAthlete>arr.find(t => t.id === s.id)) === i);
+        this.athletes = tempAthlete.filter((s, i, arr) => arr.indexOf(<IAthlete>arr.find(t => t.id === s.id)) === i);*/
       });
     });
   }
@@ -96,7 +95,7 @@ export class CompetitionOverviewEasvWorldcupComponent implements OnInit {
   }
 
   openDialog(result: IResults): void {
-    const modalRef = this.modalService.open(SeriesDialog4Component, {
+    const modalRef = this.modalService.open(SeriesDialog2Component, {
       size: 'xl',
       backdrop: 'static',
     });
@@ -106,9 +105,9 @@ export class CompetitionOverviewEasvWorldcupComponent implements OnInit {
     });
   }
 
-  getResultsByAthlete(athlete: IAthlete): Array<IResults> {
+  getResultsByGroup(groupId: number): Array<IResults> {
     if (this.results !== null) {
-      return this.results.filter(s => s.athlete?.id === athlete.id).sort((a, b) => <number>a.round - <number>b.round);
+      return this.results.filter(s => s.group?.id === groupId);
     } else {
       return [];
     }

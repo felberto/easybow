@@ -60,6 +60,7 @@ public class CacheConfiguration {
             createCache(cm, Group.class.getName());
             createCache(cm, Results.class.getName());
             createCache(cm, Ranking.class.getName());
+            createCache(cm, Round.class.getName());
             createCache(cm, AthleteResult.class.getName());
             createCache(cm, RankingList.class.getName());
             // jhipster-needle-ehcache-add-entry

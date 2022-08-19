@@ -10,7 +10,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * A group.
  */
 @Entity
-@Table(name = "group")
+@Table(name = "jhi_group")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Group implements Serializable {
 

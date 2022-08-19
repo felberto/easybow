@@ -13,7 +13,7 @@ html {
   border-bottom: 3px solid black;
 }
 
-#rangliste {
+#rankingList {
   width: 100%;
 }
 
@@ -2034,11 +2034,4 @@ a {
 .swisslos {
   width: auto;
   height: 30px;
-}
-
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
 }

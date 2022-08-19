@@ -173,16 +173,18 @@ public class ExportImportService {
         }
 
         for (AthleteResult athleteResult : importExport.getAthleteResultList()) {
-            Club clubAthlete;
-            if (clubRepository.existsByName(athleteResult.getAthlete().getClub().getName())) {
-                log.info("Club={} already exists and will be updated", athleteResult.getAthlete().getClub().getName());
-                clubAthlete = clubService.partialUpdateByName(athleteResult.getAthlete().getClub()).get();
-            } else {
-                log.info("Club={} does not exists and will be imported", athleteResult.getAthlete().getClub().getName());
-                Club club = athleteResult.getAthlete().getClub();
-                club.setId(null);
-                club.setAssociation(associationRepository.findByName(club.getAssociation().getName()).get());
-                clubAthlete = clubService.save(club);
+            Club clubAthlete = null;
+            if (athleteResult.getAthlete().getClub() != null) {
+                if (clubRepository.existsByName(athleteResult.getAthlete().getClub().getName())) {
+                    log.info("Club={} already exists and will be updated", athleteResult.getAthlete().getClub().getName());
+                    clubAthlete = clubService.partialUpdateByName(athleteResult.getAthlete().getClub()).get();
+                } else {
+                    log.info("Club={} does not exists and will be imported", athleteResult.getAthlete().getClub().getName());
+                    Club club = athleteResult.getAthlete().getClub();
+                    club.setId(null);
+                    club.setAssociation(associationRepository.findByName(club.getAssociation().getName()).get());
+                    clubAthlete = clubService.save(club);
+                }
             }
 
             if (athleteRepository.existsByName(athleteResult.getAthlete().getName())) {
@@ -192,7 +194,9 @@ public class ExportImportService {
                 log.info("Athlete={} does not exists and will be imported", athleteResult.getAthlete().getName());
                 Athlete athlete = athleteResult.getAthlete();
                 athlete.setId(null);
-                athlete.setClub(clubAthlete);
+                if (athleteResult.getAthlete().getClub() != null) {
+                    athlete.setClub(clubAthlete);
+                }
                 athleteService.save(athlete);
             }
         }
@@ -271,6 +275,7 @@ public class ExportImportService {
                     newResults.setRound(results.getRound());
                     newResults.setResult(results.getResult());
                     newResults.setAthlete(athlete);
+                    newResults.setAthleteNumber(results.getAthleteNumber());
                     newResults.setCompetition(competition);
                     newResults.setSerie1(results.getSerie1());
                     newResults.setSerie2(results.getSerie2());

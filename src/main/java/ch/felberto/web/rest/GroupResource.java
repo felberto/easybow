@@ -56,7 +56,7 @@ public class GroupResource {
      * {@code POST  /groups} : Create a new group.
      *
      * @param group the group to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new group, or with status {@code 400 (Bad Request)} if the gruppen has already an ID.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new group, or with status {@code 400 (Bad Request)} if the groups has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/groups")
@@ -176,8 +176,8 @@ public class GroupResource {
     @GetMapping("/groups/{id}")
     public ResponseEntity<Group> getGroup(@PathVariable Long id) {
         log.debug("REST request to get Group : {}", id);
-        Optional<Group> gruppenDTO = groupService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(gruppenDTO);
+        Optional<Group> group = groupService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(group);
     }
 
     /**

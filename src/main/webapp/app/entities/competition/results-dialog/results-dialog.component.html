@@ -19,7 +19,7 @@
             <th scope="col"><span>Name</span></th>
             <th scope="col"><span>FirstName</span></th>
             <th scope="col"><span>YearOfBirth</span></th>
-            <th scope="col"><span>Nationality</span></th>
+            <th scope="col" *ngIf="competition.competitionType == 'EASV_WORLDCUP'"><span>Nationality</span></th>
             <th scope="col"><span>Gender</span></th>
             <th scope="col"><span>Position</span></th>
             <th scope="col"><span>Club</span></th>
@@ -31,7 +31,7 @@
             <td>{{ athlete.name }}</td>
             <td>{{ athlete.firstName }}</td>
             <td>{{ athlete.yearOfBirth }}</td>
-            <td>{{ athlete.nationality }}</td>
+            <td *ngIf="competition.competitionType == 'EASV_WORLDCUP'">{{ athlete.nationality }}</td>
             <td>{{ athlete.gender }}</td>
             <td>{{ athlete.position }}</td>
             <td>

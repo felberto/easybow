@@ -36,7 +36,7 @@
                                  baseTableName="results"
                                  constraintName="fk_results__group_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="group"/>
+                                 referencedTableName="jhi_group"/>
 
         <addForeignKeyConstraint baseColumnNames="athlete_id"
                                  baseTableName="results"

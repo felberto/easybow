@@ -8,7 +8,7 @@
         Added the entity Group.
     -->
     <changeSet id="20211031084607-1" author="jhipster">
-        <createTable tableName="group">
+        <createTable tableName="jhi_group">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -33,7 +33,7 @@
         <loadData
                 file="config/liquibase/fake-data/group.csv"
                 separator=";"
-                tableName="group">
+                tableName="jhi_group">
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
