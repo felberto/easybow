@@ -82,6 +82,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.competitionService.find(competitionId!).subscribe(res => {
       if (res.body!.competitionType === CompetitionType.ZSAV_NAWU) {
         this.router.navigate(['/competition', competitionId, 'overview']);
+      } else if (res.body!.competitionType === CompetitionType.ZSAV_NAWU_GM) {
+        this.router.navigate(['/competition', competitionId, 'overview-zsav-nawu-gm']);
       } else if (res.body!.competitionType === CompetitionType.EASV_WORLDCUP) {
         this.router.navigate(['/competition', competitionId, 'overview-easv-worldcup']);
       }
@@ -103,6 +105,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.router.navigate([`/live/${competition.id}`]);
       } else if (competition.competitionType === CompetitionType.EASV_WORLDCUP) {
         this.router.navigate(['/live', competition.id, 'live-easv-worldcup']);
+      } else if (competition.competitionType === CompetitionType.ZSAV_NAWU_GM) {
+        this.router.navigate(['/live', competition.id, 'live-zsav-nawu-gm']);
       }
     }
   }

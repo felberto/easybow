@@ -25,6 +25,9 @@ import { CompetitionOverviewEasvWorldcupComponent } from './overview-easv-worldc
 import { SeriesDialog4Component } from './series-dialog-4/series-dialog-4.component';
 import { RankingListEasvWorldcupComponent } from './ranking-list-easv-worldcup/ranking-list-easv-worldcup.component';
 import { AthleteNumberDialogComponent } from './athlete-number-dialog/athlete-number-dialog.component';
+import { GroupDialogComponent } from './group-dialog/group-dialog.component';
+import { CompetitionOverviewZsavNawuGmComponent } from './overview-zsav-nawu-gm/competition-overview-zsav-nawu-gm.component';
+import { RankingListZsavNawuGmComponent } from './ranking-list-zsav-nawu-gm/ranking-list-zsav-nawu-gm.component';
 
 @NgModule({
   imports: [
@@ -46,15 +49,18 @@ import { AthleteNumberDialogComponent } from './athlete-number-dialog/athlete-nu
     CompetitionRankingComponent,
     CompetitionOverviewComponent,
     CompetitionOverviewEasvWorldcupComponent,
+    CompetitionOverviewZsavNawuGmComponent,
     ResultsDialogComponent,
     SeriesDialog1Component,
     SeriesDialog2Component,
     SeriesDialog4Component,
     RankingListComponent,
     RankingListEasvWorldcupComponent,
+    RankingListZsavNawuGmComponent,
     RankingListDialogComponent,
     ConfirmDialogComponent,
     AthleteNumberDialogComponent,
+    GroupDialogComponent,
   ],
   entryComponents: [
     CompetitionDeleteDialogComponent,
@@ -66,8 +72,9 @@ import { AthleteNumberDialogComponent } from './athlete-number-dialog/athlete-nu
     SeriesDialog4Component,
     ConfirmDialogComponent,
     AthleteNumberDialogComponent,
+    GroupDialogComponent,
   ],
   providers: [NgbActiveModal],
-  exports: [SeriesDialog1Component, SeriesDialog2Component, SeriesDialog4Component, AthleteNumberDialogComponent],
+  exports: [SeriesDialog1Component, SeriesDialog2Component, SeriesDialog4Component, AthleteNumberDialogComponent, GroupDialogComponent],
 })
 export class CompetitionModule {}

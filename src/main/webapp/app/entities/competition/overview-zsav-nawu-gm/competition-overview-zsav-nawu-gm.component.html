@@ -1,0 +1,53 @@
+<div class="tui-container">
+  <h4 class="tui-form__header tui-form__header_margin-top_none">{{ competition.name + ' ' + competition.year }}</h4>
+
+  <div *jhiHasAnyAuthority="['ROLE_ADMIN']" class="d-flex justify-content-center">
+    <button
+      (click)="exportCompetition(competition)"
+      tuiButton
+      type="button"
+      appearance="customButton"
+      class="tui-space_right-3 tui-space_bottom-3"
+    >
+      Export Competition
+    </button>
+  </div>
+  <div *jhiHasAnyAuthority="['ROLE_ZSAV', 'ROLE_ADMIN']" class="d-flex justify-content-center">
+    <button
+      (click)="adminAthlete(competition)"
+      tuiButton
+      type="button"
+      appearance="customButton"
+      class="tui-space_right-3 tui-space_bottom-3"
+    >
+      Manage athletes
+    </button>
+    <button
+      [routerLink]="['/competition', competition.id, 'ranking-list-zsav-nawu-gm']"
+      tuiButton
+      type="button"
+      appearance="customButton"
+      class="tui-space_right-3 tui-space_bottom-3"
+    >
+      Create rankinglist
+    </button>
+  </div>
+
+  <tui-accordion class="container">
+    <tui-accordion-item *ngFor="let group of groups; let index = index">
+      {{ group.name }}
+      <ng-template tuiAccordionItemContent>
+        <button
+          (click)="openSeriesDialog(result)"
+          *ngFor="let result of getResultsByGroup(group.id!); let i = index"
+          tuiButton
+          type="button"
+          appearance="customButton"
+          class="tui-space_right-3 tui-space_bottom-3"
+        >
+          <span class="d-none d-md-inline">{{ result.athlete?.name + ' ' + result.athlete?.firstName }}</span>
+        </button>
+      </ng-template>
+    </tui-accordion-item>
+  </tui-accordion>
+</div>

@@ -1,5 +1,6 @@
 package ch.felberto.service;
 
+import ch.felberto.domain.GroupRankingList;
 import ch.felberto.domain.RankingList;
 import com.lowagie.text.DocumentException;
 import java.io.File;
@@ -41,9 +42,28 @@ public class RankingListPrintService {
                 context = getContext(rankingList);
                 html = loadAndFillTemplate(context, rankingList.getType());
                 break;
+            case ZSAV_NAWU_GM:
+                context = getContextZsavNawuGmSingle(rankingList);
+                html = loadAndFillTemplateZsavNawuGmSingle(context);
+                break;
             case EASV_WORLDCUP:
                 context = getContextEasvWorldcup(rankingList);
                 html = loadAndFillTemplateEasvWorldcup(context);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + rankingList.getCompetition().getCompetitionType());
+        }
+
+        return renderPdf(html);
+    }
+
+    public File generatePdfGroup(GroupRankingList rankingList) throws IOException, DocumentException {
+        Context context;
+        String html;
+        switch (rankingList.getCompetition().getCompetitionType()) {
+            case ZSAV_NAWU_GM:
+                context = getContextZsavNawuGmGroup(rankingList);
+                html = loadAndFillTemplateZsavNawuGmGroup(context);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + rankingList.getCompetition().getCompetitionType());
@@ -153,6 +173,39 @@ public class RankingListPrintService {
         return context;
     }
 
+    public Context getContextZsavNawuGmGroup(GroupRankingList rankingList) {
+        Context context = new Context();
+        context.setVariable("rankingList", rankingList);
+
+        String titleDoc = "ZSAV " + rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
+        String title = rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
+        String subTitle = "Gruppenrangliste";
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        context.setVariable("titleDoc", titleDoc);
+        context.setVariable("title", title);
+        context.setVariable("subTitle", subTitle);
+        context.setVariable("date", formatter.format(date));
+
+        return context;
+    }
+
+    public Context getContextZsavNawuGmSingle(RankingList rankingList) {
+        Context context = new Context();
+        context.setVariable("rankingList", rankingList);
+
+        String titleDoc = "ZSAV " + rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
+        String title = rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
+        String subTitle = "Einzelrangliste";
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        context.setVariable("titleDoc", titleDoc);
+        context.setVariable("title", title);
+        context.setVariable("subTitle", subTitle);
+        context.setVariable("date", formatter.format(date));
+        return context;
+    }
+
     public String loadAndFillTemplate(Context context, int type) {
         switch (type) {
             case 1:
@@ -174,5 +227,13 @@ public class RankingListPrintService {
 
     public String loadAndFillTemplateEasvWorldcup(Context context) {
         return templateEngine.process("ranglisten/rangliste_easv_worldcup", context);
+    }
+
+    public String loadAndFillTemplateZsavNawuGmGroup(Context context) {
+        return templateEngine.process("ranglisten/rangliste_zsav_nawu_gm_group", context);
+    }
+
+    public String loadAndFillTemplateZsavNawuGmSingle(Context context) {
+        return templateEngine.process("ranglisten/rangliste_zsav_nawu_gm_single", context);
     }
 }

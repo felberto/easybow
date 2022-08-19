@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
  */
 public interface GroupService {
     /**
-     * Save a gruppen.
+     * Save a group.
      *
      * @param group the entity to save.
      * @return the persisted entity.
