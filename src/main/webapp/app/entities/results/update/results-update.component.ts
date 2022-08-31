@@ -27,6 +27,8 @@ export class ResultsUpdateComponent implements OnInit {
   serie2sCollection: ISeries[] = [];
   serie3sCollection: ISeries[] = [];
   serie4sCollection: ISeries[] = [];
+  serie5sCollection: ISeries[] = [];
+  serie6sCollection: ISeries[] = [];
   groupsSharedCollection: IGroup[] = [];
   athletesSharedCollection: IAthlete[] = [];
   competitionsSharedCollection: ICompetition[] = [];
@@ -40,6 +42,8 @@ export class ResultsUpdateComponent implements OnInit {
     serie2: [],
     serie3: [],
     serie4: [],
+    serie5: [],
+    serie6: [],
     group: [],
     athlete: [],
     competition: [],
@@ -122,6 +126,8 @@ export class ResultsUpdateComponent implements OnInit {
       serie2: results.serie2,
       serie3: results.serie3,
       serie4: results.serie4,
+      serie5: results.serie5,
+      serie6: results.serie6,
       group: results.group,
       athlete: results.athlete,
       competition: results.competition,
@@ -131,6 +137,8 @@ export class ResultsUpdateComponent implements OnInit {
     this.serie2sCollection = this.seriesService.addSeriesToCollectionIfMissing(this.serie2sCollection, results.serie2);
     this.serie3sCollection = this.seriesService.addSeriesToCollectionIfMissing(this.serie3sCollection, results.serie3);
     this.serie4sCollection = this.seriesService.addSeriesToCollectionIfMissing(this.serie4sCollection, results.serie4);
+    this.serie5sCollection = this.seriesService.addSeriesToCollectionIfMissing(this.serie5sCollection, results.serie5);
+    this.serie6sCollection = this.seriesService.addSeriesToCollectionIfMissing(this.serie6sCollection, results.serie6);
     this.groupsSharedCollection = this.groupService.addGroupToCollectionIfMissing(this.groupsSharedCollection, results.group);
     this.athletesSharedCollection = this.athleteService.addAthleteToCollectionIfMissing(this.athletesSharedCollection, results.athlete);
     this.competitionsSharedCollection = this.competitionService.addCompetitionToCollectionIfMissing(
@@ -162,6 +170,18 @@ export class ResultsUpdateComponent implements OnInit {
       .query({ 'resultsId.specified': 'false' })
       .pipe(map((res: HttpResponse<ISeries[]>) => res.body ?? []))
       .pipe(map((series: ISeries[]) => this.seriesService.addSeriesToCollectionIfMissing(series, this.editForm.get('serie4')!.value)))
+      .subscribe((series: ISeries[]) => (this.serie4sCollection = series));
+
+    this.seriesService
+      .query({ 'resultsId.specified': 'false' })
+      .pipe(map((res: HttpResponse<ISeries[]>) => res.body ?? []))
+      .pipe(map((series: ISeries[]) => this.seriesService.addSeriesToCollectionIfMissing(series, this.editForm.get('serie5')!.value)))
+      .subscribe((series: ISeries[]) => (this.serie4sCollection = series));
+
+    this.seriesService
+      .query({ 'resultsId.specified': 'false' })
+      .pipe(map((res: HttpResponse<ISeries[]>) => res.body ?? []))
+      .pipe(map((series: ISeries[]) => this.seriesService.addSeriesToCollectionIfMissing(series, this.editForm.get('serie6')!.value)))
       .subscribe((series: ISeries[]) => (this.serie4sCollection = series));
 
     this.groupService
@@ -201,6 +221,8 @@ export class ResultsUpdateComponent implements OnInit {
       serie2: this.editForm.get(['serie2'])!.value,
       serie3: this.editForm.get(['serie3'])!.value,
       serie4: this.editForm.get(['serie4'])!.value,
+      serie5: this.editForm.get(['serie5'])!.value,
+      serie6: this.editForm.get(['serie6'])!.value,
       group: this.editForm.get(['group'])!.value,
       athlete: this.editForm.get(['athlete'])!.value,
       competition: this.editForm.get(['competition'])!.value,

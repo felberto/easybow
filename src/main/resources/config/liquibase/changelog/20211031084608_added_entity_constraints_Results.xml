@@ -32,6 +32,18 @@
                                  referencedColumnNames="id"
                                  referencedTableName="series"/>
 
+        <addForeignKeyConstraint baseColumnNames="serie5_id"
+                                 baseTableName="results"
+                                 constraintName="fk_results__serie5_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="series"/>
+
+        <addForeignKeyConstraint baseColumnNames="serie6_id"
+                                 baseTableName="results"
+                                 constraintName="fk_results__serie6_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="series"/>
+
         <addForeignKeyConstraint baseColumnNames="group_id"
                                  baseTableName="results"
                                  constraintName="fk_results__group_id"

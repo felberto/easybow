@@ -42,7 +42,7 @@ public class Competition implements Serializable {
 
     @NotNull
     @Min(value = 1)
-    @Max(value = 4)
+    @Max(value = 6)
     @Column(name = "number_of_series", nullable = false)
     private Integer numberOfSeries;
 
@@ -56,7 +56,7 @@ public class Competition implements Serializable {
     private Integer numberOfFinalAthletes;
 
     @Min(value = 1)
-    @Max(value = 4)
+    @Max(value = 6)
     @Column(name = "number_of_final_series")
     private Integer numberOfFinalSeries;
 

@@ -46,6 +46,18 @@
             <a [routerLink]="['/series', results.serie4?.id, 'view']">{{ results.serie4?.id }}</a>
           </div>
         </dd>
+        <dt><span>Serie 5</span></dt>
+        <dd>
+          <div *ngIf="results.serie5">
+            <a [routerLink]="['/series', results.serie5?.id, 'view']">{{ results.serie5?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Serie 6</span></dt>
+        <dd>
+          <div *ngIf="results.serie6">
+            <a [routerLink]="['/series', results.serie6?.id, 'view']">{{ results.serie6?.id }}</a>
+          </div>
+        </dd>
         <dt><span>Group</span></dt>
         <dd>
           <div *ngIf="results.group">

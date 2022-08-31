@@ -33,6 +33,12 @@
             <column name="serie4_id" type="bigint">
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_results__serie4_id" />
             </column>
+            <column name="serie5_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_results__serie5_id" />
+            </column>
+            <column name="serie6_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_results__serie6_id" />
+            </column>
             <column name="group_id" type="bigint">
                 <constraints nullable="true" />
             </column>

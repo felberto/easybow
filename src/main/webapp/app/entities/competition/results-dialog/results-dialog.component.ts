@@ -8,6 +8,7 @@ import { ResultsService } from 'app/entities/results/service/results.service';
 import { HttpResponse } from '@angular/common/http';
 import { AthleteNumberDialogComponent } from '../athlete-number-dialog/athlete-number-dialog.component';
 import { GroupDialogComponent } from '../group-dialog/group-dialog.component';
+import { AthleteNumberGroupDialogComponent } from '../athlete-number-group-dialog/athlete-number-group-dialog.component';
 
 @Component({
   selector: 'jhi-resultate-dialog',
@@ -60,6 +61,10 @@ export class ResultsDialogComponent implements OnInit {
       modalRef.componentInstance.competition = competition;
     } else if (competition.competitionType === 'ZSAV_NAWU_GM') {
       modalRef = this.modalService.open(GroupDialogComponent, { size: 'xl', backdrop: 'static' });
+      modalRef.componentInstance.athlete = athlete;
+      modalRef.componentInstance.competition = competition;
+    } else if (competition.competitionType === 'EASV_STAENDEMATCH') {
+      modalRef = this.modalService.open(AthleteNumberGroupDialogComponent, { size: 'xl', backdrop: 'static' });
       modalRef.componentInstance.athlete = athlete;
       modalRef.componentInstance.competition = competition;
     }

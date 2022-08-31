@@ -35,6 +35,7 @@
           >
             <option [ngValue]="null"></option>
             <option value="EASV_WORLDCUP">EASV_WORLDCUP</option>
+            <option value="EASV_STAENDEMATCH">EASV_STAENDEMATCH</option>
             <option value="ZSAV_NAWU_GM">ZSAV_NAWU_GM</option>
             <option value="ZSAV_NAWU">ZSAV_NAWU</option>
             <option value="ZSAV">ZSAV</option>
@@ -91,7 +92,7 @@
               This field should be at least 1.
             </small>
             <small class="form-text text-danger" *ngIf="editForm.get('numberOfSeries')?.errors?.max">
-              This field cannot be more than 4.
+              This field cannot be more than 6.
             </small>
             <small class="form-text text-danger" [hidden]="!editForm.get('numberOfSeries')?.errors?.number">
               This field should be a number.

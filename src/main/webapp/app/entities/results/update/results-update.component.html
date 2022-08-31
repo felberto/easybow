@@ -100,6 +100,32 @@
         </div>
 
         <div class="form-group">
+          <label class="form-control-label" for="field_serie5">Serie 5</label>
+          <select class="form-control" id="field_serie5" data-cy="serie5" name="serie5" formControlName="serie5">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="seriesOption.id === editForm.get('serie5')!.value?.id ? editForm.get('serie5')!.value : seriesOption"
+              *ngFor="let seriesOption of serie5sCollection; trackBy: trackSeriesById"
+            >
+              {{ seriesOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_serie6">Serie 6</label>
+          <select class="form-control" id="field_serie6" data-cy="serie6" name="serie6" formControlName="serie6">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="seriesOption.id === editForm.get('serie6')!.value?.id ? editForm.get('serie6')!.value : seriesOption"
+              *ngFor="let seriesOption of serie6sCollection; trackBy: trackSeriesById"
+            >
+              {{ seriesOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
           <label class="form-control-label" for="field_group">Group</label>
           <select class="form-control" id="field_group" data-cy="group" name="group" formControlName="group">
             <option [ngValue]="null"></option>

@@ -1,0 +1,79 @@
+.div-view {
+  height: 100%;
+}
+
+.center {
+  text-align: center;
+}
+
+.liveview-title {
+  font-size: 3em;
+  font-weight: bold;
+}
+
+.liveview th {
+  font-size: 1.5em;
+}
+
+.liveview td {
+  font-size: 2em;
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab-button {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.table-nonstriped {
+  tbody tr {
+    background-color: transparent;
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .div-view {
+    height: 100%;
+  }
+  .liveview-title {
+    font-size: 2em;
+    font-weight: bold;
+  }
+  .liveview th {
+    font-size: 1em;
+  }
+
+  .liveview td {
+    font-size: 1em;
+  }
+  .tab-button {
+    font-size: 1em;
+    font-weight: bold;
+  }
+}
+
+@media screen and (max-width: 2500px) {
+  .div-view {
+    height: 100%;
+  }
+  .liveview-title {
+    font-size: 2em;
+    font-weight: bold;
+  }
+  .liveview th {
+    font-size: 1em;
+  }
+
+  .liveview td {
+    font-size: 1em;
+  }
+  .tab-button {
+    font-size: 1em;
+    font-weight: bold;
+  }
+}
