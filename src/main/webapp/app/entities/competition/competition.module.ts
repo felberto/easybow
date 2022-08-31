@@ -28,6 +28,10 @@ import { AthleteNumberDialogComponent } from './athlete-number-dialog/athlete-nu
 import { GroupDialogComponent } from './group-dialog/group-dialog.component';
 import { CompetitionOverviewZsavNawuGmComponent } from './overview-zsav-nawu-gm/competition-overview-zsav-nawu-gm.component';
 import { RankingListZsavNawuGmComponent } from './ranking-list-zsav-nawu-gm/ranking-list-zsav-nawu-gm.component';
+import { CompetitionOverviewEasvStaendematchComponent } from './overview-easv-staendematch/competition-overview-easv-staendematch.component';
+import { AthleteNumberGroupDialogComponent } from './athlete-number-group-dialog/athlete-number-group-dialog.component';
+import { SeriesDialog6Component } from './series-dialog-6/series-dialog-6.component';
+import { RankingListEasvStaendematchComponent } from './ranking-list-easv-staendematch/ranking-list-easv-staendematch.component';
 
 @NgModule({
   imports: [
@@ -50,16 +54,20 @@ import { RankingListZsavNawuGmComponent } from './ranking-list-zsav-nawu-gm/rank
     CompetitionOverviewComponent,
     CompetitionOverviewEasvWorldcupComponent,
     CompetitionOverviewZsavNawuGmComponent,
+    CompetitionOverviewEasvStaendematchComponent,
     ResultsDialogComponent,
     SeriesDialog1Component,
     SeriesDialog2Component,
     SeriesDialog4Component,
+    SeriesDialog6Component,
     RankingListComponent,
     RankingListEasvWorldcupComponent,
     RankingListZsavNawuGmComponent,
+    RankingListEasvStaendematchComponent,
     RankingListDialogComponent,
     ConfirmDialogComponent,
     AthleteNumberDialogComponent,
+    AthleteNumberGroupDialogComponent,
     GroupDialogComponent,
   ],
   entryComponents: [
@@ -67,14 +75,24 @@ import { RankingListZsavNawuGmComponent } from './ranking-list-zsav-nawu-gm/rank
     ResultsDialogComponent,
     RankingListComponent,
     RankingListEasvWorldcupComponent,
+    RankingListEasvStaendematchComponent,
     SeriesDialog1Component,
     SeriesDialog2Component,
     SeriesDialog4Component,
+    SeriesDialog6Component,
     ConfirmDialogComponent,
     AthleteNumberDialogComponent,
     GroupDialogComponent,
   ],
   providers: [NgbActiveModal],
-  exports: [SeriesDialog1Component, SeriesDialog2Component, SeriesDialog4Component, AthleteNumberDialogComponent, GroupDialogComponent],
+  exports: [
+    SeriesDialog1Component,
+    SeriesDialog2Component,
+    SeriesDialog4Component,
+    SeriesDialog6Component,
+    AthleteNumberDialogComponent,
+    GroupDialogComponent,
+    AthleteNumberGroupDialogComponent,
+  ],
 })
 export class CompetitionModule {}

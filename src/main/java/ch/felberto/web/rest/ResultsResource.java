@@ -61,8 +61,6 @@ public class ResultsResource {
         this.mailService = mailService;
     }
 
-    //TODO gemsamtresultat updaten wenn passe hinzugefügt oder geupdatet wird
-
     /**
      * {@code POST  /results} : Create a new result.
      *

@@ -1,0 +1,245 @@
+<tui-loader [overlay]="true" [showLoader]="!isDataAvailable">
+  <div *ngIf="result && competition">
+    <div class="modal-header">
+      <div *ngIf="result.round !== 99" class="modal-title tui-text_h4">
+        {{ result.athleteNumber + ' | ' + result.athlete?.name + ' ' + result.athlete?.firstName + ' | ' + result.group?.name }}
+      </div>
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="tui-container">
+        <span class="tui-text_body-l">Hinweis: Mouchen als 11 eingeben</span>
+        <br />
+        <form [formGroup]="testForm">
+          <br />
+          <span class="tui-text_h6">1. Passe Resultat: {{ getSumSeries(1) }}</span>
+          <div class="tui-form__row tui-form__row_multi-fields">
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number1"> 1</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number2"> 2</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number3"> 3</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number4"> 4</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number5"> 5</tui-input-number>
+            </div>
+          </div>
+          <div class="tui-form__row tui-form__row_multi-fields">
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number6"> 6</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number7"> 7</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number8"> 8</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number9"> 9</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number10"> 10</tui-input-number>
+            </div>
+          </div>
+          <br />
+          <span class="tui-text_h6">2. Passe Resultat: {{ getSumSeries(2) }}</span>
+          <div class="tui-form__row tui-form__row_multi-fields">
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number11"> 11</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number12"> 12</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number13"> 13</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number14"> 14</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number15"> 15</tui-input-number>
+            </div>
+          </div>
+          <div class="tui-form__row tui-form__row_multi-fields">
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number16"> 16</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number17"> 17</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number18"> 18</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number19"> 19</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number20"> 20</tui-input-number>
+            </div>
+          </div>
+          <br />
+          <span class="tui-text_h6">3. Passe Resultat: {{ getSumSeries(3) }}</span>
+          <div class="tui-form__row tui-form__row_multi-fields">
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number21"> 21</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number22"> 22</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number23"> 23</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number24"> 24</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number25"> 25</tui-input-number>
+            </div>
+          </div>
+          <div class="tui-form__row tui-form__row_multi-fields">
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number26"> 26</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number27"> 27</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number28"> 28</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number29"> 29</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number30"> 30</tui-input-number>
+            </div>
+          </div>
+          <br />
+          <span class="tui-text_h6">4. Passe Resultat: {{ getSumSeries(4) }}</span>
+          <div class="tui-form__row tui-form__row_multi-fields">
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number31"> 31</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number32"> 32</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number33"> 33</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number34"> 34</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number35"> 35</tui-input-number>
+            </div>
+          </div>
+          <div class="tui-form__row tui-form__row_multi-fields">
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number36"> 36</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number37"> 37</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number38"> 38</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number39"> 39</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number40"> 40</tui-input-number>
+            </div>
+          </div>
+          <br />
+          <span class="tui-text_h6">5. Passe Resultat: {{ getSumSeries(5) }}</span>
+          <div class="tui-form__row tui-form__row_multi-fields">
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number41"> 41</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number42"> 42</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number43"> 43</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number44"> 44</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number45"> 45</tui-input-number>
+            </div>
+          </div>
+          <div class="tui-form__row tui-form__row_multi-fields">
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number46"> 46</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number47"> 47</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number48"> 48</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number49"> 49</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number50"> 50</tui-input-number>
+            </div>
+          </div>
+          <br />
+          <span class="tui-text_h6">6. Passe Resultat: {{ getSumSeries(6) }}</span>
+          <div class="tui-form__row tui-form__row_multi-fields">
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number51"> 51</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number52"> 52</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number53"> 53</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number54"> 54</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number55"> 55</tui-input-number>
+            </div>
+          </div>
+          <div class="tui-form__row tui-form__row_multi-fields">
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number56"> 56</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number57"> 57</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number58"> 58</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number59"> 59</tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number [min]="0" [max]="11" formControlName="number60"> 60</tui-input-number>
+            </div>
+          </div>
+          <div class="tui-text_h6">Gesamtresultat: {{ getSum() }}</div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button (click)="cancel()" tuiButton type="button" appearance="greyButton" class="tui-space_right-3 tui-space_bottom-3">
+        Abbrechen
+      </button>
+      <button (click)="save()" tuiButton type="button" appearance="customButton" class="tui-space_right-3 tui-space_bottom-3">
+        Speichern
+      </button>
+    </div>
+  </div>
+</tui-loader>

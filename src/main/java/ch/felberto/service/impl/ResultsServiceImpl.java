@@ -47,6 +47,12 @@ public class ResultsServiceImpl implements ResultsService {
         if (results.getSerie4() != null && results.getSerie4().getResult() != null) {
             result = result + results.getSerie4().getResult();
         }
+        if (results.getSerie5() != null && results.getSerie5().getResult() != null) {
+            result = result + results.getSerie5().getResult();
+        }
+        if (results.getSerie6() != null && results.getSerie6().getResult() != null) {
+            result = result + results.getSerie6().getResult();
+        }
         results.setResult(result);
         return resultsRepository.save(results);
     }

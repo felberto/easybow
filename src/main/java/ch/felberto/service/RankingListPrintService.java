@@ -50,6 +50,10 @@ public class RankingListPrintService {
                 context = getContextEasvWorldcup(rankingList);
                 html = loadAndFillTemplateEasvWorldcup(context);
                 break;
+            case EASV_STAENDEMATCH:
+                context = getContextEasvStaendematchSingle(rankingList);
+                html = loadAndFillTemplateEasvStaendematchSingle(context);
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + rankingList.getCompetition().getCompetitionType());
         }
@@ -64,6 +68,10 @@ public class RankingListPrintService {
             case ZSAV_NAWU_GM:
                 context = getContextZsavNawuGmGroup(rankingList);
                 html = loadAndFillTemplateZsavNawuGmGroup(context);
+                break;
+            case EASV_STAENDEMATCH:
+                context = getContextEasvStaendematchGroup(rankingList);
+                html = loadAndFillTemplateEasvStaendematchGroup(context);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + rankingList.getCompetition().getCompetitionType());
@@ -206,6 +214,39 @@ public class RankingListPrintService {
         return context;
     }
 
+    public Context getContextEasvStaendematchGroup(GroupRankingList rankingList) {
+        Context context = new Context();
+        context.setVariable("rankingList", rankingList);
+
+        String titleDoc = "EASV " + rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
+        String title = rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
+        String subTitle = "Verbandsrangliste";
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        context.setVariable("titleDoc", titleDoc);
+        context.setVariable("title", title);
+        context.setVariable("subTitle", subTitle);
+        context.setVariable("date", formatter.format(date));
+
+        return context;
+    }
+
+    public Context getContextEasvStaendematchSingle(RankingList rankingList) {
+        Context context = new Context();
+        context.setVariable("rankingList", rankingList);
+
+        String titleDoc = "EASV " + rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
+        String title = rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
+        String subTitle = "Einzelrangliste";
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        context.setVariable("titleDoc", titleDoc);
+        context.setVariable("title", title);
+        context.setVariable("subTitle", subTitle);
+        context.setVariable("date", formatter.format(date));
+        return context;
+    }
+
     public String loadAndFillTemplate(Context context, int type) {
         switch (type) {
             case 1:
@@ -235,5 +276,13 @@ public class RankingListPrintService {
 
     public String loadAndFillTemplateZsavNawuGmSingle(Context context) {
         return templateEngine.process("ranglisten/rangliste_zsav_nawu_gm_single", context);
+    }
+
+    public String loadAndFillTemplateEasvStaendematchGroup(Context context) {
+        return templateEngine.process("ranglisten/rangliste_easv_staendematch_group", context);
+    }
+
+    public String loadAndFillTemplateEasvStaendematchSingle(Context context) {
+        return templateEngine.process("ranglisten/rangliste_easv_staendematch_single", context);
     }
 }

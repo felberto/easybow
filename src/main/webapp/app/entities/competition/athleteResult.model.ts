@@ -12,10 +12,14 @@ export interface IAthleteResult {
   resultRound1Serie2: number;
   resultRound1Serie3: number;
   resultRound1Serie4: number;
+  resultRound1Serie5: number;
+  resultRound1Serie6: number;
   resultRound2Serie1: number;
   resultRound2Serie2: number;
   resultRound2Serie3: number;
   resultRound2Serie4: number;
+  resultRound2Serie5: number;
+  resultRound2Serie6: number;
   resultFinalSerie1: number;
   resultFinalSerie2: number;
   t0: number;
@@ -44,10 +48,14 @@ export class AthleteResult implements IAthleteResult {
     public resultRound1Serie2: number,
     public resultRound1Serie3: number,
     public resultRound1Serie4: number,
+    public resultRound1Serie5: number,
+    public resultRound1Serie6: number,
     public resultRound2Serie1: number,
     public resultRound2Serie2: number,
     public resultRound2Serie3: number,
     public resultRound2Serie4: number,
+    public resultRound2Serie5: number,
+    public resultRound2Serie6: number,
     public resultFinalSerie1: number,
     public resultFinalSerie2: number,
     public t0: number,

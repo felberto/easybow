@@ -25,6 +25,10 @@ public class AthleteResult {
 
     private Integer resultRound1Serie4;
 
+    private Integer resultRound1Serie5;
+
+    private Integer resultRound1Serie6;
+
     private Integer resultRound2Serie1;
 
     private Integer resultRound2Serie2;
@@ -32,6 +36,10 @@ public class AthleteResult {
     private Integer resultRound2Serie3;
 
     private Integer resultRound2Serie4;
+
+    private Integer resultRound2Serie5;
+
+    private Integer resultRound2Serie6;
 
     private Integer resultFinalSerie1;
 
@@ -122,6 +130,22 @@ public class AthleteResult {
         this.resultRound1Serie4 = resultRound1Serie4;
     }
 
+    public Integer getResultRound1Serie5() {
+        return resultRound1Serie5;
+    }
+
+    public void setResultatRunde1Passe5(Integer resultRound1Serie5) {
+        this.resultRound1Serie5 = resultRound1Serie5;
+    }
+
+    public Integer getResultRound1Serie6() {
+        return resultRound1Serie6;
+    }
+
+    public void setResultatRunde1Passe6(Integer resultRound1Serie6) {
+        this.resultRound1Serie6 = resultRound1Serie6;
+    }
+
     public Integer getResultRound2Serie1() {
         return resultRound2Serie1;
     }
@@ -152,6 +176,22 @@ public class AthleteResult {
 
     public void setResultatRunde2Passe4(Integer resultRound2Serie4) {
         this.resultRound2Serie4 = resultRound2Serie4;
+    }
+
+    public Integer getResultRound2Serie5() {
+        return resultRound2Serie5;
+    }
+
+    public void setResultatRunde2Passe5(Integer resultRound2Serie5) {
+        this.resultRound2Serie5 = resultRound2Serie5;
+    }
+
+    public Integer getResultRound2Serie6() {
+        return resultRound2Serie6;
+    }
+
+    public void setResultatRunde2Passe6(Integer resultRound2Serie6) {
+        this.resultRound2Serie6 = resultRound2Serie6;
     }
 
     public Integer getResultFinal() {

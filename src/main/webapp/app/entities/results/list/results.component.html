@@ -60,6 +60,14 @@
             <span>Serie 4</span>
             <fa-icon icon="sort"></fa-icon>
           </th>
+          <th scope="col" jhiSortBy="serie5.id">
+            <span>Serie 5</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="serie6.id">
+            <span>Serie 6</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col" jhiSortBy="group.name">
             <span>Group</span>
             <fa-icon icon="sort"></fa-icon>
@@ -100,6 +108,16 @@
           <td>
             <div *ngIf="results.serie4">
               <a [routerLink]="['/series', results.serie4?.id, 'view']">{{ results.serie4?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="results.serie5">
+              <a [routerLink]="['/series', results.serie5?.id, 'view']">{{ results.serie5?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="results.serie6">
+              <a [routerLink]="['/series', results.serie6?.id, 'view']">{{ results.serie6?.id }}</a>
             </div>
           </td>
           <td>

@@ -53,6 +53,16 @@ public class Results implements Serializable {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Series serie4;
 
+    @OneToOne
+    @JoinColumn(unique = true)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private Series serie5;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private Series serie6;
+
     @ManyToOne
     private Group group;
 
@@ -166,6 +176,32 @@ public class Results implements Serializable {
 
     public void setSerie4(Series serie4) {
         this.serie4 = serie4;
+    }
+
+    public Series getSerie5() {
+        return this.serie5;
+    }
+
+    public Results serie5(Series serie5) {
+        this.setSerie5(serie5);
+        return this;
+    }
+
+    public void setSerie5(Series serie5) {
+        this.serie5 = serie5;
+    }
+
+    public Series getSerie6() {
+        return this.serie6;
+    }
+
+    public Results serie6(Series serie6) {
+        this.setSerie6(serie6);
+        return this;
+    }
+
+    public void setSerie6(Series serie6) {
+        this.serie6 = serie6;
     }
 
     public Group getGroup() {

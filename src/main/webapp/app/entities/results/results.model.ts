@@ -12,6 +12,8 @@ export interface IResults {
   serie2?: ISeries | null;
   serie3?: ISeries | null;
   serie4?: ISeries | null;
+  serie5?: ISeries | null;
+  serie6?: ISeries | null;
   group?: IGroup | null;
   athlete?: IAthlete | null;
   competition?: ICompetition | null;
@@ -27,6 +29,8 @@ export class Results implements IResults {
     public serie2?: ISeries | null,
     public serie3?: ISeries | null,
     public serie4?: ISeries | null,
+    public serie5?: ISeries | null,
+    public serie6?: ISeries | null,
     public group?: IGroup | null,
     public athlete?: IAthlete | null,
     public competition?: ICompetition | null

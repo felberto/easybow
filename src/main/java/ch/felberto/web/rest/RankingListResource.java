@@ -5,6 +5,7 @@ import ch.felberto.domain.GroupRankingList;
 import ch.felberto.domain.RankingList;
 import ch.felberto.service.CompetitionService;
 import ch.felberto.service.RankingListPrintService;
+import ch.felberto.service.impl.EasvStaendematchGroupRankingListServiceImpl;
 import ch.felberto.service.impl.EasvWorldcupRankingListServiceImpl;
 import ch.felberto.service.impl.ZsavNawuEinzelRankingListServiceImpl;
 import ch.felberto.service.impl.ZsavNawuGmRankingListServiceImpl;
@@ -41,6 +42,7 @@ public class RankingListResource {
     private final ZsavNawuEinzelRankingListServiceImpl zsavNawuEinzelRankingListService;
     private final EasvWorldcupRankingListServiceImpl easvWorldcupRankingListService;
     private final ZsavNawuGmRankingListServiceImpl zsavNawuGmRankingListService;
+    private final EasvStaendematchGroupRankingListServiceImpl easvStaendematchGroupRankingListService;
     private final RankingListPrintService rankingListPrintService;
 
     private final CompetitionService competitionService;
@@ -49,12 +51,14 @@ public class RankingListResource {
         ZsavNawuEinzelRankingListServiceImpl zsavNawuEinzelRankingListService,
         EasvWorldcupRankingListServiceImpl easvWorldcupRankingListService,
         ZsavNawuGmRankingListServiceImpl zsavNawuGmRankingListService,
+        EasvStaendematchGroupRankingListServiceImpl easvStaendematchGroupRankingListService,
         RankingListPrintService rankingListPrintService,
         CompetitionService competitionService
     ) {
         this.zsavNawuEinzelRankingListService = zsavNawuEinzelRankingListService;
         this.zsavNawuGmRankingListService = zsavNawuGmRankingListService;
         this.easvWorldcupRankingListService = easvWorldcupRankingListService;
+        this.easvStaendematchGroupRankingListService = easvStaendematchGroupRankingListService;
         this.rankingListPrintService = rankingListPrintService;
         this.competitionService = competitionService;
     }
@@ -81,6 +85,9 @@ public class RankingListResource {
             case EASV_WORLDCUP:
                 rankingList = Optional.ofNullable(easvWorldcupRankingListService.generateRankingList(competitionId, type));
                 break;
+            case EASV_STAENDEMATCH:
+                rankingList = Optional.ofNullable(easvStaendematchGroupRankingListService.generateRankingList(competitionId, type));
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + competition.get().getCompetitionType());
         }
@@ -102,6 +109,9 @@ public class RankingListResource {
         switch (competition.get().getCompetitionType()) {
             case ZSAV_NAWU_GM:
                 rankingList = Optional.ofNullable(zsavNawuGmRankingListService.generateGroupRankingList(competitionId, type));
+                break;
+            case EASV_STAENDEMATCH:
+                rankingList = Optional.ofNullable(easvStaendematchGroupRankingListService.generateGroupRankingList(competitionId, type));
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + competition.get().getCompetitionType());

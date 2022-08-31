@@ -21,11 +21,11 @@ export class CompetitionUpdateComponent implements OnInit {
     year: [],
     competitionType: [],
     numberOfRounds: [null, [Validators.required]],
-    numberOfSeries: [null, [Validators.required, Validators.min(1), Validators.max(4)]],
+    numberOfSeries: [null, [Validators.required, Validators.min(1), Validators.max(6)]],
     finalRound: [],
     finalPreparation: [],
     numberOfFinalAthletes: [],
-    numberOfFinalSeries: [null, [Validators.min(1), Validators.max(4)]],
+    numberOfFinalSeries: [null, [Validators.min(1), Validators.max(6)]],
     teamSize: [],
     template: [],
   });
