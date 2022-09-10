@@ -42,11 +42,13 @@ public class ExportImportService {
     private final ClubRepository clubRepository;
 
     private final AssociationRepository associationRepository;
+    private final GroupRepository groupRepository;
 
     private final CompetitionService competitionService;
     private final AthleteService athleteService;
     private final SeriesService seriesService;
     private final ResultsService resultsService;
+    private final GroupService groupService;
     private final RoundService roundService;
     private final ClubService clubService;
 
@@ -57,10 +59,12 @@ public class ExportImportService {
         RoundRepository roundRepository,
         ClubRepository clubRepository,
         AssociationRepository associationRepository,
+        GroupRepository groupRepository,
         CompetitionService competitionService,
         AthleteService athleteService,
         SeriesService seriesService,
         ResultsService resultsService,
+        GroupService groupService,
         RoundService roundService,
         ClubService clubService
     ) {
@@ -70,10 +74,12 @@ public class ExportImportService {
         this.roundRepository = roundRepository;
         this.clubRepository = clubRepository;
         this.associationRepository = associationRepository;
+        this.groupRepository = groupRepository;
         this.competitionService = competitionService;
         this.athleteService = athleteService;
         this.seriesService = seriesService;
         this.resultsService = resultsService;
+        this.groupService = groupService;
         this.roundService = roundService;
         this.clubService = clubService;
     }
@@ -187,7 +193,9 @@ public class ExportImportService {
                 }
             }
 
-            if (athleteRepository.existsByName(athleteResult.getAthlete().getName())) {
+            if (
+                athleteRepository.existsByNameAndFirstName(athleteResult.getAthlete().getName(), athleteResult.getAthlete().getFirstName())
+            ) {
                 log.info("Athlete={} already exists and will be updated", athleteResult.getAthlete().getName());
                 athleteService.partialUpdateByName(athleteResult.getAthlete());
             } else {
@@ -281,7 +289,16 @@ public class ExportImportService {
                     newResults.setSerie2(results.getSerie2());
                     newResults.setSerie3(results.getSerie3());
                     newResults.setSerie4(results.getSerie4());
-                    newResults.setGroup(null);
+                    if (groupRepository.existsByName(results.getGroup().getName())) {
+                        log.info("Group={} already exists and will be updated", results.getGroup().getName());
+                        newResults.setGroup(groupRepository.findByName(results.getGroup().getName()).get());
+                    } else {
+                        log.info("Group={} does not exists and will be imported", results.getGroup().getName());
+                        Group newGroup = new Group();
+                        newGroup.setName(results.getGroup().getName());
+                        groupService.save(newGroup);
+                        newResults.setGroup(newGroup);
+                    }
 
                     resultsService.save(newResults);
                 }

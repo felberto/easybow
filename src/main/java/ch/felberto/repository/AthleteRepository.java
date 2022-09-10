@@ -19,5 +19,7 @@ public interface AthleteRepository extends JpaRepository<Athlete, Long>, JpaSpec
 
     Boolean existsByName(String name);
 
+    Boolean existsByNameAndFirstName(String name, String firstName);
+
     Optional<Athlete> findByNameAndFirstName(String name, String firstName);
 }

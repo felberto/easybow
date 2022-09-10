@@ -19,6 +19,7 @@ import { CompetitionType } from '../entities/enumerations/competitionType.model'
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
   competitionList: Array<Competition> | null = null;
+  pastCompetitionList: Array<Competition> | null = null;
   roundList: Array<Round> = [];
   breakpoint: any;
 
@@ -64,7 +65,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.competitionService.findByYear(fullYear).subscribe(result => {
       this.competitionList = result.body;
 
-      this.competitionList?.forEach(competition => {
+      result.body?.forEach(competition => {
         if (competition.id !== undefined) {
           this.roundService.findByCompetition(competition.id).subscribe(round => {
             if (round.body !== null) {
@@ -84,6 +85,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.router.navigate(['/competition', competitionId, 'overview']);
       } else if (res.body!.competitionType === CompetitionType.ZSAV_NAWU_GM) {
         this.router.navigate(['/competition', competitionId, 'overview-zsav-nawu-gm']);
+      } else if (res.body!.competitionType === CompetitionType.EASV_NAWU_GM) {
+        this.router.navigate(['/competition', competitionId, 'overview-easv-nawu-gm']);
       } else if (res.body!.competitionType === CompetitionType.EASV_WORLDCUP) {
         this.router.navigate(['/competition', competitionId, 'overview-easv-worldcup']);
       } else if (res.body!.competitionType === CompetitionType.EASV_STAENDEMATCH) {
@@ -109,6 +112,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.router.navigate(['/live', competition.id, 'live-easv-worldcup']);
       } else if (competition.competitionType === CompetitionType.ZSAV_NAWU_GM) {
         this.router.navigate(['/live', competition.id, 'live-zsav-nawu-gm']);
+      } else if (competition.competitionType === CompetitionType.EASV_NAWU_GM) {
+        this.router.navigate(['/live', competition.id, 'live-easv-nawu-gm']);
       } else if (competition.competitionType === CompetitionType.EASV_STAENDEMATCH) {
         this.router.navigate(['/live', competition.id, 'live-easv-staendematch']);
       }
