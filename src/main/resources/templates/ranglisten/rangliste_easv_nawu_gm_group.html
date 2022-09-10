@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title th:text="${titleDoc}"></title>
+    <bookmarks>
+      <bookmark href="#rankingList" name="Rangliste"></bookmark>
+    </bookmarks>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body>
+    <div class="w3-row">
+      <div class="w3-col s9">
+        <h2 class="w3-text-black title-font" th:text="${title}"></h2>
+      </div>
+      <div class="w3-col s3 w3-center">
+        <img class="easv" src="images/easv.jpg" />
+      </div>
+    </div>
+    <div class="w3-row">
+      <div class="w3-col s9">
+        <h3 class="w3-text-black title-font" th:text="${subTitle}"></h3>
+      </div>
+      <div class="w3-col s3 w3-center"></div>
+    </div>
+    <div id="rankingList">
+      <div th:if="${not #lists.isEmpty(rankingList.getGroupAthleteResultList())}">
+        <table class="w3-table">
+          <thead>
+            <tr>
+              <th class="w3-right-align" colspan="1">Rang</th>
+              <th class="w3-left-align" colspan="1">Gruppe</th>
+              <th class="" colspan="1"></th>
+              <th class="w3-right-align" colspan="1">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="groupAthleteResult : ${rankingList.getGroupAthleteResultList()}">
+              <td
+                class="w3-right-align"
+                style="font-weight: bold"
+                th:text="${rankingList.getGroupAthleteResultList().indexOf(groupAthleteResult) + 1}"
+              ></td>
+              <td class="w3-left-align" style="font-weight: bold" th:text="${groupAthleteResult?.getGroup().getName()}"></td>
+              <table class="w3-table">
+                <tbody>
+                  <tr th:each="athleteResult : ${groupAthleteResult.getAthleteResultList()}">
+                    <td
+                      class="w3-left-align"
+                      style="width: auto"
+                      th:text="${athleteResult?.getAthlete().getName() + ' ' + athleteResult?.getAthlete().getFirstName()}"
+                    ></td>
+                    <td class="w3-left-align" style="width: 25px" th:text="${athleteResult?.getAthlete().getYearOfBirth()}"></td>
+                    <td class="w3-left-align" style="width: 25px" th:if="${athleteResult?.getAthlete().getPosition().toString() == 'FREE'}">
+                      f
+                    </td>
+                    <td
+                      class="w3-left-align"
+                      style="width: 25px"
+                      th:if="${athleteResult?.getAthlete().getPosition().toString() == 'MOUNTED'}"
+                    >
+                      a
+                    </td>
+                    <td class="w3-right-align" style="width: 25px" th:text="${athleteResult?.getResultRound1Serie1()}"></td>
+                    <td class="w3-right-align" style="width: 25px" th:text="${athleteResult?.getResultRound1Serie2()}"></td>
+                    <td class="w3-right-align" style="font-weight: bolder; width: 25px" th:text="${athleteResult?.getResult()}"></td>
+                  </tr>
+                </tbody>
+              </table>
+              <td class="w3-right-align" style="font-weight: bold" th:text="${groupAthleteResult?.getResult()}"></td>
+              <p style="page-break-after: always" th:if="${(rankingList.getGroupAthleteResultList().indexOf(groupAthleteResult) + 1) == 9}">
+                &nbsp;
+              </p>
+              <p
+                style="page-break-before: always"
+                th:if="${(rankingList.getGroupAthleteResultList().indexOf(groupAthleteResult) + 1) == 9}"
+              >
+                &nbsp;
+              </p>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <footer class="w3-bottom">
+      <div class="w3-row">
+        <div class="w3-col s4">
+          <p class="w3-left-align" th:text="${date}"></p>
+        </div>
+        <div class="w3-col s4"></div>
+        <div class="w3-col s4"></div>
+      </div>
+    </footer>
+  </body>
+</html>
