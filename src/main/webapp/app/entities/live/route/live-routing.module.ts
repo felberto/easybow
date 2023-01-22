@@ -6,6 +6,7 @@ import { LiveEasvWorldcupComponent } from '../live-easv-worldcup/live-easv-world
 import { LiveZsavNawuGmComponent } from '../live-zsav-nawu-gm/live-zsav-nawu-gm.component';
 import { LiveEasvStaendematchComponent } from '../live-easv-staendematch/live-easv-staendematch.component';
 import { LiveEasvNawuGmComponent } from '../live-easv-nawu-gm/live-easv-nawu-gm.component';
+import { LiveEasvSm10mComponent } from '../live-easv-sm-10m/live-easv-sm-10m.component';
 
 const athleteRoute: Routes = [
   {
@@ -18,6 +19,13 @@ const athleteRoute: Routes = [
   {
     path: ':id/live-easv-worldcup',
     component: LiveEasvWorldcupComponent,
+    resolve: {
+      competition: CompetitionRoutingResolveService,
+    },
+  },
+  {
+    path: ':id/live-easv-sm-10om',
+    component: LiveEasvSm10mComponent,
     resolve: {
       competition: CompetitionRoutingResolveService,
     },
