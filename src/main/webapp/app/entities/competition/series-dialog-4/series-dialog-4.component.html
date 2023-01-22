@@ -14,146 +14,538 @@
           <span class="tui-text_h6">1. Passe Resultat: {{ getSumSeries(1) }}</span>
           <div class="tui-form__row tui-form__row_multi-fields">
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number1"> 1</tui-input-number>
+              <label for="number1">1</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number1"
+                name="number1"
+                formControlName="number1"
+                tabindex="1"
+                (keydown.enter)="nextField(2)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number2"> 2</tui-input-number>
+              <label for="number2">2</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number2"
+                name="number2"
+                formControlName="number2"
+                tabindex="2"
+                (keydown.enter)="nextField(3)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number3"> 3</tui-input-number>
+              <label for="number3">3</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number3"
+                name="number3"
+                formControlName="number3"
+                tabindex="3"
+                (keydown.enter)="nextField(4)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number4"> 4</tui-input-number>
+              <label for="number4">4</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number4"
+                name="number4"
+                formControlName="number4"
+                tabindex="4"
+                (keydown.enter)="nextField(5)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number5"> 5</tui-input-number>
+              <label for="number5">5</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number5"
+                name="number5"
+                formControlName="number5"
+                tabindex="5"
+                (keydown.enter)="nextField(6)"
+              />
             </div>
           </div>
           <div class="tui-form__row tui-form__row_multi-fields">
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number6"> 6</tui-input-number>
+              <label for="number6">6</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number6"
+                name="number6"
+                formControlName="number6"
+                tabindex="6"
+                (keydown.enter)="nextField(7)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number7"> 7</tui-input-number>
+              <label for="number7">7</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number7"
+                name="number7"
+                formControlName="number7"
+                tabindex="7"
+                (keydown.enter)="nextField(8)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number8"> 8</tui-input-number>
+              <label for="number8">8</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number8"
+                name="number8"
+                formControlName="number8"
+                tabindex="8"
+                (keydown.enter)="nextField(9)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number9"> 9</tui-input-number>
+              <label for="number9">9</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number9"
+                name="number9"
+                formControlName="number9"
+                tabindex="9"
+                (keydown.enter)="nextField(10)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number10"> 10</tui-input-number>
+              <label for="number10">10</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number10"
+                name="number10"
+                formControlName="number10"
+                tabindex="10"
+                (keydown.enter)="nextField(11)"
+              />
             </div>
           </div>
           <br />
           <span class="tui-text_h6">2. Passe Resultat: {{ getSumSeries(2) }}</span>
           <div class="tui-form__row tui-form__row_multi-fields">
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number11"> 11</tui-input-number>
+              <label for="number11">11</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number11"
+                name="number11"
+                formControlName="number11"
+                tabindex="11"
+                (keydown.enter)="nextField(12)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number12"> 12</tui-input-number>
+              <label for="number12">12</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number12"
+                name="number12"
+                formControlName="number12"
+                tabindex="12"
+                (keydown.enter)="nextField(13)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number13"> 13</tui-input-number>
+              <label for="number13">13</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number13"
+                name="number13"
+                formControlName="number13"
+                tabindex="13"
+                (keydown.enter)="nextField(14)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number14"> 14</tui-input-number>
+              <label for="number14">14</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number14"
+                name="number14"
+                formControlName="number14"
+                tabindex="14"
+                (keydown.enter)="nextField(15)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number15"> 15</tui-input-number>
+              <label for="number15">15</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number15"
+                name="number15"
+                formControlName="number15"
+                tabindex="15"
+                (keydown.enter)="nextField(16)"
+              />
             </div>
           </div>
           <div class="tui-form__row tui-form__row_multi-fields">
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number16"> 16</tui-input-number>
+              <label for="number16">16</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number16"
+                name="number16"
+                formControlName="number16"
+                tabindex="16"
+                (keydown.enter)="nextField(17)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number17"> 17</tui-input-number>
+              <label for="number17">17</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number17"
+                name="number17"
+                formControlName="number17"
+                tabindex="17"
+                (keydown.enter)="nextField(18)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number18"> 18</tui-input-number>
+              <label for="number18">18</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number18"
+                name="number18"
+                formControlName="number18"
+                tabindex="18"
+                (keydown.enter)="nextField(19)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number19"> 19</tui-input-number>
+              <label for="number19">19</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number19"
+                name="number19"
+                formControlName="number19"
+                tabindex="19"
+                (keydown.enter)="nextField(20)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number20"> 20</tui-input-number>
+              <label for="number20">20</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number20"
+                name="number20"
+                formControlName="number20"
+                tabindex="20"
+                (keydown.enter)="nextField(21)"
+              />
             </div>
           </div>
           <br />
           <span class="tui-text_h6">3. Passe Resultat: {{ getSumSeries(3) }}</span>
           <div class="tui-form__row tui-form__row_multi-fields">
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number21"> 21</tui-input-number>
+              <label for="number21">21</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number21"
+                name="number21"
+                formControlName="number21"
+                tabindex="21"
+                (keydown.enter)="nextField(22)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number22"> 22</tui-input-number>
+              <label for="number22">22</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number22"
+                name="number22"
+                formControlName="number22"
+                tabindex="22"
+                (keydown.enter)="nextField(23)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number23"> 23</tui-input-number>
+              <label for="number23">23</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number23"
+                name="number23"
+                formControlName="number23"
+                tabindex="23"
+                (keydown.enter)="nextField(24)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number24"> 24</tui-input-number>
+              <label for="number24">24</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number24"
+                name="number24"
+                formControlName="number24"
+                tabindex="24"
+                (keydown.enter)="nextField(25)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number25"> 25</tui-input-number>
+              <label for="number25">25</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number25"
+                name="number25"
+                formControlName="number25"
+                tabindex="25"
+                (keydown.enter)="nextField(26)"
+              />
             </div>
           </div>
           <div class="tui-form__row tui-form__row_multi-fields">
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number26"> 26</tui-input-number>
+              <label for="number26">26</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number26"
+                name="number26"
+                formControlName="number26"
+                tabindex="26"
+                (keydown.enter)="nextField(27)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number27"> 27</tui-input-number>
+              <label for="number27">27</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number27"
+                name="number27"
+                formControlName="number27"
+                tabindex="27"
+                (keydown.enter)="nextField(28)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number28"> 28</tui-input-number>
+              <label for="number28">28</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number28"
+                name="number28"
+                formControlName="number28"
+                tabindex="28"
+                (keydown.enter)="nextField(29)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number29"> 29</tui-input-number>
+              <label for="number29">29</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number29"
+                name="number29"
+                formControlName="number29"
+                tabindex="29"
+                (keydown.enter)="nextField(30)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number30"> 30</tui-input-number>
+              <label for="number30">30</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number30"
+                name="number30"
+                formControlName="number30"
+                tabindex="30"
+                (keydown.enter)="nextField(31)"
+              />
             </div>
           </div>
           <br />
           <span class="tui-text_h6">4. Passe Resultat: {{ getSumSeries(4) }}</span>
           <div class="tui-form__row tui-form__row_multi-fields">
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number31"> 31</tui-input-number>
+              <label for="number31">31</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number31"
+                name="number31"
+                formControlName="number31"
+                tabindex="31"
+                (keydown.enter)="nextField(32)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number32"> 32</tui-input-number>
+              <label for="number32">32</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number32"
+                name="number32"
+                formControlName="number32"
+                tabindex="32"
+                (keydown.enter)="nextField(33)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number33"> 33</tui-input-number>
+              <label for="number33">33</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number33"
+                name="number33"
+                formControlName="number33"
+                tabindex="33"
+                (keydown.enter)="nextField(34)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number34"> 34</tui-input-number>
+              <label for="number34">34</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number34"
+                name="number34"
+                formControlName="number34"
+                tabindex="34"
+                (keydown.enter)="nextField(35)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number35"> 35</tui-input-number>
+              <label for="number35">35</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number35"
+                name="number35"
+                formControlName="number35"
+                tabindex="35"
+                (keydown.enter)="nextField(36)"
+              />
             </div>
           </div>
           <div class="tui-form__row tui-form__row_multi-fields">
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number36"> 36</tui-input-number>
+              <label for="number36">36</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number36"
+                name="number36"
+                formControlName="number36"
+                tabindex="36"
+                (keydown.enter)="nextField(37)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number37"> 37</tui-input-number>
+              <label for="number37">37</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number37"
+                name="number37"
+                formControlName="number37"
+                tabindex="37"
+                (keydown.enter)="nextField(38)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number38"> 38</tui-input-number>
+              <label for="number38">38</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number38"
+                name="number38"
+                formControlName="number38"
+                tabindex="38"
+                (keydown.enter)="nextField(39)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number39"> 39</tui-input-number>
+              <label for="number39">39</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number39"
+                name="number39"
+                formControlName="number39"
+                tabindex="39"
+                (keydown.enter)="nextField(40)"
+              />
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number [min]="0" [max]="11" formControlName="number40"> 40</tui-input-number>
+              <label for="number40">40</label>
+              <input type="number" min="0" max="11" id="number40" name="number40" formControlName="number40" tabindex="40" />
             </div>
           </div>
+          <br />
           <div class="tui-text_h6">Gesamtresultat: {{ getSum() }}</div>
         </form>
       </div>

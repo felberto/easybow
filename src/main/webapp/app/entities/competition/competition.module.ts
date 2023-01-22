@@ -34,6 +34,8 @@ import { SeriesDialog6Component } from './series-dialog-6/series-dialog-6.compon
 import { RankingListEasvStaendematchComponent } from './ranking-list-easv-staendematch/ranking-list-easv-staendematch.component';
 import { RankingListEasvNawuGmComponent } from './ranking-list-easv-nawu-gm/ranking-list-easv-nawu-gm.component';
 import { CompetitionOverviewEasvNawuGmComponent } from './overview-easv-nawu-gm/competition-overview-easv-nawu-gm.component';
+import { CompetitionOverviewEasvSm10mComponent } from './overview-easv-sm-10m/competition-overview-easv-sm-10m.component';
+import { RankingListEasvSm10mComponent } from './ranking-list-easv-sm-10m/ranking-list-easv-sm-10m.component';
 
 @NgModule({
   imports: [
@@ -55,6 +57,7 @@ import { CompetitionOverviewEasvNawuGmComponent } from './overview-easv-nawu-gm/
     CompetitionRankingComponent,
     CompetitionOverviewComponent,
     CompetitionOverviewEasvWorldcupComponent,
+    CompetitionOverviewEasvSm10mComponent,
     CompetitionOverviewEasvNawuGmComponent,
     CompetitionOverviewZsavNawuGmComponent,
     CompetitionOverviewEasvStaendematchComponent,
@@ -65,6 +68,7 @@ import { CompetitionOverviewEasvNawuGmComponent } from './overview-easv-nawu-gm/
     SeriesDialog6Component,
     RankingListComponent,
     RankingListEasvWorldcupComponent,
+    RankingListEasvSm10mComponent,
     RankingListEasvNawuGmComponent,
     RankingListZsavNawuGmComponent,
     RankingListEasvStaendematchComponent,
@@ -79,6 +83,7 @@ import { CompetitionOverviewEasvNawuGmComponent } from './overview-easv-nawu-gm/
     ResultsDialogComponent,
     RankingListComponent,
     RankingListEasvWorldcupComponent,
+    RankingListEasvSm10mComponent,
     RankingListEasvStaendematchComponent,
     RankingListEasvNawuGmComponent,
     SeriesDialog1Component,

@@ -54,6 +54,10 @@ public class RankingListPrintService {
                 context = getContextEasvWorldcup(rankingList);
                 html = loadAndFillTemplateEasvWorldcup(context);
                 break;
+            case EASV_SM_10M:
+                context = getContextEasvSm10m(rankingList);
+                html = loadAndFillTemplateEasvSm10m(context);
+                break;
             case EASV_STAENDEMATCH:
                 context = getContextEasvStaendematchSingle(rankingList);
                 html = loadAndFillTemplateEasvStaendematchSingle(context);
@@ -189,6 +193,20 @@ public class RankingListPrintService {
         return context;
     }
 
+    public Context getContextEasvSm10m(RankingList rankingList) {
+        Context context = new Context();
+        context.setVariable("rankingList", rankingList);
+
+        String titleDoc = rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
+        String title = rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        context.setVariable("titleDoc", titleDoc);
+        context.setVariable("title", title);
+        context.setVariable("date", formatter.format(date));
+        return context;
+    }
+
     public Context getContextZsavNawuGmGroup(GroupRankingList rankingList) {
         Context context = new Context();
         context.setVariable("rankingList", rankingList);
@@ -309,6 +327,10 @@ public class RankingListPrintService {
 
     public String loadAndFillTemplateEasvWorldcup(Context context) {
         return templateEngine.process("ranglisten/rangliste_easv_worldcup", context);
+    }
+
+    public String loadAndFillTemplateEasvSm10m(Context context) {
+        return templateEngine.process("ranglisten/rangliste_easv_sm_10m", context);
     }
 
     public String loadAndFillTemplateZsavNawuGmGroup(Context context) {

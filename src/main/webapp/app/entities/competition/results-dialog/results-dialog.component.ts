@@ -71,6 +71,10 @@ export class ResultsDialogComponent implements OnInit {
       modalRef = this.modalService.open(AthleteNumberGroupDialogComponent, { size: 'xl', backdrop: 'static' });
       modalRef.componentInstance.athlete = athlete;
       modalRef.componentInstance.competition = competition;
+    } else if (competition.competitionType === 'EASV_SM_10M') {
+      modalRef = this.modalService.open(AthleteNumberDialogComponent, { size: 'xl', backdrop: 'static' });
+      modalRef.componentInstance.athlete = athlete;
+      modalRef.componentInstance.competition = competition;
     }
   }
 

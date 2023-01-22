@@ -5,4 +5,5 @@ export enum CompetitionType {
   ZSAV_NAWU_GM = 'ZSAV_NAWU_GM',
   EASV_NAWU_GM = 'EASV_NAWU_GM',
   ZSAV = 'ZSAV',
+  EASV_SM_10M = 'EASV_SM_10M',
 }

@@ -6,7 +6,7 @@ import { CompetitionService } from '../service/competition.service';
 import { ISeries } from '../../series/series.model';
 import { SeriesService } from 'app/entities/series/service/series.service';
 import { ResultsService } from 'app/entities/results/service/results.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
 
 @Component({
@@ -79,6 +79,11 @@ export class SeriesDialog4Component implements OnInit {
 
   cancel(): void {
     this.activeModal.close('');
+  }
+
+  nextField(currentIndex: number): void {
+    const nextField = document.querySelector(`[tabindex='${currentIndex}']`) as HTMLElement;
+    nextField.focus();
   }
 
   ngOnInit(): void {

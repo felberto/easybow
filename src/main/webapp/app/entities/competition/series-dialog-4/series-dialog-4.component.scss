@@ -3,6 +3,21 @@
   font-weight: bold;
 }
 
+input[type='number'] {
+  width: 100%;
+  height: 80%;
+  border-radius: 5px; /* Rounded corners */
+  border: 1px solid grey;
+  -moz-appearance: textfield; /* Remove arrows in Firefox */
+  -webkit-appearance: none; /* Remove arrows in Chrome */
+  appearance: none; /* Remove arrows in Safari */
+  box-shadow: 2px 2px 2px #ccc; /* shadow on hover */
+}
+
+input[type='number']:focus {
+  border: 2px solid grey; /* Grey border on hover */
+}
+
 .form__group {
   position: relative;
   padding: 15px 0 0;

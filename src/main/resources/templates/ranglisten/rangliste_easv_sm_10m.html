@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title th:text="${titleDoc}"></title>
+    <bookmarks>
+      <bookmark href="#rankingList" name="Rankinglist"></bookmark>
+    </bookmarks>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body>
+    <div class="w3-row">
+      <div class="w3-col s9">
+        <h2 class="w3-text-black title-font" th:text="${title}"></h2>
+      </div>
+      <div class="w3-col s3 w3-center">
+        <img class="easv" src="images/easv.jpg" />
+      </div>
+    </div>
+    <div class="w3-row">
+      <div class="w3-col s9">
+        <h3 class="w3-text-black title-font" th:text="${subTitle}"></h3>
+      </div>
+      <div class="w3-col s3 w3-center"></div>
+    </div>
+    <br />
+    <div id="rankingList">
+      <div th:if="${not #lists.isEmpty(rankingList.getAthleteResultList())}">
+        <table class="w3-table">
+          <thead>
+            <tr>
+              <th colspan="1"></th>
+              <th colspan="1"></th>
+              <th colspan="1"></th>
+              <th colspan="1"></th>
+              <th colspan="1"></th>
+              <th colspan="1"></th>
+              <th colspan="1"></th>
+              <th colspan="1"></th>
+              <th colspan="1"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="athlete : ${rankingList.getAthleteResultList()}">
+              <td class="w3-right-align rankinglist-font" th:text="${rankingList.getAthleteResultList().indexOf(athlete) + 1}"></td>
+              <td class="rankinglist-font" th:text="${athlete?.getAthlete().getName() + ' ' + athlete.getAthlete().getFirstName()}"></td>
+              <td class="rankinglist-font" th:text="${athlete?.getAthlete().getClub().getName()}"></td>
+              <td class="w3-right-align rankinglist-font" th:text="${athlete?.getResultRound1Serie1()}"></td>
+              <td class="w3-right-align rankinglist-font" th:text="${athlete?.getResultRound1Serie2()}"></td>
+              <td class="w3-right-align rankinglist-font" th:text="${athlete?.getResultRound1Serie3()}"></td>
+              <td class="w3-right-align rankinglist-font" th:text="${athlete?.getResultRound1Serie4()}"></td>
+              <td class="w3-right-align rankinglist-font" style="font-weight: bold" th:text="${athlete?.getResultRound1()}"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <footer class="w3-bottom">
+      <div class="w3-center">
+        <div class="rankinglist-font" th:text="'Wil | ' + ${date}"></div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -81,7 +81,10 @@
       </a>
       <!--EASV STAENDEMATCH-->
       <a
-        *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_STAENDEMATCH'"
+        *ngIf="
+          (account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_STAENDEMATCH') ||
+          competition.competitionType?.toString() == 'EASV_SM_10M'
+        "
         (click)="routeTo(competition.id)"
         class="data-card"
       >

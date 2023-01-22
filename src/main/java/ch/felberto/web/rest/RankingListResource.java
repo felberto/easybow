@@ -38,6 +38,7 @@ public class RankingListResource {
 
     private final ZsavNawuEinzelRankingListServiceImpl zsavNawuEinzelRankingListService;
     private final EasvWorldcupRankingListServiceImpl easvWorldcupRankingListService;
+    private final EasvSm10mRankingListServiceImpl easvSm10mRankingListService;
     private final ZsavNawuGmRankingListServiceImpl zsavNawuGmRankingListService;
 
     private final EasvNawuGmRankingListServiceImpl easvNawuGmRankingListService;
@@ -49,6 +50,7 @@ public class RankingListResource {
     public RankingListResource(
         ZsavNawuEinzelRankingListServiceImpl zsavNawuEinzelRankingListService,
         EasvWorldcupRankingListServiceImpl easvWorldcupRankingListService,
+        EasvSm10mRankingListServiceImpl easvSm10mRankingListService,
         ZsavNawuGmRankingListServiceImpl zsavNawuGmRankingListService,
         EasvNawuGmRankingListServiceImpl easvNawuGmRankingListService,
         EasvStaendematchGroupRankingListServiceImpl easvStaendematchGroupRankingListService,
@@ -56,6 +58,7 @@ public class RankingListResource {
         CompetitionService competitionService
     ) {
         this.zsavNawuEinzelRankingListService = zsavNawuEinzelRankingListService;
+        this.easvSm10mRankingListService = easvSm10mRankingListService;
         this.zsavNawuGmRankingListService = zsavNawuGmRankingListService;
         this.easvWorldcupRankingListService = easvWorldcupRankingListService;
         this.easvNawuGmRankingListService = easvNawuGmRankingListService;
@@ -88,6 +91,9 @@ public class RankingListResource {
                 break;
             case EASV_WORLDCUP:
                 rankingList = Optional.ofNullable(easvWorldcupRankingListService.generateRankingList(competitionId, type));
+                break;
+            case EASV_SM_10M:
+                rankingList = Optional.ofNullable(easvSm10mRankingListService.generateRankingList(competitionId, type));
                 break;
             case EASV_STAENDEMATCH:
                 rankingList = Optional.ofNullable(easvStaendematchGroupRankingListService.generateRankingList(competitionId, type));

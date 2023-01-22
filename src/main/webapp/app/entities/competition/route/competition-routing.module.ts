@@ -17,6 +17,8 @@ import { CompetitionOverviewEasvStaendematchComponent } from '../overview-easv-s
 import { RankingListEasvStaendematchComponent } from '../ranking-list-easv-staendematch/ranking-list-easv-staendematch.component';
 import { CompetitionOverviewEasvNawuGmComponent } from '../overview-easv-nawu-gm/competition-overview-easv-nawu-gm.component';
 import { RankingListEasvNawuGmComponent } from '../ranking-list-easv-nawu-gm/ranking-list-easv-nawu-gm.component';
+import { CompetitionOverviewEasvSm10mComponent } from '../overview-easv-sm-10m/competition-overview-easv-sm-10m.component';
+import { RankingListEasvSm10mComponent } from '../ranking-list-easv-sm-10m/ranking-list-easv-sm-10m.component';
 
 const competitionRoute: Routes = [
   {
@@ -54,6 +56,14 @@ const competitionRoute: Routes = [
   {
     path: ':id/overview-easv-worldcup',
     component: CompetitionOverviewEasvWorldcupComponent,
+    resolve: {
+      competition: CompetitionRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id/overview-easv-sm-10m',
+    component: CompetitionOverviewEasvSm10mComponent,
     resolve: {
       competition: CompetitionRoutingResolveService,
     },
@@ -110,6 +120,14 @@ const competitionRoute: Routes = [
   {
     path: ':id/ranking-list-easv-worldcup',
     component: RankingListEasvWorldcupComponent,
+    resolve: {
+      competition: CompetitionRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id/ranking-list-easv-sm-10m',
+    component: RankingListEasvSm10mComponent,
     resolve: {
       competition: CompetitionRoutingResolveService,
     },
