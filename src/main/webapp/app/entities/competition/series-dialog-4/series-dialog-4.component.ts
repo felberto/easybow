@@ -6,7 +6,7 @@ import { CompetitionService } from '../service/competition.service';
 import { ISeries } from '../../series/series.model';
 import { SeriesService } from 'app/entities/series/service/series.service';
 import { ResultsService } from 'app/entities/results/service/results.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
 
 @Component({
@@ -315,6 +315,10 @@ export class SeriesDialog4Component implements OnInit {
     }
 
     return serie;
+  }
+
+  addNumber(addNumber: number): any {
+    return parseInt(this.result!.athleteNumber!, 10) + addNumber;
   }
 
   getSumSeries(serieNumber: number): any {

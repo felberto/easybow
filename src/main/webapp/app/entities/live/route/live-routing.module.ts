@@ -24,7 +24,7 @@ const athleteRoute: Routes = [
     },
   },
   {
-    path: ':id/live-easv-sm-10om',
+    path: ':id/live-easv-sm-10m',
     component: LiveEasvSm10mComponent,
     resolve: {
       competition: CompetitionRoutingResolveService,

@@ -1,7 +1,9 @@
 <tui-loader [overlay]="true" [showLoader]="!isDataAvailable">
   <div *ngIf="result && competition">
     <div class="modal-header">
-      <div *ngIf="result.round !== 99" class="modal-title tui-text_h4">{{ result.athlete?.name }} {{ result.round }}. Runde</div>
+      <div *ngIf="result.round !== 99" class="modal-title tui-text_h4">
+        {{ result.athlete?.name }} {{ result.athleteNumber! }} -{{ addNumber(7) }}
+      </div>
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
     </div>
 
@@ -13,6 +15,7 @@
           <br />
           <span class="tui-text_h6">1. Passe Resultat: {{ getSumSeries(1) }}</span>
           <div class="tui-form__row tui-form__row_multi-fields">
+            <span class="tui-text_h6">{{ result.athleteNumber! }}</span>
             <div class="tui-form__multi-field">
               <label for="number1">1</label>
               <input
@@ -80,6 +83,7 @@
             </div>
           </div>
           <div class="tui-form__row tui-form__row_multi-fields">
+            <span class="tui-text_h6">{{ addNumber(1) }}</span>
             <div class="tui-form__multi-field">
               <label for="number6">6</label>
               <input
@@ -149,6 +153,7 @@
           <br />
           <span class="tui-text_h6">2. Passe Resultat: {{ getSumSeries(2) }}</span>
           <div class="tui-form__row tui-form__row_multi-fields">
+            <span class="tui-text_h6">{{ addNumber(2) }}</span>
             <div class="tui-form__multi-field">
               <label for="number11">11</label>
               <input
@@ -216,6 +221,7 @@
             </div>
           </div>
           <div class="tui-form__row tui-form__row_multi-fields">
+            <span class="tui-text_h6">{{ addNumber(3) }}</span>
             <div class="tui-form__multi-field">
               <label for="number16">16</label>
               <input
@@ -285,6 +291,7 @@
           <br />
           <span class="tui-text_h6">3. Passe Resultat: {{ getSumSeries(3) }}</span>
           <div class="tui-form__row tui-form__row_multi-fields">
+            <span class="tui-text_h6">{{ addNumber(4) }}</span>
             <div class="tui-form__multi-field">
               <label for="number21">21</label>
               <input
@@ -352,6 +359,7 @@
             </div>
           </div>
           <div class="tui-form__row tui-form__row_multi-fields">
+            <span class="tui-text_h6">{{ addNumber(5) }}</span>
             <div class="tui-form__multi-field">
               <label for="number26">26</label>
               <input
@@ -421,6 +429,7 @@
           <br />
           <span class="tui-text_h6">4. Passe Resultat: {{ getSumSeries(4) }}</span>
           <div class="tui-form__row tui-form__row_multi-fields">
+            <span class="tui-text_h6">{{ addNumber(6) }}</span>
             <div class="tui-form__multi-field">
               <label for="number31">31</label>
               <input
@@ -488,6 +497,7 @@
             </div>
           </div>
           <div class="tui-form__row tui-form__row_multi-fields">
+            <span class="tui-text_h6">{{ addNumber(7) }}</span>
             <div class="tui-form__multi-field">
               <label for="number36">36</label>
               <input
