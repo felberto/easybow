@@ -98,6 +98,7 @@
     "bootstrap": "4.6.0",
     "dayjs": "1.10.5",
     "dompurify": "2.2.9",
+    "heroku": "^7.67.2",
     "ngx-infinite-scroll": "10.0.1",
     "ngx-webstorage": "8.0.0",
     "rxjs": "6.6.7",
