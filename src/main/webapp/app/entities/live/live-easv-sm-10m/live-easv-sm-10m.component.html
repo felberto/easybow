@@ -12,14 +12,15 @@
         <table aria-describedby="page-heading" class="table table-striped">
           <thead>
             <tr>
-              <th scope="col">Rank</th>
+              <th scope="col">Rang</th>
               <th scope="col">Name</th>
-              <th scope="col">Club</th>
-              <th>S1</th>
-              <th>S2</th>
-              <th>S3</th>
-              <th>S4</th>
-              <th>Result</th>
+              <th scope="col">Jahrgang</th>
+              <th scope="col">Wohnort</th>
+              <th>P1</th>
+              <th>P2</th>
+              <th>P3</th>
+              <th>P4</th>
+              <th>Resultat</th>
             </tr>
           </thead>
           <tbody>
@@ -31,6 +32,7 @@
                 <strong>{{ athlete.athlete?.name + ' ' + athlete.athlete?.firstName }}</strong>
               </td>
               <td>{{ athlete.athlete?.club?.name }}</td>
+              <td>{{ athlete.athlete?.yearOfBirth }}</td>
               <td>{{ athlete.resultRound1Serie1 }}</td>
               <td>{{ athlete.resultRound1Serie2 }}</td>
               <td>{{ athlete.resultRound1Serie3 }}</td>

@@ -44,6 +44,7 @@
             <tr th:each="athlete : ${rankingList.getAthleteResultList()}">
               <td class="w3-right-align rankinglist-font" th:text="${rankingList.getAthleteResultList().indexOf(athlete) + 1}"></td>
               <td class="rankinglist-font" th:text="${athlete?.getAthlete().getName() + ' ' + athlete.getAthlete().getFirstName()}"></td>
+              <td class="rankinglist-font" th:text="${athlete?.getAthlete().getYearOfBirth()}"></td>
               <td class="rankinglist-font" th:text="${athlete?.getAthlete().getClub().getName()}"></td>
               <td class="w3-right-align rankinglist-font" th:text="${athlete?.getResultRound1Serie1()}"></td>
               <td class="w3-right-align rankinglist-font" th:text="${athlete?.getResultRound1Serie2()}"></td>
