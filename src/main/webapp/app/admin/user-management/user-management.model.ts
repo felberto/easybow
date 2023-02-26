@@ -1,3 +1,5 @@
+import { IClub } from '../../entities/club/club.model';
+
 export interface IUser {
   id?: number;
   login?: string;
@@ -12,6 +14,7 @@ export interface IUser {
   createdDate?: Date;
   lastModifiedBy?: string;
   lastModifiedDate?: Date;
+  club?: IClub | null;
 }
 
 export class User implements IUser {
@@ -28,6 +31,7 @@ export class User implements IUser {
     public createdBy?: string,
     public createdDate?: Date,
     public lastModifiedBy?: string,
-    public lastModifiedDate?: Date
+    public lastModifiedDate?: Date,
+    public club?: IClub | null
   ) {}
 }

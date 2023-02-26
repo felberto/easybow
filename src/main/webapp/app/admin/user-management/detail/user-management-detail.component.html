@@ -23,6 +23,13 @@
         <dt><span>Email</span></dt>
         <dd>{{ user.email }}</dd>
 
+        <dt><span>Club</span></dt>
+        <dd>
+          <div *ngIf="user.club">
+            <a [routerLink]="['/club', user.club?.id, 'view']">{{ user.club?.name }}</a>
+          </div>
+        </dd>
+
         <dt><span>Created By</span></dt>
         <dd>{{ user.createdBy }}</dd>
 

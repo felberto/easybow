@@ -180,6 +180,12 @@ public class GroupResource {
         return ResponseUtil.wrapOrNotFound(group);
     }
 
+    @GetMapping("/groups/competition/{id}")
+    public ResponseEntity<List<Group>> getGroupByCompetition(@PathVariable Long id) {
+        log.debug("REST request to get Group by Competition: {}", id);
+        return ResponseEntity.ok().body(groupService.findByCompetition(id));
+    }
+
     /**
      * {@code DELETE  /groups/:id} : delete the "id" group.
      *

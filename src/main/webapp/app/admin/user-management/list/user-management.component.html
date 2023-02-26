@@ -8,7 +8,8 @@
         <span>Refresh List</span>
       </button>
       <button class="btn btn-primary jh-create-entity" [routerLink]="['./new']">
-        <fa-icon icon="plus"></fa-icon> <span>Create a new User</span>
+        <fa-icon icon="plus"></fa-icon>
+        <span>Create a new User</span>
       </button>
     </div>
   </h2>
@@ -21,14 +22,36 @@
     <table class="table table-striped" aria-describedby="user-management-page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="transition.bind(this)">
-          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="login"><span>Login</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="email"><span>Email</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="id">
+            <span>ID</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="login">
+            <span>Login</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="email">
+            <span>Email</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhisortby="club.name">
+            <span>Club</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col"></th>
           <th scope="col"><span>Profiles</span></th>
-          <th scope="col" jhiSortBy="createdDate"><span>Created Date</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="lastModifiedBy"><span>Last Modified By</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="lastModifiedDate"><span>Last Modified Date</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="createdDate">
+            <span>Created Date</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="lastModifiedBy">
+            <span>Last Modified By</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="lastModifiedDate">
+            <span>Last Modified Date</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -39,6 +62,11 @@
           </td>
           <td>{{ user.login }}</td>
           <td>{{ user.email }}</td>
+          <td>
+            <div *ngIf="user.club">
+              <a [routerLink]="['/club', user.club?.id, 'view']">{{ user.club?.name }}</a>
+            </div>
+          </td>
           <td>
             <button class="btn btn-danger btn-sm" (click)="setActive(user, true)" *ngIf="!user.activated">Deactivated</button>
             <button

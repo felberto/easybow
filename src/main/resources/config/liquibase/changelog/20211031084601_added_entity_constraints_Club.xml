@@ -13,5 +13,12 @@
                                  constraintName="fk_club__association_id"
                                  referencedColumnNames="id"
                                  referencedTableName="association"/>
+
+        <addForeignKeyConstraint baseColumnNames="club_id"
+                                 baseTableName="jhi_user"
+                                 constraintName="fk_jhi_user__club_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="club"/>
+
     </changeSet>
 </databaseChangeLog>

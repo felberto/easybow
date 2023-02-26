@@ -2,6 +2,7 @@ package ch.felberto.service.dto;
 
 import ch.felberto.config.Constants;
 import ch.felberto.domain.Authority;
+import ch.felberto.domain.Club;
 import ch.felberto.domain.User;
 import java.time.Instant;
 import java.util.Set;
@@ -54,6 +55,8 @@ public class AdminUserDTO {
 
     private Set<String> authorities;
 
+    private Club club;
+
     public AdminUserDTO() {
         // Empty constructor needed for Jackson.
     }
@@ -73,6 +76,7 @@ public class AdminUserDTO {
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
         this.authorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet());
+        this.club = user.getClub();
     }
 
     public Long getId() {
@@ -187,23 +191,32 @@ public class AdminUserDTO {
         this.authorities = authorities;
     }
 
+    public Club getClub() {
+        return club;
+    }
+
+    public void setClub(Club club) {
+        this.club = club;
+    }
+
     // prettier-ignore
     @Override
     public String toString() {
         return "AdminUserDTO{" +
-                "login='" + login + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", activated=" + activated +
-                ", langKey='" + langKey + '\'' +
-                ", createdBy=" + createdBy +
-                ", createdDate=" + createdDate +
-                ", lastModifiedBy='" + lastModifiedBy + '\'' +
-                ", lastModifiedDate=" + lastModifiedDate +
-                ", authorities=" + authorities +
-                "}";
+            "login='" + login + '\'' +
+            ", firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            ", password='" + password + '\'' +
+            ", email='" + email + '\'' +
+            ", imageUrl='" + imageUrl + '\'' +
+            ", activated=" + activated +
+            ", langKey='" + langKey + '\'' +
+            ", createdBy=" + createdBy +
+            ", createdDate=" + createdDate +
+            ", lastModifiedBy='" + lastModifiedBy + '\'' +
+            ", lastModifiedDate=" + lastModifiedDate +
+            ", authorities=" + authorities +
+            ", club=" + club +
+            "}";
     }
 }

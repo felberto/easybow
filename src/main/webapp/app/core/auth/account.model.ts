@@ -1,3 +1,5 @@
+import { IClub } from '../../entities/club/club.model';
+
 export class Account {
   constructor(
     public activated: boolean,
@@ -7,6 +9,7 @@ export class Account {
     public langKey: string,
     public lastName: string | null,
     public login: string,
-    public imageUrl: string | null
+    public imageUrl: string | null,
+    public club: IClub | null
   ) {}
 }

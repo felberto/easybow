@@ -66,6 +66,8 @@ public class Results implements Serializable {
     @ManyToOne
     private Group group;
 
+    private Integer groupPosition;
+
     @ManyToOne
     @JsonIgnoreProperties(value = { "club" }, allowSetters = true)
     private Athlete athlete;
@@ -215,6 +217,19 @@ public class Results implements Serializable {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public Integer getGroupPosition() {
+        return this.groupPosition;
+    }
+
+    public Results groupPosition(Integer groupPosition) {
+        this.setGroupPosition(groupPosition);
+        return this;
+    }
+
+    public void setGroupPosition(Integer groupPosition) {
+        this.groupPosition = groupPosition;
     }
 
     public Athlete getAthlete() {

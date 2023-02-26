@@ -42,6 +42,9 @@
             <column name="group_id" type="bigint">
                 <constraints nullable="true" />
             </column>
+            <column name="group_position" type="integer">
+                <constraints nullable="true" />
+            </column>
             <column name="athlete_id" type="bigint">
                 <constraints nullable="true" />
             </column>

@@ -1,5 +1,6 @@
 package ch.felberto.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -24,6 +25,17 @@ public class Group implements Serializable {
     @NotNull
     @Column(name = "name", nullable = false)
     private String name;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "association" }, allowSetters = true)
+    private Club club;
+
+    @ManyToOne
+    private Competition competition;
+
+    @NotNull
+    @Column(name = "round", nullable = false)
+    private Integer round;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -50,6 +62,45 @@ public class Group implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Club getClub() {
+        return this.club;
+    }
+
+    public Group club(Club club) {
+        this.setClub(club);
+        return this;
+    }
+
+    public void setClub(Club club) {
+        this.club = club;
+    }
+
+    public Competition getCompetition() {
+        return this.competition;
+    }
+
+    public Group competition(Competition competition) {
+        this.setCompetition(competition);
+        return this;
+    }
+
+    public void setCompetition(Competition competition) {
+        this.competition = competition;
+    }
+
+    public Integer getRound() {
+        return this.round;
+    }
+
+    public Group round(Integer round) {
+        this.round = round;
+        return this;
+    }
+
+    public void setRound(Integer round) {
+        this.round = round;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

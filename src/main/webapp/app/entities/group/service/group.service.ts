@@ -6,6 +6,8 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { getGroupIdentifier, IGroup } from '../group.model';
+import { getCompetitionIdentifier, ICompetition } from '../../competition/competition.model';
+import { IRanking } from '../../ranking/ranking.model';
 
 export type EntityResponseType = HttpResponse<IGroup>;
 export type EntityArrayResponseType = HttpResponse<IGroup[]>;
@@ -30,6 +32,12 @@ export class GroupService {
 
   find(id: number): Observable<EntityResponseType> {
     return this.http.get<IGroup>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  findByCompetition(competition: ICompetition): Observable<HttpResponse<Array<IGroup>>> {
+    return this.http.get<Array<IGroup>>(`${this.resourceUrl}/competition/${getCompetitionIdentifier(competition) as number}`, {
+      observe: 'response',
+    });
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {

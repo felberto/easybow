@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
 
     <!--
         Added the entity Group.
@@ -14,6 +14,15 @@
             </column>
             <column name="name" type="varchar(255)">
                 <constraints nullable="false"/>
+            </column>
+            <column name="club_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="round" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="competition_id" type="bigint">
+                <constraints nullable="true"/>
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
@@ -31,9 +40,9 @@
     -->
     <changeSet id="20211031084607-1-data" author="jhipster" context="faker">
         <loadData
-                file="config/liquibase/fake-data/group.csv"
-                separator=";"
-                tableName="jhi_group">
+            file="config/liquibase/fake-data/group.csv"
+            separator=";"
+            tableName="jhi_group">
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->

@@ -1,6 +1,7 @@
 package ch.felberto.service;
 
 import ch.felberto.domain.Group;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,4 +48,6 @@ public interface GroupService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    List<Group> findByCompetition(Long id);
 }

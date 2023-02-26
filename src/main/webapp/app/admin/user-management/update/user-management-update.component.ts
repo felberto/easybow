@@ -4,6 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 
 import { User } from '../user-management.model';
 import { UserManagementService } from '../service/user-management.service';
+import { IClub } from '../../../entities/club/club.model';
+import { ClubService } from '../../../entities/club/service/club.service';
+import { map } from 'rxjs/operators';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'jhi-user-mgmt-update',
@@ -14,6 +18,7 @@ export class UserManagementUpdateComponent implements OnInit {
   authorities: string[] = [];
   isSaving = false;
 
+  clubsSharedCollection: IClub[] = [];
   editForm = this.fb.group({
     id: [],
     login: [
@@ -32,9 +37,15 @@ export class UserManagementUpdateComponent implements OnInit {
     activated: [],
     langKey: [],
     authorities: [],
+    club: [],
   });
 
-  constructor(private userService: UserManagementService, private route: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    private userService: UserManagementService,
+    private route: ActivatedRoute,
+    private fb: FormBuilder,
+    protected clubService: ClubService
+  ) {}
 
   ngOnInit(): void {
     this.route.data.subscribe(({ user }) => {
@@ -44,6 +55,7 @@ export class UserManagementUpdateComponent implements OnInit {
           this.user.activated = true;
         }
         this.updateForm(user);
+        this.loadRelationshipsOptions();
       }
     });
     this.userService.authorities().subscribe(authorities => (this.authorities = authorities));
@@ -70,6 +82,21 @@ export class UserManagementUpdateComponent implements OnInit {
     }
   }
 
+  trackClubById(index: number, item: IClub): number {
+    return item.id!;
+  }
+
+  protected loadRelationshipsOptions(): void {
+    this.clubService
+      .query({
+        page: 0,
+        size: 100,
+      })
+      .pipe(map((res: HttpResponse<IClub[]>) => res.body ?? []))
+      .pipe(map((clubs: IClub[]) => this.clubService.addClubToCollectionIfMissing(clubs, this.editForm.get('club')!.value)))
+      .subscribe((clubs: IClub[]) => (this.clubsSharedCollection = clubs));
+  }
+
   private updateForm(user: User): void {
     this.editForm.patchValue({
       id: user.id,
@@ -81,7 +108,10 @@ export class UserManagementUpdateComponent implements OnInit {
       activated: user.activated,
       langKey: user.langKey,
       authorities: user.authorities,
+      club: user.club,
     });
+
+    this.clubsSharedCollection = this.clubService.addClubToCollectionIfMissing(this.clubsSharedCollection, user.club);
   }
 
   private updateUser(user: User): void {
@@ -93,6 +123,7 @@ export class UserManagementUpdateComponent implements OnInit {
     user.activated = this.editForm.get(['activated'])!.value;
     user.langKey = this.editForm.get(['langKey'])!.value;
     user.authorities = this.editForm.get(['authorities'])!.value;
+    user.club = this.editForm.get(['club'])!.value;
   }
 
   private onSaveSuccess(): void {

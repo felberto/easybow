@@ -3,6 +3,7 @@ package ch.felberto.service.impl;
 import ch.felberto.domain.Group;
 import ch.felberto.repository.GroupRepository;
 import ch.felberto.service.GroupService;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,5 +69,11 @@ public class GroupServiceImpl implements GroupService {
     public void delete(Long id) {
         log.debug("Request to delete Group : {}", id);
         groupRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Group> findByCompetition(Long id) {
+        log.debug("Request to get Group by Competition : {}", id);
+        return groupRepository.findByCompetition_Id(id);
     }
 }

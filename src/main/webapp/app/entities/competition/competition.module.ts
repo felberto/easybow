@@ -36,6 +36,7 @@ import { RankingListEasvNawuGmComponent } from './ranking-list-easv-nawu-gm/rank
 import { CompetitionOverviewEasvNawuGmComponent } from './overview-easv-nawu-gm/competition-overview-easv-nawu-gm.component';
 import { CompetitionOverviewEasvSm10mComponent } from './overview-easv-sm-10m/competition-overview-easv-sm-10m.component';
 import { RankingListEasvSm10mComponent } from './ranking-list-easv-sm-10m/ranking-list-easv-sm-10m.component';
+import { SeriesDialog2GroupComponent } from './series-dialog-2-group/series-dialog-2.component';
 
 @NgModule({
   imports: [
@@ -64,6 +65,7 @@ import { RankingListEasvSm10mComponent } from './ranking-list-easv-sm-10m/rankin
     ResultsDialogComponent,
     SeriesDialog1Component,
     SeriesDialog2Component,
+    SeriesDialog2GroupComponent,
     SeriesDialog4Component,
     SeriesDialog6Component,
     RankingListComponent,
@@ -88,6 +90,7 @@ import { RankingListEasvSm10mComponent } from './ranking-list-easv-sm-10m/rankin
     RankingListEasvNawuGmComponent,
     SeriesDialog1Component,
     SeriesDialog2Component,
+    SeriesDialog2GroupComponent,
     SeriesDialog4Component,
     SeriesDialog6Component,
     ConfirmDialogComponent,
@@ -98,6 +101,7 @@ import { RankingListEasvSm10mComponent } from './ranking-list-easv-sm-10m/rankin
   exports: [
     SeriesDialog1Component,
     SeriesDialog2Component,
+    SeriesDialog2GroupComponent,
     SeriesDialog4Component,
     SeriesDialog6Component,
     AthleteNumberDialogComponent,
