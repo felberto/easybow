@@ -1,0 +1,187 @@
+<tui-loader [overlay]="true" [showLoader]="false">
+  <div *ngIf="competition">
+    <div class="modal-header">
+      <div class="modal-title tui-text_h4">Neues Resultat erfassen</div>
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="tui-container">
+        <div [formGroup]="editForm" class="form-group">
+          <label class="form-control-label" for="field_athlete">Athlete</label>
+          <select class="form-control" id="field_athlete" data-cy="athlete" name="athlete" formControlName="athlete">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="athleteOption.id === editForm.get('athlete')!.value?.id ? editForm.get('athlete')!.value : athleteOption"
+              *ngFor="let athleteOption of athletesSharedCollectionTmp; trackBy: trackAthleteById"
+            >
+              {{ athleteOption.firstName }} {{ athleteOption.name }}
+            </option>
+          </select>
+        </div>
+
+        <div *ngIf="!final" [formGroup]="roundForm" class="form-group">
+          <label class="form-control-label" for="field_round">Runde</label>
+          <select class="form-control" id="field_round" data-cy="round" name="round" formControlName="round">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="roundOption.id === roundForm.get('round')!.value?.id ? roundForm.get('round')!.value : roundOption"
+              *ngFor="let roundOption of roundsSharedCollection; trackBy: trackRoundById"
+            >
+              {{ roundOption.round }}
+            </option>
+          </select>
+        </div>
+
+        <div *ngIf="final" class="form-group" [formGroup]="numberForm">
+          <div class="tui-form__row">
+            <tui-input tuiTextfieldExampleText="" formControlName="athlete_number"> Number</tui-input>
+          </div>
+        </div>
+
+        <span class="tui-text_body-l">Hinweis: Mouchen als 11 eingeben</span>
+        <br />
+        <form [formGroup]="testForm">
+          <br />
+          <span class="tui-text_h6">1. Passe Resultat: {{ getSumSeries(1) }}</span>
+          <div class="tui-form__row tui-form__row_multi-fields">
+            <div class="tui-form__multi-field">
+              <label for="number1">1</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number1"
+                name="number1"
+                formControlName="number1"
+                tabindex="1"
+                (keydown.enter)="nextField(2)"
+              />
+            </div>
+            <div class="tui-form__multi-field">
+              <label for="number2">2</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number2"
+                name="number2"
+                formControlName="number2"
+                tabindex="2"
+                (keydown.enter)="nextField(3)"
+              />
+            </div>
+            <div class="tui-form__multi-field">
+              <label for="number3">3</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number3"
+                name="number3"
+                formControlName="number3"
+                tabindex="3"
+                (keydown.enter)="nextField(4)"
+              />
+            </div>
+            <div class="tui-form__multi-field">
+              <label for="number4">4</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number4"
+                name="number4"
+                formControlName="number4"
+                tabindex="4"
+                (keydown.enter)="nextField(5)"
+              />
+            </div>
+            <div class="tui-form__multi-field">
+              <label for="number5">5</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number5"
+                name="number5"
+                formControlName="number5"
+                tabindex="5"
+                (keydown.enter)="nextField(6)"
+              />
+            </div>
+          </div>
+          <div class="tui-form__row tui-form__row_multi-fields">
+            <div class="tui-form__multi-field">
+              <label for="number6">6</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number6"
+                name="number6"
+                formControlName="number6"
+                tabindex="6"
+                (keydown.enter)="nextField(7)"
+              />
+            </div>
+            <div class="tui-form__multi-field">
+              <label for="number7">7</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number7"
+                name="number7"
+                formControlName="number7"
+                tabindex="7"
+                (keydown.enter)="nextField(8)"
+              />
+            </div>
+            <div class="tui-form__multi-field">
+              <label for="number8">8</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number8"
+                name="number8"
+                formControlName="number8"
+                tabindex="8"
+                (keydown.enter)="nextField(9)"
+              />
+            </div>
+            <div class="tui-form__multi-field">
+              <label for="number9">9</label>
+              <input
+                type="number"
+                min="0"
+                max="11"
+                id="number9"
+                name="number9"
+                formControlName="number9"
+                tabindex="9"
+                (keydown.enter)="nextField(10)"
+              />
+            </div>
+            <div class="tui-form__multi-field">
+              <label for="number10">10</label>
+              <input type="number" min="0" max="11" id="number10" name="number10" formControlName="number10" tabindex="10" />
+            </div>
+          </div>
+          <br />
+          <div class="tui-text_h6">Gesamtresultat: {{ getSum() }}</div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button (click)="cancel()" tuiButton type="button" appearance="greyButton" class="tui-space_right-3 tui-space_bottom-3">
+        Abbrechen
+      </button>
+      <button (click)="save()" tuiButton type="button" appearance="customButton" class="tui-space_right-3 tui-space_bottom-3">
+        Speichern
+      </button>
+    </div>
+  </div>
+</tui-loader>

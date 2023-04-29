@@ -48,6 +48,8 @@ export class ViewComponent implements OnInit {
             this.variable = 1;
             this.rank = 1;
           }
+        } else {
+          this.rankingListView = this.rankingList!.athleteResultList!;
         }
       });
     }

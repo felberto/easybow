@@ -78,7 +78,7 @@ export class RankingListComponent implements OnInit {
             this.rankingList.competition.year !== null
           ) {
             title =
-              'RankingList ' +
+              'Rangliste ' +
               this.rankingList.competition.name.toString() +
               ' ' +
               this.rankingList.competition.year.toString() +

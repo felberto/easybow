@@ -24,7 +24,7 @@
       <div class="w3-col s3 w3-center"></div>
     </div>
     <div id="rankingList">
-      <div th:if="${not #lists.isEmpty(rankingList.getAthleteResultList())}">
+      <div th:if="${not #lists.isEmpty(rangliste.getAthleteResultList())}">
         <table class="w3-table">
           <thead>
             <tr>
@@ -51,9 +51,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr th:each="athlete : ${rankingList.getAthleteResultList()}">
-              <td class="w3-right-align" th:text="${rankingList.getAthleteResultList().indexOf(athlete) + 1}"></td>
-              <td th:text="${athlete?.getAthlete().getName()}"></td>
+            <tr th:each="athlete : ${rangliste.getAthleteResultList()}">
+              <td class="w3-right-align" th:text="${rangliste.getAthleteResultList().indexOf(athlete) + 1}"></td>
+              <td th:text="${athlete?.getAthlete().getFirstName() + ' ' + athlete?.getAthlete().getName()}"></td>
               <td th:text="${athlete?.getAthlete().getClub().getName()}"></td>
               <td class="w3-right-align" style="font-weight: bold" th:text="${athlete?.getResult()}"></td>
               <td class="w3-center" th:text="${athlete?.getAthlete().getPosition().toString().substring(0, 1).toLowerCase()}"></td>
@@ -62,9 +62,9 @@
               <td class="w3-center" th:text="${athlete?.getT8()}"></td>
               <td class="w3-center" th:text="${athlete?.getT7()}"></td>
               <td class="w3-center" th:text="${athlete?.getT11()}"></td>
-              <td class="w3-right-align" th:text="${athlete?.getAthlete().getYear()}"></td>
-              <p style="page-break-after: always" th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) == 25}">&nbsp;</p>
-              <p style="page-break-before: always" th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) == 25}">&nbsp;</p>
+              <td class="w3-right-align" th:text="${athlete?.getAthlete().getYearOfBirth()}"></td>
+              <p style="page-break-after: always" th:if="${(rangliste.getAthleteResultList().indexOf(athlete) + 1) == 25}">&nbsp;</p>
+              <p style="page-break-before: always" th:if="${(rangliste.getAthleteResultList().indexOf(athlete) + 1) == 25}">&nbsp;</p>
             </tr>
           </tbody>
         </table>

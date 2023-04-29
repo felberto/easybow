@@ -3,7 +3,7 @@
   <head>
     <title th:text="${titleDoc}"></title>
     <bookmarks>
-      <bookmark href="#rankingList" name="Rangliste"></bookmark>
+      <bookmark href="#rangliste" name="Rangliste"></bookmark>
     </bookmarks>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
   </head>
@@ -24,7 +24,7 @@
       <div class="w3-col s3 w3-center"></div>
     </div>
     <div id="rankingList">
-      <div th:if="${not #lists.isEmpty(rankingList.getAthleteResultList())}">
+      <div th:if="${not #lists.isEmpty(rangliste.getAthleteResultList())}">
         <table class="w3-table">
           <thead>
             <tr>
@@ -39,97 +39,97 @@
             </tr>
           </thead>
           <tbody>
-            <tr th:each="athlete : ${rankingList.getAthleteResultList()}">
+            <tr th:each="athlete : ${rangliste.getAthleteResultList()}">
               <!-- Rang -->
               <td
                 class="w3-right-align solid"
-                th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) == anzahlQualiFinal}"
-                th:text="${rankingList.getAthleteResultList().indexOf(athlete) + 1}"
+                th:if="${(rangliste.getAthleteResultList().indexOf(athlete) + 1) == anzahlQualiFinal}"
+                th:text="${rangliste.getAthleteResultList().indexOf(athlete) + 1}"
               ></td>
               <td
                 class="w3-right-align"
-                th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) != anzahlQualiFinal}"
-                th:text="${rankingList.getAthleteResultList().indexOf(athlete) + 1}"
+                th:if="${(rangliste.getAthleteResultList().indexOf(athlete) + 1) != anzahlQualiFinal}"
+                th:text="${rangliste.getAthleteResultList().indexOf(athlete) + 1}"
               ></td>
               <!-- Name -->
               <td
                 class="solid"
-                th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) == anzahlQualiFinal}"
-                th:text="${athlete?.getAthlete().getName()}"
+                th:if="${(rangliste.getAthleteResultList().indexOf(athlete) + 1) == anzahlQualiFinal}"
+                th:text="${athlete?.getAthlete().getFirstName() + ' ' + athlete?.getAthlete().getName()}"
               ></td>
               <td
-                th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) != anzahlQualiFinal}"
-                th:text="${athlete?.getAthlete().getName()}"
+                th:if="${(rangliste.getAthleteResultList().indexOf(athlete) + 1) != anzahlQualiFinal}"
+                th:text="${athlete?.getAthlete().getFirstName() + ' ' + athlete?.getAthlete().getName()}"
               ></td>
               <!-- Verein -->
               <td
                 class="solid"
-                th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) == anzahlQualiFinal}"
+                th:if="${(rangliste.getAthleteResultList().indexOf(athlete) + 1) == anzahlQualiFinal}"
                 th:text="${athlete?.getAthlete().getClub().getName()}"
               ></td>
               <td
-                th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) != anzahlQualiFinal}"
+                th:if="${(rangliste.getAthleteResultList().indexOf(athlete) + 1) != anzahlQualiFinal}"
                 th:text="${athlete?.getAthlete().getClub().getName()}"
               ></td>
               <!-- Resultat Runde 1 -->
               <td
                 class="w3-right-align solid"
-                th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) == anzahlQualiFinal}"
+                th:if="${(rangliste.getAthleteResultList().indexOf(athlete) + 1) == anzahlQualiFinal}"
                 th:text="${athlete?.getResultRound1()}"
               ></td>
               <td
                 class="w3-right-align"
-                th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) != anzahlQualiFinal}"
+                th:if="${(rangliste.getAthleteResultList().indexOf(athlete) + 1) != anzahlQualiFinal}"
                 th:text="${athlete?.getResultRound1()}"
               ></td>
               <!-- Resultat Runde 2 -->
               <td
                 class="w3-right-align solid"
-                th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) == anzahlQualiFinal}"
+                th:if="${(rangliste.getAthleteResultList().indexOf(athlete) + 1) == anzahlQualiFinal}"
                 th:text="${athlete?.getResultRound2()}"
               ></td>
               <td
                 class="w3-right-align"
-                th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) != anzahlQualiFinal}"
+                th:if="${(rangliste.getAthleteResultList().indexOf(athlete) + 1) != anzahlQualiFinal}"
                 th:text="${athlete?.getResultRound2()}"
               ></td>
               <!-- Resultat -->
               <td
                 class="w3-right-align solid"
                 style="font-weight: bold"
-                th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) == anzahlQualiFinal}"
+                th:if="${(rangliste.getAthleteResultList().indexOf(athlete) + 1) == anzahlQualiFinal}"
                 th:text="${athlete?.getResult()}"
               ></td>
               <td
                 class="w3-right-align"
                 style="font-weight: bold"
-                th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) != anzahlQualiFinal}"
+                th:if="${(rangliste.getAthleteResultList().indexOf(athlete) + 1) != anzahlQualiFinal}"
                 th:text="${athlete?.getResult()}"
               ></td>
               <!-- Stellung -->
               <td
                 class="w3-center solid"
-                th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) == anzahlQualiFinal}"
+                th:if="${(rangliste.getAthleteResultList().indexOf(athlete) + 1) == anzahlQualiFinal}"
                 th:text="${athlete?.getAthlete().getPosition().toString().substring(0, 1).toLowerCase()}"
               ></td>
               <td
                 class="w3-center"
-                th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) != anzahlQualiFinal}"
+                th:if="${(rangliste.getAthleteResultList().indexOf(athlete) + 1) != anzahlQualiFinal}"
                 th:text="${athlete?.getAthlete().getPosition().toString().substring(0, 1).toLowerCase()}"
               ></td>
               <!-- Jahrgang -->
               <td
                 class="w3-right-align solid"
-                th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) == anzahlQualiFinal}"
-                th:text="${athlete?.getAthlete().getYear()}"
+                th:if="${(rangliste.getAthleteResultList().indexOf(athlete) + 1) == anzahlQualiFinal}"
+                th:text="${athlete?.getAthlete().getYearOfBirth()}"
               ></td>
               <td
                 class="w3-right-align"
-                th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) != anzahlQualiFinal}"
-                th:text="${athlete?.getAthlete().getYear()}"
+                th:if="${(rangliste.getAthleteResultList().indexOf(athlete) + 1) != anzahlQualiFinal}"
+                th:text="${athlete?.getAthlete().getYearOfBirth()}"
               ></td>
-              <p style="page-break-after: always" th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) == 25}">&nbsp;</p>
-              <p style="page-break-before: always" th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) == 25}">&nbsp;</p>
+              <p style="page-break-after: always" th:if="${(rangliste.getAthleteResultList().indexOf(athlete) + 1) == 25}">&nbsp;</p>
+              <p style="page-break-before: always" th:if="${(rangliste.getAthleteResultList().indexOf(athlete) + 1) == 25}">&nbsp;</p>
             </tr>
           </tbody>
         </table>

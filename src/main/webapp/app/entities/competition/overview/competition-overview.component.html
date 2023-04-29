@@ -12,107 +12,152 @@
       Export Competition
     </button>
   </div>
-  <div *jhiHasAnyAuthority="['ROLE_ZSAV', 'ROLE_ADMIN']" class="d-flex justify-content-center">
+  <div class="d-flex justify-content-center">
     <button
-      (click)="adminAthlete(competition)"
+      (click)="createAthlete(competition)"
       tuiButton
       type="button"
       appearance="customButton"
       class="tui-space_right-3 tui-space_bottom-3"
     >
-      Schützen verwalten
+      neuer Schütze erfassen
     </button>
     <button
-      (click)="createFinal(competition)"
+      (click)="createResult(competition)"
       tuiButton
       type="button"
       appearance="customButton"
       class="tui-space_right-3 tui-space_bottom-3"
     >
-      Finalvorbereitung starten
+      Resultat erfassen
     </button>
     <button
+      *jhiHasAnyAuthority="['ROLE_ADMIN']"
       [routerLink]="['/competition', competition.id, 'rankingList']"
       tuiButton
       type="button"
       appearance="customButton"
       class="tui-space_right-3 tui-space_bottom-3"
     >
-      RankingList erstellen
+      Rangliste erstellen
     </button>
   </div>
 
-  <tui-accordion class="container">
-    <tui-accordion-item *ngFor="let athlete of athletes; let index = index">
-      {{ athlete.name }} {{ athlete.club?.name }}
-      <!--todo badges dynamisch nach anzahl runden-->
-      <tui-badge
-        *ngIf="getResultsByAthleteAndRound(athlete, 1) > 0"
-        status="success"
-        value="1. Runde"
-        class="tui-space_right-2"
-      ></tui-badge>
-      <tui-badge
-        *ngIf="getResultsByAthleteAndRound(athlete, 1) == 0"
-        status="warning"
-        value="1. Runde"
-        class="tui-space_right-2"
-      ></tui-badge>
-      <tui-badge
-        *ngIf="getResultsByAthleteAndRound(athlete, 1) == undefined"
-        status="error"
-        value="1. Runde"
-        class="tui-space_right-2"
-      ></tui-badge>
-      <tui-badge
-        *ngIf="getResultsByAthleteAndRound(athlete, 2) > 0"
-        status="success"
-        value="2. Runde"
-        class="tui-space_right-2"
-      ></tui-badge>
-      <tui-badge
-        *ngIf="getResultsByAthleteAndRound(athlete, 2) == 0"
-        status="warning"
-        value="2. Runde"
-        class="tui-space_right-2"
-      ></tui-badge>
-      <tui-badge
-        *ngIf="getResultsByAthleteAndRound(athlete, 2) == undefined"
-        status="error"
-        value="2. Runde"
-        class="tui-space_right-2"
-      ></tui-badge>
-      <tui-badge
-        *ngIf="getResultsByAthleteAndRound(athlete, 99) > 0"
-        status="success"
-        value="Finalrunde"
-        class="tui-space_right-2"
-      ></tui-badge>
-      <tui-badge
-        *ngIf="getResultsByAthleteAndRound(athlete, 99) == 0 && getResultsByAthleteIfRound99(athlete)"
-        status="warning"
-        value="Finalrunde"
-        class="tui-space_right-2"
-      ></tui-badge>
-      <tui-badge
-        *ngIf="!getResultsByAthleteIfRound99(athlete) && isFinalReady()"
-        status="error"
-        value="nicht qualifiziert für Final"
-        class="tui-space_right-2"
-      ></tui-badge>
-      <ng-template tuiAccordionItemContent>
-        <button
-          (click)="openSeriesDialog(resultat)"
-          *ngFor="let resultat of getResultsByAthlete(athlete); let i = index"
-          tuiButton
-          type="button"
-          appearance="customButton"
-          class="tui-space_right-3 tui-space_bottom-3"
-        >
-          <span *ngIf="resultat.round != 99" class="d-none d-md-inline">{{ resultat.round }}. Runde</span>
-          <span *ngIf="resultat.round == 99" class="d-none d-md-inline">Finalrunde</span>
-        </button>
-      </ng-template>
-    </tui-accordion-item>
-  </tui-accordion>
+  <h4 class="tui-form__header tui-form__header_margin-top_none">1. Runde</h4>
+  <table class="table table-striped" aria-describedby="page-heading">
+    <thead>
+      <tr>
+        <th scope="col">
+          <span>Name</span>
+        </th>
+        <th scope="col">
+          <span>Resultat</span>
+        </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let result of resultsRound1" data-cy="entityTable">
+        <td>{{ result.athlete!.firstName }} {{ result.athlete!.name }}</td>
+        <td>{{ result.result }}</td>
+        <td class="text-right">
+          <div class="btn-group">
+            <button
+              (click)="openSeriesDialog(result)"
+              tuiButton
+              type="button"
+              appearance="customButton"
+              class="tui-space_right-3 tui-space_bottom-3"
+            >
+              <span class="d-none d-md-inline">Resultat bearbeiten</span>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h4 class="tui-form__header tui-form__header_margin-top_none">2. Runde</h4>
+  <table class="table table-striped" aria-describedby="page-heading">
+    <thead>
+      <tr>
+        <th scope="col">
+          <span>Name</span>
+        </th>
+        <th scope="col">
+          <span>Resultat</span>
+        </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let result of resultsRound2" data-cy="entityTable">
+        <td>{{ result.athlete!.firstName }} {{ result.athlete!.name }}</td>
+        <td>{{ result.result }}</td>
+        <td class="text-right">
+          <div class="btn-group">
+            <button
+              (click)="openSeriesDialog(result)"
+              tuiButton
+              type="button"
+              appearance="customButton"
+              class="tui-space_right-3 tui-space_bottom-3"
+            >
+              <span class="d-none d-md-inline">Resultat bearbeiten</span>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *jhiHasAnyAuthority="['ROLE_ADMIN']" class="d-flex justify-content-center">
+    <button
+      (click)="createResultFinal(competition)"
+      tuiButton
+      type="button"
+      appearance="customButton"
+      class="tui-space_right-3 tui-space_bottom-3"
+    >
+      Finalresultat erfassen
+    </button>
+  </div>
+
+  <h4 *ngIf="showFinal" class="tui-form__header tui-form__header_margin-top_none">Final</h4>
+  <table *ngIf="showFinal" class="table table-striped" aria-describedby="page-heading">
+    <thead>
+      <tr>
+        <th scope="col">
+          <span>Athletennummer</span>
+        </th>
+        <th scope="col">
+          <span>Name</span>
+        </th>
+        <th scope="col">
+          <span>Resultat</span>
+        </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let result of resultsRound99" data-cy="entityTable">
+        <td>{{ result.athleteNumber }}</td>
+        <td>{{ result.athlete!.firstName }} {{ result.athlete!.name }}</td>
+        <td>{{ result.result }}</td>
+        <td class="text-right">
+          <div class="btn-group">
+            <button
+              (click)="openSeriesDialog(result)"
+              tuiButton
+              type="button"
+              appearance="customButton"
+              class="tui-space_right-3 tui-space_bottom-3"
+            >
+              <span class="d-none d-md-inline">Resultat bearbeiten</span>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

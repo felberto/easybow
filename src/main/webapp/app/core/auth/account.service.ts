@@ -7,6 +7,7 @@ import { catchError, shareReplay, tap } from 'rxjs/operators';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { ApplicationConfigService } from '../config/application-config.service';
 import { Account } from 'app/core/auth/account.model';
+import { IClub } from '../../entities/club/club.model';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -59,6 +60,10 @@ export class AccountService {
 
   getAuthorites(): string[] {
     return this.userIdentity!.authorities;
+  }
+
+  getClub(): IClub {
+    return this.userIdentity!.club!;
   }
 
   isAuthenticated(): boolean {

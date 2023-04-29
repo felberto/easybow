@@ -220,29 +220,29 @@ public class ZsavNawuEinzelRankingListServiceImpl implements RankingListService 
                         if (result.getRound() == 1) {
                             if (result.getCompetition().getNumberOfSeries() == 1) {
                                 athleteResult.setResultRound1(result.getResult());
-                                athleteResult.setResultatRunde1Passe1(result.getSerie1().getResult());
+                                athleteResult.setResultatRunde1Passe1(checkIfNull(result.getSerie1().getResult()));
                             } else if (result.getCompetition().getNumberOfSeries() == 2) {
                                 athleteResult.setResultRound1(result.getResult());
-                                athleteResult.setResultatRunde1Passe1(result.getSerie1().getResult());
-                                athleteResult.setResultatRunde1Passe2(result.getSerie2().getResult());
+                                athleteResult.setResultatRunde1Passe1(checkIfNull(result.getSerie1().getResult()));
+                                athleteResult.setResultatRunde1Passe2(checkIfNull(result.getSerie2().getResult()));
                             }
                         } else if (result.getRound() == 2) {
                             if (result.getCompetition().getNumberOfSeries() == 1) {
                                 athleteResult.setResultRound2(result.getResult());
-                                athleteResult.setResultatRunde2Passe1(result.getSerie1().getResult());
+                                athleteResult.setResultatRunde2Passe1(checkIfNull(result.getSerie1().getResult()));
                             } else if (result.getCompetition().getNumberOfSeries() == 2) {
                                 athleteResult.setResultRound2(result.getResult());
-                                athleteResult.setResultatRunde2Passe1(result.getSerie1().getResult());
-                                athleteResult.setResultatRunde2Passe2(result.getSerie2().getResult());
+                                athleteResult.setResultatRunde2Passe1(checkIfNull(result.getSerie1().getResult()));
+                                athleteResult.setResultatRunde2Passe2(checkIfNull(result.getSerie2().getResult()));
                             }
                         } else if (result.getRound() == 99) {
                             if (result.getCompetition().getNumberOfSeries() == 1) {
                                 athleteResult.setResultFinal(result.getResult());
-                                athleteResult.setResultFinalSerie1(result.getSerie1().getResult());
+                                athleteResult.setResultFinalSerie1(checkIfNull(result.getSerie1().getResult()));
                             } else if (result.getCompetition().getNumberOfSeries() == 2) {
                                 athleteResult.setResultFinal(result.getResult());
-                                athleteResult.setResultFinalSerie1(result.getSerie1().getResult());
-                                athleteResult.setResultFinalSerie2(result.getSerie2().getResult());
+                                athleteResult.setResultFinalSerie1(checkIfNull(result.getSerie1().getResult()));
+                                athleteResult.setResultFinalSerie2(checkIfNull(result.getSerie2().getResult()));
                             }
                         }
                         if (result.getCompetition().getNumberOfSeries() == 1) {
@@ -356,7 +356,10 @@ public class ZsavNawuEinzelRankingListServiceImpl implements RankingListService 
                         //Resultat
                         .compare(o2.getResult(), o1.getResult())
                         //Resultat Passe 1
-                        .compare(o2.getResultsList().get(0).getSerie1().getResult(), o1.getResultsList().get(0).getSerie1().getResult())
+                        .compare(
+                            checkIfNull(o2.getResultsList().get(0).getSerie1().getResult()),
+                            checkIfNull(o1.getResultsList().get(0).getSerie1().getResult())
+                        )
                         //Tiefschüsse
                         .compare(o2.getT10(), o1.getT10())
                         .compare(o2.getT9(), o1.getT9())
@@ -406,9 +409,15 @@ public class ZsavNawuEinzelRankingListServiceImpl implements RankingListService 
                         //Resultat
                         .compare(o2.getResult(), o1.getResult())
                         //Resultat Passe 2
-                        .compare(o2.getResultsList().get(0).getSerie2().getResult(), o1.getResultsList().get(0).getSerie2().getResult())
+                        .compare(
+                            checkIfNull(o2.getResultsList().get(0).getSerie2().getResult()),
+                            checkIfNull(o1.getResultsList().get(0).getSerie2().getResult())
+                        )
                         //Resultat Passe 1
-                        .compare(o2.getResultsList().get(0).getSerie1().getResult(), o1.getResultsList().get(0).getSerie1().getResult())
+                        .compare(
+                            checkIfNull(o2.getResultsList().get(0).getSerie1().getResult()),
+                            checkIfNull(o1.getResultsList().get(0).getSerie1().getResult())
+                        )
                         //Tiefschüsse
                         .compare(o2.getT10(), o1.getT10())
                         .compare(o2.getT9(), o1.getT9())
@@ -469,13 +478,19 @@ public class ZsavNawuEinzelRankingListServiceImpl implements RankingListService 
                         //Resultat
                         .compare(o2.getResult(), o1.getResult())
                         //Resultat Runde 2
-                        .compare(o2.getResultsList().get(1).getResult(), o1.getResultsList().get(1).getResult())
+                        .compare(checkIfNull(o2.getResultsList().get(1).getResult()), checkIfNull(o1.getResultsList().get(1).getResult()))
                         //Resultat Runde 1
-                        .compare(o2.getResultsList().get(0).getResult(), o1.getResultsList().get(0).getResult())
+                        .compare(checkIfNull(o2.getResultsList().get(0).getResult()), checkIfNull(o1.getResultsList().get(0).getResult()))
                         //Resultat Runde 2 Passe 1
-                        .compare(o2.getResultsList().get(1).getSerie1().getResult(), o1.getResultsList().get(1).getSerie1().getResult())
+                        .compare(
+                            checkIfNull(o2.getResultsList().get(1).getSerie1().getResult()),
+                            checkIfNull(o1.getResultsList().get(1).getSerie1().getResult())
+                        )
                         //Resultat Runde 1 Passe 1
-                        .compare(o2.getResultsList().get(0).getSerie1().getResult(), o1.getResultsList().get(0).getSerie1().getResult())
+                        .compare(
+                            checkIfNull(o2.getResultsList().get(0).getSerie1().getResult()),
+                            checkIfNull(o1.getResultsList().get(0).getSerie1().getResult())
+                        )
                         //Tiefschüsse
                         .compare(o2.getT10(), o1.getT10())
                         .compare(o2.getT9(), o1.getT9())
@@ -528,17 +543,29 @@ public class ZsavNawuEinzelRankingListServiceImpl implements RankingListService 
                         //Resultat
                         .compare(o2.getResult(), o1.getResult())
                         //Resultat Runde 2
-                        .compare(o2.getResultsList().get(1).getResult(), o1.getResultsList().get(1).getResult())
+                        .compare(checkIfNull(o2.getResultsList().get(1).getResult()), checkIfNull(o1.getResultsList().get(1).getResult()))
                         //Resultat Runde 1
-                        .compare(o2.getResultsList().get(0).getResult(), o1.getResultsList().get(0).getResult())
+                        .compare(checkIfNull(o2.getResultsList().get(0).getResult()), checkIfNull(o1.getResultsList().get(0).getResult()))
                         //Resultat Runde 2 Passe 2
-                        .compare(o2.getResultsList().get(1).getSerie2().getResult(), o1.getResultsList().get(1).getSerie2().getResult())
+                        .compare(
+                            checkIfNull(o2.getResultsList().get(1).getSerie2().getResult()),
+                            checkIfNull(o1.getResultsList().get(1).getSerie2().getResult())
+                        )
                         //Resultat Runde 2 Passe 1
-                        .compare(o2.getResultsList().get(1).getSerie1().getResult(), o1.getResultsList().get(1).getSerie1().getResult())
+                        .compare(
+                            checkIfNull(o2.getResultsList().get(1).getSerie1().getResult()),
+                            checkIfNull(o1.getResultsList().get(1).getSerie1().getResult())
+                        )
                         //Resultat Runde 1 Passe 2
-                        .compare(o2.getResultsList().get(0).getSerie2().getResult(), o1.getResultsList().get(0).getSerie2().getResult())
+                        .compare(
+                            checkIfNull(o2.getResultsList().get(0).getSerie2().getResult()),
+                            checkIfNull(o1.getResultsList().get(0).getSerie2().getResult())
+                        )
                         //Resultat Runde 1 Passe 1
-                        .compare(o2.getResultsList().get(0).getSerie1().getResult(), o1.getResultsList().get(0).getSerie1().getResult())
+                        .compare(
+                            checkIfNull(o2.getResultsList().get(0).getSerie1().getResult()),
+                            checkIfNull(o1.getResultsList().get(0).getSerie1().getResult())
+                        )
                         //Tiefschüsse
                         .compare(o2.getT10(), o1.getT10())
                         .compare(o2.getT9(), o1.getT9())
@@ -611,17 +638,26 @@ public class ZsavNawuEinzelRankingListServiceImpl implements RankingListService 
                         //Resultat
                         .compare(o2.getResult(), o1.getResult())
                         //Resultat Final
-                        .compare(o2.getResultsList().get(2).getResult(), o1.getResultsList().get(2).getResult())
+                        .compare(checkIfNull(o2.getResultsList().get(2).getResult()), checkIfNull(o1.getResultsList().get(2).getResult()))
                         //Resultat Runde 2
-                        .compare(o2.getResultsList().get(1).getResult(), o1.getResultsList().get(1).getResult())
+                        .compare(checkIfNull(o2.getResultsList().get(1).getResult()), checkIfNull(o1.getResultsList().get(1).getResult()))
                         //Resultat Runde 1
-                        .compare(o2.getResultsList().get(0).getResult(), o1.getResultsList().get(0).getResult())
+                        .compare(checkIfNull(o2.getResultsList().get(0).getResult()), checkIfNull(o1.getResultsList().get(0).getResult()))
                         //Resultat Final Passe 1
-                        .compare(o2.getResultsList().get(2).getSerie1().getResult(), o1.getResultsList().get(2).getSerie1().getResult())
+                        .compare(
+                            checkIfNull(o2.getResultsList().get(2).getSerie1().getResult()),
+                            checkIfNull(o1.getResultsList().get(2).getSerie1().getResult())
+                        )
                         //Resultat Runde 2 Passe 1
-                        .compare(o2.getResultsList().get(1).getSerie1().getResult(), o1.getResultsList().get(1).getSerie1().getResult())
+                        .compare(
+                            checkIfNull(o2.getResultsList().get(1).getSerie1().getResult()),
+                            checkIfNull(o1.getResultsList().get(1).getSerie1().getResult())
+                        )
                         //Resultat Runde 1 Passe 1
-                        .compare(o2.getResultsList().get(0).getSerie1().getResult(), o1.getResultsList().get(0).getSerie1().getResult())
+                        .compare(
+                            checkIfNull(o2.getResultsList().get(0).getSerie1().getResult()),
+                            checkIfNull(o1.getResultsList().get(0).getSerie1().getResult())
+                        )
                         //Tiefschüsse
                         .compare(o2.getT10(), o1.getT10())
                         .compare(o2.getT9(), o1.getT9())
@@ -684,23 +720,41 @@ public class ZsavNawuEinzelRankingListServiceImpl implements RankingListService 
                         //Resultat
                         .compare(o2.getResult(), o1.getResult())
                         //Resultat Final
-                        .compare(o2.getResultsList().get(2).getResult(), o1.getResultsList().get(2).getResult())
+                        .compare(checkIfNull(o2.getResultsList().get(2).getResult()), checkIfNull(o1.getResultsList().get(2).getResult()))
                         //Resultat Runde 2
-                        .compare(o2.getResultsList().get(1).getResult(), o1.getResultsList().get(1).getResult())
+                        .compare(checkIfNull(o2.getResultsList().get(1).getResult()), checkIfNull(o1.getResultsList().get(1).getResult()))
                         //Resultat Runde 1
-                        .compare(o2.getResultsList().get(0).getResult(), o1.getResultsList().get(0).getResult())
+                        .compare(checkIfNull(o2.getResultsList().get(0).getResult()), checkIfNull(o1.getResultsList().get(0).getResult()))
                         //Resultat Final Passe 2
-                        .compare(o2.getResultsList().get(2).getSerie2().getResult(), o1.getResultsList().get(2).getSerie2().getResult())
+                        .compare(
+                            checkIfNull(o2.getResultsList().get(2).getSerie2().getResult()),
+                            checkIfNull(o1.getResultsList().get(2).getSerie2().getResult())
+                        )
                         //Resultat Final Passe 1
-                        .compare(o2.getResultsList().get(2).getSerie1().getResult(), o1.getResultsList().get(2).getSerie1().getResult())
+                        .compare(
+                            checkIfNull(o2.getResultsList().get(2).getSerie1().getResult()),
+                            checkIfNull(o1.getResultsList().get(2).getSerie1().getResult())
+                        )
                         //Resultat Runde 2 Passe 2
-                        .compare(o2.getResultsList().get(1).getSerie2().getResult(), o1.getResultsList().get(1).getSerie2().getResult())
+                        .compare(
+                            checkIfNull(o2.getResultsList().get(1).getSerie2().getResult()),
+                            checkIfNull(o1.getResultsList().get(1).getSerie2().getResult())
+                        )
                         //Resultat Runde 2 Passe 1
-                        .compare(o2.getResultsList().get(1).getSerie1().getResult(), o1.getResultsList().get(1).getSerie1().getResult())
+                        .compare(
+                            checkIfNull(o2.getResultsList().get(1).getSerie1().getResult()),
+                            checkIfNull(o1.getResultsList().get(1).getSerie1().getResult())
+                        )
                         //Resultat Runde 1 Passe 2
-                        .compare(o2.getResultsList().get(0).getSerie2().getResult(), o1.getResultsList().get(0).getSerie2().getResult())
+                        .compare(
+                            checkIfNull(o2.getResultsList().get(0).getSerie2().getResult()),
+                            checkIfNull(o1.getResultsList().get(0).getSerie2().getResult())
+                        )
                         //Resultat Runde 1 Passe 1
-                        .compare(o2.getResultsList().get(0).getSerie1().getResult(), o1.getResultsList().get(0).getSerie1().getResult())
+                        .compare(
+                            checkIfNull(o2.getResultsList().get(0).getSerie1().getResult()),
+                            checkIfNull(o1.getResultsList().get(0).getSerie1().getResult())
+                        )
                         //Tiefschüsse
                         .compare(o2.getT10(), o1.getT10())
                         .compare(o2.getT9(), o1.getT9())
@@ -817,31 +871,12 @@ public class ZsavNawuEinzelRankingListServiceImpl implements RankingListService 
         }
         return returnCount;
     }
-    /*@Override
-    public Rangliste sortRangliste(Rangliste rangliste, Wettkampf wettkampf) {
-        List<Rangierung> rangierungList = rangierungRepository.findByWettkampf_Id(wettkampf.getId());
-        rangierungList.sort(Comparator.comparing(Rangierung::getPosition));
 
-        rangliste
-            .getSchuetzeResultatList()
-            .sort(
-                (o1, o2) ->
-                    ComparisonChain
-                        .start()
-                        .compare(o2.getResultat(), o1.getResultat())
-                        .compare(o2.getResultateList().get(0).getResultat(), o1.getResultateList().get(0).getResultat())
-                        .compare(
-                            o2.getResultateList().get(0).getPasse2().getResultat(),
-                            o1.getResultateList().get(0).getPasse2().getResultat()
-                        )
-                        .compare(
-                            o2.getResultateList().get(0).getPasse1().getResultat(),
-                            o1.getResultateList().get(0).getPasse1().getResultat()
-                        )
-                        .compare(o2.getSchuetze().getJahrgang(), o1.getSchuetze().getJahrgang())
-                        .result()
-            );
+    private Integer checkIfNull(Series serie) {
+        return serie == null ? 0 : serie.getResult();
+    }
 
-        return rangliste;
-    }*/
+    private Integer checkIfNull(Integer number) {
+        return number == null ? 0 : number;
+    }
 }

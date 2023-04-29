@@ -22,19 +22,19 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let athlete of this.rankingListView; let i = index">
+            <tr *ngFor="let result of this.rankingListView; let i = index">
               <td>
                 <strong>{{ i + 1 + this.rank * 10 }}</strong>
               </td>
               <td>
-                <strong>{{ athlete.athlete?.name }}</strong>
+                <strong>{{ result.athlete?.firstName }} {{ result.athlete?.name }}</strong>
               </td>
-              <td>{{ athlete.athlete?.club?.name }}</td>
-              <td>{{ athlete.athlete?.yearOfBirth }}</td>
-              <td *ngIf="athlete.resultFinal !== null">{{ athlete.resultFinalSerie1 }}</td>
-              <td *ngIf="competition.numberOfFinalSeries == 2 && athlete.resultFinal !== null">{{ athlete.resultFinalSerie2 }}</td>
-              <td *ngIf="athlete.resultFinal !== null">
-                <strong>{{ athlete.resultFinal }}</strong>
+              <td>{{ result.athlete?.club?.name }}</td>
+              <td>{{ result.athlete?.yearOfBirth }}</td>
+              <td *ngIf="result.resultFinal !== null">{{ result.resultFinalSerie1 }}</td>
+              <td *ngIf="competition.numberOfFinalSeries == 2 && result.resultFinal !== null">{{ result.resultFinalSerie2 }}</td>
+              <td *ngIf="result.resultFinal !== null">
+                <strong>{{ result.resultFinal }}</strong>
               </td>
             </tr>
           </tbody>

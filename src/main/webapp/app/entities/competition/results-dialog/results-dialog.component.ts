@@ -9,6 +9,7 @@ import { HttpResponse } from '@angular/common/http';
 import { AthleteNumberDialogComponent } from '../athlete-number-dialog/athlete-number-dialog.component';
 import { GroupDialogComponent } from '../group-dialog/group-dialog.component';
 import { AthleteNumberGroupDialogComponent } from '../athlete-number-group-dialog/athlete-number-group-dialog.component';
+import { AccountService } from '../../../core/auth/account.service';
 
 @Component({
   selector: 'jhi-resultate-dialog',
@@ -25,7 +26,8 @@ export class ResultsDialogComponent implements OnInit {
     protected activeModal: NgbActiveModal,
     protected athleteService: AthleteService,
     private resultsService: ResultsService,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    private accountService: AccountService
   ) {}
 
   cancel(): void {
@@ -47,10 +49,23 @@ export class ResultsDialogComponent implements OnInit {
             }
           });
 
-          this.addedAthletes = tempAthlete.filter((s, i, arr) => arr.indexOf(<IAthlete>arr.find(t => t.id === s.id)) === i);
+          const tempAthlete1 = tempAthlete.filter((s, i, arr) => arr.indexOf(<IAthlete>arr.find(t => t.id === s.id)) === i);
+
+          if (this.accountService.hasAnyAuthority('ROLE_VEREIN')) {
+            this.addedAthletes = tempAthlete1.filter(
+              (s, i, arr) => arr.indexOf(<IAthlete>arr.find(t => t.club?.name === this.accountService.getClub().name)) === i
+            );
+          } else {
+            this.addedAthletes = tempAthlete1;
+          }
         });
       }
     });
+  }
+
+  checkIfAthleteIsAlreadyRegisterForCompetition(athlete: IAthlete, competition: ICompetition): boolean {
+    //todo
+    return true;
   }
 
   addAthlete(athlete: IAthlete, competition: ICompetition): void {

@@ -53,6 +53,7 @@ export class AthleteUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const athlete = this.createFromForm();
+    console.log(athlete);
     if (athlete.id !== undefined) {
       this.subscribeToSaveResponse(this.athleteService.update(athlete));
     } else {

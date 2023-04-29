@@ -37,6 +37,10 @@ import { CompetitionOverviewEasvNawuGmComponent } from './overview-easv-nawu-gm/
 import { CompetitionOverviewEasvSm10mComponent } from './overview-easv-sm-10m/competition-overview-easv-sm-10m.component';
 import { RankingListEasvSm10mComponent } from './ranking-list-easv-sm-10m/ranking-list-easv-sm-10m.component';
 import { SeriesDialog2GroupComponent } from './series-dialog-2-group/series-dialog-2.component';
+import { CreateAthleteDialogComponent } from './create-athete-dialog/create-athlete-dialog.component';
+import { NewSeriesDialog1Component } from './new-series-dialog-1/new-series-dialog-1.component';
+import { NewSeriesDialog2Component } from './new-series-dialog-2/new-series-dialog-2.component';
+import { TuiTableModule } from '@taiga-ui/addon-table';
 
 @NgModule({
   imports: [
@@ -49,6 +53,7 @@ import { SeriesDialog2GroupComponent } from './series-dialog-2-group/series-dial
     MatRadioModule,
     TuiSvgModule,
     TuiBadgeModule,
+    TuiTableModule,
   ],
   declarations: [
     CompetitionComponent,
@@ -63,6 +68,8 @@ import { SeriesDialog2GroupComponent } from './series-dialog-2-group/series-dial
     CompetitionOverviewZsavNawuGmComponent,
     CompetitionOverviewEasvStaendematchComponent,
     ResultsDialogComponent,
+    NewSeriesDialog1Component,
+    NewSeriesDialog2Component,
     SeriesDialog1Component,
     SeriesDialog2Component,
     SeriesDialog2GroupComponent,
@@ -76,6 +83,7 @@ import { SeriesDialog2GroupComponent } from './series-dialog-2-group/series-dial
     RankingListEasvStaendematchComponent,
     RankingListDialogComponent,
     ConfirmDialogComponent,
+    CreateAthleteDialogComponent,
     AthleteNumberDialogComponent,
     AthleteNumberGroupDialogComponent,
     GroupDialogComponent,
@@ -88,22 +96,28 @@ import { SeriesDialog2GroupComponent } from './series-dialog-2-group/series-dial
     RankingListEasvSm10mComponent,
     RankingListEasvStaendematchComponent,
     RankingListEasvNawuGmComponent,
+    NewSeriesDialog1Component,
+    NewSeriesDialog2Component,
     SeriesDialog1Component,
     SeriesDialog2Component,
     SeriesDialog2GroupComponent,
     SeriesDialog4Component,
     SeriesDialog6Component,
     ConfirmDialogComponent,
+    CreateAthleteDialogComponent,
     AthleteNumberDialogComponent,
     GroupDialogComponent,
   ],
   providers: [NgbActiveModal],
   exports: [
+    NewSeriesDialog1Component,
+    NewSeriesDialog2Component,
     SeriesDialog1Component,
     SeriesDialog2Component,
     SeriesDialog2GroupComponent,
     SeriesDialog4Component,
     SeriesDialog6Component,
+    CreateAthleteDialogComponent,
     AthleteNumberDialogComponent,
     GroupDialogComponent,
     AthleteNumberGroupDialogComponent,

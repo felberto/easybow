@@ -6,8 +6,10 @@ import ch.felberto.repository.ResultsRepository;
 import ch.felberto.service.ResultsService;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cglib.core.CollectionUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -96,6 +98,17 @@ public class ResultsServiceImpl implements ResultsService {
     public List<Results> findByCompetition(Long competitionId) {
         log.debug("Request to get Result : {}", competitionId);
         return resultsRepository.findByCompetition_Id(competitionId);
+    }
+
+    @Override
+    public List<Results> findByCompetitionAndClub(Long competitionId, Long clubId) {
+        List<Results> results = resultsRepository.findByCompetition_Id(competitionId);
+        return results.stream().filter(r -> r.getAthlete().getClub().getId().equals(clubId)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Results> findByRoundAndCompetition(Integer round, Long competitionId) {
+        return resultsRepository.findByCompetition_IdAndRound(competitionId, round);
     }
 
     @Override

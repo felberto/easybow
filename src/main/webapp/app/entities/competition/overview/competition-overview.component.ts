@@ -16,6 +16,9 @@ import { TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { CompetitionService } from '../service/competition.service';
 import { SeriesDialog1Component } from '../series-dialog-1/series-dialog-1.component';
+import { CreateAthleteDialogComponent } from '../create-athete-dialog/create-athlete-dialog.component';
+import { NewSeriesDialog1Component } from '../new-series-dialog-1/new-series-dialog-1.component';
+import { NewSeriesDialog2Component } from '../new-series-dialog-2/new-series-dialog-2.component';
 
 @Component({
   selector: 'jhi-overview',
@@ -27,7 +30,12 @@ export class CompetitionOverviewComponent implements OnInit {
   liveviewPath = '';
 
   results: Array<IResults> | null = [];
+  resultsRound1: Array<IResults> | null = [];
+  resultsRound2: Array<IResults> | null = [];
+  resultsRound99: Array<IResults> | null = [];
   athletes: Array<IAthlete> | null = [];
+
+  showFinal = false;
 
   constructor(
     protected activatedRoute: ActivatedRoute,
@@ -46,26 +54,49 @@ export class CompetitionOverviewComponent implements OnInit {
   ngOnInit(): void {
     this.liveviewPath = window.location.origin + '/liveview/';
 
+    console.log(this.accountService.getClub());
+    console.log(this.accountService.getAuthorites());
+
     this.activatedRoute.data.subscribe(({ competition }) => {
       this.competition = competition;
-      this.resultsService.findByCompetition(competition).subscribe(res => {
-        this.results = res.body;
-
-        const tempAthlete: Array<IAthlete> = [];
-        this.results?.forEach(value => {
-          if (value.athlete) {
-            tempAthlete.push(value.athlete);
-          }
+      if (this.userIsVerein()) {
+        this.showFinal = false;
+        this.resultsService.findByCompetitionAndClub(competition, this.accountService.getClub()).subscribe(res => {
+          this.results = res.body;
+          this.resultsRound1 = res.body!.filter(results => results.round === 1);
+          this.resultsRound2 = res.body!.filter(results => results.round === 2);
+          this.resultsRound99 = res.body!.filter(results => results.round === 99);
         });
+      } else {
+        this.showFinal = true;
+        this.resultsService.findByCompetition(competition).subscribe(res => {
+          this.results = res.body;
+          this.resultsRound1 = res.body!.filter(results => results.round === 1);
+          this.resultsRound2 = res.body!.filter(results => results.round === 2);
+          this.resultsRound99 = res
+            .body!.filter(results => results.round === 99)
+            .sort((n1, n2) => {
+              if (n1.athleteNumber! > n2.athleteNumber!) {
+                return 1;
+              }
 
-        this.athletes = tempAthlete.filter((s, i, arr) => arr.indexOf(<IAthlete>arr.find(t => t.id === s.id)) === i);
-        // filter only club athlete
-        this.accountService.getAuthorites().forEach(role => {
-          if (role !== 'ROLE_USER' && role !== 'ROLE_VEREIN' && role !== 'ROLE_ADMIN' && role !== 'ROLE_ZSAV') {
-            this.athletes = this.athletes!.filter(athlete => athlete.role === role);
-          }
+              if (n1.athleteNumber! < n2.athleteNumber!) {
+                return -1;
+              }
+
+              return 0;
+            });
         });
-      });
+      }
+    });
+  }
+
+  createAthlete(competition: ICompetition): void {
+    const modalRef = this.modalService.open(CreateAthleteDialogComponent, { size: 'xl', backdrop: 'static' });
+    modalRef.componentInstance.competition = competition;
+    modalRef.componentInstance.accountClub = this.accountService.getClub();
+    modalRef.closed.subscribe(() => {
+      this.loadPage();
     });
   }
 
@@ -89,6 +120,52 @@ export class CompetitionOverviewComponent implements OnInit {
       link.click();
       window.URL.revokeObjectURL(link.href);
     });
+  }
+
+  createResult(competition: ICompetition): void {
+    if (competition.numberOfSeries === 1) {
+      const modalRef = this.modalService.open(NewSeriesDialog1Component, {
+        size: 'xl',
+        backdrop: 'static',
+      });
+      modalRef.componentInstance.competition = this.competition;
+      modalRef.closed.subscribe(() => {
+        this.loadPage();
+      });
+    } else if (competition.numberOfSeries === 2) {
+      const modalRef = this.modalService.open(NewSeriesDialog2Component, {
+        size: 'xl',
+        backdrop: 'static',
+      });
+      modalRef.componentInstance.competition = this.competition;
+      modalRef.closed.subscribe(() => {
+        this.loadPage();
+      });
+    }
+  }
+
+  createResultFinal(competition: ICompetition): void {
+    if (competition.numberOfSeries === 1) {
+      const modalRef = this.modalService.open(NewSeriesDialog1Component, {
+        size: 'xl',
+        backdrop: 'static',
+      });
+      modalRef.componentInstance.competition = this.competition;
+      modalRef.componentInstance.final = true;
+      modalRef.closed.subscribe(() => {
+        this.loadPage();
+      });
+    } else if (competition.numberOfSeries === 2) {
+      const modalRef = this.modalService.open(NewSeriesDialog2Component, {
+        size: 'xl',
+        backdrop: 'static',
+      });
+      modalRef.componentInstance.competition = this.competition;
+      modalRef.componentInstance.final = true;
+      modalRef.closed.subscribe(() => {
+        this.loadPage();
+      });
+    }
   }
 
   openSeriesDialog(result: IResults): void {
@@ -127,7 +204,7 @@ export class CompetitionOverviewComponent implements OnInit {
         size: 'xl',
         backdrop: 'static',
       });
-      modalRef.componentInstance.resultat = result;
+      modalRef.componentInstance.result = result;
       modalRef.closed.subscribe(() => {
         this.loadPage();
       });
@@ -136,7 +213,7 @@ export class CompetitionOverviewComponent implements OnInit {
         size: 'xl',
         backdrop: 'static',
       });
-      modalRef.componentInstance.resultat = result;
+      modalRef.componentInstance.result = result;
       modalRef.closed.subscribe(() => {
         this.loadPage();
       });
@@ -151,6 +228,20 @@ export class CompetitionOverviewComponent implements OnInit {
       }
     });
     return isZsavOrAdmin;
+  }
+
+  userIsVerein(): boolean {
+    let isVerein = false;
+    this.accountService.getAuthorites().forEach(role => {
+      if (role === 'ROLE_VEREIN') {
+        isVerein = true;
+      }
+    });
+    return isVerein;
+  }
+
+  display(b: boolean): boolean {
+    return !b;
   }
 
   getResultsByAthlete(athlete: IAthlete): Array<IResults> {
@@ -193,7 +284,6 @@ export class CompetitionOverviewComponent implements OnInit {
   }
 
   createFinal(competition: ICompetition): void {
-    //todo checkboxen und athlete auswählen
     const modalRef = this.modalService.open(ConfirmDialogComponent, { size: 'xl', backdrop: 'static' });
     modalRef.componentInstance.competition = competition;
     modalRef.closed.subscribe(() => {

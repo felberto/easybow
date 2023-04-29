@@ -1,0 +1,120 @@
+<form>
+  <div class="modal-header">
+    <h4 class="modal-title tui-text_h4" data-cy="createAthleteDialogHeading">Neuer Schütze erfassen</h4>
+
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <jhi-alert-error></jhi-alert-error>
+    <div class="row justify-content-center">
+      <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+          <div>
+            <jhi-alert-error></jhi-alert-error>
+
+            <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+              <label class="form-control-label" for="field_id">ID</label>
+              <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-control-label" for="field_name">Name</label>
+              <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+              <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+                <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required"> Dieses Feld ist erforderlich. </small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-control-label" for="field_firstName">Vorname</label>
+              <input
+                type="text"
+                class="form-control"
+                name="firstName"
+                id="field_firstName"
+                data-cy="firstName"
+                formControlName="firstName"
+              />
+              <div *ngIf="editForm.get('firstName')!.invalid && (editForm.get('firstName')!.dirty || editForm.get('firstName')!.touched)">
+                <small class="form-text text-danger" *ngIf="editForm.get('firstName')?.errors?.required">
+                  Dieses Feld is erforderlich.
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-control-label" for="field_yearOfBirth">Geburtsjahr</label>
+              <input
+                type="number"
+                class="form-control"
+                name="yearOfBirth"
+                id="field_yearOfBirth"
+                data-cy="yearOfBirth"
+                formControlName="yearOfBirth"
+              />
+              <div
+                *ngIf="editForm.get('yearOfBirth')!.invalid && (editForm.get('yearOfBirth')!.dirty || editForm.get('yearOfBirth')!.touched)"
+              >
+                <small class="form-text text-danger" *ngIf="editForm.get('yearOfBirth')?.errors?.required">
+                  Dieses Feld is erforderlich.
+                </small>
+                <small class="form-text text-danger" [hidden]="!editForm.get('yearOfBirth')?.errors?.number">
+                  Dieses Feld muss eine Nummer sein.
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-control-label" for="field_gender">Geschlecht</label>
+              <select class="form-control" name="gender" formControlName="gender" id="field_gender" data-cy="gender">
+                <option [ngValue]="null"></option>
+                <option value="MALE">M</option>
+                <option value="FEMALE">F</option>
+              </select>
+              <div *ngIf="editForm.get('gender')!.invalid && (editForm.get('gender')!.dirty || editForm.get('gender')!.touched)">
+                <small class="form-text text-danger" *ngIf="editForm.get('gender')?.errors?.required"> Dieses Feld is erforderlich. </small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-control-label" for="field_position">Stellung</label>
+              <select class="form-control" name="position" formControlName="position" id="field_position" data-cy="position">
+                <option [ngValue]="null"></option>
+                <option value="FREE">Frei</option>
+                <option value="MOUNTED">Aufgelegt</option>
+              </select>
+              <div *ngIf="editForm.get('position')!.invalid && (editForm.get('position')!.dirty || editForm.get('position')!.touched)">
+                <small class="form-text text-danger" *ngIf="editForm.get('position')?.errors?.required">
+                  Dieses Feld is erforderlich.
+                </small>
+              </div>
+            </div>
+
+            <div>
+              <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="cancel()">
+                <fa-icon icon="ban"></fa-icon>&nbsp;<span>Abbrechen</span>
+              </button>
+
+              <button
+                type="submit"
+                id="save-entity"
+                data-cy="entityCreateSaveButton"
+                [disabled]="editForm.invalid || isSaving"
+                class="btn btn-primary"
+              >
+                <fa-icon icon="save"></fa-icon>&nbsp;<span>Speichern</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button (click)="cancel()" tuiButton type="button" appearance="greyButton" class="tui-space_right-3 tui-space_bottom-3">
+      Abbrechen
+    </button>
+  </div>
+</form>

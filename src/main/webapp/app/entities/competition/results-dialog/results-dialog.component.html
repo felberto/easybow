@@ -41,12 +41,22 @@
             </td>
             <td class="text-right">
               <div class="btn-group">
-                <button type="submit" (click)="addAthlete(athlete, competition)" class="btn btn-success btn-sm">
+                <button
+                  *ngIf="!checkIfAthleteIsAlreadyRegisterForCompetition(athlete, competition)"
+                  type="submit"
+                  (click)="addAthlete(athlete, competition)"
+                  class="btn btn-success btn-sm"
+                >
                   <fa-icon icon="plus"></fa-icon>
                   <span class="d-none d-md-inline">Hinzufügen</span>
                 </button>
 
-                <button type="submit" (click)="removeAthlete(athlete, competition)" class="btn btn-danger btn-sm">
+                <button
+                  *ngIf="checkIfAthleteIsAlreadyRegisterForCompetition(athlete, competition)"
+                  type="submit"
+                  (click)="removeAthlete(athlete, competition)"
+                  class="btn btn-danger btn-sm"
+                >
                   <fa-icon icon="minus"></fa-icon>
                   <span class="d-none d-md-inline">Entfernen</span>
                 </button>

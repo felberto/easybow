@@ -50,6 +50,10 @@ public interface ResultsService {
      */
     List<Results> findByCompetition(Long competitionId);
 
+    List<Results> findByCompetitionAndClub(Long competitionId, Long clubId);
+
+    List<Results> findByRoundAndCompetition(Integer round, Long competitionId);
+
     /**
      * Delete the "id" result.
      *
@@ -68,7 +72,7 @@ public interface ResultsService {
      * Delete the "id" result.
      *
      * @param competitionId the id of the entity.
-     * @param round round
+     * @param round         round
      */
     void deleteByCompetition_IdAndRound(Long competitionId, Integer round);
 }
