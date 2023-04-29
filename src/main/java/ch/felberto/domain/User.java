@@ -96,6 +96,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "association" }, allowSetters = true)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Club club;
 
     public Long getId() {
