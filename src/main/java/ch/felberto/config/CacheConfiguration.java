@@ -52,6 +52,7 @@ public class CacheConfiguration {
             createCache(cm, ch.felberto.domain.User.class.getName());
             createCache(cm, ch.felberto.domain.Authority.class.getName());
             createCache(cm, ch.felberto.domain.User.class.getName() + ".authorities");
+            createCache(cm, ch.felberto.domain.User.class.getName() + ".clubs");
             createCache(cm, Association.class.getName());
             createCache(cm, Club.class.getName());
             createCache(cm, Athlete.class.getName());
