@@ -18,8 +18,8 @@
         <h3>{{ competition.name }} {{ competition.year }}</h3>
         <h4>ZSAV NAWU</h4>
         <div *ngFor="let round of getList(competition)">
-          <p *ngIf="round.round !== 99">{{ round.round }}. Runde Schiessende: {{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
-          <p *ngIf="round.round === 99">Final {{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
+          <p *ngIf="round.round !== 99">{{ round.round }}. Runde Schiessende: {{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
+          <p *ngIf="round.round === 99">Final {{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
         </div>
         <span class="link-text">
           View
