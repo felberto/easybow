@@ -52,6 +52,8 @@ export class CreateAthleteDialogComponent {
     this.isSaving = true;
     const athlete = this.createFromForm();
     console.log(athlete);
+    athlete.role = this.accountService.getClubAuthority();
+    console.log(athlete);
     this.subscribeToSaveResponse(this.athleteService.create(athlete));
   }
 
