@@ -66,6 +66,10 @@ export class AccountService {
     return this.userIdentity!.club!;
   }
 
+  getClubAuthority(): string {
+    return this.userIdentity!.authorities.filter(value => !value.startsWith('ROLE_'))[0];
+  }
+
   getLogin(): string {
     return this.userIdentity!.login;
   }

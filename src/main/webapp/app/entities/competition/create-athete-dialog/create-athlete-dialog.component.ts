@@ -11,6 +11,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AthleteService } from '../../athlete/service/athlete.service';
 import { Athlete, IAthlete } from '../../athlete/athlete.model';
 import { Nationality } from '../../enumerations/nationality.model';
+import { AccountService } from '../../../core/auth/account.service';
+import { ClubService } from '../../club/service/club.service';
+import { Collector } from '@angular/core/schematics/migrations/module-with-providers/collector';
 
 @Component({
   selector: 'jhi-create-athlete-dialog',
@@ -36,7 +39,9 @@ export class CreateAthleteDialogComponent {
   constructor(
     protected activeModal: NgbActiveModal,
     protected athleteService: AthleteService,
+    protected clubService: ClubService,
     protected activatedRoute: ActivatedRoute,
+    protected accountService: AccountService,
     protected fb: FormBuilder
   ) {}
 
@@ -53,6 +58,13 @@ export class CreateAthleteDialogComponent {
 
   trackClubById(index: number, item: IClub): number {
     return item.id!;
+  }
+
+  getClub(): any {
+    this.accountService
+      .getAuthorites()
+      .filter(role => !role.startsWith('ROLE_'))
+      .pop();
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IAthlete>>): void {
@@ -84,8 +96,10 @@ export class CreateAthleteDialogComponent {
       nationality: Nationality.SUI,
       gender: this.editForm.get(['gender'])!.value,
       position: this.editForm.get(['position'])!.value,
-      role: 'ROLE_VEREIN',
-      club: this.accountClub,
+      role: this.accountService
+        .getAuthorites()
+        .filter(role => !role.startsWith('ROLE_'))
+        .pop(),
     };
   }
 }

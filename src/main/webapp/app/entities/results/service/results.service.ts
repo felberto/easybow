@@ -45,13 +45,10 @@ export class ResultsService {
     });
   }
 
-  findByCompetitionAndClub(competition: ICompetition, club: IClub): Observable<HttpResponse<IResults[]>> {
-    return this.http.get<IResults[]>(
-      `${this.resourceUrl}/competition/${getCompetitionIdentifier(competition) as number}/club/${club.id!}`,
-      {
-        observe: 'response',
-      }
-    );
+  findByCompetitionAndClub(competition: ICompetition, club: string): Observable<HttpResponse<IResults[]>> {
+    return this.http.get<IResults[]>(`${this.resourceUrl}/competition/${getCompetitionIdentifier(competition) as number}/club/${club}`, {
+      observe: 'response',
+    });
   }
 
   findByRoundAndCompetition(round: number, competition: ICompetition): Observable<HttpResponse<IResults[]>> {

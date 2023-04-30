@@ -50,7 +50,7 @@ public interface ResultsService {
      */
     List<Results> findByCompetition(Long competitionId);
 
-    List<Results> findByCompetitionAndClub(Long competitionId, Long clubId);
+    List<Results> findByCompetitionAndClub(Long competitionId, String club);
 
     List<Results> findByRoundAndCompetition(Integer round, Long competitionId);
 

@@ -101,9 +101,9 @@ public class ResultsServiceImpl implements ResultsService {
     }
 
     @Override
-    public List<Results> findByCompetitionAndClub(Long competitionId, Long clubId) {
+    public List<Results> findByCompetitionAndClub(Long competitionId, String club) {
         List<Results> results = resultsRepository.findByCompetition_Id(competitionId);
-        return results.stream().filter(r -> r.getAthlete().getClub().getId().equals(clubId)).collect(Collectors.toList());
+        return results.stream().filter(r -> r.getAthlete().getRole().equals(club)).collect(Collectors.toList());
     }
 
     @Override

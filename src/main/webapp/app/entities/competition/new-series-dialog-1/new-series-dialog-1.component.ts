@@ -15,6 +15,7 @@ import { HttpResponse } from '@angular/common/http';
 import { IRound } from '../../round/round.model';
 import { RoundService } from '../../round/service/round.service';
 import { AccountService } from '../../../core/auth/account.service';
+import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'jhi-new-series-dialog-1',
@@ -263,7 +264,7 @@ export class NewSeriesDialog1Component implements OnInit {
       )
       .subscribe((athletes: IAthlete[]) => {
         if (isVerein) {
-          this.athletesSharedCollectionTmp = athletes.filter(value => value.club?.id === this.accountService.getClub().id);
+          this.athletesSharedCollectionTmp = athletes.filter(value => value.role === this.accountService.getClubAuthority());
         } else {
           this.athletesSharedCollectionTmp = athletes;
         }
@@ -281,7 +282,9 @@ export class NewSeriesDialog1Component implements OnInit {
       .pipe(map((rounds: IRound[]) => this.roundService.addRoundToCollectionIfMissing(rounds, this.roundForm.get('round')!.value)))
       .subscribe(
         (rounds: IRound[]) =>
-          (this.roundsSharedCollection = rounds.filter(value => value.round !== 99 && value.competition?.id !== this.competition?.id))
+          (this.roundsSharedCollection = rounds.filter(
+            value => value.round !== 99 && value.competition?.id === this.competition?.id && value.date!.toDate() > dayjs().toDate()
+          ))
       );
   }
 }

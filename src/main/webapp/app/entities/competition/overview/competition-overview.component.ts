@@ -19,7 +19,7 @@ import { SeriesDialog1Component } from '../series-dialog-1/series-dialog-1.compo
 import { CreateAthleteDialogComponent } from '../create-athete-dialog/create-athlete-dialog.component';
 import { NewSeriesDialog1Component } from '../new-series-dialog-1/new-series-dialog-1.component';
 import { NewSeriesDialog2Component } from '../new-series-dialog-2/new-series-dialog-2.component';
-import { UserManagementService } from '../../../admin/user-management/service/user-management.service';
+import { ClubService } from '../../club/service/club.service';
 
 @Component({
   selector: 'jhi-overview',
@@ -43,11 +43,11 @@ export class CompetitionOverviewComponent implements OnInit {
     private resultsService: ResultsService,
     private rankingListService: RankingListService,
     private competitionService: CompetitionService,
+    private clubService: ClubService,
     protected modalService: NgbModal,
     private roundService: RoundService,
     private alertService: AlertService,
     private accountService: AccountService,
-    private userManagementService: UserManagementService,
     private router: Router,
     @Inject(TuiNotificationsService)
     private readonly notificationsService: TuiNotificationsService
@@ -56,18 +56,11 @@ export class CompetitionOverviewComponent implements OnInit {
   ngOnInit(): void {
     this.liveviewPath = window.location.origin + '/liveview/';
 
-    console.log(this.accountService.getClub());
-    console.log(this.accountService.getAuthorites());
-
-    //TODO test this
-    this.accountService.identity(true).subscribe(value => console.log(value?.club));
-    this.userManagementService.find(this.accountService.getLogin()).subscribe(value => console.log(value.club));
-
     this.activatedRoute.data.subscribe(({ competition }) => {
       this.competition = competition;
       if (this.userIsVerein()) {
         this.showFinal = false;
-        this.resultsService.findByCompetitionAndClub(competition, this.accountService.getClub()).subscribe(res => {
+        this.resultsService.findByCompetitionAndClub(competition, this.accountService.getClubAuthority()).subscribe(res => {
           this.results = res.body;
           this.resultsRound1 = res.body!.filter(results => results.round === 1);
           this.resultsRound2 = res.body!.filter(results => results.round === 2);
@@ -224,6 +217,13 @@ export class CompetitionOverviewComponent implements OnInit {
         this.loadPage();
       });
     }
+  }
+
+  getClub(): any {
+    this.accountService
+      .getAuthorites()
+      .filter(role => !role.startsWith('ROLE_'))
+      .pop();
   }
 
   userIsZsavOrAdmin(): boolean {

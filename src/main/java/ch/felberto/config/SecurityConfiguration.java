@@ -95,7 +95,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/rankinglist/**").permitAll()
             .antMatchers("/api/grouprankinglist/**").permitAll()
             .antMatchers("/api/rounds/competition/**").permitAll()
-            .antMatchers("/api/admin/users/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER, AuthoritiesConstants.VEREIN, AuthoritiesConstants.ZSAV)
             .antMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/**").authenticated()
             .antMatchers("/management/health").permitAll()

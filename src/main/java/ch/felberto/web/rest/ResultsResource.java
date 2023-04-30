@@ -204,10 +204,10 @@ public class ResultsResource {
         return ResponseEntity.ok().body(resultsService.findByCompetition(competitionId));
     }
 
-    @GetMapping("/results/competition/{competitionId}/club/{clubId}")
-    public ResponseEntity<List<Results>> getResultByCompetitionAndClub(@PathVariable Long clubId, @PathVariable Long competitionId) {
-        log.debug("REST request to get Result by club : {} and competitionId : {}", clubId, competitionId);
-        return ResponseEntity.ok().body(resultsService.findByCompetitionAndClub(competitionId, clubId));
+    @GetMapping("/results/competition/{competitionId}/club/{club}")
+    public ResponseEntity<List<Results>> getResultByCompetitionAndClub(@PathVariable String club, @PathVariable Long competitionId) {
+        log.debug("REST request to get Result by club : {} and competitionId : {}", club, competitionId);
+        return ResponseEntity.ok().body(resultsService.findByCompetitionAndClub(competitionId, club));
     }
 
     @GetMapping("/results/competition/{competitionId}/round/{round}")
