@@ -19,6 +19,7 @@ import { SeriesDialog1Component } from '../series-dialog-1/series-dialog-1.compo
 import { CreateAthleteDialogComponent } from '../create-athete-dialog/create-athlete-dialog.component';
 import { NewSeriesDialog1Component } from '../new-series-dialog-1/new-series-dialog-1.component';
 import { NewSeriesDialog2Component } from '../new-series-dialog-2/new-series-dialog-2.component';
+import { UserManagementService } from '../../../admin/user-management/service/user-management.service';
 
 @Component({
   selector: 'jhi-overview',
@@ -46,6 +47,7 @@ export class CompetitionOverviewComponent implements OnInit {
     private roundService: RoundService,
     private alertService: AlertService,
     private accountService: AccountService,
+    private userManagementService: UserManagementService,
     private router: Router,
     @Inject(TuiNotificationsService)
     private readonly notificationsService: TuiNotificationsService
@@ -56,6 +58,10 @@ export class CompetitionOverviewComponent implements OnInit {
 
     console.log(this.accountService.getClub());
     console.log(this.accountService.getAuthorites());
+
+    //TODO test this
+    this.accountService.identity(true).subscribe(value => console.log(value?.club));
+    this.userManagementService.find(this.accountService.getLogin()).subscribe(value => console.log(value.club));
 
     this.activatedRoute.data.subscribe(({ competition }) => {
       this.competition = competition;

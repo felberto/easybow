@@ -66,6 +66,10 @@ export class AccountService {
     return this.userIdentity!.club!;
   }
 
+  getLogin(): string {
+    return this.userIdentity!.login;
+  }
+
   isAuthenticated(): boolean {
     return this.userIdentity !== null;
   }
