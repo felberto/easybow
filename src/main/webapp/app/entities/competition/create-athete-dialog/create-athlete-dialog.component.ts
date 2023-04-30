@@ -53,6 +53,8 @@ export class CreateAthleteDialogComponent {
     const athlete = this.createFromForm();
     console.log(athlete);
     athlete.role = this.accountService.getClubAuthority();
+    console.log(this.accountService.getClubAuthority());
+    console.log(this.accountService.getAuthorites().filter(value => !value.startsWith('ROLE_'))[0]);
     console.log(athlete);
     this.accountService.getAuthenticationState().subscribe(account => {
       console.log(account);
