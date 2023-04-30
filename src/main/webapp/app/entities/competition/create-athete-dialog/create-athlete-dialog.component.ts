@@ -13,7 +13,6 @@ import { Athlete, IAthlete } from '../../athlete/athlete.model';
 import { Nationality } from '../../enumerations/nationality.model';
 import { AccountService } from '../../../core/auth/account.service';
 import { ClubService } from '../../club/service/club.service';
-import { Collector } from '@angular/core/schematics/migrations/module-with-providers/collector';
 
 @Component({
   selector: 'jhi-create-athlete-dialog',
@@ -96,10 +95,7 @@ export class CreateAthleteDialogComponent {
       nationality: Nationality.SUI,
       gender: this.editForm.get(['gender'])!.value,
       position: this.editForm.get(['position'])!.value,
-      role: this.accountService
-        .getAuthorites()
-        .filter(role => !role.startsWith('ROLE_'))
-        .pop(),
+      role: this.accountService.getClubAuthority(),
     };
   }
 }
