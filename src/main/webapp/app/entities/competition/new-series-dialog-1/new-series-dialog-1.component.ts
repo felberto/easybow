@@ -283,7 +283,10 @@ export class NewSeriesDialog1Component implements OnInit {
       .subscribe(
         (rounds: IRound[]) =>
           (this.roundsSharedCollection = rounds.filter(
-            value => value.round !== 99 && value.competition?.id === this.competition?.id && value.date!.toDate() >= dayjs().toDate()
+            value =>
+              value.round !== 99 &&
+              value.competition?.id === this.competition?.id &&
+              value.date!.toDate().getUTCDay() >= dayjs().toDate().getUTCDay()
           ))
       );
   }
