@@ -56,7 +56,8 @@
               <td th:text="${athlete?.getAthlete().getFirstName() + ' ' + athlete?.getAthlete().getName()}"></td>
               <td th:text="${athlete?.getAthlete().getClub().getName()}"></td>
               <td class="w3-right-align" style="font-weight: bold" th:text="${athlete?.getResult()}"></td>
-              <td class="w3-center" th:text="${athlete?.getAthlete().getPosition().toString().substring(0, 1).toLowerCase()}"></td>
+              <td class="w3-center" th:if="${athlete?.getAthlete().getPosition().toString().substring(0, 1).toLowerCase() == 'm'}">a</td>
+              <td class="w3-center" th:if="${athlete?.getAthlete().getPosition().toString().substring(0, 1).toLowerCase() == 'f'}">f</td>
               <td class="w3-center" th:text="${athlete?.getT10()}"></td>
               <td class="w3-center" th:text="${athlete?.getT9()}"></td>
               <td class="w3-center" th:text="${athlete?.getT8()}"></td>
