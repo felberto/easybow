@@ -99,6 +99,7 @@ export class CompetitionOverviewZsavNawuGmComponent implements OnInit {
   }
 
   createResultFinal(competition: ICompetition, group: IGroup): void {
+    /* todo newGroupSeriesDialog2 erstellen und Rangliste erstellen mit verschiendenen Runden wie Einzel */
     const modalRef = this.modalService.open(NewSeriesDialog2Component, {
       size: 'xl',
       backdrop: 'static',
