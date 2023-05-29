@@ -50,4 +50,7 @@ public interface GroupService {
     void delete(Long id);
 
     List<Group> findByCompetition(Long id);
+
+    List<Group> findByCompetitionAndClub(Long competitionId, Long clubId);
+    List<Group> findByCompetitionAndClubOnlyOne(Long competitionId, Long clubId);
 }

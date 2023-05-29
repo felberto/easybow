@@ -33,8 +33,7 @@ public class Group implements Serializable {
     @ManyToOne
     private Competition competition;
 
-    @NotNull
-    @Column(name = "round", nullable = false)
+    @Column(name = "round")
     private Integer round;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -12,16 +12,18 @@
       Export Competition
     </button>
   </div>
-  <div *jhiHasAnyAuthority="['ROLE_ZSAV', 'ROLE_ADMIN']" class="d-flex justify-content-center">
+  <div class="d-flex justify-content-center">
     <button
-      (click)="adminAthlete(competition)"
+      (click)="createAthlete(competition)"
       tuiButton
       type="button"
       appearance="customButton"
       class="tui-space_right-3 tui-space_bottom-3"
     >
-      Manage athletes
+      neuer Schütze erfassen
     </button>
+  </div>
+  <div *jhiHasAnyAuthority="['ROLE_ZSAV', 'ROLE_ADMIN']" class="d-flex justify-content-center">
     <button
       [routerLink]="['/competition', competition.id, 'ranking-list-zsav-nawu-gm']"
       tuiButton
@@ -29,31 +31,160 @@
       appearance="customButton"
       class="tui-space_right-3 tui-space_bottom-3"
     >
-      Create rankinglist
+      Rangliste erstellen
+    </button>
+  </div>
+  <div class="d-flex justify-content-center">
+    <button (click)="addNewGroup()" tuiButton type="button" appearance="customButton" class="tui-space_right-3 tui-space_bottom-3">
+      Gruppe hinzufügen
     </button>
   </div>
 
-  <button (click)="addNewGroup()" tuiButton type="button" appearance="customButton" class="tui-space_right-3 tui-space_bottom-3">
-    Gruppe hinzufügen
-  </button>
-  <!--TODO für jede Runde ein button zum resultat erfassen. dann kann dort jeweils der schütze per dropdown wie mups eingetragen werden-->
+  <h4 class="tui-form__header tui-form__header_margin-top_none">1. Runde</h4>
   <tui-accordion class="container">
-    <tui-accordion-item *ngFor="let group of groups; let index = index">
+    <tui-accordion-item *ngFor="let group of groups1; let index = index">
       {{ group.name }}
-      <button (click)="deleteGroup(group)" tuiButton type="button" appearance="customButton" class="tui-space_right-3 tui-space_bottom-3">
-        Gruppe löschen
-      </button>
       <ng-template tuiAccordionItemContent>
         <button
-          (click)="openSeriesDialogGroup(group, round)"
-          *ngFor="let round of this.rounds; let i = index"
+          (click)="createResult(competition, group, 1)"
           tuiButton
           type="button"
           appearance="customButton"
           class="tui-space_right-3 tui-space_bottom-3"
         >
-          <span class="d-none d-md-inline">{{ round.round }}. Runde</span>
+          Resultat erfassen
         </button>
+        <table class="table table-striped" aria-describedby="page-heading">
+          <thead>
+            <tr>
+              <th scope="col">
+                <span>Name</span>
+              </th>
+              <th scope="col">
+                <span>Resultat</span>
+              </th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let result of getResultsPerGroup(group, 1)" data-cy="entityTable">
+              <td>{{ result.athlete!.firstName }} {{ result.athlete!.name }}</td>
+              <td>{{ result.result }}</td>
+              <td class="text-right">
+                <div class="btn-group">
+                  <button
+                    (click)="openSeriesDialog(result)"
+                    tuiButton
+                    type="button"
+                    appearance="customButton"
+                    class="tui-space_right-3 tui-space_bottom-3"
+                  >
+                    <span class="d-none d-md-inline">Resultat bearbeiten</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-template>
+    </tui-accordion-item>
+  </tui-accordion>
+  <h4 class="tui-form__header tui-form__header_margin-top_none">2. Runde</h4>
+  <tui-accordion class="container">
+    <tui-accordion-item *ngFor="let group of groups2; let index = index">
+      {{ group.name }}
+      <ng-template tuiAccordionItemContent>
+        <button
+          (click)="createResult(competition, group, 2)"
+          tuiButton
+          type="button"
+          appearance="customButton"
+          class="tui-space_right-3 tui-space_bottom-3"
+        >
+          Resultat erfassen
+        </button>
+        <table class="table table-striped" aria-describedby="page-heading">
+          <thead>
+            <tr>
+              <th scope="col">
+                <span>Name</span>
+              </th>
+              <th scope="col">
+                <span>Resultat</span>
+              </th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let result of getResultsPerGroup(group, 2)" data-cy="entityTable">
+              <td>{{ result.athlete!.firstName }} {{ result.athlete!.name }}</td>
+              <td>{{ result.result }}</td>
+              <td class="text-right">
+                <div class="btn-group">
+                  <button
+                    (click)="openSeriesDialog(result)"
+                    tuiButton
+                    type="button"
+                    appearance="customButton"
+                    class="tui-space_right-3 tui-space_bottom-3"
+                  >
+                    <span class="d-none d-md-inline">Resultat bearbeiten</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-template>
+    </tui-accordion-item>
+  </tui-accordion>
+  <h4 *jhiHasAnyAuthority="['ROLE_ADMIN']" class="tui-form__header tui-form__header_margin-top_none">Final</h4>
+  <tui-accordion *jhiHasAnyAuthority="['ROLE_ADMIN']" class="container">
+    <tui-accordion-item *ngFor="let group of groups99; let index = index">
+      {{ group.name }}
+      <ng-template tuiAccordionItemContent>
+        <button
+          *jhiHasAnyAuthority="['ROLE_ADMIN']"
+          (click)="createResultFinal(competition, group)"
+          tuiButton
+          type="button"
+          appearance="customButton"
+          class="tui-space_right-3 tui-space_bottom-3"
+        >
+          Finalresultat erfassen
+        </button>
+        <table class="table table-striped" aria-describedby="page-heading">
+          <thead>
+            <tr>
+              <th scope="col">
+                <span>Name</span>
+              </th>
+              <th scope="col">
+                <span>Resultat</span>
+              </th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let result of getResultsPerGroup(group, 99)" data-cy="entityTable">
+              <td>{{ result.athlete!.firstName }} {{ result.athlete!.name }}</td>
+              <td>{{ result.result }}</td>
+              <td class="text-right">
+                <div class="btn-group">
+                  <button
+                    (click)="openSeriesDialog(result)"
+                    tuiButton
+                    type="button"
+                    appearance="customButton"
+                    class="tui-space_right-3 tui-space_bottom-3"
+                  >
+                    <span class="d-none d-md-inline">Resultat bearbeiten</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </ng-template>
     </tui-accordion-item>
   </tui-accordion>

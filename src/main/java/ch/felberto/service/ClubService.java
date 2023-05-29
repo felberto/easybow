@@ -49,4 +49,6 @@ public interface ClubService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Optional<Club> findOneByName(String name);
 }

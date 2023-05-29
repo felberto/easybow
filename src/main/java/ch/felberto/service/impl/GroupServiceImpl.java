@@ -76,4 +76,16 @@ public class GroupServiceImpl implements GroupService {
         log.debug("Request to get Group by Competition : {}", id);
         return groupRepository.findByCompetition_Id(id);
     }
+
+    @Override
+    public List<Group> findByCompetitionAndClub(Long competitionId, Long clubId) {
+        log.debug("Request to get Group by Competition : {} and Club : {}", competitionId, clubId);
+        return groupRepository.findByCompetition_IdAndClub_Id(competitionId, clubId);
+    }
+
+    @Override
+    public List<Group> findByCompetitionAndClubOnlyOne(Long competitionId, Long clubId) {
+        log.debug("Request to get Group by Competition : {} and Club : {}", competitionId, clubId);
+        return groupRepository.findByCompetition_IdAndClub_IdAndRound(competitionId, clubId, 1);
+    }
 }

@@ -180,6 +180,13 @@ public class ClubResource {
         return ResponseUtil.wrapOrNotFound(club);
     }
 
+    @GetMapping("/clubs/name/{name}")
+    public ResponseEntity<Club> getClub(@PathVariable String name) {
+        log.debug("REST request to get Club : {}", name);
+        Optional<Club> club = clubService.findOneByName(name);
+        return ResponseUtil.wrapOrNotFound(club);
+    }
+
     /**
      * {@code DELETE  /clubs/:id} : delete the "id" club.
      *

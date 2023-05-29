@@ -14,7 +14,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Long>, JpaSpecificationExecutor<Group> {
     Boolean existsByName(String name);
+
     Optional<Group> findByName(String name);
 
     List<Group> findByCompetition_Id(Long id);
+
+    List<Group> findByCompetition_IdAndClub_Id(Long competitionId, Long clubId);
+    List<Group> findByCompetition_IdAndClub_IdAndRound(Long competitionId, Long clubId, Integer round);
 }

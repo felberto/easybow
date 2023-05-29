@@ -87,4 +87,43 @@ public class ClubServiceImpl implements ClubService {
         log.debug("Request to delete Club : {}", id);
         clubRepository.deleteById(id);
     }
+
+    @Override
+    public Optional<Club> findOneByName(String name) {
+        log.debug("Request to get Club : {}", name);
+        String originalName = "";
+        switch (name) {
+            case "ROTHENBURG":
+                originalName = "ASV Rothenburg";
+                break;
+            case "EMMENBRUECKE":
+                originalName = "ASG Emmenbrücke";
+                break;
+            case "STEINHAUSEN":
+                originalName = "ASG Steinhausen";
+                break;
+            case "ETTISWIL":
+                originalName = "ASG Brestenegg-Ettiswil";
+                break;
+            case "AEGERITAL":
+                originalName = "ASV Ägerital";
+                break;
+            case "GURTNELLEN":
+                originalName = "ASG Gurtnellen";
+                break;
+            case "DALLENWIL":
+                originalName = "ASV Dallenwil";
+                break;
+            case "REINACH":
+                originalName = "ASV Reinach-Birseck";
+                break;
+            case "MERLISCHACHEN":
+                originalName = "ASV Merlischachen";
+                break;
+            default:
+                originalName = "";
+                break;
+        }
+        return clubRepository.findByName(originalName);
+    }
 }

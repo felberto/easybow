@@ -7,7 +7,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { createRequestOption } from 'app/core/request/request-util';
 import { getGroupIdentifier, IGroup } from '../group.model';
 import { getCompetitionIdentifier, ICompetition } from '../../competition/competition.model';
-import { IRanking } from '../../ranking/ranking.model';
+import { getClubIdentifier, IClub } from '../../club/club.model';
 
 export type EntityResponseType = HttpResponse<IGroup>;
 export type EntityArrayResponseType = HttpResponse<IGroup[]>;
@@ -38,6 +38,24 @@ export class GroupService {
     return this.http.get<Array<IGroup>>(`${this.resourceUrl}/competition/${getCompetitionIdentifier(competition) as number}`, {
       observe: 'response',
     });
+  }
+
+  findByCompetitionAndClub(competition: ICompetition, club: IClub): Observable<HttpResponse<Array<IGroup>>> {
+    return this.http.get<Array<IGroup>>(
+      `${this.resourceUrl}/competitionclub/${getCompetitionIdentifier(competition) as number}/${getClubIdentifier(club) as number}`,
+      {
+        observe: 'response',
+      }
+    );
+  }
+
+  findByCompetitionAndClubOnlyOne(competition: ICompetition, club: IClub): Observable<HttpResponse<Array<IGroup>>> {
+    return this.http.get<Array<IGroup>>(
+      `${this.resourceUrl}/competitionclub/one/${getCompetitionIdentifier(competition) as number}/${getClubIdentifier(club) as number}`,
+      {
+        observe: 'response',
+      }
+    );
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {
