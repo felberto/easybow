@@ -16,6 +16,7 @@ import { IRound } from '../../round/round.model';
 import { RoundService } from '../../round/service/round.service';
 import { AccountService } from '../../../core/auth/account.service';
 import * as dayjs from 'dayjs';
+import * as isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 
 @Component({
   selector: 'jhi-new-series-dialog-2',
@@ -301,6 +302,7 @@ export class NewSeriesDialog2Component implements OnInit {
   }
 
   protected loadRelationshipsOptionsRound(): void {
+    dayjs.extend(isSameOrBefore);
     this.roundService
       .query({
         page: 0,
@@ -311,7 +313,7 @@ export class NewSeriesDialog2Component implements OnInit {
       .subscribe(
         (rounds: IRound[]) =>
           (this.roundsSharedCollection = rounds.filter(
-            value => value.round !== 99 && value.competition?.id === this.competition?.id && value.date!.toDate() >= dayjs().toDate()
+            value => value.round !== 99 && value.competition?.id === this.competition?.id && dayjs().isSameOrBefore(value.date!, 'day')
           ))
       );
   }
