@@ -5,6 +5,7 @@ import ch.felberto.repository.GroupRepository;
 import ch.felberto.service.GroupService;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -78,9 +79,44 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<Group> findByCompetitionAndClub(Long competitionId, Long clubId) {
-        log.debug("Request to get Group by Competition : {} and Club : {}", competitionId, clubId);
-        return groupRepository.findByCompetition_IdAndClub_Id(competitionId, clubId);
+    public List<Group> findByCompetitionAndClub(Long competitionId, String club) {
+        log.debug("Request to get Group by Competition : {} and Club : {}", competitionId, club);
+        List<Group> groupList = groupRepository.findByCompetition_Id(competitionId);
+        String originalName = "";
+        switch (club) {
+            case "ROTHENBURG":
+                originalName = "ASV Rothenburg";
+                break;
+            case "EMMENBRUECKE":
+                originalName = "ASG Emmenbrücke";
+                break;
+            case "STEINHAUSEN":
+                originalName = "ASG Steinhausen";
+                break;
+            case "ETTISWIL":
+                originalName = "ASG Brestenegg-Ettiswil";
+                break;
+            case "AEGERITAL":
+                originalName = "ASV Ägerital";
+                break;
+            case "GURTNELLEN":
+                originalName = "ASG Gurtnellen";
+                break;
+            case "DALLENWIL":
+                originalName = "ASV Dallenwil";
+                break;
+            case "REINACH":
+                originalName = "ASV Reinach-Birseck";
+                break;
+            case "MERLISCHACHEN":
+                originalName = "ASV Merlischachen";
+                break;
+            default:
+                originalName = "";
+                break;
+        }
+        String finalOriginalName = originalName;
+        return groupList.stream().filter(r -> r.getClub().getName().equals(finalOriginalName)).collect(Collectors.toList());
     }
 
     @Override

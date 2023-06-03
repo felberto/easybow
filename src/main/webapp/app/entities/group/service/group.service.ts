@@ -40,13 +40,10 @@ export class GroupService {
     });
   }
 
-  findByCompetitionAndClub(competition: ICompetition, club: IClub): Observable<HttpResponse<Array<IGroup>>> {
-    return this.http.get<Array<IGroup>>(
-      `${this.resourceUrl}/competitionclub/${getCompetitionIdentifier(competition) as number}/${getClubIdentifier(club) as number}`,
-      {
-        observe: 'response',
-      }
-    );
+  findByCompetitionAndClub(competition: ICompetition, club: string): Observable<HttpResponse<Array<IGroup>>> {
+    return this.http.get<Array<IGroup>>(`${this.resourceUrl}/competition/${getCompetitionIdentifier(competition) as number}/club/${club}`, {
+      observe: 'response',
+    });
   }
 
   findByCompetitionAndClubOnlyOne(competition: ICompetition, club: IClub): Observable<HttpResponse<Array<IGroup>>> {

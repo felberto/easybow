@@ -51,6 +51,6 @@ public interface GroupService {
 
     List<Group> findByCompetition(Long id);
 
-    List<Group> findByCompetitionAndClub(Long competitionId, Long clubId);
+    List<Group> findByCompetitionAndClub(Long competitionId, String club);
     List<Group> findByCompetitionAndClubOnlyOne(Long competitionId, Long clubId);
 }

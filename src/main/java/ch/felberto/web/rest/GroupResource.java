@@ -186,10 +186,10 @@ public class GroupResource {
         return ResponseEntity.ok().body(groupService.findByCompetition(id));
     }
 
-    @GetMapping("/groups/competitionclub/{competitionId}/{clubId}")
-    public ResponseEntity<List<Group>> getGroupByCompetitionAndClub(@PathVariable Long competitionId, @PathVariable Long clubId) {
-        log.debug("REST request to get Group by Competition: {} and Club : {}", competitionId, clubId);
-        return ResponseEntity.ok().body(groupService.findByCompetitionAndClub(competitionId, clubId));
+    @GetMapping("/groups/competition/{competitionId}/club/{club}")
+    public ResponseEntity<List<Group>> getGroupByCompetitionAndClub(@PathVariable Long competitionId, @PathVariable String club) {
+        log.debug("REST request to get Group by Competition: {} and Club : {}", competitionId, club);
+        return ResponseEntity.ok().body(groupService.findByCompetitionAndClub(competitionId, club));
     }
 
     @GetMapping("/groups/competitionclub/one/{competitionId}/{clubId}")

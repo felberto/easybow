@@ -22,7 +22,6 @@ import { ClubService } from '../../club/service/club.service';
 import * as dayjs from 'dayjs';
 import { SeriesDialog1Component } from '../series-dialog-1/series-dialog-1.component';
 import { SeriesDialog2Component } from '../series-dialog-2/series-dialog-2.component';
-import { NewSeriesDialog1Component } from '../new-series-dialog-1/new-series-dialog-1.component';
 import { NewSeriesDialog2Component } from '../new-series-dialog-2/new-series-dialog-2.component';
 import { NewGroupSeriesDialog1Component } from '../new-group-series-dialog-1/new-group-series-dialog-1.component';
 
@@ -66,21 +65,23 @@ export class CompetitionOverviewZsavNawuGmComponent implements OnInit {
       this.resultsService.findByCompetition(competition).subscribe(re => {
         this.results = re.body;
 
-        this.groupService.findByCompetition(competition).subscribe(res => {
-          this.groups = res.body;
-          console.log(res.body);
-          this.accountService.getAuthenticationState().subscribe(account => {
-            this.account = account;
-            if (this.account?.club != null) {
-              this.groups1 = res.body!.filter(value => value.club?.id === this.account?.club?.id).filter(value => value.round === 1);
-              this.groups2 = res.body!.filter(value => value.club?.id === this.account?.club?.id).filter(value => value.round === 2);
-              this.groups99 = res.body!.filter(value => value.club?.id === this.account?.club?.id).filter(value => value.round === 99);
-            }
+        if (this.userIsVerein()) {
+          this.groupService.findByCompetitionAndClub(competition, this.accountService.getClubAuthority()).subscribe(res => {
+            this.groups = res.body;
+            console.log(res.body);
+            this.groups1 = res.body!.filter(value => value.round === 1);
+            this.groups2 = res.body!.filter(value => value.round === 2);
+            this.groups99 = res.body!.filter(value => value.round === 99);
           });
-          this.groups1 = res.body!.filter(value => value.round === 1);
-          this.groups2 = res.body!.filter(value => value.round === 2);
-          this.groups99 = res.body!.filter(value => value.round === 99);
-        });
+        } else {
+          this.groupService.findByCompetition(competition).subscribe(res => {
+            this.groups = res.body;
+            console.log(res.body);
+            this.groups1 = res.body!.filter(value => value.round === 1);
+            this.groups2 = res.body!.filter(value => value.round === 2);
+            this.groups99 = res.body!.filter(value => value.round === 99);
+          });
+        }
       });
     });
   }
