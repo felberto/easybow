@@ -72,9 +72,9 @@ export class CompetitionOverviewZsavNawuGmComponent implements OnInit {
           this.accountService.getAuthenticationState().subscribe(account => {
             this.account = account;
             if (this.account?.club != null) {
-              this.groups1 = res.body!.filter(value => value.id === this.account?.club?.id).filter(value => value.round === 1);
-              this.groups2 = res.body!.filter(value => value.id === this.account?.club?.id).filter(value => value.round === 2);
-              this.groups99 = res.body!.filter(value => value.id === this.account?.club?.id).filter(value => value.round === 99);
+              this.groups1 = res.body!.filter(value => value.club?.id === this.account?.club?.id).filter(value => value.round === 1);
+              this.groups2 = res.body!.filter(value => value.club?.id === this.account?.club?.id).filter(value => value.round === 2);
+              this.groups99 = res.body!.filter(value => value.club?.id === this.account?.club?.id).filter(value => value.round === 99);
             }
           });
           this.groups1 = res.body!.filter(value => value.round === 1);
