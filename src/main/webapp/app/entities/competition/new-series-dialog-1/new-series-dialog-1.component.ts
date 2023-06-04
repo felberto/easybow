@@ -84,10 +84,10 @@ export class NewSeriesDialog1Component implements OnInit {
   ngOnInit(): void {
     if (this.userIsVerein()) {
       this.loadRelationshipsOptionsAthlete(true);
-      this.loadRelationshipsOptionsRound();
+      this.loadRelationshipsOptionsRound(true);
     } else {
       this.loadRelationshipsOptionsAthlete(false);
-      this.loadRelationshipsOptionsRound();
+      this.loadRelationshipsOptionsRound(false);
     }
   }
 
@@ -273,7 +273,7 @@ export class NewSeriesDialog1Component implements OnInit {
       });
   }
 
-  protected loadRelationshipsOptionsRound(): void {
+  protected loadRelationshipsOptionsRound(isVerein: boolean): void {
     dayjs.extend(isSameOrBefore);
     this.roundService
       .query({
@@ -282,11 +282,12 @@ export class NewSeriesDialog1Component implements OnInit {
       })
       .pipe(map((res: HttpResponse<IRound[]>) => res.body ?? []))
       .pipe(map((rounds: IRound[]) => this.roundService.addRoundToCollectionIfMissing(rounds, this.roundForm.get('round')!.value)))
-      .subscribe(
-        (rounds: IRound[]) =>
-          (this.roundsSharedCollection = rounds.filter(
+      .subscribe((rounds: IRound[]) => {
+        if (isVerein) {
+          this.roundsSharedCollection = rounds.filter(
             value => value.round !== 99 && value.competition?.id === this.competition?.id && dayjs().isSameOrBefore(value.date!, 'day')
-          ))
-      );
+          );
+        }
+      });
   }
 }
