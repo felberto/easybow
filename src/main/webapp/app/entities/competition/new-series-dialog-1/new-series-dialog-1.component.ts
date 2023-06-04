@@ -287,6 +287,8 @@ export class NewSeriesDialog1Component implements OnInit {
           this.roundsSharedCollection = rounds.filter(
             value => value.round !== 99 && value.competition?.id === this.competition?.id && dayjs().isSameOrBefore(value.date!, 'day')
           );
+        } else {
+          this.roundsSharedCollection = rounds;
         }
       });
   }
