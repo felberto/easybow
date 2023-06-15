@@ -9,6 +9,21 @@
     </div>
   </h4>
 
+  <div class="container">
+    <button (click)="generate(1)" tuiButton type="button" appearance="customButton" class="tui-space_right-3 tui-space_bottom-3">
+      1. Runde
+    </button>
+    <button (click)="generate(2)" tuiButton type="button" appearance="customButton" class="tui-space_right-3 tui-space_bottom-3">
+      2. Runde
+    </button>
+    <button (click)="generate(100)" tuiButton type="button" appearance="customButton" class="tui-space_right-3 tui-space_bottom-3">
+      Qualifikation Final
+    </button>
+    <button (click)="generate(99)" tuiButton type="button" appearance="customButton" class="tui-space_right-3 tui-space_bottom-3">
+      Final
+    </button>
+  </div>
+
   <div *ngIf="this.groupRankingList !== null && this.groupRankingList !== undefined">
     <div class="example-container1">
       <h2>Gruppenrangliste</h2>

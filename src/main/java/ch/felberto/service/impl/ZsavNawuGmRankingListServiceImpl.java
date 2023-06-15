@@ -14,6 +14,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -55,9 +56,8 @@ public class ZsavNawuGmRankingListServiceImpl {
     public GroupRankingList generateGroupRankingList(Long competitionId, Integer type) {
         log.info("generate groupRankingList for competitionId: {} and type: {}", competitionId, type);
         Competition competition = competitionRepository.getOne(competitionId);
-        GroupRankingList groupRankingList = getAllAthletesByCompetitionGroup(competition);
+        GroupRankingList groupRankingList = getAllAthletesByCompetitionGroup(competition, type);
 
-        //TODO sort athletes for groups / best res
         sortRankingListFinalSeries2(groupRankingList);
         sortRankingListWithinGroup(groupRankingList);
         log.info("generated groupRankingList: {}", groupRankingList);
@@ -74,11 +74,29 @@ public class ZsavNawuGmRankingListServiceImpl {
         return rankingList;
     }
 
-    public GroupRankingList getAllAthletesByCompetitionGroup(Competition competition) {
+    public GroupRankingList getAllAthletesByCompetitionGroup(Competition competition, Integer type) {
         GroupRankingList groupRankingList = new GroupRankingList();
         groupRankingList.setCompetition(competition);
-
-        List<Results> results = new ArrayList<>(resultsRepository.findByCompetition_Id(competition.getId()));
+        //todo test this
+        List<Results> results;
+        switch (type) {
+            case 1:
+                results = new ArrayList<>(resultsRepository.findByCompetition_IdAndRound(competition.getId(), 1));
+                break;
+            case 2:
+                results = new ArrayList<>(resultsRepository.findByCompetition_IdAndRound(competition.getId(), 2));
+                break;
+            case 100:
+                List<Results> round1 = new ArrayList<>(resultsRepository.findByCompetition_IdAndRound(competition.getId(), 1));
+                List<Results> round2 = new ArrayList<>(resultsRepository.findByCompetition_IdAndRound(competition.getId(), 2));
+                results = Stream.concat(round1.stream(), round2.stream()).collect(Collectors.toList());
+                break;
+            case 99:
+                results = new ArrayList<>(resultsRepository.findByCompetition_IdAndRound(competition.getId(), 99));
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + type);
+        }
         List<GroupAthleteResult> groupAthleteResultList = new ArrayList<>();
         List<Group> groupList = new ArrayList<>();
         results.forEach(

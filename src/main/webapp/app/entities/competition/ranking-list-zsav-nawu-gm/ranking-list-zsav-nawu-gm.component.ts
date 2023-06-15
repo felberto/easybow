@@ -24,16 +24,15 @@ export class RankingListZsavNawuGmComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ competition }) => {
       this.competition = competition;
-      this.generate();
     });
   }
 
-  generate(): void {
+  generate(type: number): void {
     if (this.competition != null) {
-      this.rankingListService.getGroupRankingList(this.competition, 1).subscribe(res => {
+      this.rankingListService.getGroupRankingList(this.competition, type).subscribe(res => {
         this.groupRankingList = res.body;
       });
-      this.rankingListService.getRankingList(this.competition, 2).subscribe(res => {
+      this.rankingListService.getRankingList(this.competition, type).subscribe(res => {
         this.rankingList = res.body;
       });
     }
