@@ -18,8 +18,6 @@ export class ViewComponent implements OnInit {
   rankingListView: IAthleteResult[] = [];
   rank = 0;
 
-  liveUser = false;
-
   variable = 1;
 
   constructor(
@@ -32,11 +30,6 @@ export class ViewComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ competition }) => {
       this.competition = competition;
       if (this.competition != null) {
-        this.accountService.getAuthorites().forEach(role => {
-          if (role === 'ROLE_LIVE') {
-            this.liveUser = true;
-          }
-        });
         this.refreshData();
         setInterval(() => {
           this.refreshData();
@@ -50,11 +43,7 @@ export class ViewComponent implements OnInit {
       this.rankingListService.getRankingList(this.competition, 99).subscribe(res => {
         console.log(res.body);
         this.rankingList = res.body;
-        if (this.liveUser) {
-          this.rankingListView = this.rankingList!.athleteResultList!;
-        } else {
-          this.rankingListView = this.rankingList!.athleteResultList!;
-        }
+        this.rankingListView = this.rankingList!.athleteResultList!;
       });
     }
   }
