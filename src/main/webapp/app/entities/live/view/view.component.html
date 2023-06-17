@@ -24,7 +24,7 @@
           <tbody>
             <tr *ngFor="let result of this.rankingListView; let i = index">
               <td>
-                <strong>{{ i + 1 + this.rank * 10 }}</strong>
+                <strong>{{ i + 1 + this.rank }}</strong>
               </td>
               <td>
                 <strong>{{ result.athlete?.firstName }} {{ result.athlete?.name }}</strong>

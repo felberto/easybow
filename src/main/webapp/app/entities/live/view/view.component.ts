@@ -51,19 +51,7 @@ export class ViewComponent implements OnInit {
         console.log(res.body);
         this.rankingList = res.body;
         if (this.liveUser) {
-          if (this.rankingList!.athleteResultList!.length > 10) {
-            if (this.variable === 1) {
-              this.rankingListView = this.rankingList!.athleteResultList!.slice(0, 10);
-              this.variable = 2;
-              this.rank = 0;
-            } else {
-              this.rankingListView = this.rankingList!.athleteResultList!.slice(10, 21);
-              this.variable = 1;
-              this.rank = 1;
-            }
-          } else {
-            this.rankingListView = this.rankingList!.athleteResultList!;
-          }
+          this.rankingListView = this.rankingList!.athleteResultList!;
         } else {
           this.rankingListView = this.rankingList!.athleteResultList!;
         }
