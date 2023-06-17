@@ -43,8 +43,8 @@
     </button>
   </div>
 
-  <h4 class="tui-form__header tui-form__header_margin-top_none">1. Runde</h4>
-  <table class="table table-striped" aria-describedby="page-heading">
+  <h4 *ngIf="show" class="tui-form__header tui-form__header_margin-top_none">1. Runde</h4>
+  <table *ngIf="show" class="table table-striped" aria-describedby="page-heading">
     <thead>
       <tr>
         <th scope="col">
@@ -77,8 +77,8 @@
     </tbody>
   </table>
 
-  <h4 class="tui-form__header tui-form__header_margin-top_none">2. Runde</h4>
-  <table class="table table-striped" aria-describedby="page-heading">
+  <h4 *ngIf="show" class="tui-form__header tui-form__header_margin-top_none">2. Runde</h4>
+  <table *ngIf="show" class="table table-striped" aria-describedby="page-heading">
     <thead>
       <tr>
         <th scope="col">

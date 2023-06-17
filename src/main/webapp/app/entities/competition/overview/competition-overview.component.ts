@@ -37,6 +37,7 @@ export class CompetitionOverviewComponent implements OnInit {
   athletes: Array<IAthlete> | null = [];
 
   showFinal = false;
+  show = false;
 
   constructor(
     protected activatedRoute: ActivatedRoute,
