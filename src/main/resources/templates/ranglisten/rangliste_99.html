@@ -88,7 +88,7 @@
                 th:if="${(rangliste.getAthleteResultList().indexOf(athlete) + 1) == 8}"
                 class="w3-right-align solid"
                 style="font-weight: bold"
-                th:text="${athlete?.getResultat()}"
+                th:text="${athlete?.getResult()}"
               ></td>
               <td
                 th:if="${(rangliste.getAthleteResultList().indexOf(athlete) + 1) != 8}"
