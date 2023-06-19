@@ -45,15 +45,34 @@
               <table class="w3-table">
                 <tbody>
                   <tr th:each="athleteResult : ${groupAthleteResult.getAthleteResultList()}">
-                    <td th:text="${athleteResult?.getAthlete().getName() + ' ' + athleteResult?.getAthlete().getFirstName()}"></td>
-                    <td th:text="${athleteResult?.getAthlete().getYearOfBirth()}"></td>
-                    <td th:if="${athleteResult?.getAthlete().getPosition().toString() == 'FREE'}">f</td>
-                    <td th:if="${athleteResult?.getAthlete().getPosition().toString() == 'MOUNTED'}">a</td>
-                    <td th:text="${athleteResult?.getResult()}"></td>
+                    <td
+                      class="w3-center"
+                      th:text="${athleteResult?.getAthlete().getName() + ' ' + athleteResult?.getAthlete().getFirstName()}"
+                    ></td>
+                    <td class="w3-center" th:text="${athleteResult?.getAthlete().getYearOfBirth()}"></td>
+                    <td class="w3-center" th:if="${athlete?.getAthlete().getPosition().toString().substring(0, 1).toLowerCase() == 'm'}">
+                      a
+                    </td>
+                    <td class="w3-center" th:if="${athlete?.getAthlete().getPosition().toString().substring(0, 1).toLowerCase() == 'f'}">
+                      f
+                    </td>
+                    <td class="w3-center" th:text="${athleteResult?.getResult()}"></td>
                   </tr>
                 </tbody>
               </table>
               <td class="w3-right-align" style="font-weight: bold" th:text="${groupAthleteResult?.getResult()}"></td>
+              <p
+                style="page-break-after: always"
+                th:if="${(rankingList.getGroupAthleteResultList().indexOf(groupAthleteResult) + 1) == 10}"
+              >
+                &nbsp;
+              </p>
+              <p
+                style="page-break-before: always"
+                th:if="${(rankingList.getGroupAthleteResultList().indexOf(groupAthleteResult) + 1) == 10}"
+              >
+                &nbsp;
+              </p>
             </tr>
           </tbody>
         </table>
