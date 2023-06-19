@@ -77,6 +77,7 @@ public class ZsavNawuGmRankingListServiceImpl {
     public GroupRankingList getAllAthletesByCompetitionGroup(Competition competition, Integer type) {
         GroupRankingList groupRankingList = new GroupRankingList();
         groupRankingList.setCompetition(competition);
+        groupRankingList.setType(type);
         //todo test this
         List<Results> results;
         switch (type) {
