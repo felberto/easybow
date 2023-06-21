@@ -67,7 +67,7 @@ public class ZsavNawuGmRankingListServiceImpl {
     public RankingList generateRankingList(Long competitionId, Integer type) {
         log.info("generate rankingList for competitionId: {} and type: {}", competitionId, type);
         Competition competition = competitionRepository.getOne(competitionId);
-        RankingList rankingList = getAllAthletesByCompetition(competition);
+        RankingList rankingList = getAllAthletesByCompetition(competition, type);
 
         sortRankingListRound1Series2(rankingList);
         log.info("generated rankingList: {}", rankingList);
@@ -234,9 +234,10 @@ public class ZsavNawuGmRankingListServiceImpl {
         return groupRankingList;
     }
 
-    public RankingList getAllAthletesByCompetition(Competition competition) {
+    public RankingList getAllAthletesByCompetition(Competition competition, Integer type) {
         RankingList rankingList = new RankingList();
         rankingList.setCompetition(competition);
+        rankingList.setType(type);
 
         List<Results> results = resultsRepository.findByCompetition_Id(competition.getId());
 

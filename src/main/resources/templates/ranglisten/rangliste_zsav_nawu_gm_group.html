@@ -70,15 +70,12 @@
                 </tbody>
               </table>
               <td class="w3-right-align" style="width: 25px; font-weight: bolder" th:text="${groupAthleteResult?.getResult()}"></td>
-              <p
-                style="page-break-after: always"
-                th:if="${(rankingList.getGroupAthleteResultList().indexOf(groupAthleteResult) + 1) == 10}"
-              >
+              <p style="page-break-after: always" th:if="${(rankingList.getGroupAthleteResultList().indexOf(groupAthleteResult) + 1) == 9}">
                 &nbsp;
               </p>
               <p
                 style="page-break-before: always"
-                th:if="${(rankingList.getGroupAthleteResultList().indexOf(groupAthleteResult) + 1) == 10}"
+                th:if="${(rankingList.getGroupAthleteResultList().indexOf(groupAthleteResult) + 1) == 9}"
               >
                 &nbsp;
               </p>
