@@ -239,7 +239,26 @@ public class ZsavNawuGmRankingListServiceImpl {
         rankingList.setCompetition(competition);
         rankingList.setType(type);
 
-        List<Results> results = resultsRepository.findByCompetition_Id(competition.getId());
+        //todo test this
+        List<Results> results;
+        switch (type) {
+            case 1:
+                results = new ArrayList<>(resultsRepository.findByCompetition_IdAndRound(competition.getId(), 1));
+                break;
+            case 2:
+                results = new ArrayList<>(resultsRepository.findByCompetition_IdAndRound(competition.getId(), 2));
+                break;
+            case 100:
+                List<Results> round1 = new ArrayList<>(resultsRepository.findByCompetition_IdAndRound(competition.getId(), 1));
+                List<Results> round2 = new ArrayList<>(resultsRepository.findByCompetition_IdAndRound(competition.getId(), 2));
+                results = Stream.concat(round1.stream(), round2.stream()).collect(Collectors.toList());
+                break;
+            case 99:
+                results = new ArrayList<>(resultsRepository.findByCompetition_IdAndRound(competition.getId(), 99));
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + type);
+        }
 
         List<Athlete> athleteList = new ArrayList<>();
         results
