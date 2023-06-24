@@ -233,17 +233,6 @@ public class ZsavNawuGmRankingListServiceImpl {
         );
         groupRankingList.setGroupAthleteResultList(groupAthleteResultList);
 
-        // todo test this
-        Iterator<GroupAthleteResult> itr = groupRankingList.getGroupAthleteResultList().iterator();
-        int i = 0;
-        while (itr.hasNext()) {
-            itr.next();
-            if (i % 2 == 0) {
-                itr.remove();
-            }
-            i++;
-        }
-
         return groupRankingList;
     }
 

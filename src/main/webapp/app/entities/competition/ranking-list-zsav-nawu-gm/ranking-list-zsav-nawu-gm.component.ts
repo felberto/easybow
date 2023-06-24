@@ -31,6 +31,15 @@ export class RankingListZsavNawuGmComponent implements OnInit {
     if (this.competition != null) {
       this.rankingListService.getGroupRankingList(this.competition, type).subscribe(res => {
         this.groupRankingList = res.body;
+        if (type === 100) {
+          const list = res.body;
+          let i = list!.groupAthleteResultList!.length;
+          const n = 2;
+          while (i--) {
+            (i + 1) % n === 0 && list?.groupAthleteResultList?.splice(i, 1);
+          }
+          this.groupRankingList = list;
+        }
       });
       if (type !== 100) {
         this.rankingListService.getRankingList(this.competition, type).subscribe(res => {
