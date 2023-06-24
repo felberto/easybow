@@ -32,9 +32,11 @@ export class RankingListZsavNawuGmComponent implements OnInit {
       this.rankingListService.getGroupRankingList(this.competition, type).subscribe(res => {
         this.groupRankingList = res.body;
       });
-      this.rankingListService.getRankingList(this.competition, type).subscribe(res => {
-        this.rankingList = res.body;
-      });
+      if (type !== 100) {
+        this.rankingListService.getRankingList(this.competition, type).subscribe(res => {
+          this.rankingList = res.body;
+        });
+      }
     }
   }
 
@@ -68,6 +70,20 @@ export class RankingListZsavNawuGmComponent implements OnInit {
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
         link.target = '_blank';
+        let runde = '';
+        if (this.rankingList!.type === 1) {
+          runde = '1. Runde';
+        }
+        if (this.rankingList!.type === 2) {
+          runde = '2. Runde';
+        }
+        if (this.rankingList!.type === 100) {
+          runde = 'Qualifikation Final';
+        }
+        if (this.rankingList!.type === 99) {
+          runde = 'Final';
+        }
+        runde = runde.concat(' Runde');
         let title = '';
         if (
           this.groupRankingList?.competition?.name !== undefined &&
@@ -79,31 +95,56 @@ export class RankingListZsavNawuGmComponent implements OnInit {
             ' ' +
             this.groupRankingList.competition.year.toString() +
             ' Gruppe' +
+            ' ' +
+            runde +
             '.pdf';
         }
         link.download = title;
         link.click();
         window.URL.revokeObjectURL(link.href);
       });
-      this.rankingListService.printRankingList(this.rankingList).subscribe(data => {
-        const blob = new Blob([data], {
-          type: 'application/pdf', // must match the Accept type
+      if (this.rankingList.type !== 100) {
+        this.rankingListService.printRankingList(this.rankingList).subscribe(data => {
+          const blob = new Blob([data], {
+            type: 'application/pdf', // must match the Accept type
+          });
+          const link = document.createElement('a');
+          link.href = window.URL.createObjectURL(blob);
+          link.target = '_blank';
+          let runde = '';
+          if (this.rankingList!.type === 1) {
+            runde = '1. Runde';
+          }
+          if (this.rankingList!.type === 2) {
+            runde = '2. Runde';
+          }
+          if (this.rankingList!.type === 100) {
+            runde = 'Qualifikation Final';
+          }
+          if (this.rankingList!.type === 99) {
+            runde = 'Final';
+          }
+          runde = runde.concat(' Runde');
+          let title = '';
+          if (
+            this.rankingList?.competition?.name !== undefined &&
+            this.rankingList.competition.year !== undefined &&
+            this.rankingList.competition.year !== null
+          ) {
+            title =
+              this.rankingList.competition.name.toString() +
+              ' ' +
+              this.rankingList.competition.year.toString() +
+              ' Einzel' +
+              ' ' +
+              runde +
+              '.pdf';
+          }
+          link.download = title;
+          link.click();
+          window.URL.revokeObjectURL(link.href);
         });
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.target = '_blank';
-        let title = '';
-        if (
-          this.rankingList?.competition?.name !== undefined &&
-          this.rankingList.competition.year !== undefined &&
-          this.rankingList.competition.year !== null
-        ) {
-          title = this.rankingList.competition.name.toString() + ' ' + this.rankingList.competition.year.toString() + ' Einzel' + '.pdf';
-        }
-        link.download = title;
-        link.click();
-        window.URL.revokeObjectURL(link.href);
-      });
+      }
     }
   }
 }

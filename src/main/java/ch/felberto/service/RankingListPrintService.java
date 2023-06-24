@@ -404,11 +404,10 @@ public class RankingListPrintService {
         switch (type) {
             case 1:
             case 2:
+            case 99:
                 return templateEngine.process("ranglisten/rangliste_zsav_nawu_gm_group", context);
             case 100:
                 return templateEngine.process("ranglisten/rangliste_zsav_nawu_gm_group_100", context);
-            case 99:
-                return templateEngine.process("ranglisten/rangliste_zsav_nawu_gm_group_99", context);
             default:
                 break;
         }
