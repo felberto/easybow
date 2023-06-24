@@ -72,10 +72,10 @@ export class RankingListZsavNawuGmComponent implements OnInit {
         link.target = '_blank';
         let runde = '';
         if (this.rankingList!.type === 1) {
-          runde = '1. Runde';
+          runde = '1.';
         }
         if (this.rankingList!.type === 2) {
-          runde = '2. Runde';
+          runde = '2.';
         }
         if (this.rankingList!.type === 100) {
           runde = 'Qualifikation Final';
@@ -103,7 +103,7 @@ export class RankingListZsavNawuGmComponent implements OnInit {
         link.click();
         window.URL.revokeObjectURL(link.href);
       });
-      if (this.rankingList.type !== 100) {
+      if (this.groupRankingList.type !== 100) {
         this.rankingListService.printRankingList(this.rankingList).subscribe(data => {
           const blob = new Blob([data], {
             type: 'application/pdf', // must match the Accept type
@@ -113,10 +113,10 @@ export class RankingListZsavNawuGmComponent implements OnInit {
           link.target = '_blank';
           let runde = '';
           if (this.rankingList!.type === 1) {
-            runde = '1. Runde';
+            runde = '1.';
           }
           if (this.rankingList!.type === 2) {
-            runde = '2. Runde';
+            runde = '2.';
           }
           if (this.rankingList!.type === 100) {
             runde = 'Qualifikation Final';

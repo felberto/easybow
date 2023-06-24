@@ -9,8 +9,10 @@ import ch.felberto.service.RankingListService;
 import ch.felberto.service.ResultsService;
 import ch.felberto.service.SeriesService;
 import com.google.common.collect.ComparisonChain;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -230,6 +232,17 @@ public class ZsavNawuGmRankingListServiceImpl {
             }
         );
         groupRankingList.setGroupAthleteResultList(groupAthleteResultList);
+
+        // todo test this
+        Iterator<GroupAthleteResult> itr = groupRankingList.getGroupAthleteResultList().iterator();
+        int i = 0;
+        while (itr.hasNext()) {
+            itr.next();
+            if (i % 2 == 0) {
+                itr.remove();
+            }
+            i++;
+        }
 
         return groupRankingList;
     }
