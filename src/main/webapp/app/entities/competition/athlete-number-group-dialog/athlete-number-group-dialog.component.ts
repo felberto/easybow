@@ -66,7 +66,10 @@ export class AthleteNumberGroupDialogComponent implements OnInit {
 
   protected loadRelationshipsOptions(): void {
     this.groupService
-      .query()
+      .query({
+        page: 0,
+        size: 100,
+      })
       .pipe(map((res: HttpResponse<IGroup[]>) => res.body ?? []))
       .pipe(map((groups: IGroup[]) => this.groupService.addGroupToCollectionIfMissing(groups, this.testForm.get('group')!.value)))
       .subscribe((groups: IGroup[]) => (this.groupsSharedCollection = groups));
