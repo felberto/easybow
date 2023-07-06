@@ -43,6 +43,7 @@ public class RankingListResource {
 
     private final EasvNawuGmRankingListServiceImpl easvNawuGmRankingListService;
     private final EasvStaendematchGroupRankingListServiceImpl easvStaendematchGroupRankingListService;
+    private final EasvVerbaendefinalGroupRankingListServiceImpl easvVerbaendefinalGroupRankingListService;
     private final RankingListPrintService rankingListPrintService;
 
     private final CompetitionService competitionService;
@@ -54,6 +55,7 @@ public class RankingListResource {
         ZsavNawuGmRankingListServiceImpl zsavNawuGmRankingListService,
         EasvNawuGmRankingListServiceImpl easvNawuGmRankingListService,
         EasvStaendematchGroupRankingListServiceImpl easvStaendematchGroupRankingListService,
+        EasvVerbaendefinalGroupRankingListServiceImpl easvVerbaendefinalGroupRankingListService,
         RankingListPrintService rankingListPrintService,
         CompetitionService competitionService
     ) {
@@ -63,6 +65,7 @@ public class RankingListResource {
         this.easvWorldcupRankingListService = easvWorldcupRankingListService;
         this.easvNawuGmRankingListService = easvNawuGmRankingListService;
         this.easvStaendematchGroupRankingListService = easvStaendematchGroupRankingListService;
+        this.easvVerbaendefinalGroupRankingListService = easvVerbaendefinalGroupRankingListService;
         this.rankingListPrintService = rankingListPrintService;
         this.competitionService = competitionService;
     }
@@ -98,6 +101,9 @@ public class RankingListResource {
             case EASV_STAENDEMATCH:
                 rankingList = Optional.ofNullable(easvStaendematchGroupRankingListService.generateRankingList(competitionId, type));
                 break;
+            case EASV_VERBAENDEFINAL:
+                rankingList = Optional.ofNullable(easvVerbaendefinalGroupRankingListService.generateRankingList(competitionId, type));
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + competition.get().getCompetitionType());
         }
@@ -125,6 +131,9 @@ public class RankingListResource {
                 break;
             case EASV_STAENDEMATCH:
                 rankingList = Optional.ofNullable(easvStaendematchGroupRankingListService.generateGroupRankingList(competitionId, type));
+                break;
+            case EASV_VERBAENDEFINAL:
+                rankingList = Optional.ofNullable(easvVerbaendefinalGroupRankingListService.generateGroupRankingList(competitionId, type));
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + competition.get().getCompetitionType());

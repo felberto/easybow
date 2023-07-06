@@ -1,0 +1,45 @@
+<div *ngIf="competition" class="div-view">
+  <div>
+    <h1 class="center liveview-title">
+      <strong>{{ competition?.name }} {{ competition?.year }}</strong>
+    </h1>
+    <br />
+  </div>
+
+  <div *ngIf="this.rankingListView !== null && this.rankingListView !== undefined">
+    <div class="example-container1">
+      <div class="example-list table-responsive liveview">
+        <table aria-describedby="page-heading" class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Rang</th>
+              <th scope="col">Name</th>
+              <th scope="col">Jahrgang</th>
+              <th scope="col">Verein</th>
+              <th>P1</th>
+              <th>P2</th>
+              <th>Resultat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let athlete of this.rankingListView; let i = index">
+              <td>
+                <strong>{{ i + 1 + this.rank }}</strong>
+              </td>
+              <td>
+                <strong>{{ athlete.athlete?.name + ' ' + athlete.athlete?.firstName }}</strong>
+              </td>
+              <td>{{ athlete.athlete?.club?.name }}</td>
+              <td>{{ athlete.athlete?.yearOfBirth }}</td>
+              <td>{{ athlete.resultRound1Serie1 }}</td>
+              <td>{{ athlete.resultRound1Serie2 }}</td>
+              <td>
+                <strong>{{ athlete.result }}</strong>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

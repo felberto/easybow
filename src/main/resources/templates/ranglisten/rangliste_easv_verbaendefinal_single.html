@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title th:text="${titleDoc}"></title>
+    <bookmarks>
+      <bookmark href="#rankingList" name="Rangliste"></bookmark>
+    </bookmarks>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body>
+    <div class="w3-row">
+      <div class="w3-col s9">
+        <h2 class="w3-text-black title-font" th:text="${title}"></h2>
+      </div>
+      <div class="w3-col s3 w3-center">
+        <img class="easv" src="images/easv.jpg" />
+      </div>
+    </div>
+    <div class="w3-row">
+      <div class="w3-col s9">
+        <h3 class="w3-text-black title-font" th:text="${subTitle}"></h3>
+      </div>
+      <div class="w3-col s3 w3-center"></div>
+    </div>
+    <div id="rankingList">
+      <div th:if="${not #lists.isEmpty(rankingList.getAthleteResultList())}">
+        <table class="w3-table">
+          <thead>
+            <tr>
+              <th class="w3-right-align" colspan="1">Rang</th>
+              <th colspan="1">Name</th>
+              <th colspan="1">Verband</th>
+              <th class="w3-right-align" colspan="1">P1</th>
+              <th class="w3-right-align" colspan="1">P2</th>
+              <th class="w3-right-align" colspan="1">Resultat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="athlete : ${rankingList.getAthleteResultList()}">
+              <td class="w3-right-align" th:text="${rankingList.getAthleteResultList().indexOf(athlete) + 1}"></td>
+              <td th:text="${athlete?.getAthlete().getName() + ' ' + athlete?.getAthlete().getFirstName()}"></td>
+              <td th:text="${athlete?.getResultsList()?.get(0).getGroup()?.getName()}"></td>
+              <td class="w3-right-align" th:text="${athlete?.getResultRound1Serie1()}"></td>
+              <td class="w3-right-align" th:text="${athlete?.getResultRound1Serie2()}"></td>
+              <td class="w3-right-align" style="font-weight: bold" th:text="${athlete?.getResult()}"></td>
+              <p style="page-break-after: always" th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) == 25}">&nbsp;</p>
+              <p style="page-break-before: always" th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) == 25}">&nbsp;</p>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <footer class="w3-bottom">
+      <div class="w3-row">
+        <div class="w3-col s4"></div>
+        <div class="w3-col s4">
+          <p class="center" th:text="${date}"></p>
+        </div>
+        <div class="w3-col s4"></div>
+      </div>
+    </footer>
+  </body>
+</html>

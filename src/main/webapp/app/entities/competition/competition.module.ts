@@ -42,6 +42,8 @@ import { NewSeriesDialog1Component } from './new-series-dialog-1/new-series-dial
 import { NewSeriesDialog2Component } from './new-series-dialog-2/new-series-dialog-2.component';
 import { TuiTableModule } from '@taiga-ui/addon-table';
 import { NewGroupSeriesDialog1Component } from './new-group-series-dialog-1/new-group-series-dialog-1.component';
+import { CompetitionOverviewEasvVerbaendefinalComponent } from './overview-easv-verbaendefinal/competition-overview-easv-verbaendefinal.component';
+import { RankingListEasvVerbaendefinalComponent } from './ranking-list-easv-verbaendefinal/ranking-list-easv-verbaendefinal.component';
 
 @NgModule({
   imports: [
@@ -68,6 +70,7 @@ import { NewGroupSeriesDialog1Component } from './new-group-series-dialog-1/new-
     CompetitionOverviewEasvNawuGmComponent,
     CompetitionOverviewZsavNawuGmComponent,
     CompetitionOverviewEasvStaendematchComponent,
+    CompetitionOverviewEasvVerbaendefinalComponent,
     ResultsDialogComponent,
     NewSeriesDialog1Component,
     NewSeriesDialog2Component,
@@ -83,6 +86,7 @@ import { NewGroupSeriesDialog1Component } from './new-group-series-dialog-1/new-
     RankingListEasvNawuGmComponent,
     RankingListZsavNawuGmComponent,
     RankingListEasvStaendematchComponent,
+    RankingListEasvVerbaendefinalComponent,
     RankingListDialogComponent,
     ConfirmDialogComponent,
     CreateAthleteDialogComponent,
@@ -98,6 +102,7 @@ import { NewGroupSeriesDialog1Component } from './new-group-series-dialog-1/new-
     RankingListEasvSm10mComponent,
     RankingListEasvStaendematchComponent,
     RankingListEasvNawuGmComponent,
+    RankingListEasvVerbaendefinalComponent,
     NewSeriesDialog1Component,
     NewSeriesDialog2Component,
     NewGroupSeriesDialog1Component,
