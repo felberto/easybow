@@ -15,7 +15,7 @@
               <th scope="col">Rang</th>
               <th scope="col">Name</th>
               <th scope="col">Jahrgang</th>
-              <th scope="col">Verein</th>
+              <th scope="col">Verband</th>
               <th>P1</th>
               <th>P2</th>
               <th>Resultat</th>
@@ -29,8 +29,8 @@
               <td>
                 <strong>{{ athlete.athlete?.name + ' ' + athlete.athlete?.firstName }}</strong>
               </td>
-              <td>{{ athlete.athlete?.club?.name }}</td>
               <td>{{ athlete.athlete?.yearOfBirth }}</td>
+              <td>{{ athlete.resultsList[0].group?.name }}</td>
               <td>{{ athlete.resultRound1Serie1 }}</td>
               <td>{{ athlete.resultRound1Serie2 }}</td>
               <td>
