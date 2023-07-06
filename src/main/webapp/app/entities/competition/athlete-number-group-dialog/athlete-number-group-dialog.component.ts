@@ -68,7 +68,7 @@ export class AthleteNumberGroupDialogComponent implements OnInit {
     this.groupService
       .query({
         page: 0,
-        size: 100,
+        size: 200,
       })
       .pipe(map((res: HttpResponse<IGroup[]>) => res.body ?? []))
       .pipe(map((groups: IGroup[]) => this.groupService.addGroupToCollectionIfMissing(groups, this.testForm.get('group')!.value)))

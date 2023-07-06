@@ -7,6 +7,7 @@ import { LiveZsavNawuGmComponent } from '../live-zsav-nawu-gm/live-zsav-nawu-gm.
 import { LiveEasvStaendematchComponent } from '../live-easv-staendematch/live-easv-staendematch.component';
 import { LiveEasvNawuGmComponent } from '../live-easv-nawu-gm/live-easv-nawu-gm.component';
 import { LiveEasvSm10mComponent } from '../live-easv-sm-10m/live-easv-sm-10m.component';
+import { LiveEasvVerbaendefinalComponent } from '../live-easv-verbaendefinal/live-easv-verbaendefinal.component';
 
 const athleteRoute: Routes = [
   {
@@ -47,6 +48,13 @@ const athleteRoute: Routes = [
   {
     path: ':id/live-easv-staendematch',
     component: LiveEasvStaendematchComponent,
+    resolve: {
+      competition: CompetitionRoutingResolveService,
+    },
+  },
+  {
+    path: ':id/live-easv-verbaendefinal',
+    component: LiveEasvVerbaendefinalComponent,
     resolve: {
       competition: CompetitionRoutingResolveService,
     },
