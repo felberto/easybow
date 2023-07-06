@@ -65,7 +65,7 @@ export class ResultsDialogComponent implements OnInit {
 
   checkIfAthleteIsAlreadyRegisterForCompetition(athlete: IAthlete, competition: ICompetition): boolean {
     //todo
-    return true;
+    return false;
   }
 
   addAthlete(athlete: IAthlete, competition: ICompetition): void {
