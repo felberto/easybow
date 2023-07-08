@@ -44,8 +44,6 @@
               <td class="w3-right-align" th:text="${athlete?.getResultRound1Serie1()}"></td>
               <td class="w3-right-align" th:text="${athlete?.getResultRound1Serie2()}"></td>
               <td class="w3-right-align" style="font-weight: bold" th:text="${athlete?.getResult()}"></td>
-              <p style="page-break-after: always" th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) == 25}">&nbsp;</p>
-              <p style="page-break-before: always" th:if="${(rankingList.getAthleteResultList().indexOf(athlete) + 1) == 25}">&nbsp;</p>
             </tr>
           </tbody>
         </table>
