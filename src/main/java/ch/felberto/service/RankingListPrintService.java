@@ -54,6 +54,10 @@ public class RankingListPrintService {
                 context = getContextEasvWorldcup(rankingList);
                 html = loadAndFillTemplateEasvWorldcup(context);
                 break;
+            case EASV_WORLDCUP_30M:
+                context = getContextEasvWorldcup30m(rankingList);
+                html = loadAndFillTemplateEasvWorldcup30m(context);
+                break;
             case EASV_SM_10M:
                 context = getContextEasvSm10m(rankingList);
                 html = loadAndFillTemplateEasvSm10m(context);
@@ -197,6 +201,20 @@ public class RankingListPrintService {
         context.setVariable("titleDoc", titleDoc);
         context.setVariable("title", title);
         context.setVariable("subTitle", subTitle);
+        context.setVariable("date", formatter.format(date));
+        return context;
+    }
+
+    public Context getContextEasvWorldcup30m(RankingList rankingList) {
+        Context context = new Context();
+        context.setVariable("rankingList", rankingList);
+
+        String titleDoc = rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
+        String title = rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        context.setVariable("titleDoc", titleDoc);
+        context.setVariable("title", title);
         context.setVariable("date", formatter.format(date));
         return context;
     }
@@ -435,6 +453,10 @@ public class RankingListPrintService {
 
     public String loadAndFillTemplateEasvWorldcup(Context context) {
         return templateEngine.process("ranglisten/rangliste_easv_worldcup", context);
+    }
+
+    public String loadAndFillTemplateEasvWorldcup30m(Context context) {
+        return templateEngine.process("ranglisten/rangliste_easv_worldcup_30m", context);
     }
 
     public String loadAndFillTemplateEasvSm10m(Context context) {

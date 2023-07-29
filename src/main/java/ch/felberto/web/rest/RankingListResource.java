@@ -38,6 +38,7 @@ public class RankingListResource {
 
     private final ZsavNawuEinzelRankingListServiceImpl zsavNawuEinzelRankingListService;
     private final EasvWorldcupRankingListServiceImpl easvWorldcupRankingListService;
+    private final EasvWorldcup30mRankingListServiceImpl easvWorldcup30mRankingListService;
     private final EasvSm10mRankingListServiceImpl easvSm10mRankingListService;
     private final ZsavNawuGmRankingListServiceImpl zsavNawuGmRankingListService;
 
@@ -51,6 +52,7 @@ public class RankingListResource {
     public RankingListResource(
         ZsavNawuEinzelRankingListServiceImpl zsavNawuEinzelRankingListService,
         EasvWorldcupRankingListServiceImpl easvWorldcupRankingListService,
+        EasvWorldcup30mRankingListServiceImpl easvWorldcup30mRankingListService,
         EasvSm10mRankingListServiceImpl easvSm10mRankingListService,
         ZsavNawuGmRankingListServiceImpl zsavNawuGmRankingListService,
         EasvNawuGmRankingListServiceImpl easvNawuGmRankingListService,
@@ -60,6 +62,7 @@ public class RankingListResource {
         CompetitionService competitionService
     ) {
         this.zsavNawuEinzelRankingListService = zsavNawuEinzelRankingListService;
+        this.easvWorldcup30mRankingListService = easvWorldcup30mRankingListService;
         this.easvSm10mRankingListService = easvSm10mRankingListService;
         this.zsavNawuGmRankingListService = zsavNawuGmRankingListService;
         this.easvWorldcupRankingListService = easvWorldcupRankingListService;
@@ -94,6 +97,9 @@ public class RankingListResource {
                 break;
             case EASV_WORLDCUP:
                 rankingList = Optional.ofNullable(easvWorldcupRankingListService.generateRankingList(competitionId, type));
+                break;
+            case EASV_WORLDCUP_30M:
+                rankingList = Optional.ofNullable(easvWorldcup30mRankingListService.generateRankingList(competitionId, type));
                 break;
             case EASV_SM_10M:
                 rankingList = Optional.ofNullable(easvSm10mRankingListService.generateRankingList(competitionId, type));

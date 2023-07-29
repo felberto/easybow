@@ -10,11 +10,13 @@ import { LiveEasvStaendematchComponent } from './live-easv-staendematch/live-eas
 import { LiveEasvNawuGmComponent } from './live-easv-nawu-gm/live-easv-nawu-gm.component';
 import { LiveEasvSm10mComponent } from './live-easv-sm-10m/live-easv-sm-10m.component';
 import { LiveEasvVerbaendefinalComponent } from './live-easv-verbaendefinal/live-easv-verbaendefinal.component';
+import { LiveEasvWorldcup30mComponent } from './live-easv-worldcup-30m/live-easv-worldcup-30m.component';
 
 @NgModule({
   declarations: [
     ViewComponent,
     LiveEasvWorldcupComponent,
+    LiveEasvWorldcup30mComponent,
     LiveEasvSm10mComponent,
     LiveEasvNawuGmComponent,
     LiveZsavNawuGmComponent,

@@ -70,7 +70,7 @@ export class ResultsDialogComponent implements OnInit {
 
   addAthlete(athlete: IAthlete, competition: ICompetition): void {
     let modalRef;
-    if (competition.competitionType === 'EASV_WORLDCUP') {
+    if (competition.competitionType === 'EASV_WORLDCUP' || competition.competitionType === 'EASV_WORLDCUP_30M') {
       modalRef = this.modalService.open(AthleteNumberDialogComponent, { size: 'xl', backdrop: 'static' });
       modalRef.componentInstance.athlete = athlete;
       modalRef.componentInstance.competition = competition;

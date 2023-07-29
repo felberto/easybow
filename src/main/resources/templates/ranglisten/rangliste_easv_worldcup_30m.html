@@ -16,7 +16,6 @@
       <div class="w3-col s6 w3-center">
         <h3 class="w3-text-black w3-center" style="font-size: 30px" th:text="'Match Crossbow'"></h3>
         <h3 class="w3-text-black w3-center title-font" style="font-size: 30px" th:text="${title}"></h3>
-        <h3 class="w3-text-black w3-center title-font" style="font-size: 30px" th:text="${subTitle}"></h3>
       </div>
       <div class="w3-col s3 w3-center">
         <img class="iau" src="images/iau.png" />
@@ -35,8 +34,12 @@
               <th colspan="1"></th>
               <th colspan="1"></th>
               <th colspan="1"></th>
+              <th colspan="1" class="w3-right-align">St</th>
               <th colspan="1"></th>
               <th colspan="1"></th>
+              <th colspan="1"></th>
+              <th colspan="1" class="w3-right-align">Kn</th>
+              <th colspan="1" class="w3-right-align">Total</th>
             </tr>
           </thead>
           <tbody>
@@ -74,7 +77,19 @@
               <td class="w3-right-align rankinglist-font" th:text="${athlete?.getResultRound1Serie1()}"></td>
               <td class="w3-right-align rankinglist-font" th:text="${athlete?.getResultRound1Serie2()}"></td>
               <td class="w3-right-align rankinglist-font" th:text="${athlete?.getResultRound1Serie3()}"></td>
+              <td
+                class="w3-right-align rankinglist-font"
+                style="font-weight: bolder"
+                th:text="${athlete?.getResultRound1Serie1() + athlete?.getResultRound1Serie2() + athlete?.getResultRound1Serie3()}"
+              ></td>
               <td class="w3-right-align rankinglist-font" th:text="${athlete?.getResultRound1Serie4()}"></td>
+              <td class="w3-right-align rankinglist-font" th:text="${athlete?.getResultRound1Serie5()}"></td>
+              <td class="w3-right-align rankinglist-font" th:text="${athlete?.getResultRound1Serie6()}"></td>
+              <td
+                class="w3-right-align rankinglist-font"
+                style="font-weight: bolder"
+                th:text="${athlete?.getResultRound1Serie4() + athlete?.getResultRound1Serie5() + athlete?.getResultRound1Serie6()}"
+              ></td>
               <td class="w3-right-align rankinglist-font" style="font-weight: bold" th:text="${athlete?.getResultRound1()}"></td>
             </tr>
           </tbody>

@@ -5,6 +5,7 @@ package ch.felberto.domain.enumeration;
  */
 public enum CompetitionType {
     EASV_WORLDCUP,
+    EASV_WORLDCUP_30M,
     EASV_STAENDEMATCH,
     EASV_SM_10M,
     EASV_VERBAENDEFINAL,

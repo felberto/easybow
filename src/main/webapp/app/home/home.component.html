@@ -1,142 +1,25 @@
 <div>
-  <!--TODO anleitung anders integrieren-->
-  <!--<div *ngIf="account !== null" class="d-flex justify-content-end">
-    <button class="btn btn-info mr-2" (click)="openAnleitung()">
-      <fa-icon icon="book"></fa-icon>
-      <span>Anleitung</span>
-    </button>
-  </div>-->
-  <h4 class="tui-form__header tui-form__header_margin-top_none">Competitions</h4>
+  <!--todo nur weltcups-->
   <div class="row">
-    <div *ngFor="let competition of competitionList" class="column">
-      <!--ZSAV NAWU-->
-      <a
-        *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'ZSAV_NAWU'"
-        (click)="routeTo(competition.id)"
-        class="data-card"
-      >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>ZSAV NAWU</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p *ngIf="round.round !== 99">{{ round.round }}. Runde Schiessende: {{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
-          <p *ngIf="round.round === 99">Final {{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
-        </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
-      <!--ZSAV NAWU GM-->
-      <a
-        *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'ZSAV_NAWU_GM'"
-        (click)="routeTo(competition.id)"
-        class="data-card"
-      >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>ZSAV NAWU</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
-        </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
-      <!--EASV NAWU GM-->
-      <a
-        *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_NAWU_GM'"
-        (click)="routeTo(competition.id)"
-        class="data-card"
-      >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>EASV NAWU</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
-        </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
-      <!--EASV STAENDEMATCH-->
-      <a
-        *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_STAENDEMATCH'"
-        (click)="routeTo(competition.id)"
-        class="data-card"
-      >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>EASV</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
-        </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
-      <!--EASV VERBAENDEFINAL-->
-      <a
-        *ngIf="
-          account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_VERBAENDEFINAL'
-        "
-        (click)="routeTo(competition.id)"
-        class="data-card"
-      >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>EASV NAWU</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
-        </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
+    <div *ngFor="let competition of competitionList" class="columns">
       <!--EASV WORLDCUP-->
       <a
         *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_WORLDCUP'"
         (click)="routeTo(competition.id)"
         class="data-card"
       >
+        <div>
+          <img
+            class="card-img-top"
+            style="margin: auto; display: block; max-width: 50%; height: auto"
+            src="./content/images/worldcup_logo.jpeg"
+            alt="Card image cap"
+          />
+        </div>
         <h3>{{ competition.name }} {{ competition.year }}</h3>
         <h4>EASV / IAU</h4>
         <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
+          <p>{{ round.date?.format('dddd, D. MMMM YYYY') }}</p>
         </div>
         <span class="link-text">
           View
@@ -150,136 +33,24 @@
           </svg>
         </span>
       </a>
-      <!--EASV SM 10M-->
+      <!--EASV WORLDCUP 30M-->
       <a
-        *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_SM_10M'"
+        *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_WORLDCUP_30M'"
         (click)="routeTo(competition.id)"
         class="data-card"
       >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>EASV</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
+        <div>
+          <img
+            class="card-img-top"
+            style="margin: auto; display: block; max-width: 50%; height: auto"
+            src="./content/images/worldcup_logo.jpeg"
+            alt="Card image cap"
+          />
         </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
-      <!--ZSAV NAWU-->
-      <a
-        *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'ZSAV_NAWU'"
-        (click)="openLiveView(competition)"
-        class="data-card"
-      >
         <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>ZSAV NAWU</h4>
+        <h4>EASV / IAU</h4>
         <div *ngFor="let round of getList(competition)">
-          <p *ngIf="round.round !== 99">{{ round.round }}. Runde Schiessende: {{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
-          <p *ngIf="round.round === 99">Final {{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
-        </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
-      <!--ZSAV NAWU GM-->
-      <a
-        *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'ZSAV_NAWU_GM'"
-        (click)="openLiveView(competition)"
-        class="data-card"
-      >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>ZSAV NAWU</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
-        </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
-      <!--EASV NAWU GM-->
-      <a
-        *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_NAWU_GM'"
-        (click)="openLiveView(competition)"
-        class="data-card"
-      >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>EASV NAWU</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
-        </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
-      <!--EASV STAENDEMATCH-->
-      <a
-        *ngIf="
-          (account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_STAENDEMATCH'
-        "
-        (click)="openLiveView(competition)"
-        class="data-card"
-      >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>EASV</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
-        </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
-      <!--EASV VERBAENDEFINAL-->
-      <a
-        *ngIf="
-          (account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_VERBAENDEFINAL'
-        "
-        (click)="openLiveView(competition)"
-        class="data-card"
-      >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>EASV NAWU</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
+          <p>{{ round.date?.format('dddd, D. MMMM YYYY') }}</p>
         </div>
         <span class="link-text">
           View
@@ -299,10 +70,18 @@
         (click)="openLiveView(competition)"
         class="data-card"
       >
+        <div>
+          <img
+            class="card-img-top"
+            style="margin: auto; display: block; max-width: 50%; height: auto"
+            src="./content/images/worldcup_logo.jpeg"
+            alt="Card image cap"
+          />
+        </div>
         <h3>{{ competition.name }} {{ competition.year }}</h3>
         <h4>EASV / IAU</h4>
         <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
+          <p>{{ round.date?.format('dddd, D. MMMM YYYY') }}</p>
         </div>
         <span class="link-text">
           View
@@ -316,351 +95,26 @@
           </svg>
         </span>
       </a>
-      <!--EASV SM 10M-->
-      <a
-        *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_SM_10M'"
-        (click)="openLiveView(competition)"
-        class="data-card"
-      >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>EASV</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
-        </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
-    </div>
-  </div>
-  <h4 class="tui-form__header tui-form__header_margin-top_none">Archive</h4>
-  <div class="row">
-    <div *ngFor="let competition of pastCompetitionList" class="column">
-      <!--ZSAV NAWU-->
-      <a
-        *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'ZSAV_NAWU'"
-        (click)="routeTo(competition.id)"
-        class="data-card"
-      >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>ZSAV NAWU</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p *ngIf="round.round !== 99">{{ round.round }}. Runde Schiessende: {{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
-          <p *ngIf="round.round === 99">Final {{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
-        </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
-      <!--ZSAV NAWU GM-->
-      <a
-        *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'ZSAV_NAWU_GM'"
-        (click)="routeTo(competition.id)"
-        class="data-card"
-      >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>ZSAV NAWU</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
-        </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
-      <!--EASV NAWU GM-->
-      <a
-        *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_NAWU_GM'"
-        (click)="routeTo(competition.id)"
-        class="data-card"
-      >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>EASV NAWU</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
-        </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
-      <!--EASV STAENDEMATCH-->
-      <a
-        *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_STAENDEMATCH'"
-        (click)="routeTo(competition.id)"
-        class="data-card"
-      >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>EASV</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
-        </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
-      <!--EASV VERBAENDEFINAL-->
+      <!--EASV WORLDCUP 30M-->
       <a
         *ngIf="
-          account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_VERBAENDEFINAL'
-        "
-        (click)="routeTo(competition.id)"
-        class="data-card"
-      >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>EASV NAWU</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
-        </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
-      <!--EASV WORLDCUP-->
-      <a
-        *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_WORLDCUP'"
-        (click)="routeTo(competition.id)"
-        class="data-card"
-      >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>EASV / IAU</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
-        </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
-      <!--EASV SM 10M-->
-      <a
-        *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_SM_10M'"
-        (click)="routeTo(competition.id)"
-        class="data-card"
-      >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>EASV</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
-        </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
-      <!--ZSAV NAWU-->
-      <a
-        *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'ZSAV_NAWU'"
-        (click)="openLiveView(competition)"
-        class="data-card"
-      >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>ZSAV NAWU</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p *ngIf="round.round !== 99">{{ round.round }}. Runde Schiessende: {{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
-          <p *ngIf="round.round === 99">Final {{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
-        </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
-      <!--ZSAV NAWU GM-->
-      <a
-        *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'ZSAV_NAWU_GM'"
-        (click)="openLiveView(competition)"
-        class="data-card"
-      >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>ZSAV NAWU</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
-        </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
-      <!--EASV NAWU GM-->
-      <a
-        *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_NAWU_GM'"
-        (click)="openLiveView(competition)"
-        class="data-card"
-      >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>EASV NAWU</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
-        </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
-      <!--EASV STAENDEMATCH-->
-      <a
-        *ngIf="
-          (account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_STAENDEMATCH'
+          (account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_WORLDCUP_30M'
         "
         (click)="openLiveView(competition)"
         class="data-card"
       >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>EASV</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
+        <div>
+          <img
+            class="card-img-top"
+            style="margin: auto; display: block; max-width: 50%; height: auto"
+            src="./content/images/worldcup_logo.jpeg"
+            alt="Card image cap"
+          />
         </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
-      <!--EASV VERBAENDEFINAL-->
-      <a
-        *ngIf="
-          (account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_VERBAENDEFINAL'
-        "
-        (click)="openLiveView(competition)"
-        class="data-card"
-      >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>EASV NAWU</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
-        </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
-      <!--EASV WORLDCUP-->
-      <a
-        *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_WORLDCUP'"
-        (click)="openLiveView(competition)"
-        class="data-card"
-      >
         <h3>{{ competition.name }} {{ competition.year }}</h3>
         <h4>EASV / IAU</h4>
         <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
-        </div>
-        <span class="link-text">
-          View
-          <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
-              fill="#8cbdb9"
-            />
-          </svg>
-        </span>
-      </a>
-      <!--EASV SM 10M-->
-      <a
-        *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_SM_10M'"
-        (click)="openLiveView(competition)"
-        class="data-card"
-      >
-        <h3>{{ competition.name }} {{ competition.year }}</h3>
-        <h4>EASV</h4>
-        <div *ngFor="let round of getList(competition)">
-          <p>{{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
+          <p>{{ round.date?.format('dddd, D. MMMM YYYY') }}</p>
         </div>
         <span class="link-text">
           View
@@ -678,51 +132,675 @@
   </div>
 </div>
 
-<ng-template #header>
-  <div class="header" [style.backgroundImage]="background"></div>
-</ng-template>
-<ng-template [tuiDialogOptions]="$any({ size: 'l', header: header })" [(tuiDialog)]="open">
-  <div tuiCarouselButtons class="wrapper" (touchstart.passive.stop)="(0)">
-    <button tuiIconButton tuiMode="onDark" icon="tuiIconChevronLeftLarge" class="tui-space_right-4" (click)="navigate(-1)"></button>
-    <tui-carousel [(index)]="index">
-      <div *tuiItem>
-        <h2>Wettkampfübersicht</h2>
-        <p>
-          Auf der Startseite befinden sich alle aktuellen Wettkämpfe. Mit einem Klick auf den Wettkampf kommt man zur Schützenübersicht.
-        </p>
+<!--todo auskommentiert wegen weltcups-->
+<!--<h4 class="tui-form__header tui-form__header_margin-top_none">Competitions</h4>
+<div class="row">
+  <div *ngFor="let competition of competitionList" class="column">
+    &lt;!&ndash;ZSAV NAWU&ndash;&gt;
+    <a
+      *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'ZSAV_NAWU'"
+      (click)="routeTo(competition.id)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>ZSAV NAWU</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p *ngIf="round.round !== 99">{{ round.round }}. Runde Schiessende: {{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
+        <p *ngIf="round.round === 99">Final {{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
       </div>
-      <div *tuiItem>
-        <h2>Schützenübersicht</h2>
-        <p>
-          Hier sind alle Schützen von deinem Verein aufgelistet. Mit einem Klick auf den Namen öffnet sich das Dropdown und man sieht die
-          Runden. Falls Schützen fehlen, dies bitte melden, damit diese hinzugefügt werden können.
-        </p>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;ZSAV NAWU GM&ndash;&gt;
+    <a
+      *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'ZSAV_NAWU_GM'"
+      (click)="routeTo(competition.id)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>ZSAV NAWU</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
       </div>
-      <div *tuiItem>
-        <h2>Runden</h2>
-        <p>
-          Mit einem Klick auf die Runde, öffnet sich das Dialogfenster zur Resultateingabe. Sobald die Eingabefrist durch ist, lässt sich
-          das Dialogfenster nicht mehr öffnen.
-        </p>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;EASV NAWU GM&ndash;&gt;
+    <a
+      *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_NAWU_GM'"
+      (click)="routeTo(competition.id)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>EASV NAWU</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
       </div>
-      <div *tuiItem>
-        <h2>Resultateingabe</h2>
-        <p>
-          In der Resultateingabe werden die Resultate eingegeben und mit Speichern gespeichert. Die Mouchen müssen mit 11 erfasst werden.
-        </p>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;EASV STAENDEMATCH&ndash;&gt;
+    <a
+      *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_STAENDEMATCH'"
+      (click)="routeTo(competition.id)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>EASV</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
       </div>
-      <div *tuiItem>
-        <h2>Kontrolle</h2>
-        <p>
-          Nach dem Speichern der Resultate landet man wieder in der Schützenübersicht des Wettkampfes. Die bereits erfassten Runden werden
-          bei den Schützen mit grün markiert. Noch offene Runden sind mit orange markiert.
-        </p>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;EASV VERBAENDEFINAL&ndash;&gt;
+    <a
+      *ngIf="
+        account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_VERBAENDEFINAL'
+      "
+      (click)="routeTo(competition.id)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>EASV NAWU</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
       </div>
-    </tui-carousel>
-    <button tuiIconButton tuiMode="onDark" icon="tuiIconChevronRightLarge" class="tui-space_left-4" (click)="navigate(1)"></button>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;EASV WORLDCUP&ndash;&gt;
+    <a
+      *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_WORLDCUP'"
+      (click)="routeTo(competition.id)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>EASV / IAU</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
+      </div>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;EASV SM 10M&ndash;&gt;
+    <a
+      *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_SM_10M'"
+      (click)="routeTo(competition.id)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>EASV</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
+      </div>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;ZSAV NAWU&ndash;&gt;
+    <a
+      *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'ZSAV_NAWU'"
+      (click)="openLiveView(competition)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>ZSAV NAWU</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p *ngIf="round.round !== 99">{{ round.round }}. Runde Schiessende: {{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
+        <p *ngIf="round.round === 99">Final {{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
+      </div>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;ZSAV NAWU GM&ndash;&gt;
+    <a
+      *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'ZSAV_NAWU_GM'"
+      (click)="openLiveView(competition)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>ZSAV NAWU</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
+      </div>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;EASV NAWU GM&ndash;&gt;
+    <a
+      *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_NAWU_GM'"
+      (click)="openLiveView(competition)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>EASV NAWU</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
+      </div>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;EASV STAENDEMATCH&ndash;&gt;
+    <a
+      *ngIf="
+        (account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_STAENDEMATCH'
+      "
+      (click)="openLiveView(competition)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>EASV</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
+      </div>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;EASV VERBAENDEFINAL&ndash;&gt;
+    <a
+      *ngIf="
+        (account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_VERBAENDEFINAL'
+      "
+      (click)="openLiveView(competition)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>EASV NAWU</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
+      </div>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;EASV WORLDCUP&ndash;&gt;
+    <a
+      *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_WORLDCUP'"
+      (click)="openLiveView(competition)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>EASV / IAU</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
+      </div>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;EASV SM 10M&ndash;&gt;
+    <a
+      *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_SM_10M'"
+      (click)="openLiveView(competition)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>EASV</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
+      </div>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
   </div>
-  <tui-pagination size="s" class="tui-space_top-4" [length]="5" [(index)]="index"></tui-pagination>
-  <div class="tui-space_top-4">
-    <button tuiButton appearance="primary" (click)="open = false">Verstanden</button>
+</div>
+<h4 class="tui-form__header tui-form__header_margin-top_none">Archive</h4>
+<div class="row">
+  <div *ngFor="let competition of pastCompetitionList" class="column">
+    &lt;!&ndash;ZSAV NAWU&ndash;&gt;
+    <a
+      *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'ZSAV_NAWU'"
+      (click)="routeTo(competition.id)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>ZSAV NAWU</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p *ngIf="round.round !== 99">{{ round.round }}. Runde Schiessende: {{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
+        <p *ngIf="round.round === 99">Final {{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
+      </div>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;ZSAV NAWU GM&ndash;&gt;
+    <a
+      *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'ZSAV_NAWU_GM'"
+      (click)="routeTo(competition.id)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>ZSAV NAWU</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
+      </div>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;EASV NAWU GM&ndash;&gt;
+    <a
+      *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_NAWU_GM'"
+      (click)="routeTo(competition.id)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>EASV NAWU</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
+      </div>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;EASV STAENDEMATCH&ndash;&gt;
+    <a
+      *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_STAENDEMATCH'"
+      (click)="routeTo(competition.id)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>EASV</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
+      </div>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;EASV VERBAENDEFINAL&ndash;&gt;
+    <a
+      *ngIf="
+        account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_VERBAENDEFINAL'
+      "
+      (click)="routeTo(competition.id)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>EASV NAWU</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
+      </div>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;EASV WORLDCUP&ndash;&gt;
+    <a
+      *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_WORLDCUP'"
+      (click)="routeTo(competition.id)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>EASV / IAU</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
+      </div>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;EASV SM 10M&ndash;&gt;
+    <a
+      *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_SM_10M'"
+      (click)="routeTo(competition.id)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>EASV</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
+      </div>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;ZSAV NAWU&ndash;&gt;
+    <a
+      *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'ZSAV_NAWU'"
+      (click)="openLiveView(competition)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>ZSAV NAWU</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p *ngIf="round.round !== 99">{{ round.round }}. Runde Schiessende: {{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
+        <p *ngIf="round.round === 99">Final {{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
+      </div>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;ZSAV NAWU GM&ndash;&gt;
+    <a
+      *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'ZSAV_NAWU_GM'"
+      (click)="openLiveView(competition)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>ZSAV NAWU</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
+      </div>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;EASV NAWU GM&ndash;&gt;
+    <a
+      *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_NAWU_GM'"
+      (click)="openLiveView(competition)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>EASV NAWU</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
+      </div>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;EASV STAENDEMATCH&ndash;&gt;
+    <a
+      *ngIf="
+        (account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_STAENDEMATCH'
+      "
+      (click)="openLiveView(competition)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>EASV</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
+      </div>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;EASV VERBAENDEFINAL&ndash;&gt;
+    <a
+      *ngIf="
+        (account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_VERBAENDEFINAL'
+      "
+      (click)="openLiveView(competition)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>EASV NAWU</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, D.MMMM YYYY') }}</p>
+      </div>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;EASV WORLDCUP&ndash;&gt;
+    <a
+      *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_WORLDCUP'"
+      (click)="openLiveView(competition)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>EASV / IAU</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
+      </div>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
+    &lt;!&ndash;EASV SM 10M&ndash;&gt;
+    <a
+      *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_SM_10M'"
+      (click)="openLiveView(competition)"
+      class="data-card"
+    >
+      <h3>{{ competition.name }} {{ competition.year }}</h3>
+      <h4>EASV</h4>
+      <div *ngFor="let round of getList(competition)">
+        <p>{{ round.date?.format('dddd, MMMM D, YYYY') }}</p>
+      </div>
+      <span class="link-text">
+        View
+        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z"
+            fill="#8cbdb9"
+          />
+        </svg>
+      </span>
+    </a>
   </div>
-</ng-template>
+</div>
+</div>-->

@@ -44,6 +44,8 @@ import { TuiTableModule } from '@taiga-ui/addon-table';
 import { NewGroupSeriesDialog1Component } from './new-group-series-dialog-1/new-group-series-dialog-1.component';
 import { CompetitionOverviewEasvVerbaendefinalComponent } from './overview-easv-verbaendefinal/competition-overview-easv-verbaendefinal.component';
 import { RankingListEasvVerbaendefinalComponent } from './ranking-list-easv-verbaendefinal/ranking-list-easv-verbaendefinal.component';
+import { CompetitionOverviewEasvWorldcup30mComponent } from './overview-easv-worldcup-30m/competition-overview-easv-worldcup-30m.component';
+import { RankingListEasvWorldcup30mComponent } from './ranking-list-easv-worldcup-30m/ranking-list-easv-worldcup-30m.component';
 
 @NgModule({
   imports: [
@@ -66,6 +68,7 @@ import { RankingListEasvVerbaendefinalComponent } from './ranking-list-easv-verb
     CompetitionRankingComponent,
     CompetitionOverviewComponent,
     CompetitionOverviewEasvWorldcupComponent,
+    CompetitionOverviewEasvWorldcup30mComponent,
     CompetitionOverviewEasvSm10mComponent,
     CompetitionOverviewEasvNawuGmComponent,
     CompetitionOverviewZsavNawuGmComponent,
@@ -82,6 +85,7 @@ import { RankingListEasvVerbaendefinalComponent } from './ranking-list-easv-verb
     SeriesDialog6Component,
     RankingListComponent,
     RankingListEasvWorldcupComponent,
+    RankingListEasvWorldcup30mComponent,
     RankingListEasvSm10mComponent,
     RankingListEasvNawuGmComponent,
     RankingListZsavNawuGmComponent,
@@ -99,6 +103,7 @@ import { RankingListEasvVerbaendefinalComponent } from './ranking-list-easv-verb
     ResultsDialogComponent,
     RankingListComponent,
     RankingListEasvWorldcupComponent,
+    RankingListEasvWorldcup30mComponent,
     RankingListEasvSm10mComponent,
     RankingListEasvStaendematchComponent,
     RankingListEasvNawuGmComponent,

@@ -9,11 +9,11 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RankingListDialogComponent } from '../rankingList-dialog/rankingList-dialog.component';
 
 @Component({
-  selector: 'jhi-ranking-list-easv-worldcup',
-  templateUrl: './ranking-list-easv-worldcup.component.html',
-  styleUrls: ['./ranking-list-easv-worldcup.component.scss'],
+  selector: 'jhi-ranking-list-easv-worldcup-30m',
+  templateUrl: './ranking-list-easv-worldcup-30m.component.html',
+  styleUrls: ['./ranking-list-easv-worldcup-30m.component.scss'],
 })
-export class RankingListEasvWorldcupComponent implements OnInit {
+export class RankingListEasvWorldcup30mComponent implements OnInit {
   competition?: ICompetition | null;
   rankingList?: IRankingList | null;
 
@@ -22,12 +22,13 @@ export class RankingListEasvWorldcupComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ competition }) => {
       this.competition = competition;
+      this.generate();
     });
   }
 
-  generate(type: number): void {
+  generate(): void {
     if (this.competition != null) {
-      this.rankingListService.getRankingList(this.competition, type).subscribe(res => {
+      this.rankingListService.getRankingList(this.competition, 1).subscribe(res => {
         this.rankingList = res.body;
       });
     }
@@ -55,26 +56,12 @@ export class RankingListEasvWorldcupComponent implements OnInit {
           link.href = window.URL.createObjectURL(blob);
           link.target = '_blank';
           let title = '';
-          let type = '';
-          if (this.rankingList?.type === 1) {
-            type = 'MEN';
-          } else if (this.rankingList?.type === 2) {
-            type = 'WOMEN';
-          }
           if (
             this.rankingList?.competition?.name !== undefined &&
             this.rankingList.competition.year !== undefined &&
             this.rankingList.competition.year !== null
           ) {
-            title =
-              'Results ' +
-              this.rankingList.competition.name.toString() +
-              ' ' +
-              this.rankingList.competition.year.toString() +
-              ' ' +
-              type +
-              ' ' +
-              '.pdf';
+            title = 'Results ' + this.rankingList.competition.name.toString() + ' ' + this.rankingList.competition.year.toString() + '.pdf';
           }
           link.download = title;
           link.click();

@@ -2013,12 +2013,12 @@ a {
 
 .easv {
   width: auto;
-  height: 125px;
+  height: 120px;
 }
 
 .iau {
   width: auto;
-  height: 125px;
+  height: 120px;
 }
 
 .nationality {
@@ -2035,4 +2035,14 @@ a {
 .swisslos {
   width: auto;
   height: 30px;
+}
+
+.swisslabel {
+  width: auto;
+  height: 70px;
+}
+
+.easv_klein {
+  width: auto;
+  height: 70px;
 }

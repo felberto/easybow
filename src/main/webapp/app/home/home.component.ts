@@ -89,6 +89,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.router.navigate(['/competition', competitionId, 'overview-easv-nawu-gm']);
       } else if (res.body!.competitionType === CompetitionType.EASV_WORLDCUP) {
         this.router.navigate(['/competition', competitionId, 'overview-easv-worldcup']);
+      } else if (res.body!.competitionType === CompetitionType.EASV_WORLDCUP_30M) {
+        this.router.navigate(['/competition', competitionId, 'overview-easv-worldcup-30m']);
       } else if (res.body!.competitionType === CompetitionType.EASV_STAENDEMATCH) {
         this.router.navigate(['/competition', competitionId, 'overview-easv-staendematch']);
       } else if (res.body!.competitionType === CompetitionType.EASV_VERBAENDEFINAL) {
@@ -114,6 +116,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.router.navigate([`/live/${competition.id}`]);
       } else if (competition.competitionType === CompetitionType.EASV_WORLDCUP) {
         this.router.navigate(['/live', competition.id, 'live-easv-worldcup']);
+      } else if (competition.competitionType === CompetitionType.EASV_WORLDCUP_30M) {
+        this.router.navigate(['/live', competition.id, 'live-easv-worldcup-30m']);
       } else if (competition.competitionType === CompetitionType.ZSAV_NAWU_GM) {
         this.router.navigate(['/live', competition.id, 'live-zsav-nawu-gm']);
       } else if (competition.competitionType === CompetitionType.EASV_NAWU_GM) {
