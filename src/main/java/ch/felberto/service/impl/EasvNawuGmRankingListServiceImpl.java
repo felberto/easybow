@@ -210,8 +210,6 @@ public class EasvNawuGmRankingListServiceImpl {
                             );
                         }
                     );
-                //todo test this
-                groupAthleteResult.setResult(groupAthleteResult.getResult() / groupAthleteResult.getAthleteResultList().size());
                 groupAthleteResultList.add(groupAthleteResult);
             }
         );

@@ -83,7 +83,7 @@ public class RankingListPrintService {
         switch (rankingList.getCompetition().getCompetitionType()) {
             case ZSAV_NAWU_GM:
                 context = getContextZsavNawuGmGroup(rankingList);
-                html = loadAndFillTemplateZsavNawuGmGroup(context, rankingList.getType());
+                html = loadAndFillTemplateZsavNawuGmGroup(context);
                 break;
             case EASV_NAWU_GM:
                 context = getContextEasvNawuGmGroup(rankingList);
@@ -396,7 +396,7 @@ public class RankingListPrintService {
         return templateEngine.process("ranglisten/rangliste_easv_sm_10m", context);
     }
 
-    public String loadAndFillTemplateZsavNawuGmGroup(Context context, int type) {
+    public String loadAndFillTemplateZsavNawuGmGroup(Context context) {
         return templateEngine.process("ranglisten/rangliste_zsav_nawu_gm_group", context);
     }
 

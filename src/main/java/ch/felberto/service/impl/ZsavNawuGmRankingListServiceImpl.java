@@ -213,8 +213,6 @@ public class ZsavNawuGmRankingListServiceImpl {
                             );
                         }
                     );
-                //todo test this
-                groupAthleteResult.setResult(groupAthleteResult.getResult() / groupAthleteResult.getAthleteResultList().size());
                 groupAthleteResultList.add(groupAthleteResult);
             }
         );
