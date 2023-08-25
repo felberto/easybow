@@ -464,17 +464,7 @@ public class RankingListPrintService {
     }
 
     public String loadAndFillTemplateZsavNawuGmGroup(Context context, int type) {
-        switch (type) {
-            case 1:
-            case 2:
-            case 99:
-                return templateEngine.process("ranglisten/rangliste_zsav_nawu_gm_group", context);
-            case 100:
-                return templateEngine.process("ranglisten/rangliste_zsav_nawu_gm_group_100", context);
-            default:
-                break;
-        }
-        return null;
+        return templateEngine.process("ranglisten/rangliste_zsav_nawu_gm_group", context);
     }
 
     public String loadAndFillTemplateZsavNawuGmSingle(Context context) {

@@ -58,7 +58,7 @@ public class ZsavNawuGmRankingListServiceImpl {
     public GroupRankingList generateGroupRankingList(Long competitionId, Integer type) {
         log.info("generate groupRankingList for competitionId: {} and type: {}", competitionId, type);
         Competition competition = competitionRepository.getOne(competitionId);
-        GroupRankingList groupRankingList = getAllAthletesByCompetitionGroup(competition, type);
+        GroupRankingList groupRankingList = getAllAthletesByCompetitionGroup(competition);
 
         sortRankingListFinalSeries2(groupRankingList);
         sortRankingListWithinGroup(groupRankingList);
@@ -69,37 +69,18 @@ public class ZsavNawuGmRankingListServiceImpl {
     public RankingList generateRankingList(Long competitionId, Integer type) {
         log.info("generate rankingList for competitionId: {} and type: {}", competitionId, type);
         Competition competition = competitionRepository.getOne(competitionId);
-        RankingList rankingList = getAllAthletesByCompetition(competition, type);
+        RankingList rankingList = getAllAthletesByCompetition(competition);
 
         sortRankingListRound1Series2(rankingList);
         log.info("generated rankingList: {}", rankingList);
         return rankingList;
     }
 
-    public GroupRankingList getAllAthletesByCompetitionGroup(Competition competition, Integer type) {
+    public GroupRankingList getAllAthletesByCompetitionGroup(Competition competition) {
         GroupRankingList groupRankingList = new GroupRankingList();
         groupRankingList.setCompetition(competition);
-        groupRankingList.setType(type);
-        //todo test this
-        List<Results> results;
-        switch (type) {
-            case 1:
-                results = new ArrayList<>(resultsRepository.findByCompetition_IdAndRound(competition.getId(), 1));
-                break;
-            case 2:
-                results = new ArrayList<>(resultsRepository.findByCompetition_IdAndRound(competition.getId(), 2));
-                break;
-            case 100:
-                List<Results> round1 = new ArrayList<>(resultsRepository.findByCompetition_IdAndRound(competition.getId(), 1));
-                List<Results> round2 = new ArrayList<>(resultsRepository.findByCompetition_IdAndRound(competition.getId(), 2));
-                results = Stream.concat(round1.stream(), round2.stream()).collect(Collectors.toList());
-                break;
-            case 99:
-                results = new ArrayList<>(resultsRepository.findByCompetition_IdAndRound(competition.getId(), 99));
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + type);
-        }
+
+        List<Results> results = new ArrayList<>(resultsRepository.findByCompetition_Id(competition.getId()));
         List<GroupAthleteResult> groupAthleteResultList = new ArrayList<>();
         List<Group> groupList = new ArrayList<>();
         results.forEach(
@@ -236,31 +217,11 @@ public class ZsavNawuGmRankingListServiceImpl {
         return groupRankingList;
     }
 
-    public RankingList getAllAthletesByCompetition(Competition competition, Integer type) {
+    public RankingList getAllAthletesByCompetition(Competition competition) {
         RankingList rankingList = new RankingList();
         rankingList.setCompetition(competition);
-        rankingList.setType(type);
 
-        //todo test this
-        List<Results> results;
-        switch (type) {
-            case 1:
-                results = new ArrayList<>(resultsRepository.findByCompetition_IdAndRound(competition.getId(), 1));
-                break;
-            case 2:
-                results = new ArrayList<>(resultsRepository.findByCompetition_IdAndRound(competition.getId(), 2));
-                break;
-            case 100:
-                List<Results> round1 = new ArrayList<>(resultsRepository.findByCompetition_IdAndRound(competition.getId(), 1));
-                List<Results> round2 = new ArrayList<>(resultsRepository.findByCompetition_IdAndRound(competition.getId(), 2));
-                results = Stream.concat(round1.stream(), round2.stream()).collect(Collectors.toList());
-                break;
-            case 99:
-                results = new ArrayList<>(resultsRepository.findByCompetition_IdAndRound(competition.getId(), 99));
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + type);
-        }
+        List<Results> results = resultsRepository.findByCompetition_Id(competition.getId());
 
         List<Athlete> athleteList = new ArrayList<>();
         results
