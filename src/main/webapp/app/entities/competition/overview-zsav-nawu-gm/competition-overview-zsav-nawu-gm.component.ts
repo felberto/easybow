@@ -24,6 +24,7 @@ import { SeriesDialog1Component } from '../series-dialog-1/series-dialog-1.compo
 import { SeriesDialog2Component } from '../series-dialog-2/series-dialog-2.component';
 import { NewSeriesDialog2Component } from '../new-series-dialog-2/new-series-dialog-2.component';
 import { NewGroupSeriesDialog1Component } from '../new-group-series-dialog-1/new-group-series-dialog-1.component';
+import { NewGroupSeriesDialog2Component } from '../new-group-series-dialog-2/new-group-series-dialog-2.component';
 
 @Component({
   selector: 'jhi-overview-zsav-nawu-gm',
@@ -100,8 +101,7 @@ export class CompetitionOverviewZsavNawuGmComponent implements OnInit {
   }
 
   createResultFinal(competition: ICompetition, group: IGroup): void {
-    /* todo newGroupSeriesDialog2 erstellen und Rangliste erstellen mit verschiendenen Runden wie Einzel */
-    const modalRef = this.modalService.open(NewSeriesDialog2Component, {
+    const modalRef = this.modalService.open(NewGroupSeriesDialog2Component, {
       size: 'xl',
       backdrop: 'static',
     });

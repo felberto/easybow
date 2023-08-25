@@ -46,6 +46,7 @@ import { CompetitionOverviewEasvVerbaendefinalComponent } from './overview-easv-
 import { RankingListEasvVerbaendefinalComponent } from './ranking-list-easv-verbaendefinal/ranking-list-easv-verbaendefinal.component';
 import { CompetitionOverviewEasvWorldcup30mComponent } from './overview-easv-worldcup-30m/competition-overview-easv-worldcup-30m.component';
 import { RankingListEasvWorldcup30mComponent } from './ranking-list-easv-worldcup-30m/ranking-list-easv-worldcup-30m.component';
+import { NewGroupSeriesDialog2Component } from './new-group-series-dialog-2/new-group-series-dialog-2.component';
 
 @NgModule({
   imports: [
@@ -78,6 +79,7 @@ import { RankingListEasvWorldcup30mComponent } from './ranking-list-easv-worldcu
     NewSeriesDialog1Component,
     NewSeriesDialog2Component,
     NewGroupSeriesDialog1Component,
+    NewGroupSeriesDialog2Component,
     SeriesDialog1Component,
     SeriesDialog2Component,
     SeriesDialog2GroupComponent,
@@ -111,6 +113,7 @@ import { RankingListEasvWorldcup30mComponent } from './ranking-list-easv-worldcu
     NewSeriesDialog1Component,
     NewSeriesDialog2Component,
     NewGroupSeriesDialog1Component,
+    NewGroupSeriesDialog2Component,
     SeriesDialog1Component,
     SeriesDialog2Component,
     SeriesDialog2GroupComponent,
@@ -126,6 +129,7 @@ import { RankingListEasvWorldcup30mComponent } from './ranking-list-easv-worldcu
     NewSeriesDialog1Component,
     NewSeriesDialog2Component,
     NewGroupSeriesDialog1Component,
+    NewGroupSeriesDialog2Component,
     SeriesDialog1Component,
     SeriesDialog2Component,
     SeriesDialog2GroupComponent,

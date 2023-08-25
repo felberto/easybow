@@ -15,8 +15,8 @@
 
       <div
         (cdkDropListDropped)="dropGroup($event)"
-        *ngIf="this.groupRankingList.groupAthleteResultList !== undefined"
-        [cdkDropListData]="this.groupRankingList.groupAthleteResultList"
+        *ngIf="this.groupRankingList?.groupAthleteResultList !== undefined"
+        [cdkDropListData]="this.groupRankingList?.groupAthleteResultList"
         cdkDropList
         class="example-list table-responsive"
       >
@@ -32,7 +32,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let groupAthleteResult of this.groupRankingList.groupAthleteResultList; let i = index" cdkDrag>
+            <tr *ngFor="let groupAthleteResult of this.groupRankingList?.groupAthleteResultList; let i = index" cdkDrag>
               <td>
                 <strong>{{ i + 1 }}</strong>
               </td>
@@ -54,8 +54,8 @@
 
       <div
         (cdkDropListDropped)="drop($event)"
-        *ngIf="this.rankingList.athleteResultList !== undefined"
-        [cdkDropListData]="this.rankingList.athleteResultList"
+        *ngIf="this.rankingList?.athleteResultList !== undefined"
+        [cdkDropListData]="this.rankingList?.athleteResultList"
         cdkDropList
         class="example-list table-responsive"
       >
@@ -67,7 +67,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let athlete of this.rankingList.athleteResultList; let i = index" cdkDrag>
+            <tr *ngFor="let athlete of this.rankingList?.athleteResultList; let i = index" cdkDrag>
               <td>{{ athlete.athlete?.name + ' ' + athlete.athlete?.firstName }}</td>
               <td>
                 <strong>{{ athlete.result }}</strong>
