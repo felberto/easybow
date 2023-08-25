@@ -57,6 +57,10 @@ public class EasvNawuGmRankingListServiceImpl {
         Competition competition = competitionRepository.getOne(competitionId);
         GroupRankingList groupRankingList = getAllAthletesByCompetitionGroup(competition);
 
+        groupRankingList.setGroupAthleteResultList(
+            groupRankingList.getGroupAthleteResultList().stream().filter(s -> (s.getGroup() != null)).collect(Collectors.toList())
+        );
+
         sortRankingListFinalSeries2(groupRankingList);
         sortRankingListWithinGroup(groupRankingList);
         log.info("generated groupRankingList: {}", groupRankingList);
@@ -94,7 +98,7 @@ public class EasvNawuGmRankingListServiceImpl {
                 List<Athlete> athleteList = new ArrayList<>();
                 results.forEach(
                     result -> {
-                        if (result.getGroup().equals(group)) {
+                        if (result.getGroup() != null && result.getGroup().equals(group)) {
                             athleteList.add(result.getAthlete());
                         }
                     }
@@ -206,6 +210,8 @@ public class EasvNawuGmRankingListServiceImpl {
                             );
                         }
                     );
+                //todo test this
+                groupAthleteResult.setResult(groupAthleteResult.getResult() / groupAthleteResult.getAthleteResultList().size());
                 groupAthleteResultList.add(groupAthleteResult);
             }
         );
@@ -336,10 +342,8 @@ public class EasvNawuGmRankingListServiceImpl {
                         .start()
                         //Resultat
                         .compare(o2.getResult(), o1.getResult())
-                        //Mehrheit der Resultate in Stellung frei geschossen
-                        .compare(getNumberOfFreeAthletes(o2), getNumberOfFreeAthletes(o1))
-                        //höhere Einzelresultat in Stellung frei geschossen
-                        .compare(getHighestFreeResult(o2), getHighestFreeResult(o1))
+                        /// bestes der Einzelresultat
+                        .compare(getHighestResult(o2), getHighestResult(o1))
                         //Tiefschüsse aller Einzelresultate
                         .compare(getDeepshotsForAllAthletes(o2, 10), getDeepshotsForAllAthletes(o1, 10))
                         .compare(getDeepshotsForAllAthletes(o2, 9), getDeepshotsForAllAthletes(o1, 9))
@@ -352,8 +356,6 @@ public class EasvNawuGmRankingListServiceImpl {
                         .compare(getDeepshotsForAllAthletes(o2, 2), getDeepshotsForAllAthletes(o1, 2))
                         .compare(getDeepshotsForAllAthletes(o2, 1), getDeepshotsForAllAthletes(o1, 1))
                         .compare(getDeepshotsForAllAthletes(o2, 0), getDeepshotsForAllAthletes(o1, 0))
-                        // bestes der Einzelresultat
-                        .compare(getHighestResult(o2), getHighestResult(o1))
                         .result()
             );
 
@@ -410,38 +412,6 @@ public class EasvNawuGmRankingListServiceImpl {
             );
 
         return groupRankingList;
-    }
-
-    public Integer getNumberOfFreeAthletes(GroupAthleteResult groupAthleteResult) {
-        AtomicReference<Integer> tmpFreeAthletes = new AtomicReference<>(0);
-        groupAthleteResult
-            .getAthleteResultList()
-            .forEach(
-                athleteResult -> {
-                    if (athleteResult.getAthlete().getPosition().equals(Position.FREE)) {
-                        tmpFreeAthletes.getAndSet(tmpFreeAthletes.get() + 1);
-                    }
-                }
-            );
-
-        return tmpFreeAthletes.get();
-    }
-
-    public Integer getHighestFreeResult(GroupAthleteResult groupAthleteResult) {
-        AtomicReference<Integer> highestResult = new AtomicReference<>(0);
-        groupAthleteResult
-            .getAthleteResultList()
-            .forEach(
-                athleteResult -> {
-                    if (athleteResult.getAthlete().getPosition().equals(Position.FREE)) {
-                        if (athleteResult.getResult() > highestResult.get()) {
-                            highestResult.set(athleteResult.getResult());
-                        }
-                    }
-                }
-            );
-
-        return highestResult.get();
     }
 
     public Integer getDeepshotsForAllAthletes(GroupAthleteResult groupAthleteResult, Integer number) {
