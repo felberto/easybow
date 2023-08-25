@@ -50,26 +50,13 @@
                       style="width: auto"
                       th:text="${athleteResult?.getAthlete().getName() + ' ' + athleteResult?.getAthlete().getFirstName()}"
                     ></td>
-                    <td class="w3-right-align" style="width: 25px" th:text="${athleteResult?.getAthlete().getYearOfBirth()}"></td>
-                    <td
-                      class="w3-right-align"
-                      style="width: 25px"
-                      th:if="${athleteResult?.getAthlete().getPosition().toString().substring(0, 1).toLowerCase() == 'm'}"
-                    >
-                      a
-                    </td>
-                    <td
-                      class="w3-right-align"
-                      style="width: 25px"
-                      th:if="${athleteResult?.getAthlete().getPosition().toString().substring(0, 1).toLowerCase() == 'f'}"
-                    >
-                      f
-                    </td>
-                    <td class="w3-right-align" style="width: 25px" th:text="${athleteResult?.getResult()}"></td>
+                    <td class="w3-right-align" style="width: 25px" th:text="${athleteResult?.getResultRound1Serie1()}"></td>
+                    <td class="w3-right-align" style="width: 25px" th:text="${athleteResult?.getResultRound1Serie2()}"></td>
+                    <td class="w3-right-align" style="font-weight: bolder; width: 25px" th:text="${athleteResult?.getResult()}"></td>
                   </tr>
                 </tbody>
               </table>
-              <td class="w3-right-align" style="width: 25px; font-weight: bolder" th:text="${groupAthleteResult?.getResult()}"></td>
+              <td class="w3-right-align" style="font-weight: bold" th:text="${groupAthleteResult?.getResult()}"></td>
               <p style="page-break-after: always" th:if="${(rankingList.getGroupAthleteResultList().indexOf(groupAthleteResult) + 1) == 9}">
                 &nbsp;
               </p>

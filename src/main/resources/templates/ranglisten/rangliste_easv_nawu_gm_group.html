@@ -50,17 +50,6 @@
                       style="width: auto"
                       th:text="${athleteResult?.getAthlete().getName() + ' ' + athleteResult?.getAthlete().getFirstName()}"
                     ></td>
-                    <td class="w3-left-align" style="width: 25px" th:text="${athleteResult?.getAthlete().getYearOfBirth()}"></td>
-                    <td class="w3-left-align" style="width: 25px" th:if="${athleteResult?.getAthlete().getPosition().toString() == 'FREE'}">
-                      f
-                    </td>
-                    <td
-                      class="w3-left-align"
-                      style="width: 25px"
-                      th:if="${athleteResult?.getAthlete().getPosition().toString() == 'MOUNTED'}"
-                    >
-                      a
-                    </td>
                     <td class="w3-right-align" style="width: 25px" th:text="${athleteResult?.getResultRound1Serie1()}"></td>
                     <td class="w3-right-align" style="width: 25px" th:text="${athleteResult?.getResultRound1Serie2()}"></td>
                     <td class="w3-right-align" style="font-weight: bolder; width: 25px" th:text="${athleteResult?.getResult()}"></td>
