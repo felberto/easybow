@@ -237,43 +237,9 @@ public class RankingListPrintService {
         Context context = new Context();
         context.setVariable("rankingList", rankingList);
 
-        String runde = "";
-        String titleDoc = "";
-        String title = "";
-        String subTitle = "";
-        switch (rankingList.getType()) {
-            case 1:
-                runde = "1. Runde";
-                titleDoc =
-                    "Rangliste " + rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear() + " " + runde;
-                title = "ZSAV " + rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
-                subTitle = "Rangliste: " + runde;
-                break;
-            case 2:
-                runde = "2. Runde";
-                titleDoc =
-                    "Rangliste " + rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear() + " " + runde;
-                title = "ZSAV " + rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
-                subTitle = "Rangliste: " + runde;
-                break;
-            case 100:
-                runde = "1. + 2. Runde";
-                titleDoc =
-                    "Rangliste " + rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear() + " " + runde;
-                title = "ZSAV " + rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
-                subTitle = "Rangliste: " + runde;
-                break;
-            case 99:
-                runde = "Final";
-                titleDoc =
-                    "Rangliste " + rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear() + " " + runde;
-                title = "ZSAV " + rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
-                subTitle = "Rangliste: " + runde;
-                break;
-            default:
-                break;
-        }
-
+        String titleDoc = "ZSAV " + rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
+        String title = rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
+        String subTitle = "Gruppenrangliste";
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
         context.setVariable("titleDoc", titleDoc);
@@ -288,42 +254,9 @@ public class RankingListPrintService {
         Context context = new Context();
         context.setVariable("rankingList", rankingList);
 
-        String runde = "";
-        String titleDoc = "";
-        String title = "";
-        String subTitle = "";
-        switch (rankingList.getType()) {
-            case 1:
-                runde = "1. Runde";
-                titleDoc =
-                    "Rangliste " + rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear() + " " + runde;
-                title = "ZSAV " + rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
-                subTitle = "Einzelrangliste: " + runde;
-                break;
-            case 2:
-                runde = "2. Runde";
-                titleDoc =
-                    "Rangliste " + rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear() + " " + runde;
-                title = "ZSAV " + rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
-                subTitle = "Einzelrangliste: " + runde;
-                break;
-            case 100:
-                runde = "1. + 2. Runde";
-                titleDoc =
-                    "Rangliste " + rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear() + " " + runde;
-                title = "ZSAV " + rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
-                subTitle = "Einzelrangliste: " + runde;
-                break;
-            case 99:
-                runde = "Final";
-                titleDoc =
-                    "Rangliste " + rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear() + " " + runde;
-                title = "ZSAV " + rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
-                subTitle = "Einzelrangliste: " + runde;
-                break;
-            default:
-                break;
-        }
+        String titleDoc = "ZSAV " + rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
+        String title = rankingList.getCompetition().getName() + " " + rankingList.getCompetition().getYear();
+        String subTitle = "Höchstresultate";
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
         context.setVariable("titleDoc", titleDoc);
