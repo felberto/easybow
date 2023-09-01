@@ -136,7 +136,7 @@
 <h4 class="tui-form__header tui-form__header_margin-top_none">Competitions</h4>
 <div class="row">
   <div *ngFor="let competition of competitionList" class="column">
-    <!--ZSAV NAWU-->
+    <!--&lt;!&ndash;ZSAV NAWU&ndash;&gt;
     <a
       *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'ZSAV_NAWU'"
       (click)="routeTo(competition.id)"
@@ -160,7 +160,7 @@
         </svg>
       </span>
     </a>
-    <!--ZSAV NAWU GM-->
+    &lt;!&ndash;ZSAV NAWU GM&ndash;&gt;
     <a
       *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'ZSAV_NAWU_GM'"
       (click)="routeTo(competition.id)"
@@ -182,7 +182,7 @@
           />
         </svg>
       </span>
-    </a>
+    </a>-->
     <!--EASV NAWU GM-->
     <a
       *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_NAWU_GM'"
@@ -229,7 +229,7 @@
         </svg>
       </span>
     </a>
-    <!--EASV VERBAENDEFINAL-->
+    <!--&lt;!&ndash;EASV VERBAENDEFINAL&ndash;&gt;
     <a
       *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_VERBAENDEFINAL'"
       (click)="routeTo(competition.id)"
@@ -252,7 +252,7 @@
         </svg>
       </span>
     </a>
-    <!--EASV WORLDCUP-->
+    &lt;!&ndash;EASV WORLDCUP&ndash;&gt;
     <a
       *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_WORLDCUP'"
       (click)="routeTo(competition.id)"
@@ -275,7 +275,7 @@
         </svg>
       </span>
     </a>
-    <!--EASV SM 10M-->
+    &lt;!&ndash;EASV SM 10M&ndash;&gt;
     <a
       *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_SM_10M'"
       (click)="routeTo(competition.id)"
@@ -298,7 +298,7 @@
         </svg>
       </span>
     </a>
-    <!--ZSAV NAWU-->
+    &lt;!&ndash;ZSAV NAWU&ndash;&gt;
     <a
       *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'ZSAV_NAWU'"
       (click)="openLiveView(competition)"
@@ -322,7 +322,7 @@
         </svg>
       </span>
     </a>
-    <!--ZSAV NAWU GM-->
+    &lt;!&ndash;ZSAV NAWU GM&ndash;&gt;
     <a
       *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'ZSAV_NAWU_GM'"
       (click)="openLiveView(competition)"
@@ -344,7 +344,7 @@
           />
         </svg>
       </span>
-    </a>
+    </a>-->
     <!--EASV NAWU GM-->
     <a
       *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_NAWU_GM'"
@@ -393,7 +393,7 @@
         </svg>
       </span>
     </a>
-    <!--EASV VERBAENDEFINAL-->
+    <!--&lt;!&ndash;EASV VERBAENDEFINAL&ndash;&gt;
     <a
       *ngIf="
         (account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_VERBAENDEFINAL'
@@ -418,7 +418,7 @@
         </svg>
       </span>
     </a>
-    <!--EASV WORLDCUP-->
+    &lt;!&ndash;EASV WORLDCUP&ndash;&gt;
     <a
       *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_WORLDCUP'"
       (click)="openLiveView(competition)"
@@ -441,7 +441,7 @@
         </svg>
       </span>
     </a>
-    <!--EASV SM 10M-->
+    &lt;!&ndash;EASV SM 10M&ndash;&gt;
     <a
       *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_SM_10M'"
       (click)="openLiveView(competition)"
@@ -463,13 +463,13 @@
           />
         </svg>
       </span>
-    </a>
+    </a>-->
   </div>
 </div>
-<h4 class="tui-form__header tui-form__header_margin-top_none">Archive</h4>
+<!--<h4 class="tui-form__header tui-form__header_margin-top_none">Archive</h4>
 <div class="row">
   <div *ngFor="let competition of pastCompetitionList" class="column">
-    <!--ZSAV NAWU-->
+    &lt;!&ndash;ZSAV NAWU&ndash;&gt;
     <a
       *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'ZSAV_NAWU'"
       (click)="routeTo(competition.id)"
@@ -493,7 +493,7 @@
         </svg>
       </span>
     </a>
-    <!--ZSAV NAWU GM-->
+    &lt;!&ndash;ZSAV NAWU GM&ndash;&gt;
     <a
       *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'ZSAV_NAWU_GM'"
       (click)="routeTo(competition.id)"
@@ -516,7 +516,7 @@
         </svg>
       </span>
     </a>
-    <!--EASV NAWU GM-->
+    &lt;!&ndash;EASV NAWU GM&ndash;&gt;
     <a
       *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_NAWU_GM'"
       (click)="routeTo(competition.id)"
@@ -539,7 +539,7 @@
         </svg>
       </span>
     </a>
-    <!--EASV STAENDEMATCH-->
+    &lt;!&ndash;EASV STAENDEMATCH&ndash;&gt;
     <a
       *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_STAENDEMATCH'"
       (click)="routeTo(competition.id)"
@@ -562,7 +562,7 @@
         </svg>
       </span>
     </a>
-    <!--EASV VERBAENDEFINAL-->
+    &lt;!&ndash;EASV VERBAENDEFINAL&ndash;&gt;
     <a
       *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_VERBAENDEFINAL'"
       (click)="routeTo(competition.id)"
@@ -585,7 +585,7 @@
         </svg>
       </span>
     </a>
-    <!--EASV WORLDCUP-->
+    &lt;!&ndash;EASV WORLDCUP&ndash;&gt;
     <a
       *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_WORLDCUP'"
       (click)="routeTo(competition.id)"
@@ -608,7 +608,7 @@
         </svg>
       </span>
     </a>
-    <!--EASV SM 10M-->
+    &lt;!&ndash;EASV SM 10M&ndash;&gt;
     <a
       *ngIf="account !== null && account.authorities[0] !== 'ROLE_LIVE' && competition.competitionType?.toString() == 'EASV_SM_10M'"
       (click)="routeTo(competition.id)"
@@ -631,7 +631,7 @@
         </svg>
       </span>
     </a>
-    <!--ZSAV NAWU-->
+    &lt;!&ndash;ZSAV NAWU&ndash;&gt;
     <a
       *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'ZSAV_NAWU'"
       (click)="openLiveView(competition)"
@@ -655,7 +655,7 @@
         </svg>
       </span>
     </a>
-    <!--ZSAV NAWU GM-->
+    &lt;!&ndash;ZSAV NAWU GM&ndash;&gt;
     <a
       *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'ZSAV_NAWU_GM'"
       (click)="openLiveView(competition)"
@@ -678,7 +678,7 @@
         </svg>
       </span>
     </a>
-    <!--EASV NAWU GM-->
+    &lt;!&ndash;EASV NAWU GM&ndash;&gt;
     <a
       *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_NAWU_GM'"
       (click)="openLiveView(competition)"
@@ -701,7 +701,7 @@
         </svg>
       </span>
     </a>
-    <!--EASV STAENDEMATCH-->
+    &lt;!&ndash;EASV STAENDEMATCH&ndash;&gt;
     <a
       *ngIf="
         (account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_STAENDEMATCH'
@@ -726,7 +726,7 @@
         </svg>
       </span>
     </a>
-    <!--EASV VERBAENDEFINAL-->
+    &lt;!&ndash;EASV VERBAENDEFINAL&ndash;&gt;
     <a
       *ngIf="
         (account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_VERBAENDEFINAL'
@@ -751,7 +751,7 @@
         </svg>
       </span>
     </a>
-    <!--EASV WORLDCUP-->
+    &lt;!&ndash;EASV WORLDCUP&ndash;&gt;
     <a
       *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_WORLDCUP'"
       (click)="openLiveView(competition)"
@@ -774,7 +774,7 @@
         </svg>
       </span>
     </a>
-    <!--EASV SM 10M-->
+    &lt;!&ndash;EASV SM 10M&ndash;&gt;
     <a
       *ngIf="(account === null || account!.authorities[0] === 'ROLE_LIVE') && competition.competitionType?.toString() == 'EASV_SM_10M'"
       (click)="openLiveView(competition)"
@@ -798,4 +798,4 @@
       </span>
     </a>
   </div>
-</div>
+</div>-->

@@ -62,7 +62,14 @@ public class EasvStaendematchGroupRankingListServiceImpl {
 
         sortRankingListFinalSeries6(groupRankingList);
         sortRankingListWithinGroup(groupRankingList);
+
+        groupRankingList = filterOutGroups(groupRankingList);
         log.info("generated groupRankingList: {}", groupRankingList);
+        return groupRankingList;
+    }
+
+    private GroupRankingList filterOutGroups(GroupRankingList groupRankingList) {
+        groupRankingList.getGroupAthleteResultList().removeIf(groupAthleteResult -> groupAthleteResult.getAthleteResultList().size() < 4);
         return groupRankingList;
     }
 

@@ -1,17 +1,6 @@
 <div class="tui-container">
   <h4 class="tui-form__header tui-form__header_margin-top_none">{{ competition.name + ' ' + competition.year }}</h4>
 
-  <div *jhiHasAnyAuthority="['ROLE_ADMIN']" class="d-flex justify-content-center">
-    <button
-      (click)="exportCompetition(competition)"
-      tuiButton
-      type="button"
-      appearance="customButton"
-      class="tui-space_right-3 tui-space_bottom-3"
-    >
-      Export Competition
-    </button>
-  </div>
   <div *jhiHasAnyAuthority="['ROLE_EASV', 'ROLE_ADMIN']" class="d-flex justify-content-center">
     <button
       (click)="adminAthlete(competition)"
